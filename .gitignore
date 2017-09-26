@@ -9,4 +9,4 @@ db.sqlite3
 .idea/dataSources/a8e095fa-b76a-423b-8d9b-31962e17fb50/_staging_/
 .idea/inspectionProfiles/
 Would skip repository JTDI/
-jtdi_venv/Include/
+jtdi_venv
