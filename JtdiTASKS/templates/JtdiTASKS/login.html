@@ -1,6 +1,7 @@
 {% extends 'JtdiTASKS/base.html' %}
 {% load bootstrap %}
 {% load staticfiles %}
+{% load socialaccount %}
 {% block content %}
 <div class="page-content container">
 		<div class="row">
@@ -10,7 +11,10 @@
 			            <div class="content-wrap">
 			                <h6>Вход</h6>
 			                <div class="social">
-	                            <a class="face_login" href="#">
+                                <a class="btn btn-social-icon btn-sm btn-vk" href="{% provider_login_url "vk" method="oauth2" %}">
+                                    <span class="fa fa-vk"></span>
+                                  </a>
+	                            <!--<a class="face_login" href="">
 	                                <span class="face_icon">
 	                                    <img src="../../static/images/facebook.png" alt="fb">
 	                                </span>
@@ -20,7 +24,7 @@
 	                                <hr class="left">
 	                                <span>Или</span>
 	                                <hr class="right">
-	                            </div>
+	                            </div>-->
 	                        </div>
 			                <form method="POST" action="." data-validate-username-url="{% url 'validate_username' %}">
                                     {% csrf_token %}

@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from . import views
 from django.conf import settings
@@ -20,5 +20,6 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$', views.task_finish, name='task_finish'),
     url(r'^task/new/$', views.task_new, name='task_new'),
     url(r'^task/new/(?P<project>[0-9]+)/$', views.task_new, name='project_task_new'),
+    url(r'^/', include('allauth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

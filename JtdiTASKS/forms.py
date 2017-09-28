@@ -40,7 +40,7 @@ class UserForm(forms.ModelForm):
 
 class TaskForm(forms.Form):
     title = forms.CharField(label='Заголовок')
-    title.widget.attrs.update({'ng-model': "data.myinput"})
+    title.widget.attrs.update({'ng-model': "data.myinput", 'placeholder': 'забить гвоздь в стену через 20 минут'})
 
     description = forms.CharField(label='Описание', widget=forms.Textarea, required=False)
 

@@ -35,12 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'oauth2_provider',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
     'corsheaders',
     'JtdiTASKS',
     'bootstrapform',
-    'registration',
-    'googlecharts'
+    'googlecharts',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +75,8 @@ TEMPLATES = [
     },
 ]
 
+SITE_ID = 2
+
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
@@ -101,6 +106,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -141,3 +154,10 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'info@google.ru'
+
+SOCIAL_AUTH_VK_APP_ID = '6198747'
+SOCIAL_AUTH_VKONTAKTE_APP_ID = SOCIAL_AUTH_VK_APP_ID
+SOCIAL_AUTH_VK_API_SECRET = '3vDlzO1y2LJZnOmNFmAL'
+SOCIAL_AUTH_VKONTAKTE_APP_SECRET = SOCIAL_AUTH_VK_API_SECRET
+
+LOGIN_REDIRECT_URL = '/profile/'

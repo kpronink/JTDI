@@ -1,6 +1,5 @@
 *.pyc
 __pycache__
-myvenv
 db.sqlite3
 .DS_Store
 .idea/dataSources/31fd862a-9dc7-4b1a-9434-a7004446589a/_src_/

@@ -1,6 +1,7 @@
 import random
 
 import pytz
+from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -102,7 +103,7 @@ def logout_view(request):
 
 def update_profile(request):
     search_form = SearchForm()
-
+    soc_acc = SocialAccount.objects.filter(user=request.user)
     today = datetime.date.today()
     monday = today - datetime.timedelta(days=today.weekday())
     sunday = today + datetime.timedelta(6 - today.weekday())
@@ -133,13 +134,12 @@ def update_profile(request):
     else:
         user_form = UserForm(instance=request.user)
         profile_form = UserProfileForm(instance=request.user.profile)
-        # project_form = ProjectForm()
     return render(request, 'JtdiTASKS/profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
-        #'project_form': project_form,
         'values': values,
-        'search_form': search_form
+        'search_form': search_form,
+        'accounts': soc_acc,
     })
 
 
