@@ -9,8 +9,8 @@
         <div class="col-md-6">
             <div class="content-box-large">
                 <div class="panel-heading">
-                    <form method="post" enctype="multipart/form-data" action=""> {% csrf_token %}
-                        <div class="form-group">
+
+                    <div class="form-group">
 
                             {% if accounts %}
                             <p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
@@ -58,6 +58,8 @@
 
 
                         </div>
+                    <form method="post" enctype="multipart/form-data" action=""> {% csrf_token %}
+
                         <div class="form-group"> {{ user_form|bootstrap }} {{ profile_form|bootstrap }} </div>
                         <div class="form-group">
                             {% if user.profile.avatar %}
