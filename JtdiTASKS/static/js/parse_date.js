@@ -26,7 +26,7 @@ $scope.jsParseDate = function(title) {
         var mytime = "";
         var mydate = new Date();
         var newdate = new Date();
-        if (title == "") {
+        if (title !== undefined) {
         title = title.replace("одинадцать", "11").replace("двенадцать", "12").replace("тринадцать", "13").replace("четырнадцать", "14").replace("пятнадцать", "15").replace(" шестнадцать", " 16").replace(" семнадцать", " 17").replace(" двадцать", " 20").replace(" один", " 1").replace(" один", " 1").replace(" два", " 2").replace(" три", " 3").replace(" четыре", " 4").replace(" пять", " 5").replace(" шесть", " 6").replace(" семь", " 7").replace("восемь", "8").replace("девять", "9").replace("десять", "10").replace(" ноль", " 0");
         if (title) title = title.toLowerCase();
         var answer = "";
@@ -273,10 +273,12 @@ $scope.jsParseDate = function(title) {
         month = checkZero(month);
         year = checkZero(year);
 
+        var title_date = "";
         document.getElementById('id_date').value = year + '-' + month + '-' + day
-
+        if ((answer == undefined) && (add == undefined)) {title_date = ""}
+        else {title_date = answer + " " + add};
         return {
-            title: answer + " " + add,
+            title: title_date,
             date: mydate,
             sms: sms
         };
