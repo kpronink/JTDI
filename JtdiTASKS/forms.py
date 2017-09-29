@@ -16,6 +16,13 @@ class TimeInput(Input):
     input_type = 'time'
 
 
+class DataTimeInput(Input):
+    """
+    The email input widget
+    """
+    input_type = 'date'
+
+
 class UserProfileForm(forms.ModelForm):
 
     class Meta:
@@ -65,7 +72,8 @@ class TaskEditForm(forms.ModelForm):
 
         widgets = {
             'description': Textarea(attrs={'cols': 80, 'rows': 20}),
-            'date': DateTimeInput(attrs={'input_type': 'date'}),
+            'date': DataTimeInput(attrs={'input_type': 'date'}),
+            'time': TimeInput(attrs={'input_type': 'date'}),
 
         }
         labels = {

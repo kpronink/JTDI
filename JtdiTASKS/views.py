@@ -3,8 +3,7 @@ import random
 import pytz
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.db import transaction
+
 from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -52,6 +51,7 @@ class RegisterFormView(FormView):
 
 
 class LoginFormView(FormView):
+
     form_class = AuthenticationForm
 
     # Аналогично регистрации, только используем шаблон аутентификации.
@@ -264,7 +264,7 @@ def task_edit(request, pk):
     task = get_object_or_404(Task, pk=pk)
 
     if request.method == "POST":
-        form = TaskEditForm(request.POST, instance=task)
+        form = TaskEditForm(request.POST)
         if form.is_valid():
             task.author = request.user
             task.active = True

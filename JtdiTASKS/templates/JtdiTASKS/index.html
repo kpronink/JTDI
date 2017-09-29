@@ -40,16 +40,19 @@
                                         <td>  </td>
                                     {% endif %}
                                     <td>{{ task.time }}</td>
-                                    <td><a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse"><i class="glyphicon glyphicon-flag"></i></a></td>
-                                    <td><a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse"><i class="glyphicon glyphicon-cog"></i></a></td>
-                                    <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse"><i class="glyphicon glyphicon-trash"></i></a></td>
+                                    <td><a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу">
+                                        <i class="glyphicon glyphicon-flag"></i></a></td>
+                                    <td><a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse" title="Редактировать задачу">
+                                        <i class="glyphicon glyphicon-cog"></i></a></td>
+                                    <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
+                                        <i class="glyphicon glyphicon-trash"></i></a></td>
                                 </tr>
                               {% endfor %}
 				              </tbody>
 				            </table>
                             </div>
                             <div>
-                                <a href="{% url 'task_new' %}" data-rel="collapse"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a>
+                                <a href="{% url 'task_new' %}" data-rel="collapse" title="Добавить задачу"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a>
                             </div>
                             <div class="pagination">
                                 <span class="step-links">
