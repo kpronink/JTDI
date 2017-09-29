@@ -186,6 +186,40 @@ def task_list(request):
                                                     'tasks_finished_today': tasks_finished_today})
 
 
+def task_list_finished(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+        filter(project=None).order_by(
+        'date_finish')
+
+    paginator_task = Paginator(tasks_finish, 16)
+
+    page = request.GET.get('page')
+    try:
+        tasks_finish = paginator_task.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        tasks_finish = paginator_task.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        tasks_finish = paginator_task.page(paginator_task.num_pages)
+
+    if request.method == 'POST':
+        project_form = ProjectForm(request.POST)
+        if project_form.is_valid():
+            project = Project()
+            project.title = project_form.cleaned_data['title']
+            project.author = request.user
+            color = generate_color()
+            project.color_project = "color: " + color + "; background: " + color
+            project.save(Project)
+            return redirect('/')
+
+    return render(request, 'JtdiTASKS/finished_task.html', {'tasks': tasks_finish})
+
+
 def project_task_list(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
@@ -307,6 +341,23 @@ def task_finish(request, pk):
     task.finished = True
     task.active = False
     task.date_finish = datetime.date.today()
+    task.save()
+    if task.project is not None:
+        project_pk = task.project.pk
+        success_url = redirect('project_tasks_list', pk=project_pk)
+    else:
+        success_url = redirect('/')
+
+    return success_url
+
+
+def task_restore(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    task = get_object_or_404(Task, pk=pk)
+    task.finished = False
+    task.active = True
     task.save()
     if task.project is not None:
         project_pk = task.project.pk
