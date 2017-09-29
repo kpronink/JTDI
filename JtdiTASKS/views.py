@@ -158,7 +158,7 @@ def task_list(request):
     tasks_finished_today = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
         filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
-    paginator_task = Paginator(tasks, 4)
+    paginator_task = Paginator(tasks, 8)
 
     page = request.GET.get('page')
     try:
