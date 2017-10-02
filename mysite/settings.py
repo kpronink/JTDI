@@ -75,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-SITE_ID = 2
+SITE_ID = 3
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 

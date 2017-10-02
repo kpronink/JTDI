@@ -447,7 +447,7 @@ def project_recent_list(user):
 @register.inclusion_tag('JtdiTASKS/profile_menu.html')
 def profile_menu(user):
     today = datetime.date.today()
-    week_end = today - datetime.timedelta(today.weekday() + 2)
+    week_end = today - datetime.timedelta(days=7)
     tasks_finish_base = Task.objects.filter(active=False).filter(finished=True).filter(author=user).filter(
         date_finish__range=(week_end, today)).order_by(
         'date_finish')
