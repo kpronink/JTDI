@@ -105,7 +105,7 @@
                 <div class="col-md-5">
                     <!-- Logo -->
                     <div class="logo">
-                        <h1><a href={% url 'task_list' %}>JTDI Tasks</a></h1> </div>
+                        <h1><a href={% url 'task_list' %}><i class="glyphicon glyphicon-ok" style="color: #777777"></i> JTDI Tasks</a></h1> </div>
                 </div> {% if user.is_authenticated %}
                 {% search_block user %}
                 {% profile_menu user%}{% endif %}

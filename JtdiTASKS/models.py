@@ -22,7 +22,7 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 
 class Profile(models.Model):
     """User with app settings."""
@@ -88,6 +88,17 @@ class Profile(models.Model):
 
 
 class Task(models.Model):
+    PRIORITY_1 = 'red'
+    PRIORITY_2 = 'yellow'
+    PRIORITY_3 = 'green'
+    PRIORITY_4 = 'grey'
+
+    PRIORITY_CHOISE = (
+        (PRIORITY_1, 'Степень важности 1'),
+        (PRIORITY_2, 'Степень важности 2'),
+        (PRIORITY_3, 'Степень важности 3'),
+        (PRIORITY_4, 'Степень важности 4'))
+
     author = models.ForeignKey('auth.User')
     project = models.ForeignKey('Project', null=True, default=None, blank=True)
     title = models.CharField(max_length=200)
@@ -98,6 +109,11 @@ class Task(models.Model):
     date_finish = models.DateField(default=timezone.now, blank=True, null=True)
     active = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
+    group = models.BooleanField(default=False)
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOISE,
+                                default=PRIORITY_4, blank=True)
+    
+    remind = models.BooleanField(default=True)
 
     def publish(self):
         self.published_date = timezone.now
@@ -105,5 +121,16 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
-    
 
+
+class PartnerGroup(models.Model):
+
+    project = models.ForeignKey('Project', default=None)
+    partner = models.ForeignKey('auth.User')
+
+
+class InviteUser(models.Model):
+
+    user_sender = models.ForeignKey('auth.User')
+    user_invite = models.CharField(max_length=200)
+    invited = models.BooleanField(default=False)

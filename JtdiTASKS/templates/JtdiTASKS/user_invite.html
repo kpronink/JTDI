@@ -1,0 +1,33 @@
+{% extends 'JtdiTASKS/base.html' %}
+{% load bootstrap %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+	  				<div class="col-md-6">
+	  					<div class="content-box-header">
+		  					<div class="panel-title">Inline Form</div>
+
+							<div class="panel-options">
+								<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+								<a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+							</div>
+			  			</div>
+			  			<div class="content-box-large box-with-header">
+			  				<form method="post" class="form-inline" role="form">
+
+								<fieldset>
+                                    <div class="form-group col-sm-3">
+                                        {% csrf_token %}
+									{{ invite_form|bootstrap }}
+                                    </div>
+									<button type="submit" class="btn btn-primary">
+										Пригласить
+									</button>
+								</fieldset>
+
+							</form>
+						</div>
+	  				</div>
+
+</div>
+{% endblock content %}

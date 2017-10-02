@@ -11,9 +11,9 @@ import datetime
 
 from django.template.defaulttags import register
 
-from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm
+from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Task, Project, User
+from .models import Task, Project, User, InviteUser
 from django.contrib.auth import logout, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import FormView
@@ -51,7 +51,6 @@ class RegisterFormView(FormView):
 
 
 class LoginFormView(FormView):
-
     form_class = AuthenticationForm
 
     # Аналогично регистрации, только используем шаблон аутентификации.
@@ -81,16 +80,16 @@ def validate_username(request):
 
 def get_recent_task(request):
     if request.user.is_authenticated():
-        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None)\
+        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None) \
             .filter(date__lte=datetime.datetime.today()).order_by('date')
         data = {}
         for task in tasks_alert:
-            data['/task/'+str(task.pk)+'/'] = task.title
+            data['/task/' + str(task.pk) + '/'] = task.title
 
     else:
 
         data = {
-           
+
         }
 
     return JsonResponse(data)
@@ -390,6 +389,7 @@ def task_new(request, project=None):
             task.project = proj
             task.active = True
             task.repeating = form.cleaned_data['repeating']
+            task.priority = form.cleaned_data['priority_field']
             task.save(Task)
 
             return success_url
@@ -407,6 +407,35 @@ def task_new(request, project=None):
                                                        })
 
 
+def user_invite(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    if request.method == "POST":
+        form = InviteUserForm(request.POST)
+        if form.is_valid():
+            invite = InviteUser()
+            invite_user = User.objects.filter(username__iexact=form.cleaned_data['user_invite'])
+            invite.user_invite = invite_user
+            invite.user_sender = request.user
+            invite.invited = False
+            invite.save(InviteUser)
+
+            return redirect('/invite')
+        project_form = ProjectForm(request.POST)
+        if project_form.is_valid():
+            project = Project()
+            project.title = project_form.cleaned_data['title']
+            project.author = request.user
+            project.save(Project)
+            return redirect('/invite')
+    else:
+        form = InviteUserForm()
+
+    return render(request, 'JtdiTASKS/user_invite.html', {'invite_form': form
+                                                          })
+
+
 @register.inclusion_tag('JtdiTASKS/menu.html')
 def project_recent_list(user):
     return {
@@ -418,12 +447,10 @@ def project_recent_list(user):
 @register.inclusion_tag('JtdiTASKS/profile_menu.html')
 def profile_menu(user):
     today = datetime.date.today()
-    monday = today - datetime.timedelta(days=today.weekday())
-    sunday = today + datetime.timedelta(6 - today.weekday())
-    week_end = today - datetime.timedelta(6 - today.weekday())
-    tasks_finish_base = Task.objects.filter(active=False).filter(finished=True).filter(author=user).order_by(
+    week_end = today - datetime.timedelta(today.weekday() + 2)
+    tasks_finish_base = Task.objects.filter(active=False).filter(finished=True).filter(author=user).filter(
+        date_finish__range=(week_end, today)).order_by(
         'date_finish')
-    # считаем количество платежей...
     qsstats = QuerySetStats(tasks_finish_base, date_field='date_finish', aggregate=Count('id'))
     # ...в день за указанный период
     values = qsstats.time_series(week_end, today, interval='days')

@@ -1,44 +1,66 @@
 import datetime
 
 from django import forms
-from django.forms import Textarea, ClearableFileInput, DateTimeInput
+from django.forms import Textarea, ClearableFileInput, DateTimeInput, CharField
 from django.forms.widgets import Input
 
-from JtdiTASKS.models import Profile, Task, User, Project
+from JtdiTASKS.models import Profile, Task, User, Project, InviteUser
 
 year = datetime.date.today().year
 
 
 class TimeInput(Input):
-    """
-    The email input widget
-    """
+
     input_type = 'time'
 
 
 class DataTimeInput(Input):
-    """
-    The email input widget
-    """
+
     input_type = 'date'
 
 
-class UserProfileForm(forms.ModelForm):
+class CharFieldWidget(Input):
+    def __init__(self, max_length=None, min_length=None, strip=True, empty_value='', *args, **kwargs):
+        self.max_length = max_length
+        self.min_length = min_length
+        self.strip = strip
+        self.empty_value = empty_value
+        super(CharFieldWidget, self).__init__(*args, **kwargs)
 
+
+class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('timezone', 'formatdate', 'firstdayweek', 'sex', 'avatar')
-        
+
         widgets = {
-            'avatar': ClearableFileInput(attrs={'class': 'ask-signup-avatar-input',}),
+            'avatar': ClearableFileInput(attrs={'class': 'ask-signup-avatar-input', }),
             'required': False
         }
 
         labels = {
             'avatar': 'Аватар',
+            'timezone': 'Часовой пояс',
+            'formatdate': 'Формат даты',
+            'sex': 'Пол',
+            'firstdayweek': 'Первый день недели'
         }
 
-    
+
+class InviteUserForm(forms.ModelForm):
+    class Meta:
+        model = InviteUser
+        fields = ('user_invite',)
+
+        labels = {
+            'user_invite': 'Имя пользователя',
+        }
+
+        widgets = {'user_invite': CharFieldWidget(attrs={'id': 'id_username',
+                                                   }),
+                   }
+
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -46,6 +68,18 @@ class UserForm(forms.ModelForm):
 
 
 class TaskForm(forms.Form):
+    PRIORITY_1 = 'red'
+    PRIORITY_2 = 'yellow'
+    PRIORITY_3 = 'green'
+    PRIORITY_4 = 'grey'
+
+    PRIORITY_CHOISE = (
+        (PRIORITY_4, 'Степень важности 4'),
+        (PRIORITY_3, 'Степень важности 3'),
+        (PRIORITY_2, 'Степень важности 2'),
+        (PRIORITY_1, 'Степень важности 1'),
+    )
+
     title = forms.CharField(label='Заголовок')
     title.widget.attrs.update({'ng-model': "data.myinput", 'placeholder': 'забить гвоздь в стену через 20 минут'})
 
@@ -56,6 +90,12 @@ class TaskForm(forms.Form):
 
     time_field = forms.TimeField(label='Время', required=False)
     time_field.widget.input_type = 'time'
+
+    priority_field = forms.ChoiceField(
+        label='Важность',
+        required=False,
+        choices=PRIORITY_CHOISE,
+    )
 
     repeating = forms.BooleanField(label='Повторяющаяся задача', required=False)
 

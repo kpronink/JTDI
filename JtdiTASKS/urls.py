@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^ajax/get_recent_task/$', views.get_recent_task, name='get_recent_task'),
     url(r'^logout/$', views.logout_view, name='logout'),
     url(r'^profile/$', views.update_profile, name='profile'),
+    url(r'^invite/$', views.user_invite, name='user_invite'),
     url(r'^search/$', views.search_result, name='search'),
     url(r'^$', views.task_list, name='task_list'),
     url(r'^task_finished/$', views.task_list_finished, name='task_list_finished'),
@@ -22,6 +23,6 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/restore', views.task_restore, name='task_restore'),
     url(r'^task/new/$', views.task_new, name='task_new'),
     url(r'^task/new/(?P<project>[0-9]+)/$', views.task_new, name='project_task_new'),
-    url(r'^/', include('allauth.urls')),
+    url(r'^accounts/', include('allauth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
