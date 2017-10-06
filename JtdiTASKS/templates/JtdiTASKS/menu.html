@@ -4,6 +4,7 @@
                     <ul class="nav">
                         <!-- Main menu -->
                         <li class="current"><a href="{% url 'task_list' %}"><i class="glyphicon glyphicon-home"></i> Задачи</a></li>
+                        <li class="current"><a href="{% url 'task_today' %}"><i class="glyphicon glyphicon-tasks"></i> Задачи на сегодня</a></li>
                         <li class="current"><a href="{% url 'task_list_finished' %}">
                             <i class="glyphicon glyphicon-briefcase"></i> Завершенные адачи</a></li>
                         <li class="submenu">
@@ -14,7 +15,8 @@
                                     <li>
                                         <!--<div class="circle" style="{{ project_item.color_project }}">
                                         </div>-->
-                                        <a href="{% url 'project_tasks_list' pk=project_item.pk %}">{{ project_item.title }} </a>
+                                        <a href="{% url 'project_tasks_list' pk=project_item.pk %}">
+                                            <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
                                     </li>
                                 {% endfor %}
 

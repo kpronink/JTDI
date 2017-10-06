@@ -16,6 +16,7 @@ class Project(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200, null=True)
     color_project = models.CharField(max_length=10)
+    group = models.BooleanField(default=False)
 
     def publish(self):
         self.save()

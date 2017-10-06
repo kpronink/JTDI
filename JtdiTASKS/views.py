@@ -179,11 +179,57 @@ def task_list(request):
             project.title = project_form.cleaned_data['title']
             project.author = request.user
             color = generate_color()
-            project.color_project = "color: " + color + "; background: " + color
+            project.color_project = "color: " + color
+            project.group = False
             project.save(Project)
             return redirect('/')
 
     return render(request, 'JtdiTASKS/index.html', {'tasks': tasks,
+                                                    'tasks_finish': tasks_finish,
+                                                    'tasks_finished_today': tasks_finished_today})
+
+
+def task_list_today(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    currentdate = datetime.datetime.today()
+    start_day = currentdate.combine(currentdate, currentdate.min.time())
+    end_day = currentdate.combine(currentdate, currentdate.max.time())
+
+    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date_finish__range=(start_day, end_day))\
+        .filter(project=None).order_by('date', 'priority', 'time')
+    tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+        filter(project=None).order_by(
+        'date_finish')
+    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+        filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
+        'date_finish')
+    paginator_task = Paginator(tasks, 8)
+
+    page = request.GET.get('page')
+    try:
+        tasks = paginator_task.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        tasks = paginator_task.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        tasks = paginator_task.page(paginator_task.num_pages)
+
+    if request.method == 'POST':
+        project_form = ProjectForm(request.POST, prefix='project')
+        if project_form.is_valid():
+            project = Project()
+            project.title = project_form.cleaned_data['title']
+            project.author = request.user
+            color = generate_color()
+            project.color_project = "color: " + color
+            project.group = False
+            project.save(Project)
+            return redirect('/')
+
+    return render(request, 'JtdiTASKS/task_today.html', {'tasks': tasks,
                                                     'tasks_finish': tasks_finish,
                                                     'tasks_finished_today': tasks_finished_today})
 
@@ -215,7 +261,8 @@ def task_list_finished(request):
             project.title = project_form.cleaned_data['title']
             project.author = request.user
             color = generate_color()
-            project.color_project = "color: " + color + "; background: " + color
+            project.color_project = "color: " + color
+            project.group = False
             project.save(Project)
             return redirect('/')
 
