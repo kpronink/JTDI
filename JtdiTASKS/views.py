@@ -486,12 +486,12 @@ def task_new(request, project=None):
                                                        })
 
 
-def task_transfer_date(request, pk):
+def task_transfer_date(request, pk, days):
     if not request.user.is_authenticated():
         return redirect('login')
 
     task = get_object_or_404(Task, pk=pk)
-    task.date = task.date + datetime.timedelta(days=1)
+    task.date = task.date + datetime.timedelta(days=int(days))
     task.save()
     if task.project is not None:
         project_pk = task.project.pk
