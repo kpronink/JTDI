@@ -46,7 +46,7 @@
                                         <i class="glyphicon glyphicon-cog"></i></a></td>
                                     <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
                                         <i class="glyphicon glyphicon-trash"></i></a></td>
-                                    <td>{% task_menu user %}</td>
+                                    <td>{% task_menu task.pk %}</td>
                                 </tr>
                               {% endfor %}
 				              </tbody>

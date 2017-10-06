@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^task/(?P<pk>[0-9]+)/$', views.task_detail, name='task_detail'),
     url(r'^task/(?P<pk>[0-9]+)/edit/$', views.task_edit, name='task_edit'),
     url(r'^task/(?P<pk>[0-9]+)/del$', views.task_del, name='task_del'),
+    url(r'^task/(?P<pk>[0-9]+)/transfer_date', views.task_transfer_date, name='transfer_date'),
     url(r'^project/(?P<pk>[0-9]+)/del$', views.project_del, name='project_del'),
     url(r'^(?P<pk>[0-9]+)/finish$', views.task_finish, name='task_finish'),
     url(r'^task/(?P<pk>[0-9]+)/not_remind$', views.task_do_not_remind, name='not_remind$'),
