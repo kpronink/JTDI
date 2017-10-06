@@ -2,32 +2,37 @@
 {% load bootstrap %}
 {% load staticfiles %}
 {% block content %}
-<div class="row">
+ <div class="col-md-10">
+
+	  			<div class="row">
 	  				<div class="col-md-6">
-	  					<div class="content-box-header">
-		  					<div class="panel-title">Inline Form</div>
+	  					<div class="content-box-large">
+			  				<div class="panel-heading">
+					            <div class="panel-title">Пригласить пользователя</div>
 
-							<div class="panel-options">
-								<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-								<a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-							</div>
+					            <div class="panel-options">
+					              <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+					              <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+					            </div>
+					        </div>
+			  				<div class="panel-body">
+			  					<form method="POST" class="form">
+                                    <fieldset>
+								  <div class="form-group">
+								        {% csrf_token %}
+                                        {{ invite_form|bootstrap }}
+								  </div>
+                                </fieldset>
+								  <div>
+										<div class="btn btn-primary">
+											Пригласить
+										</div>
+                                  </div>
+								</form>
+			  				</div>
 			  			</div>
-			  			<div class="content-box-large box-with-header">
-			  				<form method="post" class="form-inline" role="form">
-
-								<fieldset>
-                                    <div class="form-group col-sm-3">
-                                        {% csrf_token %}
-									{{ invite_form|bootstrap }}
-                                    </div>
-									<button type="submit" class="btn btn-primary">
-										Пригласить
-									</button>
-								</fieldset>
-
-							</form>
-						</div>
 	  				</div>
+                    </div>
+ </div>
 
-</div>
 {% endblock content %}

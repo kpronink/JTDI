@@ -20,3 +20,18 @@ $(document).ready(function(){
 });
 
 
+$("#id_username").change(function () {
+    $.ajax({
+        url: "/ajax/validate_username/",
+        data: {'username': $("#id_username")[0].value},
+        dataType: 'json',
+        success: function (data) {
+            if (data.is_taken != true) {
+                alert(data.error_message);
+            }
+        }
+    });
+});
+
+
+

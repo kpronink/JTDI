@@ -5,7 +5,7 @@
 <html>
 
 <head>
-    <title>JTDI Tasks</title>
+    <title>Tasker it</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- jQuery UI -->
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
@@ -30,23 +30,8 @@
             }
         }
     </script>
+
     {% block javascript %}
-        <script>
-            $("#id_username").change(function () {
-              $.ajax({
-                url: "{% url 'validate_username' %}",
-                data: {'username': $("#id_username")[0].value},
-                dataType: 'json',
-                success: function (data) {
-                  if (data.is_taken) {
-                    alert(data.error_message);
-                  }
-                }
-              });
-
-            });
-          </script>
-
     <script>
         function show()
         {
@@ -59,6 +44,7 @@
                       '<div id="myAlert5" class="alert alert-success">',
                           '   <span class="close">&times;</span>',
                           '   <a href="%KEY%">%value%</a>',
+                          '   <a href="%KEY%not_remind">| Не напоминать</a>',
                       '</div>'
                         ].join("\n");
                         var el = document.getElementById('alert');
@@ -105,7 +91,7 @@
                 <div class="col-md-5">
                     <!-- Logo -->
                     <div class="logo">
-                        <h1><a href={% url 'task_list' %}><i class="glyphicon glyphicon-ok" style="color: #777777"></i> JTDI Tasks</a></h1> </div>
+                        <h1><a href={% url 'task_list' %}><i class="glyphicon glyphicon-ok" style="color: #777777"></i> Tasker it</a></h1> </div>
                 </div> {% if user.is_authenticated %}
                 {% search_block user %}
                 {% profile_menu user%}{% endif %}

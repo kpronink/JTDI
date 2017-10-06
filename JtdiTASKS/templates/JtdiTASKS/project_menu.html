@@ -1,0 +1,18 @@
+{% load googlecharts %}
+{% load bootstrap %}
+<div class="dropdown">
+  <i data-toggle="dropdown">
+  <span class="caret"></span></i>
+  <ul class="dropdown-menu">
+    <li>
+        <fieldset>
+            <div class="form-group">
+                <form method="POST" class="form"> {% csrf_token %}
+                    <div class="form-group"> {{ project_rename_form|bootstrap }} </div>
+                    <button type="submit" class="save btn btn-default">Переименовать</button>
+                </form></div>
+        </fieldset>
+    </li>
+    <li><a href="{% url 'project_del' pk=project %}"><i class="glyphicon glyphicon-trash"></i> Удалить проект</a></li>
+  </ul>
+</div>

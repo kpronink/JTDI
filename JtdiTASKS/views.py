@@ -5,13 +5,15 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 
 from django.db.models import Q, Count
+from django.forms import formset_factory
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
 
 from django.template.defaulttags import register
 
-from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm
+from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
+    ProjectFormRename
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser
 from django.contrib.auth import logout, login
@@ -73,14 +75,14 @@ def validate_username(request):
     data = {
         'is_taken': User.objects.filter(username__iexact=username).exists()
     }
-    if data['is_taken']:
-        data['error_message'] = 'A user with this username already exists.'
+    if not data['is_taken']:
+        data['error_message'] = 'Пользователя с таким именем не существует'
     return JsonResponse(data)
 
 
 def get_recent_task(request):
     if request.user.is_authenticated():
-        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None) \
+        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).filter(remind=True) \
             .filter(date__lte=datetime.datetime.today()).order_by('date')
         data = {}
         for task in tasks_alert:
@@ -150,7 +152,8 @@ def task_list(request):
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
 
-    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).order_by('date')
+    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).\
+        order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
         filter(project=None).order_by(
         'date_finish')
@@ -170,7 +173,7 @@ def task_list(request):
         tasks = paginator_task.page(paginator_task.num_pages)
 
     if request.method == 'POST':
-        project_form = ProjectForm(request.POST)
+        project_form = ProjectForm(request.POST, prefix='project')
         if project_form.is_valid():
             project = Project()
             project.title = project_form.cleaned_data['title']
@@ -232,13 +235,18 @@ def project_task_list(request, pk):
     project = Project.objects.filter(pk=pk)[0]
 
     if request.method == 'POST':
-        project_form = ProjectForm(request.POST)
+        # project_form = ProjectForm(request.POST)
+        project_form = ProjectForm(request.POST, prefix='project')
+        project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
         if project_form.is_valid():
             project = Project()
             project.title = project_form.cleaned_data['title']
             project.author = request.user
             project.save(Project)
             return redirect('/')
+        elif project_rename_form.is_valid():
+            project.title = project_rename_form.cleaned_data['title']
+            project.save()
 
     return render(request, 'JtdiTASKS/project_task_list.html', {'tasks': tasks,
                                                                 'tasks_finish': tasks_finish,
@@ -277,7 +285,7 @@ def task_detail(request, pk):
 
     task = get_object_or_404(Task, pk=pk)
 
-    project_form = ProjectForm()
+    project_form = ProjectForm(request.POST, prefix='project')
     if request.method == "POST":
         if project_form.is_valid():
             project = Project()
@@ -303,7 +311,7 @@ def task_edit(request, pk):
             task.active = True
             task.save()
             return redirect('task_detail', pk=task.pk)
-        project_form = ProjectForm(request.POST)
+        project_form = ProjectForm(request.POST, prefix='project')
         if project_form.is_valid():
             project = Project()
             project.title = project_form.cleaned_data['title']
@@ -350,6 +358,22 @@ def task_finish(request, pk):
     return success_url
 
 
+def task_do_not_remind(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    task = get_object_or_404(Task, pk=pk)
+    task.remind = False
+    task.save()
+    if task.project is not None:
+        project_pk = task.project.pk
+        success_url = redirect('project_tasks_list', pk=project_pk)
+    else:
+        success_url = redirect('/')
+
+    return success_url
+
+
 def task_restore(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
@@ -371,6 +395,12 @@ def task_new(request, project=None):
     if not request.user.is_authenticated():
         return redirect('login')
 
+    COLOR_CHOISE = {
+        1: 'red',
+        2: 'yellow',
+        3: 'green',
+        4: 'grey'}
+
     if request.method == "POST":
         proj = None
         form = TaskForm(request.POST, initial={'project': 'instance'})
@@ -390,10 +420,12 @@ def task_new(request, project=None):
             task.active = True
             task.repeating = form.cleaned_data['repeating']
             task.priority = form.cleaned_data['priority_field']
+            task.color = COLOR_CHOISE[int(task.priority)]
+            task.remind = False
             task.save(Task)
 
             return success_url
-        project_form = ProjectForm(request.POST)
+        project_form = ProjectForm(request.POST, prefix='project')
         if project_form.is_valid():
             project = Project()
             project.title = project_form.cleaned_data['title']
@@ -405,6 +437,22 @@ def task_new(request, project=None):
 
     return render(request, 'JtdiTASKS/new_task.html', {'form': form
                                                        })
+
+
+def project_del(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    project = get_object_or_404(Project, pk=pk)
+    tasks = Task.objects.filter(active=True).filter(author=request.user). \
+        filter(project=pk).order_by('date')
+    for task in tasks:
+        task_obj = get_object_or_404(Task, pk=task.pk)
+        task_obj.delete()
+    project.delete()
+    success_url = redirect('/')
+
+    return success_url
 
 
 def user_invite(request):
@@ -422,7 +470,7 @@ def user_invite(request):
             invite.save(InviteUser)
 
             return redirect('/invite')
-        project_form = ProjectForm(request.POST)
+        project_form = ProjectForm(request.POST, prefix='project')
         if project_form.is_valid():
             project = Project()
             project.title = project_form.cleaned_data['title']
@@ -440,7 +488,7 @@ def user_invite(request):
 def project_recent_list(user):
     return {
         'projects': Project.objects.filter(author=user),
-        'project_form': ProjectForm(),
+        'project_form': ProjectForm(prefix='project'),
     }
 
 
@@ -457,6 +505,19 @@ def profile_menu(user):
 
     return {'user': user,
             'values': values}
+
+
+@register.inclusion_tag('JtdiTASKS/task_menu.html')
+def task_menu(user):
+
+    return {'user': user,
+            }
+
+
+@register.inclusion_tag('JtdiTASKS/project_menu.html')
+def project_menu(project):
+    return {'project': project,
+            'project_rename_form': ProjectFormRename(prefix='rename_project')}
 
 
 @register.inclusion_tag('JtdiTASKS/search_block.html')

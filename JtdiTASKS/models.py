@@ -88,10 +88,10 @@ class Profile(models.Model):
 
 
 class Task(models.Model):
-    PRIORITY_1 = 'red'
-    PRIORITY_2 = 'yellow'
-    PRIORITY_3 = 'green'
-    PRIORITY_4 = 'grey'
+    PRIORITY_1 = '1'
+    PRIORITY_2 = '2'
+    PRIORITY_3 = '3'
+    PRIORITY_4 = '4'
 
     PRIORITY_CHOISE = (
         (PRIORITY_1, 'Степень важности 1'),
@@ -106,12 +106,13 @@ class Task(models.Model):
     repeating = models.BooleanField(default=False, blank=True)
     date = models.DateField(default=timezone.now, blank=True, null=True)
     time = models.TimeField(default=timezone.now, blank=True, null=True)
-    date_finish = models.DateField(default=timezone.now, blank=True, null=True)
+    date_finish = models.DateTimeField(default=timezone.now, blank=True, null=True)
     active = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     group = models.BooleanField(default=False)
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOISE,
                                 default=PRIORITY_4, blank=True)
+    color = models.CharField(max_length=20, default='grey', blank=True)
     
     remind = models.BooleanField(default=True)
 

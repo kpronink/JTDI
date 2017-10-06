@@ -263,7 +263,7 @@ $scope.jsParseDate = function(title) {
             var sms = "";
         }}
         if (mydate == "") {mydate = new Date()};
-        document.getElementById('id_time_field').value = mydate.getHours() + ":" + (mydate.getMinutes()<10?'0':'') + mydate.getMinutes();
+        document.getElementById('id_time_field').value = (mydate.getHours()<10?'0'+mydate.getHours():'') + ":" + (mydate.getMinutes()<10?'0':'') + mydate.getMinutes();
 
         var day = mydate.getDate() + "";
         var month = (mydate.getMonth() + 1) + "";

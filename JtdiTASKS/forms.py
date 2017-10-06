@@ -20,9 +20,10 @@ class DataTimeInput(Input):
 
 
 class CharFieldWidget(Input):
-    def __init__(self, max_length=None, min_length=None, strip=True, empty_value='', *args, **kwargs):
+    def __init__(self, max_length=None, min_length=None, strip=True, empty_value='', name='', *args, **kwargs):
         self.max_length = max_length
         self.min_length = min_length
+        self.name = name
         self.strip = strip
         self.empty_value = empty_value
         super(CharFieldWidget, self).__init__(*args, **kwargs)
@@ -68,10 +69,10 @@ class UserForm(forms.ModelForm):
 
 
 class TaskForm(forms.Form):
-    PRIORITY_1 = 'red'
-    PRIORITY_2 = 'yellow'
-    PRIORITY_3 = 'green'
-    PRIORITY_4 = 'grey'
+    PRIORITY_1 = '1'
+    PRIORITY_2 = '2'
+    PRIORITY_3 = '3'
+    PRIORITY_4 = '4'
 
     PRIORITY_CHOISE = (
         (PRIORITY_4, 'Степень важности 4'),
@@ -141,3 +142,8 @@ class ProjectForm(forms.ModelForm):
         labels = {
             'title': '',
         }
+
+
+class ProjectFormRename(forms.Form):
+    title = forms.CharField(label='Новый заголовок')
+
