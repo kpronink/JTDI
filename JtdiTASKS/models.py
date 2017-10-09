@@ -107,7 +107,7 @@ class Task(models.Model):
     repeating = models.BooleanField(default=False, blank=True)
     date = models.DateField(default=timezone.now, blank=True, null=True)
     time = models.TimeField(default=timezone.now, blank=True, null=True)
-    date_finish = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    date_finish = models.DateTimeField(default=None, blank=True, null=True)
     active = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     group = models.BooleanField(default=False)

@@ -142,6 +142,14 @@ class ProjectForm(forms.ModelForm):
         labels = {
             'title': '',
         }
+        
+        
+class FormMoveInProject(forms.Form):
+
+    project_field = forms.ChoiceField(
+        label='Переместить',
+        required=False,
+    )
 
 
 class ProjectFormRename(forms.Form):

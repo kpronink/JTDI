@@ -5,10 +5,20 @@
   <span class="caret"></span></i>
   <ul class="dropdown-menu">
     <li><a href="{% url 'transfer_date' pk=task days=1 %}" title="Перенести задачу на день">
-                                        <i class="glyphicon glyphicon-time"></i>Перенести задачу на день</a></li>
+                                        <i class="glyphicon glyphicon-time"></i> Перенести задачу на день</a></li>
     <li><a href="{% url 'transfer_date' pk=task days=7 %}" title="Перенести задачу на неделю">
-                                        <i class="glyphicon glyphicon-time"></i>Перенести задачу на неделю</a></li>
+                                        <i class="glyphicon glyphicon-time"></i> Перенести задачу на неделю</a></li>
     <li><a href="{% url 'transfer_date' pk=task days=30 %}" title="Перенести задачу на 30 дней">
-                                        <i class="glyphicon glyphicon-time"></i>Перенести задачу на 30 дней</a></li>
+                                        <i class="glyphicon glyphicon-time"></i> Перенести задачу на 30 дней</a></li>
+    <li><span></span></li>
+    <li> <div class="col-md-6">
+            <fieldset>
+                    <form method="POST" class="form"> {% csrf_token %}
+                         {{ form_move_in_project|bootstrap }}
+                        <button type="submit" class="save btn btn-default"> Переместить</button>
+                    </form>
+            </fieldset>
+        </div>
+    </li>
   </ul>
 </div>

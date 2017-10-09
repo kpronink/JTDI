@@ -13,7 +13,7 @@ import datetime
 from django.template.defaulttags import register
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
-    ProjectFormRename
+    ProjectFormRename, FormMoveInProject
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser
 from django.contrib.auth import logout, login
@@ -354,6 +354,7 @@ def task_edit(request, pk):
     if request.method == "POST":
         form = TaskEditForm(request.POST)
         if form.is_valid():
+            task = form.save(commit=False)
             task.author = request.user
             task.active = True
             task.save()
@@ -571,10 +572,28 @@ def profile_menu(user):
 
 
 @register.inclusion_tag('JtdiTASKS/task_menu.html')
-def task_menu(task):
+def task_menu(request, task, user):
+
+    projects = Project.objects.filter(author=user)
+    PROJECT_CHOISE = []
+    PROJECT_CHOISE.append(('0', 'Без проекта'))
+    for proj in projects:
+        PROJECT_CHOISE.append((str(proj.pk), proj.title))
+
+    if request.method == 'POST':
+        form_move_in_project = FormMoveInProject(request.POST, prefix='move_task')
+        form_move_in_project.fields['project_field'].choices = PROJECT_CHOISE
+        if form_move_in_project.is_valid():
+            task_obj = get_object_or_404(Task, pk=task)
+            proj = get_object_or_404(Project, pk=form_move_in_project.cleaned_data['project_field'])
+            task_obj.project = proj
+            task_obj.save()
+
+    form_move_in_project = FormMoveInProject(prefix='move_task')
+    form_move_in_project.fields['project_field'].choices = PROJECT_CHOISE
 
     return {'task': task,
-            }
+            'form_move_in_project': form_move_in_project}
 
 
 @register.inclusion_tag('JtdiTASKS/project_menu.html')
