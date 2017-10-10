@@ -696,10 +696,10 @@ body {
     height: 13px;
     min-width: 9px;
     border-radius: 8px;
-    padding: 2px 4px;
+    padding: 0px 4px;
     background-color: #e63917;
     color: #fff;
-    font-weight: 500;
+    font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     font-size: 11px;
