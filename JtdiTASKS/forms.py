@@ -10,12 +10,10 @@ year = datetime.date.today().year
 
 
 class TimeInput(Input):
-
     input_type = 'time'
 
 
 class DataTimeInput(Input):
-
     input_type = 'date'
 
 
@@ -48,18 +46,11 @@ class UserProfileForm(forms.ModelForm):
         }
 
 
-class InviteUserForm(forms.ModelForm):
-    class Meta:
-        model = InviteUser
-        fields = ('user_invite',)
-
-        labels = {
-            'user_invite': 'Имя пользователя',
-        }
-
-        widgets = {'user_invite': CharFieldWidget(attrs={'id': 'id_username',
-                                                   }),
-                   }
+class InviteUserForm(forms.Form):
+    username = forms.CharField(label='Имя пользователя')
+    widgets = {'user_name': CharFieldWidget(attrs={'id': 'id_username',
+                                                     }),
+               }
 
 
 class UserForm(forms.ModelForm):
@@ -99,6 +90,7 @@ class TaskForm(forms.Form):
     )
 
     repeating = forms.BooleanField(label='Повторяющаяся задача', required=False)
+    remind = forms.BooleanField(label='Не напоминать', required=False)
 
 
 class SearchForm(forms.Form):
@@ -142,10 +134,9 @@ class ProjectForm(forms.ModelForm):
         labels = {
             'title': '',
         }
-        
-        
-class FormMoveInProject(forms.Form):
 
+
+class FormMoveInProject(forms.Form):
     project_field = forms.ChoiceField(
         label='Переместить',
         required=False,
@@ -154,4 +145,3 @@ class FormMoveInProject(forms.Form):
 
 class ProjectFormRename(forms.Form):
     title = forms.CharField(label='Новый заголовок')
-

@@ -133,6 +133,7 @@ class PartnerGroup(models.Model):
 
 class InviteUser(models.Model):
 
-    user_sender = models.ForeignKey('auth.User')
-    user_invite = models.CharField(max_length=200)
+    user_sender = models.ForeignKey('auth.User', related_name='user_sender')
+    user_invite = models.ForeignKey('auth.User', related_name='user_invite')
     invited = models.BooleanField(default=False)
+    not_invited = models.BooleanField(default=False)

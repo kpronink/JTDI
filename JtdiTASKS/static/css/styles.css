@@ -688,3 +688,19 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
 }}
+
+.tab_counter {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: 13px;
+    min-width: 9px;
+    border-radius: 8px;
+    padding: 2px 4px;
+    background-color: #e63917;
+    color: #fff;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    font-size: 11px;
+}

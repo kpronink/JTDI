@@ -82,8 +82,11 @@ def validate_username(request):
 
 def get_recent_task(request):
     if request.user.is_authenticated():
-        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).filter(remind=True) \
-            .filter(date__lte=datetime.datetime.today()).order_by('date')
+        today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+        today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).filter(
+            remind=True) \
+            .filter(date__range=(today_min, today_max)).order_by('date')
         data = {}
         for task in tasks_alert:
             data['/task/' + str(task.pk) + '/'] = task.title
@@ -152,7 +155,7 @@ def task_list(request):
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
 
-    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).\
+    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(project=None). \
         order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
         filter(project=None).order_by(
@@ -197,7 +200,7 @@ def task_list_today(request):
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
 
-    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date_finish__range=(start_day, end_day))\
+    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date__range=(start_day, end_day)) \
         .filter(project=None).order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
         filter(project=None).order_by(
@@ -230,8 +233,8 @@ def task_list_today(request):
             return redirect('/')
 
     return render(request, 'JtdiTASKS/task_today.html', {'tasks': tasks,
-                                                    'tasks_finish': tasks_finish,
-                                                    'tasks_finished_today': tasks_finished_today})
+                                                         'tasks_finish': tasks_finish,
+                                                         'tasks_finished_today': tasks_finished_today})
 
 
 def task_list_finished(request):
@@ -467,6 +470,7 @@ def task_new(request, project=None):
             task.project = proj
             task.active = True
             task.repeating = form.cleaned_data['repeating']
+            task.remind = form.cleaned_data['remind']
             task.priority = form.cleaned_data['priority_field']
             task.color = COLOR_CHOISE[int(task.priority)]
             task.remind = False
@@ -501,7 +505,7 @@ def task_transfer_date(request, pk, days):
         success_url = redirect('/')
 
     return success_url
-    
+
 
 def project_del(request, pk):
     if not request.user.is_authenticated():
@@ -523,11 +527,14 @@ def user_invite(request):
     if not request.user.is_authenticated():
         return redirect('login')
 
+    my_invites = InviteUser.objects.filter(user_invite__username__exact=request.user.username).filter(not_invited=False)
+    invites = InviteUser.objects.filter(user_sender__username__exact=request.user.username)
+
     if request.method == "POST":
         form = InviteUserForm(request.POST)
         if form.is_valid():
             invite = InviteUser()
-            invite_user = User.objects.filter(username__iexact=form.cleaned_data['user_invite'])
+            invite_user = get_object_or_404(User, username=form.cleaned_data['username'])
             invite.user_invite = invite_user
             invite.user_sender = request.user
             invite.invited = False
@@ -544,15 +551,46 @@ def user_invite(request):
     else:
         form = InviteUserForm()
 
+    return render(request, 'JtdiTASKS/user_invite.html', {'invite_form': form,
+                                                          'my_invites': my_invites,
+                                                          'invites': invites,
+                                                          })
+
+
+def invited(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    if request.method == "POST":
+        form = InviteUserForm()
+
+    return render(request, 'JtdiTASKS/user_invite.html', {'invite_form': form
+                                                          })
+
+
+def not_invited(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    if request.method == "POST":
+        form = InviteUserForm()
+
     return render(request, 'JtdiTASKS/user_invite.html', {'invite_form': form
                                                           })
 
 
 @register.inclusion_tag('JtdiTASKS/menu.html')
 def project_recent_list(user):
+    currentdate = datetime.datetime.today()
+    start_day = currentdate.combine(currentdate, currentdate.min.time())
+    end_day = currentdate.combine(currentdate, currentdate.max.time())
+
+    tasks_today_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(start_day, end_day)) \
+        .filter(project=None).order_by('date', 'priority', 'time').count()
     return {
         'projects': Project.objects.filter(author=user),
         'project_form': ProjectForm(prefix='project'),
+        'tasks_today_notify': tasks_today_notify,
     }
 
 
@@ -566,14 +604,16 @@ def profile_menu(user):
     qsstats = QuerySetStats(tasks_finish_base, date_field='date_finish', aggregate=Count('id'))
     # ...в день за указанный период
     values = qsstats.time_series(week_end, today, interval='days')
-
+    my_invites = InviteUser.objects.filter(user_invite__username__exact=user.username).filter(not_invited=False).count()
+    notify = 0 + my_invites
     return {'user': user,
-            'values': values}
+            'values': values,
+            'notify': notify,
+            'my_invites': my_invites}
 
 
 @register.inclusion_tag('JtdiTASKS/task_menu.html')
 def task_menu(request, task, user):
-
     projects = Project.objects.filter(author=user)
     PROJECT_CHOISE = []
     PROJECT_CHOISE.append(('0', 'Без проекта'))
