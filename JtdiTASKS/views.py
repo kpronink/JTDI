@@ -503,6 +503,9 @@ def user_invite(request):
         form = InviteUserForm(request.POST)
         if form.is_valid():
             invite = InviteUser()
+            exist = User.objects.filter(username__iexact=form.cleaned_data['username']).exists()
+            if not exist:
+                return redirect('/invite')
             invite_user = get_object_or_404(User, username=form.cleaned_data['username'])
             invite.user_invite = invite_user
             invite.user_sender = request.user
