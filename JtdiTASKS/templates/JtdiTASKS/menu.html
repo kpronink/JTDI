@@ -9,6 +9,11 @@
                                <div class="tab_counter">{{ tasks_today_notify }}</div>
                             {% endif %}
                         </i> Задачи на сегодня</a></li>
+                        <li class="current"><a href="{% url 'task_overdue' %}"><i class="glyphicon glyphicon-tasks">
+                            {% if tasks_overdue_notify > 0 %}
+                               <div class="tab_counter">{{ tasks_overdue_notify }}</div>
+                            {% endif %}
+                        </i> Просроченые задачи</a></li>
                         <li class="current"><a href="{% url 'task_list_finished' %}">
                             <i class="glyphicon glyphicon-briefcase"></i> Завершенные адачи</a></li>
                         <li class="submenu">

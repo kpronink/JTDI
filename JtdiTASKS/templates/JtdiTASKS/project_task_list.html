@@ -75,7 +75,7 @@
                                     <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
                                     <td>{{ task.description|linebreaksbr }}</td>
                                     <td>{{ task.date }}</td>
-                                    <td>{{ task.date_finish }}</td>
+                                    <td>{{ task.date_time_finish }}</td>
                                     <td><a href="{% url 'task_restore' pk=task.pk %}" data-rel="collapse" title="Восстановить задачу">
                                         <i class="glyphicon glyphicon-backward"></i></a></td>
                                     <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">

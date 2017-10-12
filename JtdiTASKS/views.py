@@ -127,12 +127,6 @@ def update_profile(request):
             profile_form.save()
             messages.success(request, 'Your profile was successfully updated!')
             return redirect('profile')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            project.save(Project)
-            return redirect('profile')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -175,18 +169,6 @@ def task_list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         tasks = paginator_task.page(paginator_task.num_pages)
 
-    if request.method == 'POST':
-        project_form = ProjectForm(request.POST, prefix='project')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            color = generate_color()
-            project.color_project = "color: " + color
-            project.group = False
-            project.save(Project)
-            return redirect('/')
-
     return render(request, 'JtdiTASKS/index.html', {'tasks': tasks,
                                                     'tasks_finish': tasks_finish,
                                                     'tasks_finished_today': tasks_finished_today})
@@ -220,21 +202,43 @@ def task_list_today(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         tasks = paginator_task.page(paginator_task.num_pages)
 
-    if request.method == 'POST':
-        project_form = ProjectForm(request.POST, prefix='project')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            color = generate_color()
-            project.color_project = "color: " + color
-            project.group = False
-            project.save(Project)
-            return redirect('/')
-
     return render(request, 'JtdiTASKS/task_today.html', {'tasks': tasks,
                                                          'tasks_finish': tasks_finish,
                                                          'tasks_finished_today': tasks_finished_today})
+
+
+def task_list_overdue(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    currentdate = datetime.datetime.today()
+    start_day = currentdate.combine(currentdate, currentdate.min.time())
+    end_day = currentdate.combine(currentdate, currentdate.max.time())
+    first_day = datetime.date(1001, 1, 1)
+
+    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date__range=(first_day, start_day)) \
+        .filter(project=None).order_by('date', 'priority', 'time')
+    tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+        filter(project=None).order_by(
+        'date_finish')
+    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+        filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
+        'date_finish')
+    paginator_task = Paginator(tasks, 8)
+
+    page = request.GET.get('page')
+    try:
+        tasks = paginator_task.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        tasks = paginator_task.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        tasks = paginator_task.page(paginator_task.num_pages)
+
+    return render(request, 'JtdiTASKS/task_overdue.html', {'tasks': tasks,
+                                                           'tasks_finish': tasks_finish,
+                                                           'tasks_finished_today': tasks_finished_today})
 
 
 def task_list_finished(request):
@@ -257,18 +261,6 @@ def task_list_finished(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         tasks_finish = paginator_task.page(paginator_task.num_pages)
 
-    if request.method == 'POST':
-        project_form = ProjectForm(request.POST)
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            color = generate_color()
-            project.color_project = "color: " + color
-            project.group = False
-            project.save(Project)
-            return redirect('/')
-
     return render(request, 'JtdiTASKS/finished_task.html', {'tasks': tasks_finish})
 
 
@@ -285,16 +277,8 @@ def project_task_list(request, pk):
     project = Project.objects.filter(pk=pk)[0]
 
     if request.method == 'POST':
-        # project_form = ProjectForm(request.POST)
-        project_form = ProjectForm(request.POST, prefix='project')
         project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            project.save(Project)
-            return redirect('/')
-        elif project_rename_form.is_valid():
+        if project_rename_form.is_valid():
             project.title = project_rename_form.cleaned_data['title']
             project.save()
 
@@ -317,15 +301,6 @@ def search_result(request):
                                                  Q(description__contains=item)).order_by(
             '-date_finish')
 
-    if request.method == 'POST':
-        project_form = ProjectForm(request.POST)
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            project.save(Project)
-            return redirect('/')
-
     return render(request, 'JtdiTASKS/search.html', {'search_result_data': search_result_data})
 
 
@@ -334,15 +309,6 @@ def task_detail(request, pk):
         return redirect('login')
 
     task = get_object_or_404(Task, pk=pk)
-
-    project_form = ProjectForm(request.POST, prefix='project')
-    if request.method == "POST":
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            project.save(Project)
-            return redirect('task_detail', pk=task.pk)
 
     return render(request, 'JtdiTASKS/task_detail.html', {'task': task
                                                           })
@@ -356,21 +322,16 @@ def task_edit(request, pk):
 
     if request.method == "POST":
         form = TaskEditForm(request.POST)
+        form.fields['project'].queryset = Project.objects.filter(author=request.user)
         if form.is_valid():
             task = form.save(commit=False)
             task.author = request.user
             task.active = True
             task.save()
             return redirect('task_detail', pk=task.pk)
-        project_form = ProjectForm(request.POST, prefix='project')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            project.save(Project)
-            return redirect('task_detail', pk=task.pk)
     else:
         form = TaskEditForm(instance=task)
+        form.fields['project'].queryset = Project.objects.filter(author=request.user)
 
     return render(request, 'JtdiTASKS/task_edit.html', {'form': form
                                                         })
@@ -398,7 +359,8 @@ def task_finish(request, pk):
     task = get_object_or_404(Task, pk=pk)
     task.finished = True
     task.active = False
-    task.date_finish = datetime.date.today()
+    task.date_finish = datetime.datetime.today()
+    task.date_time_finish = datetime.datetime.today()
     task.save()
     if task.project is not None:
         project_pk = task.project.pk
@@ -477,13 +439,6 @@ def task_new(request, project=None):
             task.save(Task)
 
             return success_url
-        project_form = ProjectForm(request.POST, prefix='project')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            project.save(Project)
-            return success_url
     else:
         form = TaskForm()
 
@@ -542,12 +497,7 @@ def user_invite(request):
 
             return redirect('/invite')
         project_form = ProjectForm(request.POST, prefix='project')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            project.save(Project)
-            return redirect('/invite')
+
     else:
         form = InviteUserForm()
 
@@ -580,17 +530,33 @@ def not_invited(request, pk):
 
 
 @register.inclusion_tag('JtdiTASKS/menu.html')
-def project_recent_list(user):
+def project_recent_list(request, user):
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
+    first_day = datetime.date(1001, 1, 1)
 
     tasks_today_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(start_day, end_day)) \
         .filter(project=None).order_by('date', 'priority', 'time').count()
+    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(first_day, start_day)) \
+        .filter(project=None).order_by('date', 'priority', 'time').count()
+
+    if request.method == 'POST':
+        project_form = ProjectForm(request.POST, prefix='project')
+        if project_form.is_valid():
+            project = Project()
+            project.title = project_form.cleaned_data['title']
+            project.author = request.user
+            color = generate_color()
+            project.color_project = "color: " + color
+            project.group = False
+            project.save(Project)
+
     return {
         'projects': Project.objects.filter(author=user),
         'project_form': ProjectForm(prefix='project'),
         'tasks_today_notify': tasks_today_notify,
+        'tasks_overdue_notify': tasks_overdue_notify,
     }
 
 
@@ -602,6 +568,7 @@ def profile_menu(user):
         date_finish__range=(week_end, today)).order_by(
         'date_finish')
     qsstats = QuerySetStats(tasks_finish_base, date_field='date_finish', aggregate=Count('id'))
+    qsstats.today = today
     # ...в день за указанный период
     values = qsstats.time_series(week_end, today, interval='days')
     my_invites = InviteUser.objects.filter(user_invite__username__exact=user.username).filter(not_invited=False).count()
@@ -614,26 +581,7 @@ def profile_menu(user):
 
 @register.inclusion_tag('JtdiTASKS/task_menu.html')
 def task_menu(request, task, user):
-    projects = Project.objects.filter(author=user)
-    PROJECT_CHOISE = []
-    PROJECT_CHOISE.append(('0', 'Без проекта'))
-    for proj in projects:
-        PROJECT_CHOISE.append((str(proj.pk), proj.title))
-
-    if request.method == 'POST':
-        form_move_in_project = FormMoveInProject(request.POST, prefix='move_task')
-        form_move_in_project.fields['project_field'].choices = PROJECT_CHOISE
-        if form_move_in_project.is_valid():
-            task_obj = get_object_or_404(Task, pk=task)
-            proj = get_object_or_404(Project, pk=form_move_in_project.cleaned_data['project_field'])
-            task_obj.project = proj
-            task_obj.save()
-
-    form_move_in_project = FormMoveInProject(prefix='move_task')
-    form_move_in_project.fields['project_field'].choices = PROJECT_CHOISE
-
-    return {'task': task,
-            'form_move_in_project': form_move_in_project}
+    return {'task': task}
 
 
 @register.inclusion_tag('JtdiTASKS/project_menu.html')

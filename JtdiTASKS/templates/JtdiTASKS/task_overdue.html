@@ -8,7 +8,7 @@
   				<div class="col-md-6">
   					<div class="content-box-large">
 		  				<div class="panel-heading">
-							<div class="panel-title">Задачи на сегодня</div>
+							<div class="panel-title">Просроченые задачи</div>
 
 							<div class="panel-options">
 								<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -101,7 +101,7 @@
 
                                     <td>{{ task.description|linebreaksbr }}</td>
                                     <td>{{ task.date }}</td>
-                                    <td>{{ task.date_time_finish }}</td>
+                                    <td>{{ task.date_finish }}</td>
                                 </tr>
                               {% endfor %}
 				              </tbody>

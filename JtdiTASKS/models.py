@@ -101,13 +101,15 @@ class Task(models.Model):
         (PRIORITY_4, 'Степень важности 4'))
 
     author = models.ForeignKey('auth.User')
-    project = models.ForeignKey('Project', null=True, default=None, blank=True)
+    project = models.ForeignKey('Project', null=True, default=None,
+                                blank=True)
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=2000, blank=True)
     repeating = models.BooleanField(default=False, blank=True)
     date = models.DateField(default=timezone.now, blank=True, null=True)
     time = models.TimeField(default=timezone.now, blank=True, null=True)
-    date_finish = models.DateTimeField(default=None, blank=True, null=True)
+    date_finish = models.DateField(default=None, blank=True, null=True)
+    date_time_finish = models.DateTimeField(default=None, blank=True, null=True)
     active = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     group = models.BooleanField(default=False)

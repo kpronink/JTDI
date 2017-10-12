@@ -100,7 +100,7 @@
     </div> {% if user.is_authenticated %}
     <div class="page-content">
         <div class="row">
-        {% project_recent_list user%}
+        {% project_recent_list request user%}
              {% endif %} {% block content %} {% endblock %}
     </div>
     </div>

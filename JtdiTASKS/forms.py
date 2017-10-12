@@ -99,9 +99,10 @@ class SearchForm(forms.Form):
 
 
 class TaskEditForm(forms.ModelForm):
+    
     class Meta:
         model = Task
-        fields = ("title", "description", "date", "time", "repeating")
+        fields = ("title", "description", "date", "time", "repeating", "remind", "project")
 
         widgets = {
             'description': Textarea(attrs={'cols': 80, 'rows': 20}),
@@ -115,15 +116,17 @@ class TaskEditForm(forms.ModelForm):
             'date': 'Дата начала',
             'time': 'Время',
             'repeating': 'Повторяющаяся задача',
+            'remind': 'Не напоминать',
+            'project': 'Проект',
         }
 
         date = forms.DateField(label='Дата начала', initial=datetime.date.today)
         date.widget.input_type = 'date'
+        
+        project = forms.ModelChoiceField(queryset=None)
 
         time_field = forms.TimeField(label='Время', required=False)
         time_field.widget.input_type = 'time'
-
-    ''''date': SelectDateWidget(years=range(year, year - 100, -1))'''
 
 
 class ProjectForm(forms.ModelForm):

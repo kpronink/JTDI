@@ -11,14 +11,5 @@
     <li><a href="{% url 'transfer_date' pk=task days=30 %}" title="Перенести задачу на 30 дней">
                                         <i class="glyphicon glyphicon-time"></i> Перенести задачу на 30 дней</a></li>
     <li><span></span></li>
-    <li> <div class="col-md-6">
-            <fieldset>
-                    <form method="POST" class="form"> {% csrf_token %}
-                         {{ form_move_in_project|bootstrap }}
-                        <button type="submit" class="save btn btn-default"> Переместить</button>
-                    </form>
-            </fieldset>
-        </div>
-    </li>
   </ul>
 </div>
