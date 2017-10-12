@@ -121,7 +121,6 @@ def update_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        project_form = ProjectForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -313,10 +312,18 @@ def task_detail(request, pk):
     return render(request, 'JtdiTASKS/task_detail.html', {'task': task
                                                           })
 
+# Task view
+
 
 def task_edit(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
+
+    COLOR_CHOISE = {
+        1: 'red',
+        2: 'yellow',
+        3: 'green',
+        4: 'grey'}
 
     task = get_object_or_404(Task, pk=pk)
 
@@ -327,6 +334,7 @@ def task_edit(request, pk):
             task = form.save(commit=False)
             task.author = request.user
             task.active = True
+            task.color = COLOR_CHOISE[int(task.priority)]
             task.save()
             return redirect('task_detail', pk=task.pk)
     else:
@@ -462,6 +470,9 @@ def task_transfer_date(request, pk, days):
     return success_url
 
 
+# Project view
+
+
 def project_del(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
@@ -478,12 +489,15 @@ def project_del(request, pk):
     return success_url
 
 
+# User invite
+
+
 def user_invite(request):
     if not request.user.is_authenticated():
         return redirect('login')
 
     my_invites = InviteUser.objects.filter(user_invite__username__exact=request.user.username).filter(not_invited=False)
-    invites = InviteUser.objects.filter(user_sender__username__exact=request.user.username)
+    invites = InviteUser.objects.filter(user_sender__username__exact=request.user.username).filter(not_invited=False)
 
     if request.method == "POST":
         form = InviteUserForm(request.POST)
@@ -496,7 +510,6 @@ def user_invite(request):
             invite.save(InviteUser)
 
             return redirect('/invite')
-        project_form = ProjectForm(request.POST, prefix='project')
 
     else:
         form = InviteUserForm()
@@ -511,22 +524,31 @@ def invited(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    if request.method == "POST":
-        form = InviteUserForm()
+    invite_user = get_object_or_404(InviteUser, pk=pk)
+    invite_user.invited = True
+    invite_user.not_invited = False
 
-    return render(request, 'JtdiTASKS/user_invite.html', {'invite_form': form
-                                                          })
+    invite_user.save()
+    success_url = redirect('user_invite')
+
+    return success_url
 
 
 def not_invited(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    if request.method == "POST":
-        form = InviteUserForm()
+    invite_user = get_object_or_404(InviteUser, pk=pk)
+    invite_user.invited = False
+    invite_user.not_invited = True
 
-    return render(request, 'JtdiTASKS/user_invite.html', {'invite_form': form
-                                                          })
+    invite_user.save()
+    success_url = redirect('user_invite')
+
+    return success_url
+
+
+# Include tags
 
 
 @register.inclusion_tag('JtdiTASKS/menu.html')
@@ -571,7 +593,8 @@ def profile_menu(user):
     qsstats.today = today
     # ...в день за указанный период
     values = qsstats.time_series(week_end, today, interval='days')
-    my_invites = InviteUser.objects.filter(user_invite__username__exact=user.username).filter(not_invited=False).count()
+    my_invites = InviteUser.objects.filter(user_invite__username__exact=user.username).filter(not_invited=False)\
+        .filter(invited=False).count()
     notify = 0 + my_invites
     return {'user': user,
             'values': values,

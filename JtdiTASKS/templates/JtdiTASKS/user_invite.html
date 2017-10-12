@@ -49,9 +49,11 @@
 				              <tbody>
 				                {% for invite in my_invites %}
                                 <tr>
-                                    <td>{{ invite.user_invite }}</td>
-                                    <td><a href="{% url 'invited' pk=invite.pk %}" data-rel="collapse" title="Принять">
-                                        <i class="glyphicon glyphicon-ok" style="color: {{ task.color }}"></i></a></td>
+                                    <td>{{ invite.user_sender }}</td>
+                                    <td>{% if invite.invited and not invite.not_invited%}Принято{% elif not invite.invited and invite.not_invited%}Отклонен{% elif not invite.invited and not invite.not_invited%}Ожидает{% endif %}</td>
+                                    <td>{% if not invite.invited and not invite.not_invited%}
+                                        <a href="{% url 'invited' pk=invite.pk %}" data-rel="collapse" title="Принять">
+                                        <i class="glyphicon glyphicon-ok" style="color: {{ task.color }}"></i></a>{% endif %}</td>
                                     <td><a href="{% url 'not_invited' pk=invite.pk %}" data-rel="collapse" title="Отклонить">
                                         <i class="glyphicon glyphicon-remove-circle"></i></a></td>
                                 </tr>

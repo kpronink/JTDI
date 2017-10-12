@@ -102,7 +102,7 @@ class TaskEditForm(forms.ModelForm):
     
     class Meta:
         model = Task
-        fields = ("title", "description", "date", "time", "repeating", "remind", "project")
+        fields = ("title", "description", "date", "time", "repeating", "remind", "project", "priority")
 
         widgets = {
             'description': Textarea(attrs={'cols': 80, 'rows': 20}),
