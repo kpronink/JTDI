@@ -321,7 +321,7 @@ def task_edit(request, pk):
     task = get_object_or_404(Task, pk=pk)
 
     if request.method == "POST":
-        form = TaskEditForm(request.POST)
+        form = TaskEditForm(request.POST, instance=task)
         form.fields['project'].queryset = Project.objects.filter(author=request.user)
         if form.is_valid():
             task = form.save(commit=False)
