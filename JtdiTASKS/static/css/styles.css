@@ -54,6 +54,7 @@ footer .copy{
 .header{
    height:50px;
    background-color: #2c3742;
+   box-shadow: 0 2px 10px rgba(0,0,0,0.7); /* Параметры тени */
 }
 
 .header .logo h1{

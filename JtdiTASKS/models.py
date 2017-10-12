@@ -101,6 +101,7 @@ class Task(models.Model):
         (PRIORITY_4, 'Степень важности 4'))
 
     author = models.ForeignKey('auth.User')
+    performer = models.ForeignKey('auth.User', related_name='performer', blank=True, null=True)
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
     title = models.CharField(max_length=200)
