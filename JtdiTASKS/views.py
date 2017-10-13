@@ -566,7 +566,7 @@ def project_recent_list(request, user):
     tasks_today_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(start_day, end_day)) \
         .filter(project=None).order_by('date', 'priority', 'time').count()
     tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(first_day, start_day)) \
-        .filter(project=None).order_by('date', 'priority', 'time').count()
+        .order_by('date', 'priority', 'time').count()
 
     if request.method == 'POST':
         project_form = ProjectForm(request.POST, prefix='project')
