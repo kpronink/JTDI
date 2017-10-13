@@ -216,7 +216,7 @@ def task_list_overdue(request):
     first_day = datetime.date(1001, 1, 1)
 
     tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date__range=(first_day, start_day)) \
-        .filter(project=None).order_by('date', 'priority', 'time')
+        .order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
         filter(project=None).order_by(
         'date_finish')
@@ -425,6 +425,7 @@ def task_new(request, project=None):
     if request.method == "POST":
         proj = None
         form = TaskForm(request.POST, initial={'project': 'instance'})
+        form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
         if project is not None:
             proj = get_object_or_404(Project, pk=project)
             success_url = redirect('project_tasks_list', pk=project)
@@ -448,7 +449,8 @@ def task_new(request, project=None):
 
             return success_url
     else:
-        form = TaskForm()
+        form = TaskForm(initial={'project': 'instance'})
+        form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
 
     return render(request, 'JtdiTASKS/new_task.html', {'form': form
                                                        })

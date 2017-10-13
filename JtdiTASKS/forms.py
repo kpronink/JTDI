@@ -82,6 +82,18 @@ class TaskForm(forms.Form):
 
     time_field = forms.TimeField(label='Время', required=False)
     time_field.widget.input_type = 'time'
+    
+    project_field = forms.ModelChoiceField(
+        label='Проект',
+        required=False,
+        queryset=None,
+    )
+
+    performer_field = forms.ModelChoiceField(
+        label='Исполнитель',
+        required=False,
+        queryset=None,
+    )
 
     priority_field = forms.ChoiceField(
         label='Важность',
