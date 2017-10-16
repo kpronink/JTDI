@@ -2,35 +2,39 @@
 {% load bootstrap %}
 {% load staticfiles %}
 {% block content %}
-<div class="col-md-10">
+<div id="page-wrapper">
+		  <div class="header">
+                        <h1 class="page-header">
+                            Новая задача
+                        </h1>
+        </div>
 
-	  			<div class="row">
-	  				<div class="col-md-6">
-	  					<div class="content-box-large">
-			  				<div class="panel-heading">
-					            <div class="panel-title">Детали задачи</div>
-
-					            <div class="panel-options">
-					              <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-					              <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-					            </div>
-					        </div>
-			  				<div class="panel-body">
-			  					<form method="POST" class="form">
+            <div id="page-inner">
+            <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                        <div class="card-action">
+                            Профиль
+                        </div>
+                        <div class="card-content">
+                            <div class="form-group" ng-app="myAppName" ng-controller="MainCtrl">
+			  					<form method="POST" class="form" action="">
                                     {% csrf_token %}
-                                    <div class="form-group" ng-app="myAppName" ng-controller="MainCtrl">
+                                    <!--<div class="form-group" >-->
                                         {{ form|bootstrap }}
                                         {%  verbatim  %}
                                         <span>Распознано как:</span> <b>{{dt=jsParseDate(data.myinput); dt.title}}</b><br/>
                                         <span>Дата:</span> <b>{{dt.date.toLocaleString()}}</b>
                                         {%  endverbatim  %}
+                                    <div class="action">
+                                        <button type="submit" class="btn btn-primary btn-sm">Сохранить</button>
                                     </div>
-                                    <button type="submit" class="save btn btn-default">Сохранить</button>
                                 </form>
-
-			  				</div>
-			  			</div>
-	  				</div>
+                            </div>
+                        </div>
+            </div>
 	  			</div>
+	  		</div>
+</div>
 </div>
 {% endblock content %}

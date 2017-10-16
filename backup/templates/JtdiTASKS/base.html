@@ -1,0 +1,120 @@
+{% load staticfiles %}
+{% load bootstrap %}
+{% load googlecharts %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tasker it</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" media="screen">
+    <!-- Bootstrap -->
+    <link href={% static "bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <!-- styles -->
+    <link href={% static "css/styles.css" %} rel="stylesheet">
+    <link href={% static "css/stats.css" %} rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/bootstrap-social-gh-pages/bootstrap-social.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'vendor/bootstrap-social-gh-pages/assets/css/font-awesome.css' %}">
+    <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+
+    <script type="text/javascript">
+        function openbox(id){
+            display = document.getElementById(id).style.display;
+            if(display=='none'){
+               document.getElementById(id).style.display='block';
+            }else{
+               document.getElementById(id).style.display='none';
+            }
+        }
+    </script>
+
+    {% block javascript %}
+    <script>
+        function show()
+        {
+            $.ajax({
+                url: "{% url 'get_recent_task' %}",
+                dataType: 'json',
+                success: function (data) {
+                  $.each(data, function( key, value ) {
+                      var tmpl = [
+                      '<div id="myAlert5" class="alert alert-success">',
+                          '   <span class="close">&times;</span>',
+                          '   <a href="%KEY%">%value%</a>',
+                          '   <a href="%KEY%not_remind">| Не напоминать</a>',
+                      '</div>'
+                        ].join("\n");
+                        var el = document.getElementById('alert');
+
+                    //function addMore() {
+                      var html = tmpl
+                        .replace(/%KEY%/g, key)
+                        .replace(/%value%/g, value)
+                      ;
+                      el.innerHTML = html + el.innerHTML;
+                    //}
+
+                      // действия, которые будут выполняться для каждого свойства объекта
+                      // key - текущее имя свойства массива
+                      // value - значение текущего свойства объекта
+
+                      // выведем имя свойства и его значение в консоль
+                      console.log( 'Свойство: ' +key + '; Значение: ' + value );
+                      //addMore()
+
+                        $(".close").click(function(){
+                            $("#myAlert5").alert('close');
+                        });
+
+                    });
+                }
+            });
+        }
+
+        //$(document).ready(function(){
+        //    show();
+        //    setInterval('show()',100000);
+        //});
+    </script>
+
+{% endblock %}
+
+</head>
+
+<body onload="show()">
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1><a href={% url 'task_list' %}><i class="glyphicon glyphicon-ok" style="color: #777777"></i> Tasker it</a></h1> </div>
+                </div> {% if user.is_authenticated %}
+                {% search_block user %}
+                {% profile_menu user%}{% endif %}
+            </div>
+        </div>
+    </div> {% if user.is_authenticated %}
+    <div class="page-content">
+        <div class="row">
+        {% project_recent_list request user%}
+             {% endif %} {% block content %} {% endblock %}
+    </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+    <script src={% static "bootstrap/js/bootstrap.min.js" %}></script>
+
+    <script src={% static "js/custom.js" %}></script>
+    {% block extra_javascript %}
+    <script src={% static "js/parse_date.js" %}></script>
+    {% endblock extra_javascript %}
+
+</body>
+
+</html>

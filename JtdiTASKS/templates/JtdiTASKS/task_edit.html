@@ -1,20 +1,25 @@
 {% extends 'JtdiTASKS/base.html' %} {% load bootstrap %} {% load staticfiles %} {% block content %}
-<div class="col-md-10">
-    <div class="row">
+<div id="page-wrapper">
+		  <div class="header">
+                        <h1 class="page-header">
+                            Редактирование задачи
+                        </h1>
+        </div>
+            <div id="page-inner">
+            <div class="row">
         <div class="col-md-6">
-            <div class="content-box-large">
-                <div class="panel-heading">
-                    <div class="panel-title">Детали задачи</div>
-                    <div class="panel-options"> <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a> <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a> </div>
-                </div>
-                <div class="panel-body">
+            <div class="card">
+                        <div class="card-action">
+                            Профиль
+                        </div>
+                        <div class="card-content">
                     <!--<form action="">-->
                         <fieldset>
                             <div class="form-group">
                     <form method="POST" class="form">
                         {% csrf_token %}
                         <div class="form-group"> {{ form|bootstrap }} </div>
-                        <button type="submit" class="save btn btn-default">Сохранить</button>
+                        <button type="submit" class="save btn btn-primary">Сохранить</button>
                     </form></div>
                         </fieldset>
                     <!--</form>-->
@@ -22,4 +27,5 @@
             </div>
         </div>
     </div>
+                </div>
 </div> {% endblock content %}

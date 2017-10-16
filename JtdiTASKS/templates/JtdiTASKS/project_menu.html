@@ -5,20 +5,21 @@
   <span class="caret"></span></i>
   <ul class="dropdown-menu">
     <li>
-        <div class="col-md-6">
-            <fieldset>
-
-                    <form method="POST" class="form"> {% csrf_token %}
-                         {{ project_rename_form|bootstrap }}
-                        <button type="submit" class="save btn btn-default">Переименовать</button>
-                    </form>
-            </fieldset>
+        <div class="col-md-12 col-sm-12">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <fieldset>
+                        <form method="POST" class="form"> {% csrf_token %}
+                            {{ project_rename_form|bootstrap }}
+                            <button type="submit" class="save btn btn-primary">Переименовать</button>
+                        </form>
+                    </fieldset>
+                </div>
+                <div class="card-action">
+                    <a href="{% url 'project_del' pk=project %}"><i class="glyphicon glyphicon-trash"></i> Удалить проект</a>
+                </div>
+            </div>
         </div>
-    </li>
-    <li>
-    </li>
-    <li>
-        <a href="{% url 'project_del' pk=project %}"><i class="glyphicon glyphicon-trash"></i> Удалить проект</a>
     </li>
   </ul>
 </div>

@@ -2,28 +2,26 @@
 {% load bootstrap %}
 {% load staticfiles %}
 {% block content %}
-<body class="login-bg">
-
-	<div class="page-content container">
+<div class="page-content container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
-				<div class="login-wrapper">
-			        <div class="box">
+				<div class="card">
+			        <div class="card-content">
 			            <div class="content-wrap">
-			                <h6>Регистрация</h6>
+			                <h4 align="center">Регистрация</h4>
                             <form method="post" action="">
                             {% csrf_token %}
                                 <div class="form-group">
                                     {{ form|bootstrap }}
                                 </div>
                             <div class="action">
-			                    <button type="submit" class="btn btn-primary btn-sm">Зарегистрироваться</button>
+			                    <button type="submit" class="btn btn-primary btn-sm" align="center">Зарегистрироваться</button>
 			                </div>
                             </form>
 			            </div>
 			        </div>
 
-			        <div class="already">
+			        <div class="already" align="center">
 			            <p>Уже есть аккаут?</p>
 			            <a href={% url 'login' %}>Войти</a>
 			        </div>

@@ -1,12 +1,19 @@
 {% load bootstrap %}
-<div class="col-md-5">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <!--<div class="input-group form">-->
-                                <form method="GET" class="input-group form" action="{% url 'search' %}"> {% csrf_token %}
-                                {{ search_form.search_field }}<!--<input type="text" class="form-control" placeholder="Поиск...">--> <span class="input-group-btn">
-	                         <button class="btn btn-primary" type="submit">Поиск</button>
-                                    </span></form>
-                        </div>
-                    </div>
-                </div>
+<div class="col-md-10">
+
+	  			<div class="row">
+	  				<div class="col-md-6">
+	  					<div class="content-box-large">
+			  				<div class="panel-body">
+			  					<form method="GET" class="input-group form" action="{% url 'search' %}"> {% csrf_token %}
+
+                                    <div class="form-group">
+                                        {{ search_form.search_field }}
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Поиск</button>
+                                </form>
+			  				</div>
+			  			</div>
+	  				</div>
+	  			</div>
+</div>

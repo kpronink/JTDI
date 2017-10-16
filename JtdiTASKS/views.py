@@ -438,7 +438,10 @@ def task_new(request, project=None):
             task.date = form.cleaned_data['date']
             task.time = datetime.datetime.combine(task.date, form.cleaned_data['time_field'])
             task.author = request.user
-            task.project = proj
+            if proj is not None:
+                task.project = proj
+            else:
+                task.project = form.cleaned_data['project_field']
             task.active = True
             task.repeating = form.cleaned_data['repeating']
             task.remind = form.cleaned_data['remind']
@@ -584,6 +587,7 @@ def project_recent_list(request, user):
         'project_form': ProjectForm(prefix='project'),
         'tasks_today_notify': tasks_today_notify,
         'tasks_overdue_notify': tasks_overdue_notify,
+        'request': request
     }
 
 

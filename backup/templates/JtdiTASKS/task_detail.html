@@ -1,0 +1,39 @@
+{% extends 'JtdiTASKS/base.html' %} {% load staticfiles %} {% block content %}
+<div class="col-md-10">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="content-box-large">
+                <div class="panel-heading">
+                    <div class="panel-title">Детали задачи</div>
+                    <div class="panel-options"> <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a> <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a> <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse"><i class="glyphicon glyphicon-flag"></i></a></div>
+                </div>
+                <div class="panel-body">
+                    <form action="">
+                        <fieldset>
+                            <div class="form-group">
+                                <label>Заголовок задачи</label>
+                                <input class="form-control" placeholder="Заголовок задачи" type="text" maxlength=1000 value="{{ task.title }}" readonly> </div>
+                            <div class="form-group">
+                                <label>Расшифровка</label>
+                                <textarea class="form-control" placeholder="Расшифровка" rows="3" readonly> "{{ task.description }}" </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Дата начала</label>
+                                {{ task.date }}
+                            </div>
+                            <div class="form-group">
+                                <label>Время начала</label>
+                                {{ task.time }}
+                            </div>
+                            <div class="form-group">
+                                <label>Дата завершения</label>
+                                {{ task.date_time_finish }}
+                            </div>
+                            <div> </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> {% endblock content %}

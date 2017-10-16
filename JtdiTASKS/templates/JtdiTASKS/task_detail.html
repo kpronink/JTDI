@@ -1,15 +1,24 @@
 {% extends 'JtdiTASKS/base.html' %} {% load staticfiles %} {% block content %}
-<div class="col-md-10">
-    <div class="row">
+<div id="page-wrapper">
+		  <div class="header">
+                        <h1 class="page-header">
+                            Детали задачи
+                        </h1>
+        </div>
+            <div id="page-inner">
+            <div class="row">
         <div class="col-md-6">
-            <div class="content-box-large">
-                <div class="panel-heading">
-                    <div class="panel-title">Детали задачи</div>
-                    <div class="panel-options"> <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a> <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a> <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse"><i class="glyphicon glyphicon-flag"></i></a></div>
-                </div>
-                <div class="panel-body">
-                    <form action="">
+            <div class="card">
+                        <div class="card-action">
+                            Задача
+                        </div>
+                        <div class="card-content">
+                    <!--<form action="">-->
                         <fieldset>
+
+                            <div class="form-group">
+                                <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse"><i class="glyphicon glyphicon-flag"></i></a>
+                                {% task_menu request task=task.pk user=user%}
                             <div class="form-group">
                                 <label>Заголовок задачи</label>
                                 <input class="form-control" placeholder="Заголовок задачи" type="text" maxlength=1000 value="{{ task.title }}" readonly> </div>
@@ -29,11 +38,24 @@
                                 <label>Дата завершения</label>
                                 {{ task.date_time_finish }}
                             </div>
-                            <div> </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="checkbox" value="{{ task.repeating }}">
+                                    <label for="{{ task.repeating.auto_id }}">Повторяющаяся</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <input type="checkbox" value="{{ task.remind }}">
+                                    <label for="{{ task.remind.auto_id }}">Не напоминать</label>
+                                </div>
+                            </div>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+            </div>
 </div> {% endblock content %}

@@ -17,6 +17,10 @@ class DataTimeInput(Input):
     input_type = 'date'
 
 
+class BooleanFieldInput(Input):
+    input_type = 'checkbox'
+
+
 class CharFieldWidget(Input):
     def __init__(self, max_length=None, min_length=None, strip=True, empty_value='', name='', *args, **kwargs):
         self.max_length = max_length
@@ -49,7 +53,7 @@ class UserProfileForm(forms.ModelForm):
 class InviteUserForm(forms.Form):
     username = forms.CharField(label='Имя пользователя')
     widgets = {'user_name': CharFieldWidget(attrs={'id': 'id_username',
-                                                     }),
+                                                   }),
                }
 
 
@@ -66,10 +70,10 @@ class TaskForm(forms.Form):
     PRIORITY_4 = '4'
 
     PRIORITY_CHOISE = (
-        (PRIORITY_4, 'Степень важности 4'),
-        (PRIORITY_3, 'Степень важности 3'),
-        (PRIORITY_2, 'Степень важности 2'),
-        (PRIORITY_1, 'Степень важности 1'),
+        (PRIORITY_4, 'Приоритет 4'),
+        (PRIORITY_3, 'Приоритет 3'),
+        (PRIORITY_2, 'Приоритет 2'),
+        (PRIORITY_1, 'Приоритет 1'),
     )
 
     title = forms.CharField(label='Заголовок')
@@ -82,15 +86,9 @@ class TaskForm(forms.Form):
 
     time_field = forms.TimeField(label='Время', required=False)
     time_field.widget.input_type = 'time'
-    
+
     project_field = forms.ModelChoiceField(
         label='Проект',
-        required=False,
-        queryset=None,
-    )
-
-    performer_field = forms.ModelChoiceField(
-        label='Исполнитель',
         required=False,
         queryset=None,
     )
@@ -101,7 +99,7 @@ class TaskForm(forms.Form):
         choices=PRIORITY_CHOISE,
     )
 
-    repeating = forms.BooleanField(label='Повторяющаяся задача', required=False)
+    repeating = forms.BooleanField(label='Повторяющаяся задача', required=False, )
     remind = forms.BooleanField(label='Не напоминать', required=False)
 
 
@@ -111,7 +109,6 @@ class SearchForm(forms.Form):
 
 
 class TaskEditForm(forms.ModelForm):
-    
     class Meta:
         model = Task
         fields = ("title", "description", "date", "time", "repeating", "remind", "project", "priority")
@@ -134,7 +131,7 @@ class TaskEditForm(forms.ModelForm):
 
         date = forms.DateField(label='Дата начала', initial=datetime.date.today)
         date.widget.input_type = 'date'
-        
+
         project = forms.ModelChoiceField(queryset=None)
 
         time_field = forms.TimeField(label='Время', required=False)

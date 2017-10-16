@@ -1,0 +1,15 @@
+{% load googlecharts %}
+{% load bootstrap %}
+<div class="dropdown">
+  <i class="dropdown-toggle" data-toggle="dropdown">
+  <span class="caret"></span></i>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'transfer_date' pk=task days=1 %}" title="Перенести задачу на день">
+                                        <i class="glyphicon glyphicon-time"></i> Перенести задачу на день</a></li>
+    <li><a href="{% url 'transfer_date' pk=task days=7 %}" title="Перенести задачу на неделю">
+                                        <i class="glyphicon glyphicon-time"></i> Перенести задачу на неделю</a></li>
+    <li><a href="{% url 'transfer_date' pk=task days=30 %}" title="Перенести задачу на 30 дней">
+                                        <i class="glyphicon glyphicon-time"></i> Перенести задачу на 30 дней</a></li>
+    <li><span></span></li>
+  </ul>
+</div>

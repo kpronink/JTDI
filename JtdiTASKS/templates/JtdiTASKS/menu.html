@@ -1,26 +1,27 @@
 {% load bootstrap %}
-<div class="col-md-2">
-                <div class="sidebar content-box" style="display: block;">
-                    <ul class="nav">
-                        <!-- Main menu -->
-                        <li class="current"><a href="{% url 'task_list' %}"><i class="glyphicon glyphicon-home"></i> Задачи</a></li>
-                        <li class="current"><a href="{% url 'task_today' %}"><i class="glyphicon glyphicon-tasks">
-                            {% if tasks_today_notify > 0 %}
-                               <div class="tab_counter">{{ tasks_today_notify }}</div>
-                            {% endif %}
-                        </i> Задачи на сегодня</a></li>
-                        <li class="current"><a href="{% url 'task_overdue' %}"><i class="glyphicon glyphicon-tasks">
+ <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a class=" {% if request.resolver_match.url_name == 'task_today' %}active-menu {% endif %} waves-effect waves-dark" href="{% url 'task_today' %}"><i class="glyphicon glyphicon-home"></i> Задачи на сегодня</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'task_list' %}" class=" {% if request.resolver_match.url_name == 'task_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-tasks"></i> Задачи</a>
+                    </li>
+					<li class="current"><a href="{% url 'task_overdue' %}" class=" {% if request.resolver_match.url_name == 'task_overdue' %}active-menu {% endif %} waves-effect waves-dark"><i class="glyphicon glyphicon-tasks">
                             {% if tasks_overdue_notify > 0 %}
                                <div class="tab_counter">{{ tasks_overdue_notify }}</div>
                             {% endif %}
                         </i> Просроченые задачи</a></li>
-                        <li class="current"><a href="{% url 'task_list_finished' %}">
-                            <i class="glyphicon glyphicon-briefcase"></i> Завершенные адачи</a></li>
-                        <li class="submenu">
-                            <a href="#"> <i class="glyphicon glyphicon-list"></i> Проекты <span class="caret pull-right"></span> </a>
-                            <!-- Sub menu -->
-                            <ul>
-                                {% for project_item in projects %}
+                    <li class="current"><a href="{% url 'task_list_finished' %}" class=" {% if request.resolver_match.url_name == 'task_list_finished' %}active-menu {% endif %} waves-effect waves-dark">
+                            <i class="glyphicon glyphicon-briefcase"></i> Завершенные задачи</a></li>
+
+
+                    <li>
+                        <a href="#" class=" {{ acitvemenu_project }} waves-effect waves-dark"><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            {% for project_item in projects %}
                                     <li>
                                         <!--<div class="circle" style="{{ project_item.color_project }}">
                                         </div>-->
@@ -28,8 +29,7 @@
                                             <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
                                     </li>
                                 {% endfor %}
-
-                                <li>
+                            <li>
                                     <div id="box_proj" style="display: none;">
 
                                     <fieldset>
@@ -42,11 +42,13 @@
 
                                     </div>
                                 </li>
-                               <li><a href="#" onclick="openbox('box_proj'); return false"><i class="glyphicon glyphicon-plus-sign" style="font-size: 15px; color:#428bca"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div id="alert" >
-                    </div>
-                </div>
+                            <li><a href="#" onclick="openbox('box_proj'); return false"><i class="glyphicon glyphicon-plus-sign" style="font-size: 15px; color:#428bca"></i></a></li>
+                        </ul>
+
+                    </li>
+                </ul>
+
             </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->

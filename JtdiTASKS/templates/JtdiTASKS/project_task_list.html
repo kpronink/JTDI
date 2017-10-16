@@ -1,20 +1,23 @@
 {% extends 'JtdiTASKS/base.html' %}
 {% load staticfiles %}
 {% block content %}
+<div id="page-wrapper">
+		  <div class="header">
+                        <h1 class="page-header">
+                            Задачи проекта
+                        </h1>
+        </div>
 
-		  <div class="col-md-10">
+            <div id="page-inner">
             <div class="row">
-  				<div class="col-md-6">
-  					<div class="content-box-large">
-		  				<div class="panel-heading">
-							<div class="panel-title">Задачи проекта - {{ project_object.title }}</div>
+                <div class="col-md-6">
+                    <!-- Advanced Tables -->
+                    <div class="card">
+                        <div class="card-action">Задачи проекта - {{ project_object.title }} {% project_menu project %}</div>
 
-							<div class="panel-options">
-                                {% project_menu project %}
-							</div>
-						</div>
-		  				<div class="panel-body">
-		  					<table class="table">
+		  				<div class="card-content">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
 				              <thead>
 
 				                <tr>
@@ -37,7 +40,6 @@
                                         <i class="glyphicon glyphicon-cog"></i></a></td>
                                     <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
                                         <i class="glyphicon glyphicon-trash"></i></a></td>
-                                    <td>{% task_menu request task=task.pk user=user%}</td>
                                 </tr>
                               {% endfor %}
 				              </tbody>
@@ -49,18 +51,16 @@
 		  				</div>
 		  			</div>
   				</div>
+                </div>
   				<div class="col-md-6">
-  					<div class="content-box-large">
-		  				<div class="panel-heading">
-							<div class="panel-title">Завершенные</div>
-
-							<div class="panel-options">
-								<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-								<a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-							</div>
-						</div>
-		  				<div class="panel-body">
-		  					<table class="table table-striped">
+                    <!-- Advanced Tables -->
+                    <div class="card">
+                        <div class="card-action">
+                            Завершенные сегодня
+                        </div>
+                        <div class="card-content">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
 				              <thead>
 				                <tr>
 				                  <th>Задача</th>
@@ -88,6 +88,20 @@
 		  			</div>
   				</div>
   			</div>
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-image donutpad">
+                                    <div id="morris-donut-chart"></div>
+                                </div>
+                                <div class="card-action">
+                                    <b>Donut Chart Example</b>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.row-->
 		  </div>
     </div>
 {% endblock content %}

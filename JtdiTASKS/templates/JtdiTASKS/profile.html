@@ -4,11 +4,21 @@
 {% load socialaccount %}
 {% load i18n %}
 {% block content %}
-<div class="col-md-10">
-    <div class="row">
+<div id="page-wrapper">
+		  <div class="header">
+                        <h1 class="page-header">
+                            Профиль
+                        </h1>
+        </div>
+
+            <div id="page-inner">
+            <div class="row">
         <div class="col-md-6">
-            <div class="content-box-large">
-                <div class="panel-heading">
+            <div class="card">
+                        <div class="card-action">
+                            Профиль
+                        </div>
+                        <div class="card-content">
 
                     <div class="form-group">
 
@@ -76,5 +86,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock content %}

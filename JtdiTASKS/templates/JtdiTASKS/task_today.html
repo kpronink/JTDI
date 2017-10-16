@@ -2,22 +2,25 @@
 {% load googlecharts %}
 {% load staticfiles %}
 {% block content %}
+<div id="page-wrapper">
+		  <div class="header">
+                        <h1 class="page-header">
+                            Задачи на сегодня
+                        </h1>
+					</ol>
+        </div>
 
-		  <div class="col-md-10">
+            <div id="page-inner">
             <div class="row">
-  				<div class="col-md-6">
-  					<div class="content-box-large">
-		  				<div class="panel-heading">
-							<div class="panel-title">Задачи на сегодня</div>
-
-							<div class="panel-options">
-								<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-								<a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-							</div>
-						</div>
-		  				<div class="panel-body">
+                <div class="col-md-6">
+                    <!-- Advanced Tables -->
+                    <div class="card">
+                        <div class="card-action">
+                            Задачи на сегодня
+                        </div>
+                        <div class="card-content">
                             <div class="table-responsive">
-		  					<table class="table">
+                                <table class="table table-hover">
 				              <thead>
 
 				                <tr>
@@ -46,7 +49,6 @@
                                         <i class="glyphicon glyphicon-cog"></i></a></td>
                                     <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
                                         <i class="glyphicon glyphicon-trash"></i></a></td>
-                                    <td>{% task_menu request task=task.pk user=user %}</td>
                                 </tr>
                               {% endfor %}
 				              </tbody>
@@ -74,18 +76,13 @@
 		  			</div>
   				</div>
   				<div class="col-md-6">
-  					<div class="content-box-large">
-		  				<div class="panel-heading">
-							<div class="panel-title">Завершенные сегодня</div>
-
-							<div class="panel-options">
-								<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-								<a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-							</div>
-						</div>
-		  				<div class="panel-body">
-                        <div class="table-responsive">
-		  					<table class="table table-striped">
+  					<div class="card">
+                        <div class="card-action">
+                            Завершенные сегодня
+                        </div>
+                        <div class="card-content">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
 				              <thead>
 				                <tr>
 				                  <th>Задача</th>

@@ -95,10 +95,10 @@ class Task(models.Model):
     PRIORITY_4 = '4'
 
     PRIORITY_CHOISE = (
-        (PRIORITY_1, 'Степень важности 1'),
-        (PRIORITY_2, 'Степень важности 2'),
-        (PRIORITY_3, 'Степень важности 3'),
-        (PRIORITY_4, 'Степень важности 4'))
+        (PRIORITY_1, 'Приоритет 1'),
+        (PRIORITY_2, 'Приоритет 2'),
+        (PRIORITY_3, 'Приоритет 3'),
+        (PRIORITY_4, 'Приоритет 4'))
 
     author = models.ForeignKey('auth.User')
     performer = models.ForeignKey('auth.User', related_name='performer', blank=True, null=True)

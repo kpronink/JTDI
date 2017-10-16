@@ -1,0 +1,80 @@
+{% extends 'JtdiTASKS/base.html' %}
+{% load bootstrap %}
+{% load staticfiles %}
+{% load socialaccount %}
+{% load i18n %}
+{% block content %}
+<div class="col-md-10">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="content-box-large">
+                <div class="panel-heading">
+
+                    <div class="form-group">
+
+                            {% if accounts %}
+                            <p>{% blocktrans %}You can sign in to your account using any of the following third party accounts:{% endblocktrans %}</p>
+
+
+                            <form method="post" action="{% url 'socialaccount_connections' %}">
+                            {% csrf_token %}
+
+                            <fieldset>
+                            {% if form.non_field_errors %}
+                            <div id="errorMsg">{{ form.non_field_errors }}</div>
+                            {% endif %}
+
+                            {% for base_account in accounts %}
+                            {% with base_account.get_provider_account as account %}
+                            <div>
+                            <label for="id_account_{{ base_account.id }}">
+                            <input id="id_account_{{ base_account.id }}" type="radio" name="account" value="{{ base_account.id }}"/>
+                            <span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
+                            {{ account }}
+                            </label>
+                            </div>
+                            {% endwith %}
+                            {% endfor %}
+
+                            <div>
+                            <button type="submit">{% trans 'Remove' %}</button>
+                            </div>
+
+                            </fieldset>
+
+                            </form>
+
+                            {% else %}
+                            <p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
+                            {% endif %}
+
+                            <h4>{% trans 'Add a 3rd Party Account' %}</h4>
+
+                            <ul class="socialaccount_providers">
+                            {% include "JtdiTASKS/provider_list.html" with process="connect" %}
+                            </ul>
+
+
+
+
+                        </div>
+                    <form method="post" enctype="multipart/form-data" action=""> {% csrf_token %}
+
+                        <div class="form-group"> {{ user_form|bootstrap }} {{ profile_form|bootstrap }}</div>
+                        <div class="form-group">
+                            {% if user.profile.avatar %}
+                                <img src="{{ user.profile.avatar.url }}" class="profile-image img-circle" width="100" height="100">
+                            {% else %}
+
+                            {% endif %}
+                        </div>
+                        <div class="action">
+                            <button type="submit" class="btn btn-primary btn-sm">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
