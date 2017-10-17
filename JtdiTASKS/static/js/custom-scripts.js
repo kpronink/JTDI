@@ -21,22 +21,49 @@
                 }
             });
 
+
+            /* MORRIS BAR CHART
+			-----------------------------------------*/
+            try{
+            $.ajax({
+                    url: $("#url_ajax_chart_bar").attr('url_ajax_chart_bar'),
+                    dataType: 'json',
+                    success: function (data){Morris.Bar({
+                element: 'morris-bar-chart',
+                data: data,
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Создано', 'Выполненно'],
+				 barColors: [
+    '#e96562','#414e63',
+    '#A8E9DC'
+  ],
+                hideHover: 'auto',
+                resize: true
+            });}})}
+            catch(err)
+{ }
+
             /* MORRIS DONUT CHART
 			----------------------------------------*/
-            $.ajax({
-                url: $("#url_ajax_chart").attr('url_ajax_chart'),
-                dataType: 'json',
-                success: function (data){
-                Morris.Donut({
-                    element: 'morris-donut-chart',
-                    data: data,
-				   colors: [
-    '#A6A6A6','#414e63',
-    '#e96562'
-  ],
-                    resize: true
-                });}})
+            try
+            {
+                $.ajax({
+                    url: $("#url_ajax_chart").attr('url_ajax_chart'),
+                    dataType: 'json',
+                    success: function (data){
+                    Morris.Donut({
+                        element: 'morris-donut-chart',
+                        data: data,
+                       colors: [
+        '#A6A6A6','#414e63',
+        '#e96562'
+      ],
+                        resize: true
+                    });}})}
+                             catch(err) { }
 
+                $('.bar-chart').cssCharts({type:"bar"});
                 $('.donut-chart').cssCharts({type:"donut"}).trigger('show-donut-chart');
 
             },

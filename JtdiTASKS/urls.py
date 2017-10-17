@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^ajax/validate_username/$', views.validate_username, name='validate_username'),
     url(r'^ajax/get_recent_task/$', views.get_recent_task, name='get_recent_task'),
     url(r'^ajax/get_index_project/(?P<pk>[0-9]+)/$', views.get_index_project, name='get_index_project'),
+    url(r'^ajax/get_index_task/$', views.get_index_tasks, name='get_index_tasks'),
     url(r'^logout/$', views.logout_view, name='logout'),
     url(r'^profile/$', views.update_profile, name='profile'),
     url(r'^invite/$', views.user_invite, name='user_invite'),

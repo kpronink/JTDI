@@ -113,6 +113,32 @@ def get_index_project(request, pk):
          {'label': 'Участников проекта', 'value': 1}], safe=False)
 
 
+def get_index_tasks(request):
+    if request.user.is_authenticated():
+        today = datetime.date.today()
+        week_end = today - datetime.timedelta(days=7)
+        tasks_finish_base = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user).filter(
+            date_finish__range=(week_end, today)).order_by(
+            'date_finish')
+        tasks_create = Task.objects.filter(author=request.user).filter(
+            date__range=(week_end, today)).order_by(
+            'date')
+        qsstats = QuerySetStats(tasks_finish_base, date_field='date_finish', aggregate=Count('id'))
+        qsstats2 = QuerySetStats(tasks_create, date_field='date', aggregate=Count('id'))
+
+        # ...в день за указанный период
+        data = []
+        values = qsstats.time_series(week_end, today, interval='days')
+        values2 = qsstats2.time_series(week_end, today, interval='days')
+        count = 0
+        for val in values:
+            data.append({'y': str(val[0].day) + '.' + str(val[0].month),
+                         'a': val[1],
+                         'b': values2[count][1]})
+            count += 1
+    return JsonResponse(data, safe=False)
+
+
 def logout_view(request):
     logout(request)
     return redirect('login')
