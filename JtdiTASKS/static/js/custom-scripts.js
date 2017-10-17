@@ -23,33 +23,28 @@
 
             /* MORRIS DONUT CHART
 			----------------------------------------*/
-            Morris.Donut({
-                element: 'morris-donut-chart',
-                data: [{
-                    label: "Участников",
-                    value: 1
-                }, {
-                    label: "Всего задач",
-                    value: 30
-                }, {
-                    label: "Завершено",
-                    value: 20
-                }],
+            $.ajax({
+                url: $("#url_ajax_chart").attr('url_ajax_chart'),
+                dataType: 'json',
+                success: function (data){
+                Morris.Donut({
+                    element: 'morris-donut-chart',
+                    data: data,
 				   colors: [
     '#A6A6A6','#414e63',
-    '#e96562' 
+    '#e96562'
   ],
-                resize: true
-            });
+                    resize: true
+                });}})
 
-            $('.donut-chart').cssCharts({type:"donut"}).trigger('show-donut-chart');
-	 
-        },
+                $('.donut-chart').cssCharts({type:"donut"}).trigger('show-donut-chart');
 
-        initialization: function () {
-            mainApp.initFunction();
+            },
 
-        }
+            initialization: function () {
+                mainApp.initFunction();
+
+            }
 
     }
     // Initializing ///

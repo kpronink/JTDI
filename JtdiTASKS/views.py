@@ -1,3 +1,4 @@
+import json
 import random
 
 import pytz
@@ -98,6 +99,18 @@ def get_recent_task(request):
         }
 
     return JsonResponse(data)
+
+
+def get_index_project(request, pk):
+    if request.user.is_authenticated():
+        proj = get_object_or_404(Project, pk=pk)
+        tasks_total = Task.objects.filter().filter(author=request.user).filter(project=proj).order_by('date').count()
+        tasks_finished = Task.objects.filter(finished=True).filter(author=request.user).filter(project=proj).order_by(
+            'date').count()
+
+    return JsonResponse(
+        [{'label': 'Всего задач', 'value': tasks_total}, {'label': 'Задач завершено', 'value': tasks_finished},
+         {'label': 'Участников проекта', 'value': 1}], safe=False)
 
 
 def logout_view(request):
@@ -311,6 +324,7 @@ def task_detail(request, pk):
 
     return render(request, 'JtdiTASKS/task_detail.html', {'task': task
                                                           })
+
 
 # Task view
 
@@ -568,7 +582,8 @@ def project_recent_list(request, user):
 
     tasks_today_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(start_day, end_day)) \
         .filter(project=None).order_by('date', 'priority', 'time').count()
-    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(first_day, start_day)) \
+    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user).filter(
+        date__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time').count()
 
     if request.method == 'POST':
@@ -602,7 +617,7 @@ def profile_menu(user):
     qsstats.today = today
     # ...в день за указанный период
     values = qsstats.time_series(week_end, today, interval='days')
-    my_invites = InviteUser.objects.filter(user_invite__username__exact=user.username).filter(not_invited=False)\
+    my_invites = InviteUser.objects.filter(user_invite__username__exact=user.username).filter(not_invited=False) \
         .filter(invited=False).count()
     notify = 0 + my_invites
     return {'user': user,
@@ -626,3 +641,8 @@ def project_menu(project):
 def search_block(user):
     return {'user': user,
             'search_form': SearchForm()}
+
+
+
+
+    # TODO В модуле бутстрэп переписан теплейт с полями
