@@ -221,7 +221,7 @@ def task_list_today(request):
     end_day = currentdate.combine(currentdate, currentdate.max.time())
 
     tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date__range=(start_day, end_day)) \
-        .filter(project=None).order_by('date', 'priority', 'time')
+        .order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
         filter(project=None).order_by(
         'date_finish')

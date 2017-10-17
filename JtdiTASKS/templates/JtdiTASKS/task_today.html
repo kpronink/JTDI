@@ -29,6 +29,7 @@
 				                  <th>Дата начала</th>
                                   <th> </th>
                                   <th>Время начала</th>
+                                  <th>Проект</th>
 				                </tr>
 				              </thead>
 				              <tbody>
@@ -43,6 +44,7 @@
                                         <td>  </td>
                                     {% endif %}
                                     <td>{{ task.time }}</td>
+                                    <td>{{ task.project }}</td>
                                     <td><a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу">
                                         <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a></td>
                                     <td><a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse" title="Редактировать задачу">
