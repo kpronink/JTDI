@@ -14,9 +14,9 @@ import datetime
 from django.template.defaulttags import register
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
-    ProjectFormRename, FormMoveInProject
+    ProjectFormRename, FormMoveInProject, ProjectInviteUser
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Task, Project, User, InviteUser
+from .models import Task, Project, User, InviteUser, PartnerGroup
 from django.contrib.auth import logout, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import FormView
@@ -104,13 +104,18 @@ def get_recent_task(request):
 def get_index_project(request, pk):
     if request.user.is_authenticated():
         proj = get_object_or_404(Project, pk=pk)
-        tasks_total = Task.objects.filter().filter(author=request.user).filter(project=proj).order_by('date').count()
+        tasks_total = Task.objects.filter().filter(Q(author=request.user) | Q(performer=request.user))\
+            .filter(project=proj).order_by('date').count()
         tasks_finished = Task.objects.filter(finished=True).filter(author=request.user).filter(project=proj).order_by(
             'date').count()
 
+        users_in_project = PartnerGroup.objects.filter(project=proj)
+        all_users_in_project = User.objects.filter(
+            Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk)).count()
+
     return JsonResponse(
         [{'label': 'Всего задач', 'value': tasks_total}, {'label': 'Задач завершено', 'value': tasks_finished},
-         {'label': 'Участников проекта', 'value': 1}], safe=False)
+         {'label': 'Участников проекта', 'value': all_users_in_project}], safe=False)
 
 
 def get_index_tasks(request):
@@ -187,12 +192,15 @@ def task_list(request):
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
 
-    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(project=None). \
+    tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user))\
+        .filter(project=None). \
         order_by('date', 'priority', 'time')
-    tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+    tasks_finish = Task.objects.filter(active=False).filter(finished=True)\
+        .filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=None).order_by(
         'date_finish')
-    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True)\
+        .filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
     paginator_task = Paginator(tasks, 8)
@@ -220,13 +228,16 @@ def task_list_today(request):
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
 
-    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date__range=(start_day, end_day)) \
+    tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user))\
+        .filter(date__range=(start_day, end_day)) \
         .order_by('date', 'priority', 'time')
-    tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
-        filter(project=None).order_by(
+    tasks_finish = Task.objects.filter(active=False).filter(finished=True)\
+        .filter(Q(author=request.user) | Q(performer=request.user))\
+        .filter(project=None).order_by(
         'date_finish')
-    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
-        filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
+    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True)\
+        .filter(Q(author=request.user) | Q(performer=request.user)).filter(project=None)\
+        .filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
     paginator_task = Paginator(tasks, 8)
 
@@ -254,12 +265,15 @@ def task_list_overdue(request):
     end_day = currentdate.combine(currentdate, currentdate.max.time())
     first_day = datetime.date(1001, 1, 1)
 
-    tasks = Task.objects.filter(active=True).filter(author=request.user).filter(date__range=(first_day, start_day)) \
+    tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user))\
+        .filter(date__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time')
-    tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+    tasks_finish = Task.objects.filter(active=False).filter(finished=True)\
+        .filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=None).order_by(
         'date_finish')
-    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
+    tasks_finished_today = Task.objects.filter(active=False).filter(finished=True)\
+        .filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
     paginator_task = Paginator(tasks, 8)
@@ -283,8 +297,8 @@ def task_list_finished(request):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(author=request.user). \
-        filter(project=None).order_by(
+    tasks_finish = Task.objects.filter(active=False).filter(finished=True)\
+        .filter(Q(author=request.user) | Q(performer=request.user)).filter(project=None).order_by(
         'date_finish')
 
     paginator_task = Paginator(tasks_finish, 16)
@@ -306,24 +320,52 @@ def project_task_list(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    tasks = Task.objects.filter(active=True).filter(author=request.user). \
+    currentdate = datetime.datetime.today()
+    start_day = currentdate.combine(currentdate, currentdate.min.time())
+    end_day = currentdate.combine(currentdate, currentdate.max.time())
+
+    tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=pk).order_by('date')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True). \
-        filter(author=request.user).filter(project=pk).order_by(
+        filter(Q(author=request.user) | Q(performer=request.user)).filter(project=pk)\
+        .filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
-
+    
     project = Project.objects.filter(pk=pk)[0]
 
+    invited_users = InviteUser\
+        .objects.filter(Q(user_sender__username__exact=request.user.username)
+                        | Q(user_invite__username__exact=request.user.username)) \
+        .filter(not_invited=False).filter(invited=True)
+
+    users_in_project = PartnerGroup.objects.filter(project=project)
+
+    all_users_in_project = User.objects.filter(
+        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+    
     if request.method == 'POST':
         project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
+        project_invite_form = ProjectInviteUser(request.POST, prefix='invite_project')
+
+        project_invite_form.fields['user_invite'].queryset = User.objects.filter(
+            pk__in=[user.user_invite.pk for user in invited_users])
         if project_rename_form.is_valid():
             project.title = project_rename_form.cleaned_data['title']
             project.save()
+        if project_invite_form.is_valid():
+            exist = PartnerGroup.objects.filter(partner=project_invite_form.cleaned_data['user_invite'])\
+                .filter(project=project).exists()
+            if not exist:
+                new_partner = PartnerGroup()
+                new_partner.project = project
+                new_partner.partner = project_invite_form.cleaned_data['user_invite']
+                new_partner.save()
 
     return render(request, 'JtdiTASKS/project_task_list.html', {'tasks': tasks,
                                                                 'tasks_finish': tasks_finish,
                                                                 'project': pk,
-                                                                'project_object': project})
+                                                                'project_object': project,
+                                                                'users_in_project': all_users_in_project})
 
 
 def search_result(request):
@@ -336,7 +378,9 @@ def search_result(request):
     search_result_data = []
     for item in search_str_split:
         search_result_data = Task.objects.filter(Q(title__contains=item) |
-                                                 Q(description__contains=item)).order_by(
+                                                 Q(description__contains=item))\
+            .filter(Q(author=request.user) | Q(performer=request.user)) \
+            .order_by(
             '-date_finish')
 
     return render(request, 'JtdiTASKS/search.html', {'search_result_data': search_result_data})
@@ -462,15 +506,29 @@ def task_new(request, project=None):
         3: 'green',
         4: 'grey'}
 
+    invited_users = InviteUser \
+        .objects.filter(Q(user_sender__username__exact=request.user.username)
+                        | Q(user_invite__username__exact=request.user.username)) \
+        .filter(not_invited=False).filter(invited=True)
+
+    users_in_project = PartnerGroup.objects.filter(project=project) \
+        .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+
+    proj = None
+
+    if project is not None:
+        proj = get_object_or_404(Project, pk=project)
+        all_users_in_project = User.objects.filter(
+            Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk))
+        success_url = redirect('project_tasks_list', pk=project)
+    else:
+        all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
+        success_url = redirect('/')
+
     if request.method == "POST":
-        proj = None
         form = TaskForm(request.POST, initial={'project': 'instance'})
         form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
-        if project is not None:
-            proj = get_object_or_404(Project, pk=project)
-            success_url = redirect('project_tasks_list', pk=project)
-        else:
-            success_url = redirect('/')
+        form.fields['performer'].queryset = all_users_in_project
         if form.is_valid():
             task = Task()
             task.title = form.cleaned_data['title']
@@ -482,6 +540,7 @@ def task_new(request, project=None):
                 task.project = proj
             else:
                 task.project = form.cleaned_data['project_field']
+            task.performer = form.cleaned_data['performer']
             task.active = True
             task.repeating = form.cleaned_data['repeating']
             task.remind = form.cleaned_data['remind']
@@ -494,6 +553,7 @@ def task_new(request, project=None):
     else:
         form = TaskForm(initial={'project': 'instance'})
         form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
+        form.fields['performer'].queryset = all_users_in_project
 
     return render(request, 'JtdiTASKS/new_task.html', {'form': form
                                                        })
@@ -612,6 +672,9 @@ def project_recent_list(request, user):
         date__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time').count()
 
+    projects_group = PartnerGroup.objects \
+        .filter(partner=user)
+
     if request.method == 'POST':
         project_form = ProjectForm(request.POST, prefix='project')
         if project_form.is_valid():
@@ -625,6 +688,7 @@ def project_recent_list(request, user):
 
     return {
         'projects': Project.objects.filter(author=user),
+        'projects_group': projects_group,
         'project_form': ProjectForm(prefix='project'),
         'tasks_today_notify': tasks_today_notify,
         'tasks_overdue_notify': tasks_overdue_notify,
@@ -658,9 +722,15 @@ def task_menu(request, task, user):
 
 
 @register.inclusion_tag('JtdiTASKS/project_menu.html')
-def project_menu(project):
+def project_menu(request, project):
+    invited_users = InviteUser.objects.filter(user_sender__username__exact=request.user.username)\
+        .filter(not_invited=False).filter(invited=True)
+    project_invite_form = ProjectInviteUser(prefix='invite_project')
+    project_invite_form.fields['user_invite'].queryset = User.objects\
+        .filter(pk__in=[user.user_invite.pk for user in invited_users])
     return {'project': project,
-            'project_rename_form': ProjectFormRename(prefix='rename_project')}
+            'project_rename_form': ProjectFormRename(prefix='rename_project'),
+            'project_invite_form': project_invite_form}
 
 
 @register.inclusion_tag('JtdiTASKS/search_block.html')
@@ -671,4 +741,4 @@ def search_block(user):
 
 
 
-    # TODO В модуле бутстрэп переписан теплейт с полями
+    # TODO В модуле бутстрэп переписан темплейт с полями

@@ -99,6 +99,12 @@ class TaskForm(forms.Form):
         choices=PRIORITY_CHOISE,
     )
 
+    performer = forms.ModelChoiceField(
+        label='Исполнитель',
+        required=False,
+        queryset=None,
+    )
+
     repeating = forms.BooleanField(label='Повторяющаяся задача', required=False, )
     remind = forms.BooleanField(label='Не напоминать', required=False)
 
@@ -111,7 +117,7 @@ class SearchForm(forms.Form):
 class TaskEditForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ("title", "description", "date", "time", "repeating", "remind", "project", "priority")
+        fields = ("title", "description", "date", "time", "repeating", "remind", "project", "priority", "performer")
 
         widgets = {
             'description': Textarea(attrs={'cols': 80, 'rows': 20}),
@@ -127,12 +133,14 @@ class TaskEditForm(forms.ModelForm):
             'repeating': 'Повторяющаяся задача',
             'remind': 'Не напоминать',
             'project': 'Проект',
+            'performer': 'performer',
         }
 
         date = forms.DateField(label='Дата начала', initial=datetime.date.today)
         date.widget.input_type = 'date'
 
         project = forms.ModelChoiceField(queryset=None)
+        performer = forms.ModelChoiceField(queryset=None)
 
         time_field = forms.TimeField(label='Время', required=False)
         time_field.widget.input_type = 'time'
@@ -157,3 +165,10 @@ class FormMoveInProject(forms.Form):
 
 class ProjectFormRename(forms.Form):
     title = forms.CharField(label='Новый заголовок')
+
+
+class ProjectInviteUser(forms.Form):
+    user_invite = forms.ModelChoiceField(queryset=None,
+                                         label='Добавить пользователя',
+                                         required=False,
+                                         )

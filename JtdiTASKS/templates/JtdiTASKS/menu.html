@@ -22,13 +22,21 @@
                         <a href="#" class=" {{ acitvemenu_project }} waves-effect waves-dark"><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             {% for project_item in projects %}
-                                    <li>
-                                        <!--<div class="circle" style="{{ project_item.color_project }}">
-                                        </div>-->
-                                        <a href="{% url 'project_tasks_list' pk=project_item.pk %}">
-                                            <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
-                                    </li>
-                                {% endfor %}
+                                <li>
+                                    <!--<div class="circle" style="{{ project_item.color_project }}">
+                                       </div>-->
+                                    <a href="{% url 'project_tasks_list' pk=project_item.pk %}">
+                                        <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
+                                </li>
+                            {% endfor %}
+                            {% for project_item in projects_group %}
+                                <li>
+                                    <!--<div class="circle" style="{{ project_item.project.color_project }}">
+                                       </div>-->
+                                    <a href="{% url 'project_tasks_list' pk=project_item.project.pk %}">
+                                        <i class="glyphicon glyphicon-bookmark" style="{{ project_item.project.color_project }}"></i> {{ project_item.project.title }} (Групповая)</a>
+                                </li>
+                            {% endfor %}
                             <li>
                                     <div id="box_proj" style="display: none;">
 

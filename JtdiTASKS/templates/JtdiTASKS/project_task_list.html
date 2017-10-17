@@ -13,7 +13,7 @@
                 <div class="col-md-6">
                     <!-- Advanced Tables -->
                     <div class="card">
-                        <div class="card-action">Задачи проекта - {{ project_object.title }} {% project_menu project %}</div>
+                        <div class="card-action">Задачи проекта - {{ project_object.title }} {% project_menu request project %}</div>
 
 		  				<div class="card-content">
                             <div class="table-responsive">
@@ -99,7 +99,24 @@
 								</div>
                             </div>
                         </div>
+
+                        <div class="col-xs-12">
+                            <div class="card"><div class="card-action">
+                          <b>Участники проекта</b>
+                        </div>
+                        <div class="card-image">
+                          <div class="collection">
+                              {% for user_in_proj in users_in_project %}
+                                <a href="#" class="collection-item">{{ user_in_proj.username }}<span class="new badge red" data-badge-caption="red">4</span></a>
+                              {% endfor %}
+                            </div>
+                        </div>
+
+                        </div>
+
                     </div>
+                    </div>
+
   			    </div>
                 <div class="col-xs-12 col-sm-12 col-md-5">
                     <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>

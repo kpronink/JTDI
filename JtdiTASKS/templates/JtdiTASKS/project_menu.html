@@ -14,6 +14,12 @@
                             <button type="submit" class="save btn btn-primary">Переименовать</button>
                         </form>
                     </fieldset>
+                    <fieldset>
+                        <form method="POST" class="form"> {% csrf_token %}
+                            {{ project_invite_form|bootstrap }}
+                            <button type="submit" class="save btn btn-primary">Добавить</button>
+                        </form>
+                    </fieldset>
                 </div>
                 <div class="card-action">
                     <a href="{% url 'project_del' pk=project %}"><i class="glyphicon glyphicon-trash"></i> Удалить проект</a>
