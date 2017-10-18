@@ -159,10 +159,16 @@ def get_data_gantt(request, pk):
                 plane_date_finish = val.date + datetime.timedelta(days=3)
             else:
                 plane_date_finish = val.planed_date_finish
-            data.append({'id': count + 1, 'name': val.title[0:15], 'series': []})
+
+            if val.date_finish is None:
+                date_finish = datetime.date.today()
+            else:
+                date_finish = val.date_finish
+
+            data.append({'id': count + 1, 'name': 'Задача' + str(count + 1), 'series': []})
             data[count]['series'] = (
                 {'name': 'Планируемая', 'start': val.date, 'end': plane_date_finish, 'color': "#e96562"},
-                {'name': 'Актуальная', 'start': val.date, 'end': datetime.date.today(), 'color': "#414e63"})
+                {'name': 'Актуальная', 'start': val.date, 'end': date_finish, 'color': "#414e63"})
             count += 1
         return JsonResponse(data, safe=False)
 
@@ -421,12 +427,22 @@ def task_edit(request, pk):
         3: 'green',
         4: 'grey'}
 
+    invited_users = InviteUser \
+        .objects.filter(Q(user_sender__username__exact=request.user.username)
+                        | Q(user_invite__username__exact=request.user.username)) \
+        .filter(not_invited=False).filter(invited=True)
+
+    users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+    all_users_in_project = User.objects.filter(
+        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
+
     task = get_object_or_404(Task, pk=pk)
 
     if request.method == "POST":
         if task.author == request.user:
             form = TaskEditForm(request.POST, instance=task)
             form.fields['project'].queryset = Project.objects.filter(author=request.user)
+            form.fields['performer'].queryset = all_users_in_project
             if form.is_valid():
                 task = form.save(commit=False)
                 task.author = request.user
@@ -437,6 +453,7 @@ def task_edit(request, pk):
     else:
         form = TaskEditForm(instance=task)
         form.fields['project'].queryset = Project.objects.filter(author=request.user)
+        form.fields['performer'].queryset = all_users_in_project
 
     return render(request, 'JtdiTASKS/task_edit.html', {'form': form
                                                         })
@@ -757,6 +774,9 @@ def search_block(user):
             'search_form': SearchForm()}
 
 
+@register.inclusion_tag('JtdiTASKS/gantt.html')
+def gantt_block():
+    return {}
 
 
-    # TODO В модуле бутстрэп переписан темплейт с полями
+# TODO В модуле бутстрэп переписан темплейт с полями

@@ -3,6 +3,7 @@ jQuery.ganttView v.0.8.0
 Copyright (c) 2010 JC Grubbs - jc.grubbs@devmynd.com
 MIT License Applies
 */
+
 div.ganttChart{width: inherit}
 
 div.ganttview-hzheader-month,
@@ -10,7 +11,7 @@ div.ganttview-hzheader-day,
 div.ganttview-vtheader,
 div.ganttview-vtheader-item-name,
 div.ganttview-vtheader-series,
-div.ganttview-grid,
+divgant.ganttview-grid,
 div.ganttview-grid-row-cell {
 	float: left;
 }
