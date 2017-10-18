@@ -93,14 +93,16 @@
                 {% block content %}
                 {% endblock %}
 
-    <div class="fixed-action-btn horizontal click-to-toggle">
-    <a class="btn-floating btn-large red">
-      <i class="material-icons">menu</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red" href="{% url 'task_new' %}"><i class="material-icons">track_changes</i></a></li>
-    </ul>
-  </div>
+     {% if user.is_authenticated %}
+        <div class="fixed-action-btn horizontal click-to-toggle">
+        <a class="btn-floating btn-large red">
+          <i class="material-icons">menu</i>
+        </a>
+        <ul>
+          <li><a class="btn-floating red" href="{% url 'task_new' %}"><i class="material-icons">track_changes</i></a></li>
+        </ul>
+      </div>
+    {% endif %}
 
 
             </div>
