@@ -155,10 +155,10 @@ def get_data_gantt(request, pk):
         count = 0
 
         for val in tasks:
-            data.append({'id': count + 1, 'name': val.title[0:15], 'series': [], 'color': "#f0f0f0"})
+            data.append({'id': count + 1, 'name': val.title[0:15], 'series': []})
             data[count]['series'] = (
-            {'name': 'Планируемая', 'start': val.date, 'end': val.date + datetime.timedelta(days=3)},
-            {'name': 'Актуальная', 'start': val.date, 'end': datetime.date.today()})
+                {'name': 'Планируемая', 'start': val.date, 'end': val.date + datetime.timedelta(days=3), 'color': "#e96562"},
+                {'name': 'Актуальная', 'start': val.date, 'end': datetime.date.today(), 'color': "#414e63"})
             count += 1
         return JsonResponse(data, safe=False)
 
