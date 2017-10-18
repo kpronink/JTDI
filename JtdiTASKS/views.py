@@ -344,22 +344,23 @@ def project_task_list(request, pk):
         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
     
     if request.method == 'POST':
-        project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
-        project_invite_form = ProjectInviteUser(request.POST, prefix='invite_project')
+        if project.author == request.user:
+            project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
+            project_invite_form = ProjectInviteUser(request.POST, prefix='invite_project')
 
-        project_invite_form.fields['user_invite'].queryset = User.objects.filter(
-            pk__in=[user.user_invite.pk for user in invited_users])
-        if project_rename_form.is_valid():
-            project.title = project_rename_form.cleaned_data['title']
-            project.save()
-        if project_invite_form.is_valid():
-            exist = PartnerGroup.objects.filter(partner=project_invite_form.cleaned_data['user_invite'])\
-                .filter(project=project).exists()
-            if not exist:
-                new_partner = PartnerGroup()
-                new_partner.project = project
-                new_partner.partner = project_invite_form.cleaned_data['user_invite']
-                new_partner.save()
+            project_invite_form.fields['user_invite'].queryset = User.objects.filter(
+                pk__in=[user.user_invite.pk for user in invited_users])
+            if project_rename_form.is_valid():
+                project.title = project_rename_form.cleaned_data['title']
+                project.save()
+            if project_invite_form.is_valid():
+                exist = PartnerGroup.objects.filter(partner=project_invite_form.cleaned_data['user_invite'])\
+                    .filter(project=project).exists()
+                if not exist:
+                    new_partner = PartnerGroup()
+                    new_partner.project = project
+                    new_partner.partner = project_invite_form.cleaned_data['user_invite']
+                    new_partner.save()
 
     return render(request, 'JtdiTASKS/project_task_list.html', {'tasks': tasks,
                                                                 'tasks_finish': tasks_finish,
@@ -412,15 +413,16 @@ def task_edit(request, pk):
     task = get_object_or_404(Task, pk=pk)
 
     if request.method == "POST":
-        form = TaskEditForm(request.POST, instance=task)
-        form.fields['project'].queryset = Project.objects.filter(author=request.user)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.author = request.user
-            task.active = True
-            task.color = COLOR_CHOISE[int(task.priority)]
-            task.save()
-            return redirect('task_detail', pk=task.pk)
+        if task.author == request.user:
+            form = TaskEditForm(request.POST, instance=task)
+            form.fields['project'].queryset = Project.objects.filter(author=request.user)
+            if form.is_valid():
+                task = form.save(commit=False)
+                task.author = request.user
+                task.active = True
+                task.color = COLOR_CHOISE[int(task.priority)]
+                task.save()
+                return redirect('task_detail', pk=task.pk)
     else:
         form = TaskEditForm(instance=task)
         form.fields['project'].queryset = Project.objects.filter(author=request.user)
@@ -433,13 +435,14 @@ def task_del(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
+    success_url = redirect('/')
+
     task = get_object_or_404(Task, pk=pk)
-    if task.project is not None:
-        project_pk = task.project.pk
-        success_url = redirect('project_tasks_list', pk=project_pk)
-    else:
-        success_url = redirect('/')
-    task.delete()
+    if task.author == request.user:
+        if task.project is not None:
+            project_pk = task.project.pk
+            success_url = redirect('project_tasks_list', pk=project_pk)
+        task.delete()
 
     return success_url
 
@@ -448,17 +451,18 @@ def task_finish(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
+    success_url = redirect('/')
+
     task = get_object_or_404(Task, pk=pk)
-    task.finished = True
-    task.active = False
-    task.date_finish = datetime.datetime.today()
-    task.date_time_finish = datetime.datetime.today()
-    task.save()
-    if task.project is not None:
-        project_pk = task.project.pk
-        success_url = redirect('project_tasks_list', pk=project_pk)
-    else:
-        success_url = redirect('/')
+    if task.author == request.user or task.performer == request.user:
+        task.finished = True
+        task.active = False
+        task.date_finish = datetime.datetime.today()
+        task.date_time_finish = datetime.datetime.today()
+        task.save()
+        if task.project is not None:
+            project_pk = task.project.pk
+            success_url = redirect('project_tasks_list', pk=project_pk)
 
     return success_url
 
@@ -582,14 +586,16 @@ def project_del(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    project = get_object_or_404(Project, pk=pk)
-    tasks = Task.objects.filter(active=True).filter(author=request.user). \
-        filter(project=pk).order_by('date')
-    for task in tasks:
-        task_obj = get_object_or_404(Task, pk=task.pk)
-        task_obj.delete()
-    project.delete()
     success_url = redirect('/')
+
+    project = get_object_or_404(Project, pk=pk)
+    if project.author == request.user:
+        tasks = Task.objects.filter(active=True).filter(author=request.user). \
+            filter(project=pk).order_by('date')
+        for task in tasks:
+            task_obj = get_object_or_404(Task, pk=task.pk)
+            task_obj.delete()
+        project.delete()
 
     return success_url
 
