@@ -1,10 +1,10 @@
 import datetime
 
 from django import forms
-from django.forms import Textarea, ClearableFileInput, DateTimeInput, CharField
+from django.forms import Textarea, ClearableFileInput
 from django.forms.widgets import Input
 
-from JtdiTASKS.models import Profile, Task, User, Project, InviteUser
+from JtdiTASKS.models import Profile, Task, User, Project
 
 year = datetime.date.today().year
 
@@ -87,6 +87,9 @@ class TaskForm(forms.Form):
     time_field = forms.TimeField(label='Время', required=False)
     time_field.widget.input_type = 'time'
 
+    date_planed = forms.DateField(label='Планируемая дата сдачи')
+    date_planed.widget.input_type = 'date'
+
     project_field = forms.ModelChoiceField(
         label='Проект',
         required=False,
@@ -117,11 +120,13 @@ class SearchForm(forms.Form):
 class TaskEditForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ("title", "description", "date", "time", "repeating", "remind", "project", "priority", "performer")
+        fields = ("title", "description", "date", "time", "repeating", "remind", "project"
+                  , "priority", "performer", "planed_date_finish")
 
         widgets = {
             'description': Textarea(attrs={'cols': 80, 'rows': 20}),
             'date': DataTimeInput(attrs={'input_type': 'date'}),
+            'planed_date_finish': DataTimeInput(attrs={'input_type': 'date'}),
             'time': TimeInput(attrs={'input_type': 'date'}),
 
         }
@@ -133,11 +138,15 @@ class TaskEditForm(forms.ModelForm):
             'repeating': 'Повторяющаяся задача',
             'remind': 'Не напоминать',
             'project': 'Проект',
-            'performer': 'performer',
+            'performer': 'Исполнитель',
+            'planed_date_finish': 'Планируемая дата сдачи',
         }
 
         date = forms.DateField(label='Дата начала', initial=datetime.date.today)
         date.widget.input_type = 'date'
+
+        planed_date_finish = forms.DateField(label='Планируемая дата сдачи')
+        planed_date_finish.widget.input_type = 'date'
 
         project = forms.ModelChoiceField(queryset=None)
         performer = forms.ModelChoiceField(queryset=None)

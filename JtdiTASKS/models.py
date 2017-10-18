@@ -111,6 +111,7 @@ class Task(models.Model):
     time = models.TimeField(default=timezone.now, blank=True, null=True)
     date_finish = models.DateField(default=None, blank=True, null=True)
     date_time_finish = models.DateTimeField(default=None, blank=True, null=True)
+    planed_date_finish = models.DateField(default=None, blank=True, null=True)
     active = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     group = models.BooleanField(default=False)

@@ -115,12 +115,25 @@
                         </div>
 
                     </div>
+
                     </div>
 
   			    </div>
                 <div class="col-xs-12 col-sm-12 col-md-5">
                     <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>
+                    <div id="url_ajax_gantt" url_ajax_gantt="{% url 'get_data_gantt' project%}"></div>
                 </div><!--/.row-->
 		  </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+		  				<div class="card-content">
+                            <div id="ganttChart"></div>
+                                <br/><br/>
+                            <div id="eventMessage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 {% endblock content %}

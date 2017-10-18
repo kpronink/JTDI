@@ -17,6 +17,7 @@
     <link href={% static "/js/morris/morris-0.4.3.min.css"%} rel="stylesheet" />
     <!-- Custom Styles-->
     <link href={% static "/css/custom-styles.css"%} rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href={% static "/css/jquery.ganttView.css"%} />
 
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -132,6 +133,20 @@
     <!-- Custom Js -->
     <script src={% static "js/parse_date.js" %}></script>
     <script src={% static "js/custom-scripts.js"%}></script>
+    <script type="text/javascript" src={% static "js/date.js"%}></script>
+	<script type="text/javascript" src={% static "js/jquery.ganttView.js"%}></script>
+    <script type="text/javascript" src={% static "js/data.js"%}></script>
+    <script type="text/javascript">
+		$.ajax({
+                    url: $("#url_ajax_gantt").attr('url_ajax_gantt'),
+                    dataType: 'json',
+                    success: function (data){$(function () {
+			$("#ganttChart").ganttView({
+				data: data,
+				slideWidth: $("#card-content").width()
+			});
+		});}})
+	</script>
 
 </body>
 

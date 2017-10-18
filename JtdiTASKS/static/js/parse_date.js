@@ -275,6 +275,7 @@ $scope.jsParseDate = function(title) {
 
         var title_date = "";
         document.getElementById('id_date').value = year + '-' + month + '-' + day
+        document.getElementById('id_date_planed').value = year + '-' + month + '-' + (day + 3)
         if ((answer == undefined) && (add == undefined)) {title_date = ""}
         else {title_date = answer + " " + add};
         return {
