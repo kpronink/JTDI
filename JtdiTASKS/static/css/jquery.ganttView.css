@@ -3,6 +3,7 @@ jQuery.ganttView v.0.8.0
 Copyright (c) 2010 JC Grubbs - jc.grubbs@devmynd.com
 MIT License Applies
 */
+div.ganttChart{width: inherit}
 
 div.ganttview-hzheader-month,
 div.ganttview-hzheader-day,

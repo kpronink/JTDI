@@ -155,9 +155,13 @@ def get_data_gantt(request, pk):
         count = 0
 
         for val in tasks:
+            if val.planed_date_finish is None:
+                plane_date_finish = val.date + datetime.timedelta(days=3)
+            else:
+                plane_date_finish = val.planed_date_finish
             data.append({'id': count + 1, 'name': val.title[0:15], 'series': []})
             data[count]['series'] = (
-                {'name': 'Планируемая', 'start': val.date, 'end': val.date + datetime.timedelta(days=3), 'color': "#e96562"},
+                {'name': 'Планируемая', 'start': val.date, 'end': plane_date_finish, 'color': "#e96562"},
                 {'name': 'Актуальная', 'start': val.date, 'end': datetime.date.today(), 'color': "#414e63"})
             count += 1
         return JsonResponse(data, safe=False)

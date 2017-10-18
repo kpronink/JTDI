@@ -78,7 +78,8 @@ behavior: {
 				
 				var w = jQuery("div.ganttview-vtheader", container).outerWidth() +
 					jQuery("div.ganttview-slide-container", container).outerWidth();
-	            container.css("width", (w + 2) + "px");
+	            //container.css("width", (w + 2) + "px");
+                container.css("width", "inherit");
 	        });
 		}
     }
@@ -114,7 +115,7 @@ behavior: {
             applyLastClass(div.parent());
 		}
 		
-		var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+		var monthNames = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
 
 		// Creates a 3 dimensional array [year][month][day] of every day 
 		// between the given start and end dates
