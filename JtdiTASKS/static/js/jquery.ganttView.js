@@ -235,7 +235,9 @@ behavior: {
                     if (data[i].series[j].color) {
                         block.css("background-color", data[i].series[j].color);
                     }
+
                     block.append(jQuery("<div>", { "class": "ganttview-block-text" }).text(size));
+
                     jQuery(rows[rowIdx]).append(block);
                     rowIdx = rowIdx + 1;
                 }
@@ -259,6 +261,79 @@ behavior: {
 		return {
 			render: render
 		};
+	}
+
+    var Behavior = function (div, opts) {
+
+		function apply() {
+
+			if (opts.behavior.clickable) {
+            	bindBlockClick(div, opts.behavior.onClick);
+        	}
+
+            if (opts.behavior.resizable) {
+            	bindBlockResize(div, opts.cellWidth, opts.start, opts.behavior.onResize);
+        	}
+
+            if (opts.behavior.draggable) {
+            	bindBlockDrag(div, opts.cellWidth, opts.start, opts.behavior.onDrag);
+        	}
+		}
+
+        function bindBlockClick(div, callback) {
+            jQuery("div.ganttview-block", div).live("click", function () {
+                if (callback) { callback(jQuery(this).data("block-data")); }
+            });
+        }
+
+        function bindBlockResize(div, cellWidth, startDate, callback) {
+        	jQuery("div.ganttview-block", div).resizable({
+        		grid: cellWidth,
+        		handles: "e,w",
+        		stop: function () {
+        			var block = jQuery(this);
+        			updateDataAndPosition(div, block, cellWidth, startDate);
+        			if (callback) { callback(block.data("block-data")); }
+        		}
+        	});
+        }
+
+        function bindBlockDrag(div, cellWidth, startDate, callback) {
+        	jQuery("div.ganttview-block", div).draggable({
+        		axis: "x",
+        		grid: [cellWidth, cellWidth],
+        		stop: function () {
+        			var block = jQuery(this);
+        			updateDataAndPosition(div, block, cellWidth, startDate);
+        			if (callback) { callback(block.data("block-data")); }
+        		}
+        	});
+        }
+
+        function updateDataAndPosition(div, block, cellWidth, startDate) {
+        	var container = jQuery("div.ganttview-slide-container", div);
+        	var scroll = container.scrollLeft();
+			var offset = block.offset().left - container.offset().left - 1 + scroll;
+
+			// Set new start date
+			var daysFromStart = Math.round(offset / cellWidth);
+			var newStart = startDate.clone().addDays(daysFromStart);
+			block.data("block-data").start = newStart;
+
+			// Set new end date
+        	var width = block.outerWidth();
+			var numberOfDays = Math.round(width / cellWidth) - 1;
+			block.data("block-data").end = newStart.clone().addDays(numberOfDays);
+			jQuery("div.ganttview-block-text", block).text(numberOfDays + 1);
+
+			// Remove top and left properties to avoid incorrect block positioning,
+        	// set position to relative to keep blocks relative to scrollbar when scrolling
+			block.css("top", "").css("left", "")
+				.css("position", "relative").css("margin-left", offset + "px");
+        }
+        return {
+        	apply: apply
+        };
 	}
 
     var ArrayUtils = {

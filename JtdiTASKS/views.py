@@ -165,10 +165,10 @@ def get_data_gantt(request, pk):
             else:
                 date_finish = val.date_finish
 
-            data.append({'id': count + 1, 'name': val.title[:8], 'series': []})
+            data.append({'id': count + 1, 'name': val.title[:15], 'series': []})
             data[count]['series'] = (
-                {'name': 'Планируемая', 'start': val.date, 'end': plane_date_finish, 'color': "#e96562"},
-                {'name': 'Актуальная', 'start': val.date, 'end': date_finish, 'color': "#414e63"})
+                {'name': 'Планируемая', 'start': val.date, 'end': plane_date_finish, 'color': "#e96562", 'url': redirect('task_edit', pk=val.pk).url},
+                {'name': 'Актуальная', 'start': val.date, 'end': date_finish, 'color': "#414e63", 'url': redirect('task_edit', pk=val.pk).url})
             count += 1
         return JsonResponse(data, safe=False)
 
@@ -757,13 +757,14 @@ def task_menu(request, task, user):
 
 
 @register.inclusion_tag('JtdiTASKS/project_menu.html')
-def project_menu(request, project):
+def project_menu(request, project, project_title):
     invited_users = InviteUser.objects.filter(user_sender__username__exact=request.user.username) \
         .filter(not_invited=False).filter(invited=True)
     project_invite_form = ProjectInviteUser(prefix='invite_project')
     project_invite_form.fields['user_invite'].queryset = User.objects \
         .filter(pk__in=[user.user_invite.pk for user in invited_users])
     return {'project': project,
+            'project_title': project_title,
             'project_rename_form': ProjectFormRename(prefix='rename_project'),
             'project_invite_form': project_invite_form}
 
