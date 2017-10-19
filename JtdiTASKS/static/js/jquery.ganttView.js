@@ -79,7 +79,7 @@ behavior: {
 				var w = jQuery("div.ganttview-vtheader", container).outerWidth() +
 					jQuery("div.ganttview-slide-container", container).outerWidth();
 	            //container.css("width", (w + 2) + "px");
-                container.css("width", "inherit").css("margin", 0);
+                container.css("width", "inherit").css("margin", 0).css("box-sizin","unset");
 	        });
 		}
     }

@@ -165,7 +165,7 @@ def get_data_gantt(request, pk):
             else:
                 date_finish = val.date_finish
 
-            data.append({'id': count + 1, 'name': 'Задача' + str(count + 1), 'series': []})
+            data.append({'id': count + 1, 'name': val.title[:8], 'series': []})
             data[count]['series'] = (
                 {'name': 'Планируемая', 'start': val.date, 'end': plane_date_finish, 'color': "#e96562"},
                 {'name': 'Актуальная', 'start': val.date, 'end': date_finish, 'color': "#414e63"})
