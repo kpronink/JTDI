@@ -89,6 +89,17 @@ class Profile(models.Model):
 
 
 class Task(models.Model):
+    STATUS_WAIT = 'Wait'
+    STATUS_STARTED = 'Started'
+    STATUS_STOPED = 'Stoped'
+    STATUS_FINISHED = 'Finished'
+
+    STATUS_CHOISE = (
+        (STATUS_WAIT, 'Ожидание'),
+        (STATUS_STARTED, 'Выполнение'),
+        (STATUS_STOPED, 'Приостановлена'),
+        (STATUS_FINISHED, 'Завершена'))
+
     PRIORITY_1 = '1'
     PRIORITY_2 = '2'
     PRIORITY_3 = '3'
@@ -118,7 +129,10 @@ class Task(models.Model):
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOISE,
                                 default=PRIORITY_4, blank=True)
     color = models.CharField(max_length=20, default='grey', blank=True)
-    
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOISE,
+                              default=STATUS_WAIT, blank=True)
+
     remind = models.BooleanField(default=True)
 
     def publish(self):
@@ -129,14 +143,20 @@ class Task(models.Model):
         return self.title
 
 
-class PartnerGroup(models.Model):
+class TasksTimeTracker(models.Model):
+    task = models.ForeignKey('Task')
+    datetime = models.DateTimeField(default=None, blank=True, null=True)
+    start = models.DateTimeField(default=None, blank=True, null=True)
+    finish = models.DateTimeField(default=None, blank=True, null=True)
+    full_time = models.FloatField(default=None, blank=True, null=True)
 
+
+class PartnerGroup(models.Model):
     project = models.ForeignKey('Project', default=None)
     partner = models.ForeignKey('auth.User')
 
 
 class InviteUser(models.Model):
-
     user_sender = models.ForeignKey('auth.User', related_name='user_sender')
     user_invite = models.ForeignKey('auth.User', related_name='user_invite')
     invited = models.BooleanField(default=False)

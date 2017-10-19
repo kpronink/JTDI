@@ -63,8 +63,34 @@
                     });}})}
                              catch(err) { }
 
+
+                        /* MORRIS LINE CHART
+			----------------------------------------*/
+            try{$.ajax({
+                    url: $("#url_ajax_line_chart").attr('url_ajax_line_chart'),
+                    dataType: 'json',
+                    success: function (data){Morris.Line({
+                element: 'morris-line-chart',
+                data: data,
+
+
+              xkey: 'y',
+              ykeys: ['a', 'b'],
+              labels: ['Total Income', 'Total Outcome'],
+              fillOpacity: 0.6,
+              hideHover: 'auto',
+              behaveLikeLine: true,
+              resize: true,
+              pointFillColors:['#ffffff'],
+              pointStrokeColors: ['black'],
+              lineColors:['gray','#414e63']
+
+                    });}})}
+            catch(err) { }
+
                 $('.bar-chart').cssCharts({type:"bar"});
                 $('.donut-chart').cssCharts({type:"donut"}).trigger('show-donut-chart');
+                $('.line-chart').cssCharts({type:"line"});
 
             },
 

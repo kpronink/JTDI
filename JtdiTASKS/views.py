@@ -5,7 +5,7 @@ import pytz
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
@@ -15,7 +15,7 @@ from django.template.defaulttags import register
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
     ProjectFormRename, ProjectInviteUser
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Task, Project, User, InviteUser, PartnerGroup
+from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker
 from django.contrib.auth import logout, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import FormView
@@ -144,6 +144,45 @@ def get_index_tasks(request):
     return JsonResponse(data, safe=False)
 
 
+def get_index_task(request, pk):
+    if request.user.is_authenticated():
+        currentdate = datetime.datetime.today()
+        start_day = currentdate.combine(currentdate, currentdate.min.time())
+        end_day = currentdate.combine(currentdate, currentdate.max.time())
+        tasks = Task.objects.filter(pk=pk)
+        tasks_time_tracking = TasksTimeTracker.objects.filter(task=tasks).filter(
+            datetime__range=(start_day, end_day)).order_by('datetime')
+        qsstats = QuerySetStats(tasks_time_tracking, date_field='datetime')
+        # ...в день за указанный период
+        values = qsstats.time_series(start_day, end_day, interval='hours')
+        data = []
+
+        for val in values:
+            time_work = 0
+            for traker in tasks_time_tracking:
+                if traker.start.hour == val[0].hour or traker.finish.hour == val[0].hour:
+                    time_work = traker.full_time
+            data.append({'y': str(val[0].hour),
+                         'a': time_work})
+
+    return JsonResponse(data, safe=False)
+
+
+'''[
+					  { y: '2014', a: 50, b: 90},
+					  { y: '2015', a: 165,  b: 185},
+					  { y: '2016', a: 150,  b: 130},
+					  { y: '2017', a: 175,  b: 160},
+					  { y: '2018', a: 80,  b: 65},
+					  { y: '2019', a: 90,  b: 70},
+					  { y: '2020', a: 100, b: 125},
+					  { y: '2021', a: 155, b: 175},
+					  { y: '2022', a: 80, b: 85},
+					  { y: '2023', a: 145, b: 155},
+					  { y: '2024', a: 160, b: 195}
+				]'''
+
+
 def get_data_gantt(request, pk):
     if request.user.is_authenticated():
         proj = get_object_or_404(Project, pk=pk)
@@ -167,8 +206,10 @@ def get_data_gantt(request, pk):
 
             data.append({'id': count + 1, 'name': val.title[:15], 'series': []})
             data[count]['series'] = (
-                {'name': 'Планируемая', 'start': val.date, 'end': plane_date_finish, 'color': "#e96562", 'url': redirect('task_edit', pk=val.pk).url},
-                {'name': 'Актуальная', 'start': val.date, 'end': date_finish, 'color': "#414e63", 'url': redirect('task_edit', pk=val.pk).url})
+                {'name': 'Планируемая', 'start': val.date, 'end': plane_date_finish, 'color': "#e96562",
+                 'url': redirect('task_edit', pk=val.pk).url},
+                {'name': 'Актуальная', 'start': val.date, 'end': date_finish, 'color': "#414e63",
+                 'url': redirect('task_edit', pk=val.pk).url})
             count += 1
         return JsonResponse(data, safe=False)
 
@@ -475,6 +516,39 @@ def task_del(request, pk):
     return success_url
 
 
+def task_start_stop(request, pk, status):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    success_url = redirect('/')
+
+    task = get_object_or_404(Task, pk=pk)
+    if task.author == request.user or task.performer == request.user:
+        time_tracker = TasksTimeTracker.objects.filter(task=task).order_by('-datetime')[:1]
+        if time_tracker.count():
+            if time_tracker[0].finish is None:
+                time_tracker = get_object_or_404(TasksTimeTracker, pk=time_tracker[0].pk)
+                time_tracker.finish = datetime.datetime.now()
+                time_tracker.full_time = (time_tracker.finish - time_tracker.start.replace(tzinfo=None)).seconds / 60
+            else:
+                time_tracker = TasksTimeTracker()
+                time_tracker.task = task
+                time_tracker.datetime = datetime.datetime.now()
+                time_tracker.start = datetime.datetime.now()
+        else:
+            time_tracker = TasksTimeTracker()
+            time_tracker.task = task
+            time_tracker.datetime = datetime.datetime.now()
+            time_tracker.start = datetime.datetime.now()
+
+        time_tracker.save()
+
+        task.status = status
+        task.save()
+
+    return redirect('task_detail', pk=pk)
+
+
 def task_finish(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
@@ -487,6 +561,7 @@ def task_finish(request, pk):
         task.active = False
         task.date_finish = datetime.datetime.today()
         task.date_time_finish = datetime.datetime.today()
+        task.status = 'Finished'
         task.save()
         if task.project is not None:
             project_pk = task.project.pk
@@ -778,6 +853,5 @@ def search_block(user):
 @register.inclusion_tag('JtdiTASKS/gantt.html')
 def gantt_block():
     return {}
-
 
 # TODO В модуле бутстрэп переписан темплейт с полями
