@@ -25,6 +25,7 @@
 				                  <th>Расшифровка</th>
 				                  <th>Дата начала</th>
                                   <th>Время начала</th>
+                                  <th>Исполнитель</th>
 				                </tr>
 				              </thead>
 				              <tbody>
@@ -34,6 +35,7 @@
                                     <td>{{ task.description|linebreaksbr }}</td>
                                     <td>{{ task.date }}</td>
                                     <td>{{ task.time }}</td>
+                                    <td>{{ task.performer }}</td>
                                     <td><a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу">
                                         <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a></td>
                                     <td><a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse" title="Редактировать задачу">
