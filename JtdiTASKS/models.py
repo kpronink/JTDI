@@ -62,7 +62,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    timezone = models.CharField(max_length=50, default='Europe/London',
+    timezone = models.CharField(max_length=50, default='Europe/Moscow',
                                 blank=True)
     formatdate = models.CharField(max_length=20, choices=FORMAT_DATE_CHOISE,
                                   default=DDMMYYY, blank=True)

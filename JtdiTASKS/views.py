@@ -439,7 +439,7 @@ def search_result(request):
 def task_detail(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
-
+    server_timezone = pytz.timezone(request.user.profile.timezone)
     task = get_object_or_404(Task, pk=pk)
         
     if request.method == "POST":
@@ -447,7 +447,7 @@ def task_detail(request, pk):
         if form.is_valid():
             comment = CommentsTask()
             comment.task = task
-            comment.date_time = datetime.datetime.now()
+            comment.date_time = datetime.datetime.now(tz=server_timezone)
             comment.comment = form.cleaned_data['addComment']
             comment.commentator = request.user
             comment.save(CommentsTask)
@@ -527,27 +527,25 @@ def task_del(request, pk):
 def task_start_stop(request, pk, status):
     if not request.user.is_authenticated():
         return redirect('login')
-
-    success_url = redirect('/')
-
+    server_timezone = pytz.timezone(request.user.profile.timezone)
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user or task.performer == request.user:
         time_tracker = TasksTimeTracker.objects.filter(task=task).order_by('-datetime')[:1]
         if time_tracker.count():
             if time_tracker[0].finish is None:
                 time_tracker = get_object_or_404(TasksTimeTracker, pk=time_tracker[0].pk)
-                time_tracker.finish = datetime.datetime.now()
+                time_tracker.finish = datetime.datetime.now(tz=server_timezone)
                 time_tracker.full_time = (time_tracker.finish - time_tracker.start.replace(tzinfo=None)).seconds / 60
             else:
                 time_tracker = TasksTimeTracker()
                 time_tracker.task = task
-                time_tracker.datetime = datetime.datetime.now()
-                time_tracker.start = datetime.datetime.now()
+                time_tracker.datetime = datetime.datetime.now(tz=server_timezone)
+                time_tracker.start = datetime.datetime.now(tz=server_timezone)
         else:
             time_tracker = TasksTimeTracker()
             time_tracker.task = task
-            time_tracker.datetime = datetime.datetime.now()
-            time_tracker.start = datetime.datetime.now()
+            time_tracker.datetime = datetime.datetime.now(tz=server_timezone)
+            time_tracker.start = datetime.datetime.now(tz=server_timezone)
 
         time_tracker.save()
 
