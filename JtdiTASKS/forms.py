@@ -179,7 +179,7 @@ class ProjectFormRename(forms.Form):
 class ProjectInviteUser(forms.Form):
     user_invite = forms.ModelChoiceField(queryset=None,
                                          label='Добавить пользователя',
-                                         required=False,
+                                         required=True,
                                          )
 
 

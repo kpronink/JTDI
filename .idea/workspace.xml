@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/views.py" afterPath="$PROJECT_DIR$/JtdiTASKS/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/forms.py" afterPath="$PROJECT_DIR$/JtdiTASKS/forms.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,8 +40,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="537" column="82" lean-forward="false" selection-start-line="537" selection-start-column="82" selection-end-line="537" selection-end-column="82" />
+            <state relative-caret-position="407">
+              <caret line="410" column="0" lean-forward="false" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#951#1030#0" expanded="false" />
@@ -61,7 +61,6 @@
                 <element signature="e#10451#12077#0" expanded="false" />
                 <element signature="e#12116#13792#0" expanded="false" />
                 <element signature="e#13832#14632#0" expanded="false" />
-                <element signature="e#14675#17345#0" expanded="false" />
                 <element signature="e#17380#18030#0" expanded="false" />
                 <element signature="e#19298#21029#0" expanded="false" />
                 <element signature="e#21063#21443#0" expanded="false" />
@@ -79,6 +78,24 @@
                 <element signature="e#32550#32571#0" expanded="false" />
                 <element signature="e#32684#33259#0" expanded="false" />
                 <element signature="e#33481#33490#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/JtdiTASKS/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="496">
+              <caret line="181" column="54" lean-forward="false" selection-start-line="181" selection-start-column="54" selection-end-line="181" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#1690#3064#0" expanded="false" />
+                <element signature="e#3101#3224#0" expanded="false" />
+                <element signature="e#3268#4635#0" expanded="false" />
+                <element signature="e#4678#4796#0" expanded="false" />
+                <element signature="e#4840#4933#0" expanded="false" />
+                <element signature="e#4977#5025#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -167,7 +184,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ProjectFormRename</find>
       <find>choi</find>
       <find>queryse</find>
       <find>FormMoveInProject</find>
@@ -197,6 +213,7 @@
       <find>now</find>
       <find>start_st</find>
       <find>timezone</find>
+      <find>partner_id</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -249,13 +266,13 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/urls.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
       </list>
     </option>
   </component>
@@ -528,7 +545,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="321" />
+      <option name="time" value="322" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -823,23 +840,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="186" column="40" lean-forward="false" selection-start-line="186" selection-start-column="40" selection-end-line="186" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#1690#3064#0" expanded="false" />
-            <element signature="e#3101#3224#0" expanded="false" />
-            <element signature="e#3268#4635#0" expanded="false" />
-            <element signature="e#4678#4796#0" expanded="false" />
-            <element signature="e#4840#4933#0" expanded="false" />
-            <element signature="e#4977#5025#0" expanded="false" />
-            <element signature="e#5069#5292#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -959,10 +959,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="181" column="54" lean-forward="false" selection-start-line="181" selection-start-column="54" selection-end-line="181" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#1690#3064#0" expanded="false" />
+            <element signature="e#3101#3224#0" expanded="false" />
+            <element signature="e#3268#4635#0" expanded="false" />
+            <element signature="e#4678#4796#0" expanded="false" />
+            <element signature="e#4840#4933#0" expanded="false" />
+            <element signature="e#4977#5025#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="537" column="82" lean-forward="false" selection-start-line="537" selection-start-column="82" selection-end-line="537" selection-end-column="82" />
+        <state relative-caret-position="407">
+          <caret line="410" column="0" lean-forward="false" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#951#1030#0" expanded="false" />
@@ -982,7 +998,6 @@
             <element signature="e#10451#12077#0" expanded="false" />
             <element signature="e#12116#13792#0" expanded="false" />
             <element signature="e#13832#14632#0" expanded="false" />
-            <element signature="e#14675#17345#0" expanded="false" />
             <element signature="e#17380#18030#0" expanded="false" />
             <element signature="e#19298#21029#0" expanded="false" />
             <element signature="e#21063#21443#0" expanded="false" />
