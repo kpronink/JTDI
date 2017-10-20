@@ -31,10 +31,11 @@
                     success: function (data){Morris.Bar({
                 element: 'morris-bar-chart',
                 data: data,
+                stacked: true,
                 xkey: 'y',
                 ykeys: ['a', 'b'],
                 labels: ['Создано', 'Выполненно'],
-				 barColors: [
+				barColors: [
     '#e96562','#414e63',
     '#A8E9DC'
   ],
@@ -77,6 +78,7 @@
                 labels: ['Количество минут'],
                 fillOpacity: 0.6,
                 hideHover: 'auto',
+                stacked: true,
                 behaveLikeLine: true,
                 resize: true,
                 parseTime: false,

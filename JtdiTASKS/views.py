@@ -160,6 +160,8 @@ def get_index_task(request, pk):
         for val in values:
             time_work = 0
             for traker in tasks_time_tracking:
+                if traker.full_time is None:
+                    continue
                 if traker.start.hour == val[0].hour or traker.finish.hour == val[0].hour:
                     time_work = traker.full_time
             data.append({'y': val[0].strftime("%H:%M"),
