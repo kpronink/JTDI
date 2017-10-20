@@ -107,13 +107,13 @@
                         <div class="card-image">
                           <div class="collection">
                               {% for user_in_proj in users_in_project %}
-                                  <a href="#" class="collection-item">{{ user_in_proj.username }} ({{ user_in_proj.first_name }})</a>
+                                  <a href="#" class="collection-item">{{ user_in_proj.username }} ({{ user_in_proj.first_name }})
                                     {% if project_object.author == user_in_proj %}
                                          Владелец
                                         <span class="new badge red" data-badge-caption="">4</span>
                                      {% else %}
                                         <span class="badge" data-badge-caption="">1</span>
-                                    {% endif %}
+                                    {% endif %}</a>
                               {% endfor %}
                             </div>
                         </div>
