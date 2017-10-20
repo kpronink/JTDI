@@ -249,17 +249,17 @@ def task_list(request):
         .filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
-    paginator_task = Paginator(tasks, 8)
-
-    page = request.GET.get('page')
-    try:
-        tasks = paginator_task.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        tasks = paginator_task.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        tasks = paginator_task.page(paginator_task.num_pages)
+    # paginator_task = Paginator(tasks, 8)
+    # 
+    # page = request.GET.get('page')
+    # try:
+    #     tasks = paginator_task.page(page)
+    # except PageNotAnInteger:
+    #     # If page is not an integer, deliver first page.
+    #     tasks = paginator_task.page(1)
+    # except EmptyPage:
+    #     # If page is out of range (e.g. 9999), deliver last page of results.
+    #     tasks = paginator_task.page(paginator_task.num_pages)
 
     return render(request, 'JtdiTASKS/index.html', {'tasks': tasks,
                                                     'tasks_finish': tasks_finish,
@@ -495,7 +495,10 @@ def task_edit(request, pk):
                 task = form.save(commit=False)
                 task.author = request.user
                 task.active = True
-                task.color = COLOR_CHOISE[int(task.priority)]
+                if task.priority is not None:
+                    task.color = COLOR_CHOISE[int(task.priority)]
+                else:
+                    task.color = COLOR_CHOISE[4]
                 task.date_time = task.date_time.combine(task.date, task.time)
                 task.save()
                 return redirect('task_detail', pk=task.pk)
@@ -788,7 +791,7 @@ def project_recent_list(request, user):
 
     tasks_today_notify = Task.objects.filter(active=True).filter(author=user)\
         .filter(date_time__range=(start_day, end_day)) \
-        .filter(project=None).order_by('date', 'priority', 'time').count()
+        .order_by('date', 'priority', 'time').count()
     tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user)\
         .filter(date_time__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time').count()

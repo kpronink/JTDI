@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tasker</title>
-    <link href={% static "/css/reset.css"%} rel="stylesheet" />
+
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href={% static "/materialize/css/materialize.min.css"%} media="screen,projection" />
      <!--Bootstrap Styles>-->
@@ -169,6 +169,14 @@
 			});
 		});}})
 	</script>
+    	 <!-- DATA TABLE SCRIPTS -->
+    <script src="{% static "js/dataTables/jquery.dataTables.js"%}"></script>
+    <script src="{% static "js/dataTables/dataTables.bootstrap.js"%}"></script>
+    <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+    </script>
 
 </body>
 
