@@ -72,18 +72,17 @@
                     success: function (data){Morris.Line({
                 element: 'morris-line-chart',
                 data: data,
-
-
-              xkey: 'y',
-              ykeys: ['a', 'b'],
-              labels: ['Total Income', 'Total Outcome'],
-              fillOpacity: 0.6,
-              hideHover: 'auto',
-              behaveLikeLine: true,
-              resize: true,
-              pointFillColors:['#ffffff'],
-              pointStrokeColors: ['black'],
-              lineColors:['gray','#414e63']
+                xkey: 'y',
+                ykeys: ['a'],
+                labels: ['Количество минут'],
+                fillOpacity: 0.6,
+                hideHover: 'auto',
+                behaveLikeLine: true,
+                resize: true,
+                parseTime: false,
+                pointFillColors:['#ffffff'],
+                pointStrokeColors: ['black'],
+                lineColors:['gray']
 
                     });}})}
             catch(err) { }

@@ -760,3 +760,11 @@ padding: 0 15px 0px 15px;
     -moz-osx-font-smoothing: auto;
     font-size: 11px;
 }
+
+.user_name{
+    font-size:14px;
+    font-weight: bold;
+}
+.comments-list .media{
+    border-bottom: 1px dotted #ccc;
+}

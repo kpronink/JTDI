@@ -26,6 +26,7 @@
 				                <tr>
 				                  <th>Задача</th>
 				                  <th>Расшифровка</th>
+                                  <th>Проект</th>
 				                  <th>Дата начала</th>
                                   <th> </th>
                                   <th>Время начала</th>
@@ -38,6 +39,11 @@
 
                                     <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
                                     <td>{{ task.description|linebreaksbr }}</td>
+                                    {% if task.project is not None %}
+                                    <td><a href="{% url 'project_tasks_list' pk=task.project.pk %}">{{ task.project }}</a></td>
+                                    {% else %}
+                                    <td><a href="">{{ task.project }}</a></td>
+                                    {% endif %}
                                     <td>{{ task.date }}</td>
                                     {% if task.repeating %}
                                         <td><i class="glyphicon glyphicon-refresh"></i></td>

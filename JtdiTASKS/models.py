@@ -120,6 +120,7 @@ class Task(models.Model):
     repeating = models.BooleanField(default=False, blank=True)
     date = models.DateField(default=timezone.now, blank=True, null=True)
     time = models.TimeField(default=timezone.now, blank=True, null=True)
+    date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
     date_finish = models.DateField(default=None, blank=True, null=True)
     date_time_finish = models.DateTimeField(default=None, blank=True, null=True)
     planed_date_finish = models.DateField(default=None, blank=True, null=True)
@@ -150,6 +151,13 @@ class TasksTimeTracker(models.Model):
     finish = models.DateTimeField(default=None, blank=True, null=True)
     full_time = models.FloatField(default=None, blank=True, null=True)
 
+
+class CommentsTask(models.Model):
+    task = models.ForeignKey('Task')
+    commentator = models.ForeignKey('auth.User')
+    comment = models.TextField(max_length=2000, blank=True)
+    date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    
 
 class PartnerGroup(models.Model):
     project = models.ForeignKey('Project', default=None)

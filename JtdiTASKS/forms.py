@@ -181,3 +181,7 @@ class ProjectInviteUser(forms.Form):
                                          label='Добавить пользователя',
                                          required=False,
                                          )
+
+
+class CommentAddForm(forms.Form):
+    addComment = forms.CharField(label='', widget=forms.Textarea, required=True)

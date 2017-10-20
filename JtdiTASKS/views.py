@@ -13,9 +13,9 @@ import datetime
 from django.template.defaulttags import register
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
-    ProjectFormRename, ProjectInviteUser
+    ProjectFormRename, ProjectInviteUser, CommentAddForm
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker
+from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask
 from django.contrib.auth import logout, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import FormView
@@ -87,7 +87,7 @@ def get_recent_task(request):
         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
         tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).filter(
             remind=True) \
-            .filter(date__range=(today_min, today_max)).order_by('date')
+            .filter(time__range=(today_min, today_max)).order_by('date')
         data = {}
         for task in tasks_alert:
             data['/task/' + str(task.pk) + '/'] = task.title
@@ -162,25 +162,10 @@ def get_index_task(request, pk):
             for traker in tasks_time_tracking:
                 if traker.start.hour == val[0].hour or traker.finish.hour == val[0].hour:
                     time_work = traker.full_time
-            data.append({'y': str(val[0].hour),
+            data.append({'y': val[0].strftime("%H:%M"),
                          'a': time_work})
 
     return JsonResponse(data, safe=False)
-
-
-'''[
-					  { y: '2014', a: 50, b: 90},
-					  { y: '2015', a: 165,  b: 185},
-					  { y: '2016', a: 150,  b: 130},
-					  { y: '2017', a: 175,  b: 160},
-					  { y: '2018', a: 80,  b: 65},
-					  { y: '2019', a: 90,  b: 70},
-					  { y: '2020', a: 100, b: 125},
-					  { y: '2021', a: 155, b: 175},
-					  { y: '2022', a: 80, b: 85},
-					  { y: '2023', a: 145, b: 155},
-					  { y: '2024', a: 160, b: 195}
-				]'''
 
 
 def get_data_gantt(request, pk):
@@ -287,7 +272,7 @@ def task_list_today(request):
     end_day = currentdate.combine(currentdate, currentdate.max.time())
 
     tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)) \
-        .filter(date__range=(start_day, end_day)) \
+        .filter(date_time__range=(start_day, end_day)) \
         .order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
         .filter(Q(author=request.user) | Q(performer=request.user)) \
@@ -324,7 +309,7 @@ def task_list_overdue(request):
     first_day = datetime.date(1001, 1, 1)
 
     tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)) \
-        .filter(date__range=(first_day, start_day)) \
+        .filter(date_time__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
         .filter(Q(author=request.user) | Q(performer=request.user)). \
@@ -356,8 +341,8 @@ def task_list_finished(request):
         return redirect('login')
 
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
-        .filter(Q(author=request.user) | Q(performer=request.user)).filter(project=None).order_by(
-        'date_finish')
+        .filter(Q(author=request.user) | Q(performer=request.user)).order_by(
+        'project').order_by('date_finish')
 
     paginator_task = Paginator(tasks_finish, 16)
 
@@ -453,8 +438,27 @@ def task_detail(request, pk):
         return redirect('login')
 
     task = get_object_or_404(Task, pk=pk)
+        
+    if request.method == "POST":
+        form = CommentAddForm(request.POST)
+        if form.is_valid():
+            comment = CommentsTask()
+            comment.task = task
+            comment.date_time = datetime.datetime.now()
+            comment.comment = form.cleaned_data['addComment']
+            comment.commentator = request.user
+            comment.save(CommentsTask)
 
-    return render(request, 'JtdiTASKS/task_detail.html', {'task': task
+            return redirect('task_detail', pk)
+    
+    comment_form = CommentAddForm()
+    comments = CommentsTask.objects.filter(task=task).order_by('date_time')
+    count_comments = comments.count()
+
+    return render(request, 'JtdiTASKS/task_detail.html', {'task': task,
+                                                          'count_comments': count_comments,
+                                                          'comments': comments,
+                                                          'comment_form': comment_form
                                                           })
 
 
@@ -489,6 +493,7 @@ def task_edit(request, pk):
                 task.author = request.user
                 task.active = True
                 task.color = COLOR_CHOISE[int(task.priority)]
+                task.date_time = task.date_time.combine(task.date, task.time)
                 task.save()
                 return redirect('task_detail', pk=task.pk)
     else:
@@ -766,6 +771,9 @@ def not_invited(request, pk):
     return success_url
 
 
+# Comments
+
+
 # Include tags
 
 
@@ -774,12 +782,14 @@ def project_recent_list(request, user):
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
-    first_day = datetime.date(1001, 1, 1)
+    first_day = currentdate
+    first_day = first_day.combine(datetime.date(1001, 1, 1), currentdate.min.time())
 
-    tasks_today_notify = Task.objects.filter(active=True).filter(author=user).filter(date__range=(start_day, end_day)) \
+    tasks_today_notify = Task.objects.filter(active=True).filter(author=user)\
+        .filter(date_time__range=(start_day, end_day)) \
         .filter(project=None).order_by('date', 'priority', 'time').count()
-    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user).filter(
-        date__range=(first_day, start_day)) \
+    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user)\
+        .filter(date_time__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time').count()
 
     projects_group = PartnerGroup.objects \
