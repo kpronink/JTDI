@@ -172,7 +172,8 @@ def get_data_gantt(request, pk):
     if request.user.is_authenticated():
         proj = get_object_or_404(Project, pk=pk)
 
-        tasks = Task.objects.filter(project=proj).order_by('date_finish').order_by('performer').order_by('date')
+        tasks = Task.objects.filter(project=proj).filter(finished=False).order_by('date_finish')\
+            .order_by('performer').order_by('date')
 
         # ...в день за указанный период
         data = []

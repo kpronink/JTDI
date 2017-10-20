@@ -107,7 +107,7 @@
                         <div class="card-image">
                           <div class="collection">
                               {% for user_in_proj in users_in_project %}
-                                <a href="#" class="collection-item">{{ user_in_proj.username }} ({{ user_in_proj.first_name }})
+                                  <a href="#" class="collection-item">{{ user_in_proj.username }} ({{ user_in_proj.first_name }})</a>
                                     {% if project_object.author == user_in_proj %}
                                          Владелец
                                         <span class="new badge red" data-badge-caption="">4</span>
@@ -138,6 +138,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
     </div>
 {% endblock content %}

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/views.py" afterPath="$PROJECT_DIR$/JtdiTASKS/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,11 +38,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="455" column="18" lean-forward="false" selection-start-line="455" selection-start-column="4" selection-end-line="455" selection-end-column="18" />
+            <state relative-caret-position="199">
+              <caret line="175" column="12" lean-forward="false" selection-start-line="175" selection-start-column="12" selection-end-line="175" selection-end-column="12" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#951#1030#0" expanded="false" />
@@ -54,30 +55,29 @@
                 <element signature="e#3413#4255#0" expanded="false" />
                 <element signature="e#4292#5434#0" expanded="false" />
                 <element signature="e#5474#6495#0" expanded="false" />
-                <element signature="e#6535#7710#0" expanded="false" />
-                <element signature="e#7743#7787#0" expanded="false" />
-                <element signature="e#7823#8686#0" expanded="false" />
-                <element signature="e#8717#10303#0" expanded="false" />
-                <element signature="e#13721#14521#0" expanded="false" />
-                <element signature="e#14564#17234#0" expanded="false" />
-                <element signature="e#17269#17919#0" expanded="false" />
-                <element signature="e#19103#20834#0" expanded="false" />
-                <element signature="e#20868#21248#0" expanded="false" />
-                <element signature="e#21297#22527#0" expanded="false" />
-                <element signature="e#22564#23177#0" expanded="false" />
-                <element signature="e#23221#23584#0" expanded="false" />
-                <element signature="e#23622#24010#0" expanded="false" />
-                <element signature="e#24054#26699#0" expanded="false" />
-                <element signature="e#26749#27151#0" expanded="false" />
-                <element signature="e#27205#27691#0" expanded="false" />
-                <element signature="e#27740#28996#0" expanded="false" />
-                <element signature="e#29029#29314#0" expanded="false" />
-                <element signature="e#29351#29636#0" expanded="false" />
-                <element signature="e#29760#31275#0" expanded="false" />
-                <element signature="e#31361#32158#0" expanded="false" />
-                <element signature="e#32253#32274#0" expanded="false" />
-                <element signature="e#32387#32962#0" expanded="false" />
-                <element signature="e#33184#33193#0" expanded="false" />
+                <element signature="e#7780#7824#0" expanded="false" />
+                <element signature="e#7860#8723#0" expanded="false" />
+                <element signature="e#8754#10340#0" expanded="false" />
+                <element signature="e#13758#14558#0" expanded="false" />
+                <element signature="e#14601#17271#0" expanded="false" />
+                <element signature="e#17306#17956#0" expanded="false" />
+                <element signature="e#19140#20871#0" expanded="false" />
+                <element signature="e#20905#21285#0" expanded="false" />
+                <element signature="e#21334#22564#0" expanded="false" />
+                <element signature="e#22601#23214#0" expanded="false" />
+                <element signature="e#23258#23621#0" expanded="false" />
+                <element signature="e#23659#24047#0" expanded="false" />
+                <element signature="e#24091#26736#0" expanded="false" />
+                <element signature="e#26786#27188#0" expanded="false" />
+                <element signature="e#27242#27728#0" expanded="false" />
+                <element signature="e#27777#29033#0" expanded="false" />
+                <element signature="e#29066#29351#0" expanded="false" />
+                <element signature="e#29388#29673#0" expanded="false" />
+                <element signature="e#29797#31312#0" expanded="false" />
+                <element signature="e#31398#32195#0" expanded="false" />
+                <element signature="e#32290#32311#0" expanded="false" />
+                <element signature="e#32424#32999#0" expanded="false" />
+                <element signature="e#33221#33230#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -98,8 +98,8 @@
       <file leaf-file-name="project_task_list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="72" column="32" lean-forward="false" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="62" />
+            <state relative-caret-position="673">
+              <caret line="141" column="12" lean-forward="false" selection-start-line="141" selection-start-column="12" selection-end-line="141" selection-end-column="12" />
               <folding>
                 <element signature="e#1647#1678#0#HTML" expanded="true" />
                 <element signature="e#2447#2470#0#HTML" expanded="true" />
@@ -118,11 +118,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="task_detail.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="task_detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="104" column="80" lean-forward="false" selection-start-line="104" selection-start-column="80" selection-end-line="104" selection-end-column="80" />
+            <state relative-caret-position="265">
+              <caret line="111" column="59" lean-forward="true" selection-start-line="111" selection-start-column="59" selection-end-line="111" selection-end-column="59" />
               <folding>
                 <element signature="e#292#5182#0#HTML" expanded="false" />
                 <element signature="e#942#974#0#HTML" expanded="true" />
@@ -275,7 +275,6 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/jquery.ganttView.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/jquery.ganttView.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/parse_date.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
@@ -286,8 +285,9 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/urls.py" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
       </list>
     </option>
   </component>
@@ -919,66 +919,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="72" column="32" lean-forward="false" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="62" />
-          <folding>
-            <element signature="e#1647#1678#0#HTML" expanded="true" />
-            <element signature="e#2447#2470#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="36" column="85" lean-forward="false" selection-start-line="36" selection-start-column="85" selection-end-line="36" selection-end-column="85" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="455" column="18" lean-forward="false" selection-start-line="455" selection-start-column="4" selection-end-line="455" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#951#1030#0" expanded="false" />
-            <element signature="e#1057#1175#0" expanded="false" />
-            <element signature="e#1216#1868#0" expanded="false" />
-            <element signature="e#1906#2414#0" expanded="false" />
-            <element signature="e#2164#2414#0" expanded="false" />
-            <element signature="e#2453#2727#0" expanded="false" />
-            <element signature="e#2764#3370#0" expanded="false" />
-            <element signature="e#3413#4255#0" expanded="false" />
-            <element signature="e#4292#5434#0" expanded="false" />
-            <element signature="e#5474#6495#0" expanded="false" />
-            <element signature="e#6535#7710#0" expanded="false" />
-            <element signature="e#7743#7787#0" expanded="false" />
-            <element signature="e#7823#8686#0" expanded="false" />
-            <element signature="e#8717#10303#0" expanded="false" />
-            <element signature="e#13721#14521#0" expanded="false" />
-            <element signature="e#14564#17234#0" expanded="false" />
-            <element signature="e#17269#17919#0" expanded="false" />
-            <element signature="e#19103#20834#0" expanded="false" />
-            <element signature="e#20868#21248#0" expanded="false" />
-            <element signature="e#21297#22527#0" expanded="false" />
-            <element signature="e#22564#23177#0" expanded="false" />
-            <element signature="e#23221#23584#0" expanded="false" />
-            <element signature="e#23622#24010#0" expanded="false" />
-            <element signature="e#24054#26699#0" expanded="false" />
-            <element signature="e#26749#27151#0" expanded="false" />
-            <element signature="e#27205#27691#0" expanded="false" />
-            <element signature="e#27740#28996#0" expanded="false" />
-            <element signature="e#29029#29314#0" expanded="false" />
-            <element signature="e#29351#29636#0" expanded="false" />
-            <element signature="e#29760#31275#0" expanded="false" />
-            <element signature="e#31361#32158#0" expanded="false" />
-            <element signature="e#32253#32274#0" expanded="false" />
-            <element signature="e#32387#32962#0" expanded="false" />
-            <element signature="e#33184#33193#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1018,8 +963,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="104" column="80" lean-forward="false" selection-start-line="104" selection-start-column="80" selection-end-line="104" selection-end-column="80" />
+        <state relative-caret-position="265">
+          <caret line="111" column="59" lean-forward="true" selection-start-line="111" selection-start-column="59" selection-end-line="111" selection-end-column="59" />
           <folding>
             <element signature="e#292#5182#0#HTML" expanded="false" />
             <element signature="e#942#974#0#HTML" expanded="true" />
@@ -1027,6 +972,60 @@
             <element signature="e#4656#4674#0#HTML" expanded="true" />
             <element signature="e#5195#5742#0#HTML" expanded="false" />
             <element signature="e#7250#7272#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="673">
+          <caret line="141" column="12" lean-forward="false" selection-start-line="141" selection-start-column="12" selection-end-line="141" selection-end-column="12" />
+          <folding>
+            <element signature="e#1647#1678#0#HTML" expanded="true" />
+            <element signature="e#2447#2470#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="175" column="12" lean-forward="false" selection-start-line="175" selection-start-column="12" selection-end-line="175" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#951#1030#0" expanded="false" />
+            <element signature="e#1057#1175#0" expanded="false" />
+            <element signature="e#1216#1868#0" expanded="false" />
+            <element signature="e#1906#2414#0" expanded="false" />
+            <element signature="e#2164#2414#0" expanded="false" />
+            <element signature="e#2453#2727#0" expanded="false" />
+            <element signature="e#2764#3370#0" expanded="false" />
+            <element signature="e#3413#4255#0" expanded="false" />
+            <element signature="e#4292#5434#0" expanded="false" />
+            <element signature="e#5474#6495#0" expanded="false" />
+            <element signature="e#7780#7824#0" expanded="false" />
+            <element signature="e#7860#8723#0" expanded="false" />
+            <element signature="e#8754#10340#0" expanded="false" />
+            <element signature="e#13758#14558#0" expanded="false" />
+            <element signature="e#14601#17271#0" expanded="false" />
+            <element signature="e#17306#17956#0" expanded="false" />
+            <element signature="e#19140#20871#0" expanded="false" />
+            <element signature="e#20905#21285#0" expanded="false" />
+            <element signature="e#21334#22564#0" expanded="false" />
+            <element signature="e#22601#23214#0" expanded="false" />
+            <element signature="e#23258#23621#0" expanded="false" />
+            <element signature="e#23659#24047#0" expanded="false" />
+            <element signature="e#24091#26736#0" expanded="false" />
+            <element signature="e#26786#27188#0" expanded="false" />
+            <element signature="e#27242#27728#0" expanded="false" />
+            <element signature="e#27777#29033#0" expanded="false" />
+            <element signature="e#29066#29351#0" expanded="false" />
+            <element signature="e#29388#29673#0" expanded="false" />
+            <element signature="e#29797#31312#0" expanded="false" />
+            <element signature="e#31398#32195#0" expanded="false" />
+            <element signature="e#32290#32311#0" expanded="false" />
+            <element signature="e#32424#32999#0" expanded="false" />
+            <element signature="e#33221#33230#0" expanded="false" />
           </folding>
         </state>
       </provider>
