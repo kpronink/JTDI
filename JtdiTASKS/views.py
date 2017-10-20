@@ -535,7 +535,7 @@ def task_start_stop(request, pk, status):
             if time_tracker[0].finish is None:
                 time_tracker = get_object_or_404(TasksTimeTracker, pk=time_tracker[0].pk)
                 time_tracker.finish = datetime.datetime.now(tz=server_timezone)
-                time_tracker.full_time = (time_tracker.finish - time_tracker.start.replace(tzinfo=None)).seconds / 60
+                time_tracker.full_time = (time_tracker.finish - time_tracker.start).seconds / 60
             else:
                 time_tracker = TasksTimeTracker()
                 time_tracker.task = task
