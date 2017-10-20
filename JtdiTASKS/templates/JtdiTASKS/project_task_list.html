@@ -130,6 +130,7 @@
                     <div id="url_ajax_gantt" url_ajax_gantt="{% url 'get_data_gantt' project%}"></div>
                 </div><!--/.row-->
 		  </div>
+            {% if tasks.count %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -139,6 +140,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             </div>
     </div>
 {% endblock content %}

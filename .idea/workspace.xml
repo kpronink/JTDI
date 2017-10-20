@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/forms.py" afterPath="$PROJECT_DIR$/JtdiTASKS/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,7 +37,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="407">
@@ -111,11 +111,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project_task_list.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="project_task_list.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="843">
-              <caret line="115" column="51" lean-forward="false" selection-start-line="115" selection-start-column="51" selection-end-line="115" selection-end-column="51" />
+            <state relative-caret-position="469">
+              <caret line="142" column="20" lean-forward="false" selection-start-line="142" selection-start-column="20" selection-end-line="142" selection-end-column="20" />
               <folding>
                 <element signature="e#1647#1678#0#HTML" expanded="true" />
                 <element signature="e#2447#2470#0#HTML" expanded="true" />
@@ -268,11 +268,11 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/urls.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
       </list>
     </option>
   </component>
@@ -887,17 +887,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="843">
-          <caret line="115" column="51" lean-forward="false" selection-start-line="115" selection-start-column="51" selection-end-line="115" selection-end-column="51" />
-          <folding>
-            <element signature="e#1647#1678#0#HTML" expanded="true" />
-            <element signature="e#2447#2470#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/morris/morris.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
@@ -1015,6 +1004,17 @@
             <element signature="e#32550#32571#0" expanded="false" />
             <element signature="e#32684#33259#0" expanded="false" />
             <element signature="e#33481#33490#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="469">
+          <caret line="142" column="20" lean-forward="false" selection-start-line="142" selection-start-column="20" selection-end-line="142" selection-end-column="20" />
+          <folding>
+            <element signature="e#1647#1678#0#HTML" expanded="true" />
+            <element signature="e#2447#2470#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
