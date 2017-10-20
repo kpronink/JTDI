@@ -102,9 +102,9 @@
                         <div class="comments-list">
                             {% for comment in comments %}
                                <div class="media">
-                                   <p class="pull-right"><small>5 days ago</small></p>
+                                   <p class="pull-right"><small>{{ comment.date_time }}</small></p>
                                     <a class="media-left" href="#">
-                                      <img src="{{ comment.commentator.profile.avatar.url }}">
+                                      <img src="{{ comment.commentator.profile.avatar.url }}" class="circle-avatar" width="40" height="40" border="20">
                                     </a>
                                     <div class="media-body">
 
@@ -121,6 +121,7 @@
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">Комментарий</label>
                                     <div class="col-sm-10">
+                                        {% csrf_token %}
                                         {{ comment_form }}
                                     </div>
                                 </div>
