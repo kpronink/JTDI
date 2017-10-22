@@ -1,10 +1,11 @@
 import datetime
 
 from django import forms
+from django.db.models import Q
 from django.forms import Textarea, ClearableFileInput
 from django.forms.widgets import Input
 
-from JtdiTASKS.models import Profile, Task, User, Project
+from JtdiTASKS.models import Profile, Task, User, Project, PartnerGroup, InviteUser
 
 year = datetime.date.today().year
 
@@ -110,6 +111,25 @@ class TaskForm(forms.Form):
 
     repeating = forms.BooleanField(label='Повторяющаяся задача', required=False, )
     remind = forms.BooleanField(label='Не напоминать', required=False)
+
+    def clean(self):
+        project = self.cleaned_data['project_field']
+        performer = self.cleaned_data['performer']
+
+        users_in_project = PartnerGroup.objects.filter(project=project)
+        all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
+
+        pass_performer = False
+        for user_in_proj in all_users_in_project:
+            if user_in_proj == performer:
+                pass_performer = True
+
+        if not pass_performer:
+            raise forms.ValidationError("Исполнитель не состоит в проекте (" + project.title + ")")
+
+        # Always return a value to use as the new cleaned data, even if
+        # this method didn't change it.
+        return performer
 
 
 class SearchForm(forms.Form):

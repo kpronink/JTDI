@@ -638,10 +638,12 @@ def task_new(request, project=None):
             Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk))
         success_url = redirect('project_tasks_list', pk=project)
     else:
+        users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
         all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
         success_url = redirect('/')
 
     if request.method == "POST":
+
         form = TaskForm(request.POST, initial={'project': 'instance'})
         form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
         form.fields['performer'].queryset = all_users_in_project
