@@ -34,7 +34,7 @@
                 stacked: true,
                 xkey: 'y',
                 ykeys: ['a', 'b'],
-                labels: ['Создано', 'Выполненно'],
+                labels: ['Выполненно', 'Создано'],
 				barColors: [
     '#e96562','#414e63',
     '#A8E9DC'

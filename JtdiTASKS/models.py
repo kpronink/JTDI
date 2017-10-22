@@ -14,7 +14,7 @@ def avatar_upload_to(instance, filename):
 
 class Project(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=200, null=True)
+    title = models.CharField(max_length=200, null=True, blank=False)
     color_project = models.CharField(max_length=10)
     group = models.BooleanField(default=False)
 

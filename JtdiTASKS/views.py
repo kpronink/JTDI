@@ -138,8 +138,8 @@ def get_index_tasks(request):
         count = 0
         for val in values:
             data.append({'y': str(val[0].day) + '.' + str(val[0].month),
-                         'a': val[1],
-                         'b': values2[count][1]})
+                         'a': values2[count][1],
+                         'b': val[1]})
             count += 1
     return JsonResponse(data, safe=False)
 
