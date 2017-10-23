@@ -11,33 +11,33 @@
         </div>
 
              <div id="page-inner">
-            <div class="row">
+             <div class="row">
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
                     <div class="card">
                         <div class="card-action">
-                            Завершенные задачи
+                             Завершенные задачи
                         </div>
                         <div class="card-content">
                             <div class="table-responsive">
-                                <table class="table table-hover">
-				              <thead>
-
-				                <tr>
-				                  <th>Задача</th>
-				                  <th>Расшифровка</th>
-                                  <th>Проект</th>
-				                  <th>Дата начала</th>
-                                  <th> </th>
-                                  <th>Время начала</th>
-                                  <th>Дата завершения</th>
-				                </tr>
-				              </thead>
-				              <tbody>
-                              {% for task in tasks %}
-                                <tr>
-
-                                    <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Задача</th>
+                                            <th>Расшифровка</th>
+                                            <th>Проект</th>
+                                            <th>Дата начала</th>
+                                            <th> </th>
+                                            <th>Время начала</th>
+                                            <th>Дата завершения</th>
+                                            <th> </th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for task in tasks %}
+                                        <tr class="odd gradeX">
+                                            <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
                                     <td>{{ task.description|linebreaksbr }}</td>
                                     {% if task.project is not None %}
                                     <td><a href="{% url 'project_tasks_list' pk=task.project.pk %}">{{ task.project }}</a></td>
@@ -56,30 +56,21 @@
                                         <i class="glyphicon glyphicon-backward"></i></a></td>
                                     <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
                                         <i class="glyphicon glyphicon-trash"></i></a></td>
-                                </tr>
-                              {% endfor %}
-				              </tbody>
-				            </table>
-                            </div>
-                            <div class="pagination">
-                                <span class="step-links">
-                                    {% if tasks.has_previous %}
-                                        <a href="?page={{ tasks.previous_page_number }}">предыдущая</a>
-                                    {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
 
-                                    <span class="current">
-                                        Страница {{ tasks.number }} из {{ tasks.paginator.num_pages }}.
-                                    </span>
+                                </table>
 
-                                    {% if tasks.has_next %}
-                                        <a href="?page={{ tasks.next_page_number }}">следущая</a>
-                                    {% endif %}
-                                </span>
                             </div>
-		  				</div>
-		  			</div>
-  				</div>
-  			</div>
+                            <div>
+                                <a href="{% url 'task_new' %}" data-rel="collapse" title="Добавить задачу"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
 		  </div>
     <!--</div>-->
 {% endblock content %}

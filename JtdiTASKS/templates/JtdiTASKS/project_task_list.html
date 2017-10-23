@@ -10,50 +10,57 @@
 
             <div id="page-inner">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <!-- Advanced Tables -->
                     <div class="card">
-                        <div class="card-action">{% project_menu request project project_object.title%}</div>
-
-		  				<div class="card-content">
+                        <div class="card-action">
+                             {% project_menu request project project_object.title%}
+                        </div>
+                        <div class="card-content">
                             <div class="table-responsive">
-                                <table class="table table-hover">
-				              <thead>
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Задача</th>
+                                              <th>Расшифровка</th>
+                                              <th>Дата начала</th>
+                                              <th>Время начала</th>
+                                              <th>Проект</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for task in tasks %}
+                                        <tr class="odd gradeX">
+                                            <td><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
+                                            <td>{{ task.description|linebreaksbr }}</td>
+                                            <td>{{ task.date }}</td>
+                                            <td>{{ task.time }}</td>
+                                            <td>{{ task.project }}</td>
+                                            <td><a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу">
+                                                <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a></td>
+                                            <td><a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse" title="Редактировать задачу">
+                                                <i class="glyphicon glyphicon-cog"></i></a></td>
+                                            <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
+                                                <i class="glyphicon glyphicon-trash"></i></a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
 
-				                <tr>
-				                  <th>Задача</th>
-				                  <th>Расшифровка</th>
-				                  <th>Дата начала</th>
-                                  <th>Время начала</th>
-                                  <th>Исполнитель</th>
-				                </tr>
-				              </thead>
-				              <tbody>
-                              {% for task in tasks %}
-                                <tr>
-                                    <td><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
-                                    <td>{{ task.description|linebreaksbr }}</td>
-                                    <td>{{ task.date }}</td>
-                                    <td>{{ task.time }}</td>
-                                    <td>{{ task.performer }}</td>
-                                    <td><a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу">
-                                        <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a></td>
-                                    <td><a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse" title="Редактировать задачу">
-                                        <i class="glyphicon glyphicon-cog"></i></a></td>
-                                    <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
-                                        <i class="glyphicon glyphicon-trash"></i></a></td>
-                                </tr>
-                              {% endfor %}
-				              </tbody>
-				            </table>
-                            <div>
+                                </table>
 
-                                <a href="{% url 'project_task_new' project=project%}" data-rel="collapse"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a>
                             </div>
-		  				</div>
-		  			</div>
-  				</div>
+                            <div>
+                                <a href="{% url 'task_new' %}" data-rel="collapse" title="Добавить задачу"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
                 </div>
+            </div>
+            <div class="row">
   				<div class="col-md-6">
                     <!-- Advanced Tables -->
                     <div class="card">
@@ -89,6 +96,9 @@
 		  				</div>
 		  			</div>
   				</div>
+
+  			    </div>
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="card">
@@ -125,13 +135,12 @@
                     </div>
 
                     </div>
-
-  			    </div>
+                </div>
                 <div class="col-xs-12 col-sm-12 col-md-5">
                     <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>
                     <div id="url_ajax_gantt" url_ajax_gantt="{% url 'get_data_gantt' project%}"></div>
                 </div><!--/.row-->
-		  </div>
+		    </div>
             {% if tasks.count %}
             <div class="row">
                 <div class="col-md-12">

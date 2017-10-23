@@ -336,7 +336,8 @@ def task_list_overdue(request):
 
     return render(request, 'JtdiTASKS/task_overdue.html', {'tasks': tasks,
                                                            'tasks_finish': tasks_finish,
-                                                           'tasks_finished_today': tasks_finished_today})
+                                                           'tasks_finished_today': tasks_finished_today,
+                                                           'all_tasks':     Task.objects.all()})
 
 
 def task_list_finished(request):
