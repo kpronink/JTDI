@@ -609,6 +609,7 @@ def task_new(request, project=None):
             task.date = form.cleaned_data['date']
             task.time = datetime.datetime.combine(task.date, form.cleaned_data['time_field'])
             task.planed_date_finish = form.cleaned_data['date_planed']
+            task.date_time = task.time
             task.author = request.user
             if proj is not None:
                 task.project = proj
