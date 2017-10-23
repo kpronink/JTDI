@@ -30,12 +30,6 @@ def generate_color():
     return '#%02X%02X%02X' % (r(), r(), r())
 
 
-def time_to_utc(t):
-    dt = datetime.datetime.combine(datetime.date.today(), t)
-    utc_dt = dt.astimezone(pytz.utc)
-    return utc_dt.time()
-
-
 class RegisterFormView(FormView):
     form_class = UserCreationForm
     form_class.Meta.fields = ("username", "email")
@@ -176,7 +170,7 @@ def get_data_gantt(request, pk):
     if request.user.is_authenticated():
         proj = get_object_or_404(Project, pk=pk)
 
-        tasks = Task.objects.filter(project=proj).filter(finished=False).order_by('date_finish')\
+        tasks = Task.objects.filter(project=proj).filter(finished=False).order_by('date_finish') \
             .order_by('performer').order_by('date')
 
         # ...в день за указанный период
@@ -346,6 +340,12 @@ def project_task_list(request, pk):
     all_users_in_project = User.objects.filter(
         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
 
+    all_users_task_count = []
+    for user_in_proj in all_users_in_project:
+        all_users_task_count.append({'user': user_in_proj
+                                        , 'task_count': Task.objects.filter(project=project)
+                                    .filter(author=user_in_proj).count()})
+
     if request.method == 'POST':
         if project.author == request.user:
             project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
@@ -369,7 +369,7 @@ def project_task_list(request, pk):
                                                                 'tasks_finish': tasks_finish,
                                                                 'project': pk,
                                                                 'project_object': project,
-                                                                'users_in_project': all_users_in_project})
+                                                                'users_in_project': all_users_task_count})
 
 
 def search_result(request):
@@ -398,7 +398,7 @@ def task_detail(request, pk):
         return redirect('login')
     server_timezone = pytz.timezone(request.user.profile.timezone)
     task = get_object_or_404(Task, pk=pk)
-        
+
     if request.method == "POST":
         form = CommentAddForm(request.POST)
         if form.is_valid():
@@ -410,7 +410,7 @@ def task_detail(request, pk):
             comment.save(CommentsTask)
 
             return redirect('task_detail', pk)
-    
+
     comment_form = CommentAddForm()
     comments = CommentsTask.objects.filter(task=task).order_by('date_time')
     count_comments = comments.count()
@@ -596,7 +596,7 @@ def task_new(request, project=None):
         success_url = redirect('project_tasks_list', pk=project)
     else:
         users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
-        all_users_in_project = User.objects\
+        all_users_in_project = User.objects \
             .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
         success_url = redirect('/')
 
@@ -753,10 +753,10 @@ def project_recent_list(request, user):
     first_day = currentdate
     first_day = first_day.combine(datetime.date(1001, 1, 1), currentdate.min.time())
 
-    tasks_today_notify = Task.objects.filter(active=True).filter(author=user)\
+    tasks_today_notify = Task.objects.filter(active=True).filter(author=user) \
         .filter(date_time__range=(start_day, end_day)) \
         .order_by('date', 'priority', 'time').count()
-    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user)\
+    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=user) \
         .filter(date_time__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time').count()
 

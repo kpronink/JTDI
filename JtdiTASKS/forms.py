@@ -117,7 +117,12 @@ class TaskForm(forms.Form):
         performer = self.cleaned_data['performer']
 
         users_in_project = PartnerGroup.objects.filter(project=project)
-        all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
+
+        if project is not None:
+            all_users_in_project = User.objects.filter(
+                Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+        else:
+            all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
 
         pass_performer = (project is None and performer is None)
         for user_in_proj in all_users_in_project:
@@ -129,7 +134,7 @@ class TaskForm(forms.Form):
 
         # Always return a value to use as the new cleaned data, even if
         # this method didn't change it.
-        return performer
+        return self.cleaned_data
 
 
 class SearchForm(forms.Form):
