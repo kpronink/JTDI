@@ -17,7 +17,7 @@ from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectFor
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask
 from django.contrib.auth import logout, login
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 from qsstats import QuerySetStats
@@ -249,17 +249,6 @@ def task_list(request):
         .filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
-    # paginator_task = Paginator(tasks, 8)
-    # 
-    # page = request.GET.get('page')
-    # try:
-    #     tasks = paginator_task.page(page)
-    # except PageNotAnInteger:
-    #     # If page is not an integer, deliver first page.
-    #     tasks = paginator_task.page(1)
-    # except EmptyPage:
-    #     # If page is out of range (e.g. 9999), deliver last page of results.
-    #     tasks = paginator_task.page(paginator_task.num_pages)
 
     return render(request, 'JtdiTASKS/index.html', {'tasks': tasks,
                                                     'tasks_finish': tasks_finish,
@@ -285,17 +274,6 @@ def task_list_today(request):
         .filter(Q(author=request.user) | Q(performer=request.user)).filter(project=None) \
         .filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
-    paginator_task = Paginator(tasks, 8)
-
-    page = request.GET.get('page')
-    try:
-        tasks = paginator_task.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        tasks = paginator_task.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        tasks = paginator_task.page(paginator_task.num_pages)
 
     return render(request, 'JtdiTASKS/task_today.html', {'tasks': tasks,
                                                          'tasks_finish': tasks_finish,
@@ -322,22 +300,10 @@ def task_list_overdue(request):
         .filter(Q(author=request.user) | Q(performer=request.user)). \
         filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
-    paginator_task = Paginator(tasks, 8)
-
-    page = request.GET.get('page')
-    try:
-        tasks = paginator_task.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        tasks = paginator_task.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        tasks = paginator_task.page(paginator_task.num_pages)
 
     return render(request, 'JtdiTASKS/task_overdue.html', {'tasks': tasks,
                                                            'tasks_finish': tasks_finish,
-                                                           'tasks_finished_today': tasks_finished_today,
-                                                           'all_tasks':     Task.objects.all()})
+                                                           'tasks_finished_today': tasks_finished_today})
 
 
 def task_list_finished(request):
@@ -347,18 +313,6 @@ def task_list_finished(request):
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
         .filter(Q(author=request.user) | Q(performer=request.user)).order_by(
         'project').order_by('date_finish')
-
-    paginator_task = Paginator(tasks_finish, 16)
-
-    page = request.GET.get('page')
-    try:
-        tasks_finish = paginator_task.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        tasks_finish = paginator_task.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        tasks_finish = paginator_task.page(paginator_task.num_pages)
 
     return render(request, 'JtdiTASKS/finished_task.html', {'tasks': tasks_finish})
 
