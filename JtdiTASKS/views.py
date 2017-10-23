@@ -22,6 +22,8 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 from qsstats import QuerySetStats
 
+from django.utils.timezone import now, pytz
+
 
 def generate_color():
     r = lambda: random.randint(0, 255)
@@ -492,18 +494,18 @@ def task_start_stop(request, pk, status):
         if time_tracker.count():
             if time_tracker[0].finish is None:
                 time_tracker = get_object_or_404(TasksTimeTracker, pk=time_tracker[0].pk)
-                time_tracker.finish = datetime.datetime.now(tz=server_timezone)
+                time_tracker.finish = now().astimezone(server_timezone)
                 time_tracker.full_time = (time_tracker.finish - time_tracker.start).seconds / 60
             else:
                 time_tracker = TasksTimeTracker()
                 time_tracker.task = task
-                time_tracker.datetime = datetime.datetime.now(tz=server_timezone)
-                time_tracker.start = datetime.datetime.now(tz=server_timezone)
+                time_tracker.datetime = now().astimezone(server_timezone)
+                time_tracker.start = now().astimezone(server_timezone)
         else:
             time_tracker = TasksTimeTracker()
             time_tracker.task = task
-            time_tracker.datetime = datetime.datetime.now(tz=server_timezone)
-            time_tracker.start = datetime.datetime.now(tz=server_timezone)
+            time_tracker.datetime = now().astimezone(server_timezone)
+            time_tracker.start = now().astimezone(server_timezone)
 
         time_tracker.save()
 
@@ -594,7 +596,8 @@ def task_new(request, project=None):
         success_url = redirect('project_tasks_list', pk=project)
     else:
         users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
-        all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
+        all_users_in_project = User.objects\
+            .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
         success_url = redirect('/')
 
     if request.method == "POST":
@@ -615,7 +618,10 @@ def task_new(request, project=None):
                 task.project = proj
             else:
                 task.project = form.cleaned_data['project_field']
-            task.performer = form.cleaned_data['performer']
+            if form.cleaned_data['performer'] is not None:
+                task.performer = form.cleaned_data['performer']
+            else:
+                task.performer = task.author
             task.active = True
             task.repeating = form.cleaned_data['repeating']
             task.remind = form.cleaned_data['remind']
