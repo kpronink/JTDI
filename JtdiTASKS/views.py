@@ -344,7 +344,7 @@ def project_task_list(request, pk):
     for user_in_proj in all_users_in_project:
         all_users_task_count.append({'user': user_in_proj
                                         , 'task_count': Task.objects.filter(project=project)
-                                    .filter(author=user_in_proj).count()})
+                                    .filter(Q(author=user_in_proj) | Q(performer=user_in_proj)).count()})
 
     if request.method == 'POST':
         if project.author == request.user:
