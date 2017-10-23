@@ -119,7 +119,7 @@ class TaskForm(forms.Form):
         users_in_project = PartnerGroup.objects.filter(project=project)
         all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
 
-        pass_performer = False
+        pass_performer = (project is None and performer is None)
         for user_in_proj in all_users_in_project:
             if user_in_proj == performer:
                 pass_performer = True
