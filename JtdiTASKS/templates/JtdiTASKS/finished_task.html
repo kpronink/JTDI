@@ -44,8 +44,9 @@
                                     <td><a href="{% url 'project_tasks_list' pk=task.project.pk %}">{{ task.project }}</a></td>
                                     {% else %}
                                     <td><a href="">{{ task.project }}</a></td>
-                                    <td>{{ task.performer }}</td>
+
                                     {% endif %}
+                                    <td>{{ task.performer }}</td>
                                     <td>{{ task.date }}</td>
                                     {% if task.repeating %}
                                         <td><i class="glyphicon glyphicon-refresh"></i></td>
