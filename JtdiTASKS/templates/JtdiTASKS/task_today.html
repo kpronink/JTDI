@@ -21,6 +21,7 @@
                                         <th>Дата начала</th>
                                         <th>Время начала</th>
                                         <th>Проект</th>
+                                        <th>Исполнитель</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -33,6 +34,7 @@
                                         <td>{{ task.date }}</td>
                                         <td>{{ task.time }}</td>
                                         <td>{{ task.project }}</td>
+                                        <td>{{ task.performer }}</td>
                                         <td>
                                             <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
                                         </td>
