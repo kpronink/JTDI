@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/views.py" afterPath="$PROJECT_DIR$/JtdiTASKS/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,11 +40,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="315" column="35" lean-forward="false" selection-start-line="315" selection-start-column="35" selection-end-line="315" selection-end-column="35" />
+            <state relative-caret-position="411">
+              <caret line="137" column="27" lean-forward="false" selection-start-line="137" selection-start-column="27" selection-end-line="137" selection-end-column="27" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#924#1003#0" expanded="false" />
@@ -54,7 +54,7 @@
                 <element signature="e#2281#2555#0" expanded="false" />
                 <element signature="e#2592#3198#0" expanded="false" />
                 <element signature="e#3241#4083#0" expanded="false" />
-                <element signature="e#4120#5262#0" expanded="false" />
+                <element signature="e#5302#6397#0" expanded="false" />
                 <element signature="e#6437#7650#0" expanded="false" />
                 <element signature="e#7683#7727#0" expanded="false" />
                 <element signature="e#7763#8626#0" expanded="false" />
@@ -129,7 +129,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="finished_task.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="finished_task.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="459">
@@ -254,13 +254,13 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/new_task.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_edit.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_today.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_overdue.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
       </list>
     </option>
   </component>
@@ -908,46 +908,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="315" column="35" lean-forward="false" selection-start-line="315" selection-start-column="35" selection-end-line="315" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#924#1003#0" expanded="false" />
-            <element signature="e#1044#1696#0" expanded="false" />
-            <element signature="e#1734#2242#0" expanded="false" />
-            <element signature="e#1992#2242#0" expanded="false" />
-            <element signature="e#2281#2555#0" expanded="false" />
-            <element signature="e#2592#3198#0" expanded="false" />
-            <element signature="e#3241#4083#0" expanded="false" />
-            <element signature="e#4120#5262#0" expanded="false" />
-            <element signature="e#6437#7650#0" expanded="false" />
-            <element signature="e#7683#7727#0" expanded="false" />
-            <element signature="e#7763#8626#0" expanded="false" />
-            <element signature="e#8657#9829#0" expanded="false" />
-            <element signature="e#9866#11078#0" expanded="false" />
-            <element signature="e#11117#12379#0" expanded="false" />
-            <element signature="e#12419#12775#0" expanded="false" />
-            <element signature="e#12818#15902#0" expanded="false" />
-            <element signature="e#15937#16587#0" expanded="false" />
-            <element signature="e#16638#17808#0" expanded="false" />
-            <element signature="e#17843#19695#0" expanded="false" />
-            <element signature="e#19729#20109#0" expanded="false" />
-            <element signature="e#20158#21450#0" expanded="false" />
-            <element signature="e#21487#22100#0" expanded="false" />
-            <element signature="e#22144#22507#0" expanded="false" />
-            <element signature="e#22545#22933#0" expanded="false" />
-            <element signature="e#25999#26401#0" expanded="false" />
-            <element signature="e#26455#26941#0" expanded="false" />
-            <element signature="e#26990#28246#0" expanded="false" />
-            <element signature="e#28279#28564#0" expanded="false" />
-            <element signature="e#28601#28886#0" expanded="false" />
-            <element signature="e#29010#30506#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jtdi_venv/Lib/site-packages/django/forms/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -1008,6 +968,46 @@
         <state relative-caret-position="459">
           <caret line="48" column="65" lean-forward="false" selection-start-line="48" selection-start-column="65" selection-end-line="48" selection-end-column="65" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="137" column="27" lean-forward="false" selection-start-line="137" selection-start-column="27" selection-end-line="137" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#924#1003#0" expanded="false" />
+            <element signature="e#1044#1696#0" expanded="false" />
+            <element signature="e#1734#2242#0" expanded="false" />
+            <element signature="e#1992#2242#0" expanded="false" />
+            <element signature="e#2281#2555#0" expanded="false" />
+            <element signature="e#2592#3198#0" expanded="false" />
+            <element signature="e#3241#4083#0" expanded="false" />
+            <element signature="e#5302#6397#0" expanded="false" />
+            <element signature="e#6437#7650#0" expanded="false" />
+            <element signature="e#7683#7727#0" expanded="false" />
+            <element signature="e#7763#8626#0" expanded="false" />
+            <element signature="e#8657#9829#0" expanded="false" />
+            <element signature="e#9866#11078#0" expanded="false" />
+            <element signature="e#11117#12379#0" expanded="false" />
+            <element signature="e#12419#12775#0" expanded="false" />
+            <element signature="e#12818#15902#0" expanded="false" />
+            <element signature="e#15937#16587#0" expanded="false" />
+            <element signature="e#16638#17808#0" expanded="false" />
+            <element signature="e#17843#19695#0" expanded="false" />
+            <element signature="e#19729#20109#0" expanded="false" />
+            <element signature="e#20158#21450#0" expanded="false" />
+            <element signature="e#21487#22100#0" expanded="false" />
+            <element signature="e#22144#22507#0" expanded="false" />
+            <element signature="e#22545#22933#0" expanded="false" />
+            <element signature="e#25999#26401#0" expanded="false" />
+            <element signature="e#26455#26941#0" expanded="false" />
+            <element signature="e#26990#28246#0" expanded="false" />
+            <element signature="e#28279#28564#0" expanded="false" />
+            <element signature="e#28601#28886#0" expanded="false" />
+            <element signature="e#29010#30506#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
