@@ -104,7 +104,7 @@
                                <div class="media">
                                    <p class="pull-right"><small>{{ comment.date_time }}</small></p>
                                     <a class="media-left" href="#">
-                                      {% if user.profile.avatar %}
+                                      {% if comment.commentator.profile.avatar %}
                                         <img src="{{ comment.commentator.profile.avatar.url }}" class="circle-avatar" width="40" height="40" border="20">
                                        {% else %}
                                           <img src="{% static "/img/avatar_2x.png"%}" class="circle-avatar" width="40" height="40" border="20">
