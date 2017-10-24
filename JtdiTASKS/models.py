@@ -111,6 +111,24 @@ class Task(models.Model):
         (PRIORITY_3, 'Приоритет 3'),
         (PRIORITY_4, 'Приоритет 4'))
 
+    MONDAY = 'Понедельник'
+    TUESDAY = 'Вторник'
+    WEDNESDAY = 'Среда'
+    THURSDAY = 'Четверг'
+    FRIDAY = 'Пятница'
+    SATURDAY = 'Суббота'
+    SUNDAY = 'Воскресенье'
+
+    DAY_WEEEK = (
+        (MONDAY, 'Понедельник'),
+        (TUESDAY, 'Вторник'),
+        (WEDNESDAY, 'Среда'),
+        (THURSDAY, 'Четверг'),
+        (FRIDAY, 'Пятница'),
+        (SATURDAY, 'Суббота'),
+        (SUNDAY, 'Воскресенье'),
+    )
+
     author = models.ForeignKey('auth.User')
     performer = models.ForeignKey('auth.User', related_name='performer', blank=True, null=True)
     project = models.ForeignKey('Project', null=True, default=None,
@@ -130,6 +148,8 @@ class Task(models.Model):
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOISE,
                                 default=PRIORITY_4, blank=True)
     color = models.CharField(max_length=20, default='grey', blank=True)
+    firstdayweek = models.CharField(max_length=20, choices=DAY_WEEEK,
+                                    default=MONDAY, blank=True)
 
     status = models.CharField(max_length=20, choices=STATUS_CHOISE,
                               default=STATUS_WAIT, blank=True)
