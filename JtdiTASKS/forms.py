@@ -130,7 +130,10 @@ class TaskForm(forms.Form):
                 pass_performer = True
 
         if not pass_performer:
-            raise forms.ValidationError("Исполнитель не состоит в проекте (" + project.title + ")")
+            if project is not None:
+                raise forms.ValidationError("Исполнитель не состоит в проекте (" + project.title + ")")
+            else:
+                raise forms.ValidationError("Нельзя назначать исполнителя без проекта")
 
         # Always return a value to use as the new cleaned data, even if
         # this method didn't change it.
