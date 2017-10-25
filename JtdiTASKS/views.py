@@ -169,7 +169,7 @@ def get_index_task(request, pk):
                     continue
                 if traker.start.hour == val[0].hour or traker.finish.hour == val[0].hour:
                     time_work = traker.full_time
-            dt = local_time(val[0], local_timez)
+            dt = val[0].astimezone(local_timez)
             data.append({'y': dt.strftime("%H:%M"),
                          'a': time_work})
 
@@ -482,15 +482,15 @@ def task_start_stop(request, pk, status):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    local_timez= pytz.timezone(request.user.profile.timezone)
-    dt = local_time(datetime.datetime.now())
+    local_timez = pytz.timezone(request.user.profile.timezone)
+    dt = datetime.datetime.now().astimezone(local_timez)
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user or task.performer == request.user:
         time_tracker = TasksTimeTracker.objects.filter(task=task).order_by('-datetime')[:1]
         if time_tracker.count():
             if time_tracker[0].finish is None:
                 time_tracker = get_object_or_404(TasksTimeTracker, pk=time_tracker[0].pk)
-                time_tracker.finish = dt
+                time_tracker.finish = datetime.datetime.now().astimezone(local_timez)
                 time_tracker.full_time = (time_tracker.finish - time_tracker.start).seconds / 60
             else:
                 time_tracker = TasksTimeTracker()
@@ -748,7 +748,7 @@ def add_comment(request, pk):
 
         comment = CommentsTask()
         comment.task = task
-        comment.date_time = dt
+        comment.date_time = datetime.datetime.now().astimezone(local_timez)
         comment.comment = post_text
         comment.commentator = request.user
         comment.save(CommentsTask)
@@ -777,7 +777,7 @@ def get_comments(request, pk):
         response_data = {}
         response_data['postpk'] = comment.pk
         response_data['text'] = comment.comment
-        response_data['created'] = local_time(comment.date_time, local_timez).strftime('%B %d, %Y %H:%M')
+        response_data['created'] = comment.date_time.astimezone(local_timez).strftime('%B %d, %Y %H:%M')
         response_data['author'] = comment.commentator.username
         if request.user.profile.avatar:
             response_data['avatar'] = request.user.profile.avatar.url
