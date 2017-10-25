@@ -30,6 +30,12 @@ def generate_color():
     return '#%02X%02X%02X' % (r(), r(), r())
 
 
+def local_time(dt, tz):
+    if dt.tzinfo is None:
+        dt = tz.localize(dt)
+    return dt.astimezone(tz)
+
+
 class RegisterFormView(FormView):
     form_class = UserCreationForm
     form_class.Meta.fields = ("username", "email")
@@ -143,8 +149,8 @@ def get_index_tasks(request):
 def get_index_task(request, pk):
     if request.user.is_authenticated():
 
-        local_time = pytz.timezone(request.user.profile.timezone)
-        
+        local_timez = pytz.timezone(request.user.profile.timezone)
+
         currentdate = datetime.datetime.today()
         start_day = currentdate.combine(currentdate, currentdate.min.time())
         end_day = currentdate.combine(currentdate, currentdate.max.time())
@@ -163,7 +169,8 @@ def get_index_task(request, pk):
                     continue
                 if traker.start.hour == val[0].hour or traker.finish.hour == val[0].hour:
                     time_work = traker.full_time
-            data.append({'y': val[0].astimezone(local_time).strftime("%H:%M"),
+            dt = local_time(val[0], local_timez)
+            data.append({'y': dt.strftime("%H:%M"),
                          'a': time_work})
 
     return JsonResponse(data, safe=False)
@@ -475,26 +482,26 @@ def task_start_stop(request, pk, status):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    local_time = pytz.timezone(request.user.profile.timezone)
-
+    local_timez= pytz.timezone(request.user.profile.timezone)
+    dt = local_time(datetime.datetime.now())
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user or task.performer == request.user:
         time_tracker = TasksTimeTracker.objects.filter(task=task).order_by('-datetime')[:1]
         if time_tracker.count():
             if time_tracker[0].finish is None:
                 time_tracker = get_object_or_404(TasksTimeTracker, pk=time_tracker[0].pk)
-                time_tracker.finish = local_time.localize(datetime.datetime.now())
+                time_tracker.finish = dt
                 time_tracker.full_time = (time_tracker.finish - time_tracker.start).seconds / 60
             else:
                 time_tracker = TasksTimeTracker()
                 time_tracker.task = task
-                time_tracker.datetime = local_time.localize(datetime.datetime.now())
-                time_tracker.start = local_time.localize(datetime.datetime.now())
+                time_tracker.datetime = dt
+                time_tracker.start = dt
         else:
             time_tracker = TasksTimeTracker()
             time_tracker.task = task
-            time_tracker.datetime = local_time.localize(datetime.datetime.now())
-            time_tracker.start = local_time.localize(datetime.datetime.now())
+            time_tracker.datetime = dt
+            time_tracker.start = dt
 
         time_tracker.save()
 
@@ -732,7 +739,8 @@ def not_invited(request, pk):
 
 
 def add_comment(request, pk):
-    local_time = pytz.timezone(request.user.profile.timezone)
+    local_timez = pytz.timezone(request.user.profile.timezone)
+    dt = local_time(datetime.datetime.now(), local_timez)
     task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
         post_text = request.POST.get('the_post')
@@ -740,7 +748,7 @@ def add_comment(request, pk):
 
         comment = CommentsTask()
         comment.task = task
-        comment.date_time = local_time.localize(datetime.datetime.now())
+        comment.date_time = dt
         comment.comment = post_text
         comment.commentator = request.user
         comment.save(CommentsTask)
@@ -764,12 +772,12 @@ def get_comments(request, pk):
     task = get_object_or_404(Task, pk=pk)
     comments = CommentsTask.objects.filter(task=task).order_by('date_time')
     data = []
-    local_time = pytz.timezone(request.user.profile.timezone)
+    local_timez = pytz.timezone(request.user.profile.timezone)
     for comment in comments:
         response_data = {}
         response_data['postpk'] = comment.pk
         response_data['text'] = comment.comment
-        response_data['created'] = comment.date_time.astimezone(local_time).strftime('%B %d, %Y %H:%M')
+        response_data['created'] = local_time(comment.date_time, local_timez).strftime('%B %d, %Y %H:%M')
         response_data['author'] = comment.commentator.username
         if request.user.profile.avatar:
             response_data['avatar'] = request.user.profile.avatar.url
