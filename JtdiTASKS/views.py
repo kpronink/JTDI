@@ -13,7 +13,7 @@ from django.template.defaulttags import register
 from django.templatetags.static import static
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
-    ProjectFormRename, ProjectInviteUser, CommentAddForm
+    ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask
 from django.contrib.auth import logout, login
@@ -37,8 +37,7 @@ def local_time(dt, tz):
 
 
 class RegisterFormView(FormView):
-    form_class = UserCreationForm
-    form_class.Meta.fields = ("username", "email")
+    form_class = MyUserCreationForm
 
     # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
     # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.

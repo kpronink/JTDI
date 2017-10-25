@@ -1,6 +1,8 @@
 import datetime
 
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import EmailValidator
 from django.db.models import Q
 from django.forms import Textarea, ClearableFileInput
 from django.forms.widgets import Input
@@ -30,6 +32,32 @@ class CharFieldWidget(Input):
         self.strip = strip
         self.empty_value = empty_value
         super(CharFieldWidget, self).__init__(*args, **kwargs)
+
+
+class MyUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+        unique_together = [['email']]
+
+    email = forms.CharField(
+        label="email",
+        widget=forms.EmailInput,
+        strip=False,
+        help_text="Укажите активный email.",
+        validators=[EmailValidator]
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(MyUserCreationForm, self).__init__(*args, **kwargs)
+
+        self.fields['email'].required = True
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if email and User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Пользователь с таким email уже существует")
+        return email
 
 
 class UserProfileForm(forms.ModelForm):
