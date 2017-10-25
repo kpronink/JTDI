@@ -1,7 +1,6 @@
-import json
+
 import random
 
-import pytz
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 
@@ -11,6 +10,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 import datetime
 
 from django.template.defaulttags import register
+from django.templatetags.static import static
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
     ProjectFormRename, ProjectInviteUser, CommentAddForm
@@ -142,6 +142,9 @@ def get_index_tasks(request):
 
 def get_index_task(request, pk):
     if request.user.is_authenticated():
+
+        local_time = pytz.timezone(request.user.profile.timezone)
+        
         currentdate = datetime.datetime.today()
         start_day = currentdate.combine(currentdate, currentdate.min.time())
         end_day = currentdate.combine(currentdate, currentdate.max.time())
@@ -160,7 +163,7 @@ def get_index_task(request, pk):
                     continue
                 if traker.start.hour == val[0].hour or traker.finish.hour == val[0].hour:
                     time_work = traker.full_time
-            data.append({'y': val[0].strftime("%H:%M"),
+            data.append({'y': val[0].astimezone(local_time).strftime("%H:%M"),
                          'a': time_work})
 
     return JsonResponse(data, safe=False)
@@ -397,28 +400,11 @@ def search_result(request):
 def task_detail(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
-    server_timezone = pytz.timezone(request.user.profile.timezone)
+
     task = get_object_or_404(Task, pk=pk)
-
-    if request.method == "POST":
-        form = CommentAddForm(request.POST)
-        if form.is_valid():
-            comment = CommentsTask()
-            comment.task = task
-            comment.date_time = datetime.datetime.now(tz=server_timezone)
-            comment.comment = form.cleaned_data['addComment']
-            comment.commentator = request.user
-            comment.save(CommentsTask)
-
-            return redirect('task_detail', pk)
-
     comment_form = CommentAddForm()
-    comments = CommentsTask.objects.filter(task=task).order_by('date_time')
-    count_comments = comments.count()
 
     return render(request, 'JtdiTASKS/task_detail.html', {'task': task,
-                                                          'count_comments': count_comments,
-                                                          'comments': comments,
                                                           'comment_form': comment_form
                                                           })
 
@@ -488,25 +474,27 @@ def task_del(request, pk):
 def task_start_stop(request, pk, status):
     if not request.user.is_authenticated():
         return redirect('login')
-    server_timezone = pytz.timezone(request.user.profile.timezone)
+
+    local_time = pytz.timezone(request.user.profile.timezone)
+
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user or task.performer == request.user:
         time_tracker = TasksTimeTracker.objects.filter(task=task).order_by('-datetime')[:1]
         if time_tracker.count():
             if time_tracker[0].finish is None:
                 time_tracker = get_object_or_404(TasksTimeTracker, pk=time_tracker[0].pk)
-                time_tracker.finish = now().astimezone(server_timezone)
+                time_tracker.finish = local_time.localize(datetime.datetime.now())
                 time_tracker.full_time = (time_tracker.finish - time_tracker.start).seconds / 60
             else:
                 time_tracker = TasksTimeTracker()
                 time_tracker.task = task
-                time_tracker.datetime = now().astimezone(server_timezone)
-                time_tracker.start = now().astimezone(server_timezone)
+                time_tracker.datetime = local_time.localize(datetime.datetime.now())
+                time_tracker.start = local_time.localize(datetime.datetime.now())
         else:
             time_tracker = TasksTimeTracker()
             time_tracker.task = task
-            time_tracker.datetime = now().astimezone(server_timezone)
-            time_tracker.start = now().astimezone(server_timezone)
+            time_tracker.datetime = local_time.localize(datetime.datetime.now())
+            time_tracker.start = local_time.localize(datetime.datetime.now())
 
         time_tracker.save()
 
@@ -742,6 +730,55 @@ def not_invited(request, pk):
 
 # Comments
 
+
+def add_comment(request, pk):
+    local_time = pytz.timezone(request.user.profile.timezone)
+    task = get_object_or_404(Task, pk=pk)
+    if request.method == 'POST':
+        post_text = request.POST.get('the_post')
+        response_data = {}
+
+        comment = CommentsTask()
+        comment.task = task
+        comment.date_time = local_time.localize(datetime.datetime.now())
+        comment.comment = post_text
+        comment.commentator = request.user
+        comment.save(CommentsTask)
+
+        response_data['result'] = 'Create post successful!'
+        response_data['postpk'] = comment.pk
+        response_data['text'] = comment.comment
+        response_data['created'] = comment.date_time.strftime('%B %d, %Y %H:%M')
+        response_data['author'] = comment.commentator.username
+        if request.user.profile.avatar:
+            response_data['avatar'] = request.user.profile.avatar.url
+        else:
+            response_data['avatar'] = static('img/avatar_2x.png')
+
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({"nothing to see": "this isn't happening"})
+
+
+def get_comments(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    comments = CommentsTask.objects.filter(task=task).order_by('date_time')
+    data = []
+    local_time = pytz.timezone(request.user.profile.timezone)
+    for comment in comments:
+        response_data = {}
+        response_data['postpk'] = comment.pk
+        response_data['text'] = comment.comment
+        response_data['created'] = comment.date_time.astimezone(local_time).strftime('%B %d, %Y %H:%M')
+        response_data['author'] = comment.commentator.username
+        if request.user.profile.avatar:
+            response_data['avatar'] = request.user.profile.avatar.url
+        else:
+            response_data['avatar'] = static('img/avatar_2x.png')
+        data.append(response_data)
+
+    return JsonResponse(data, safe=False)
+    
 
 # Include tags
 

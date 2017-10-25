@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'^task/(?P<pk>[0-9]+)/not_remind$', views.task_do_not_remind, name='not_remind$'),
     url(r'^(?P<pk>[0-9]+)/restore', views.task_restore, name='task_restore'),
     url(r'^task/new/$', views.task_new, name='task_new'),
+    url(r'^add_comment/(?P<pk>[0-9]+)/$', views.add_comment, name='add_comment'),
+    url(r'^get_comments/(?P<pk>[0-9]+)/$', views.get_comments, name='get_comments'),
     url(r'^task/new/(?P<project>[0-9]+)/$', views.task_new, name='project_task_new'),
     url(r'^accounts/', include('allauth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
