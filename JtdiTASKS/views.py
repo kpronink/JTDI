@@ -273,8 +273,7 @@ def task_list_today(request):
         .filter(date_time__range=(start_day, end_day)) \
         .order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
-        .filter(Q(author=request.user) | Q(performer=request.user)) \
-        .filter(project=None).order_by(
+        .filter(Q(author=request.user) | Q(performer=request.user)).order_by(
         'date_finish')
     tasks_finished_today = Task.objects.filter(active=False).filter(finished=True) \
         .filter(Q(author=request.user) | Q(performer=request.user)).filter(project=None) \
@@ -436,6 +435,8 @@ def task_edit(request, pk):
         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
 
     task = get_object_or_404(Task, pk=pk)
+    if task.author != request.user:
+        return redirect('task_detail', pk=task.pk)
 
     if request.method == "POST":
         if task.author == request.user:

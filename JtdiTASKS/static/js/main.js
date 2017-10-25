@@ -88,7 +88,7 @@ function create_post() {
     });
 };
 
-
+if($('*').is('.comments-list')) {
 $(document).ready(setInterval(function get_comments() {
     $.ajax({
         url : $("#url_ajax_get_comments").attr('url_ajax_get_comments'), // the endpoint
@@ -107,7 +107,7 @@ $(document).ready(setInterval(function get_comments() {
         }
 
     });
-}, 5000))
+}, 5000))}
 
 function remove(id)
             {
