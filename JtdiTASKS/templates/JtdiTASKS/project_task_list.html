@@ -1,157 +1,126 @@
-{% extends 'JtdiTASKS/base.html' %}
-{% load staticfiles %}
-{% block content %}
+{% extends 'JtdiTASKS/base.html' %} {% load staticfiles %} {% block content %}
 <div id="page-wrapper">
-		  <div class="header">
-                        <h1 class="page-header">
+    <div class="header">
+        <h1 class="page-header">
                             Задачи проекта
-                        </h1>
-        </div>
-
-            <div id="page-inner">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Advanced Tables -->
-                    <div class="card">
-                        <div class="card-action">
-                             {% project_menu request project project_object.title%}
+                        </h1> </div>
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Advanced Tables -->
+                <div class="card">
+                    <div class="card-action"> {% project_menu request project project_object.title%} </div>
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Задача</th>
+                                        <th>Расшифровка</th>
+                                        <th>Дата начала</th>
+                                        <th>Время начала</th>
+                                        <th>Исполнитель</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody> {% for task in tasks %}
+                                    <tr class="odd gradeX">
+                                        <td><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
+                                        <td>{{ task.description|linebreaksbr }}</td>
+                                        <td>{{ task.date }}</td>
+                                        <td>{{ task.time }}</td>
+                                        <td>{{ task.performer }}</td>
+                                        <td>
+                                            <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse" title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу"> <i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+                                    </tr> {% endfor %} </tbody>
+                            </table>
                         </div>
-                        <div class="card-content">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>Задача</th>
-                                              <th>Расшифровка</th>
-                                              <th>Дата начала</th>
-                                              <th>Время начала</th>
-                                              <th>Исполнитель</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for task in tasks %}
-                                        <tr class="odd gradeX">
-                                            <td><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
-                                            <td>{{ task.description|linebreaksbr }}</td>
-                                            <td>{{ task.date }}</td>
-                                            <td>{{ task.time }}</td>
-                                            <td>{{ task.performer }}</td>
-                                            <td><a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse" title="Завершить задачу">
-                                                <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a></td>
-                                            <td><a href="{% url 'task_edit' pk=task.pk %}" data-rel="collapse" title="Редактировать задачу">
-                                                <i class="glyphicon glyphicon-cog"></i></a></td>
-                                            <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
-                                                <i class="glyphicon glyphicon-trash"></i></a></td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-                            <div>
-                                <a href="{% url 'task_new' %}" data-rel="collapse" title="Добавить задачу"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a>
-                            </div>
+                        <div> <a href="{% url 'task_new' %}" data-rel="collapse" title="Добавить задачу"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a> </div>
+                    </div>
+                </div>
+                <!--End Advanced Tables -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Advanced Tables -->
+                <div class="card">
+                    <div class="card-action"> Завершенные сегодня </div>
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Задача</th>
+                                        <th>Расшифровка</th>
+                                        <th>Дата начала</th>
+                                        <th>Дата завершения</th>
+                                    </tr>
+                                </thead>
+                                <tbody> {% for task in tasks_finish %}
+                                    <tr>
+                                        <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
+                                        <td>{{ task.description|linebreaksbr }}</td>
+                                        <td>{{ task.date }}</td>
+                                        <td>{{ task.date_time_finish }}</td>
+                                        <td>
+                                            <a href="{% url 'task_restore' pk=task.pk %}" data-rel="collapse" title="Восстановить задачу"> <i class="glyphicon glyphicon-backward"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу"> <i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+                                    </tr> {% endfor %} </tbody>
+                            </table>
                         </div>
                     </div>
-                    <!--End Advanced Tables -->
                 </div>
             </div>
-            <div class="row">
-  				<div class="col-md-6">
-                    <!-- Advanced Tables -->
-                    <div class="card">
-                        <div class="card-action">
-                            Завершенные сегодня
-                        </div>
-                        <div class="card-content">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-				              <thead>
-				                <tr>
-				                  <th>Задача</th>
-				                  <th>Расшифровка</th>
-				                  <th>Дата начала</th>
-                                  <th>Дата завершения</th>
-				                </tr>
-				              </thead>
-				              <tbody>
-				                {% for task in tasks_finish %}
-                                <tr>
-                                    <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
-                                    <td>{{ task.description|linebreaksbr }}</td>
-                                    <td>{{ task.date }}</td>
-                                    <td>{{ task.date_time_finish }}</td>
-                                    <td><a href="{% url 'task_restore' pk=task.pk %}" data-rel="collapse" title="Восстановить задачу">
-                                        <i class="glyphicon glyphicon-backward"></i></a></td>
-                                    <td><a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу">
-                                        <i class="glyphicon glyphicon-trash"></i></a></td>
-                                </tr>
-                              {% endfor %}
-				              </tbody>
-				            </table>
-		  				</div>
-		  			</div>
-  				</div>
-
-  			    </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="card">
-                                <div class="card-image donutpad">
-                                    <div id="morris-donut-chart">
-                                    </div>
-                                </div>
-                                <div class="card-action">
-                                    <b>Основные показатели проекта</b>
-								</div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-image donutpad">
+                                <div id="morris-donut-chart"> </div>
                             </div>
+                            <div class="card-action"> <b>Основные показатели проекта</b> </div>
                         </div>
-
-                        <div class="col-xs-12">
-                            <div class="card"><div class="card-action">
-                          <b>Участники проекта</b>
-                        </div>
-                        <div class="card-image">
-                          <div class="collection">
-                              {% for user_in_proj in users_in_project %}
-                                  <a href="#" class="collection-item">{{ user_in_proj.user.username }} ({{ user_in_proj.user.first_name }})
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-action"> <b>Участники проекта</b> </div>
+                            <div class="card-image">
+                                <div class="collection"> {% for user_in_proj in users_in_project %} <a href="#" class="collection-item">{{ user_in_proj.user.username }} ({{ user_in_proj.user.first_name }})
                                     {% if project_object.author == user_in_proj.user %}
                                          Владелец
                                         <span class="new badge red" data-badge-caption="">{{ user_in_proj.task_count }}</span>
                                      {% else %}
                                         <span class="badge" data-badge-caption="">{{ user_in_proj.task_count }}</span>
-                                    {% endif %}</a>
-                              {% endfor %}
+                                    {% endif %}</a> {% endfor %} </div>
                             </div>
                         </div>
-
-                        </div>
-
-                    </div>
-
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-5">
-                    <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>
-                    <div id="url_ajax_gantt" url_ajax_gantt="{% url 'get_data_gantt' project%}"></div>
-                </div><!--/.row-->
-		    </div>
-            {% if tasks.count %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-		  				<div class="card-content" id="gantt_shadow" style="all: initial">
-                            {% gantt_block %}
-                        </div>
                     </div>
                 </div>
             </div>
-            {% endif %}>
+            <div class="col-xs-12 col-sm-12 col-md-5">
+                <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>
+                <div id="url_ajax_gantt" url_ajax_gantt="{% url 'get_data_gantt' project%}"></div>
             </div>
-    </div>
-{% endblock content %}
+            <!--/.row-->
+        </div> {% if tasks.count %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content" id="gantt_shadow" style="all: initial"> {% gantt_block %} </div>
+                </div>
+            </div>
+        </div> {% endif %}> </div>
+</div> {% endblock content %}

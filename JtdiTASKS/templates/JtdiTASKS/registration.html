@@ -1,33 +1,22 @@
-{% extends 'JtdiTASKS/base.html' %}
-{% load bootstrap %}
-{% load staticfiles %}
-{% block content %}
+{% extends 'JtdiTASKS/base.html' %} {% load bootstrap %} {% load staticfiles %} {% block content %}
 <div class="page-content container">
-		<div class="row">
-			<div class="col-md-4 col-md-offset-4">
-				<div class="card">
-			        <div class="card-content">
-			            <div class="content-wrap">
-			                <h4 align="center">Регистрация</h4>
-                            <form method="post" action="">
-                            {% csrf_token %}
-                                <div class="form-group">
-                                    {{ form|bootstrap }}
-                                </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content-wrap">
+                        <h4 align="center">Регистрация</h4>
+                        <form method="post" action=""> {% csrf_token %}
+                            <div class="form-group"> {{ form|bootstrap }} </div>
                             <div class="action">
-			                    <button type="submit" class="btn btn-primary btn-sm" align="center">Зарегистрироваться</button>
-			                </div>
-                            </form>
-			            </div>
-			        </div>
-
-			        <div class="already" align="center">
-			            <p>Уже есть аккаут?</p>
-			            <a href={% url 'login' %}>Войти</a>
-			        </div>
-			    </div>
-			</div>
-		</div>
-	</div>
-
-{% endblock %}
+                                <button type="submit" class="btn btn-primary btn-sm" align="center">Зарегистрироваться</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="already" align="center">
+                    <p>Уже есть аккаут?</p> <a href={% url 'login' %}>Войти</a> </div>
+            </div>
+        </div>
+    </div>
+</div> {% endblock %}

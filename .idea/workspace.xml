@@ -2,8 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/gantt.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/gantt.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/index.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/login.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/new_task.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/new_task.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_menu.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_menu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_new.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_new.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/provider_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/provider_list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_complete.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_complete.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_confirm.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_confirm.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_done.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_done.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_email.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_email.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_form.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_form.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/search.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/search.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/search_block.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/search_block.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_edit.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_edit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_menu.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_menu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_overdue.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_overdue.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_today.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_today.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/user_invite.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/user_invite.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/base.html" afterPath="$PROJECT_DIR$/backup/templates/JtdiTASKS/base.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -87,29 +113,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-2172">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="105" column="42" lean-forward="true" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="42" />
               <folding>
-                <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
+                <marker date="1509016060278" expanded="true" signature="7352:7374" ph="{% block content ... %}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom-scripts.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="69" column="46" lean-forward="false" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
-              <folding />
+            <state relative-caret-position="94">
+              <caret line="105" column="42" lean-forward="false" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="42" />
+              <folding>
+                <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,7 +147,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-234">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1509015939531" expanded="true" signature="3170:3192" ph="{% block content ... %}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -577,7 +597,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="django-line">
           <url>file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html</url>
-          <line>132</line>
+          <line>164</line>
           <option name="timeStamp" value="352" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -752,9 +772,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="37" lean-forward="false" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-          <folding>
-            <element signature="e#747#767#0#HTML" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -919,16 +937,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/bootstrap.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/morris/morris-0.4.3.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1004,7 +1012,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-234">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1509015939531" expanded="true" signature="3170:3192" ph="{% block content ... %}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1077,7 +1087,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2172">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1509016060278" expanded="true" signature="7352:7374" ph="{% block content ... %}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1089,21 +1101,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/bootstrap.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="105" column="42" lean-forward="true" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="42" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
+        <state relative-caret-position="-2601">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
+        <state relative-caret-position="1105">
           <caret line="69" column="46" lean-forward="false" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="105" column="42" lean-forward="false" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="42" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

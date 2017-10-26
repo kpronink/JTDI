@@ -1,21 +1,13 @@
-
-{% extends 'JtdiTASKS/base.html' %}
-{% load bootstrap %}
-{% load staticfiles %}
-{% load socialaccount %}
-{% block content %}
 <div class="page-content container">
-		<div class="row">
-			<div class="col-md-4 col-md-offset-4">
-				<div class="card">
-			        <div class="card-content">
-			            <div class="content-wrap">
-			                <h4 align="center">Вход</h4>
-			                <div class="social" align="center">
-                                <a class="btn btn-social-icon btn-sm btn-vk" href="{% provider_login_url "vk" method="oauth2" %}">
-                                    <span class="fa fa-vk"></span>
-                                  </a>
-	                            <!--<a class="face_login" href="">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content-wrap">
+                        <h4 align="center">Вход</h4>
+                        <div class="social" align="center">
+                            <a class="btn btn-social-icon btn-sm btn-vk" href="{% provider_login_url " vk " method="oauth2 " %}"> <span class="fa fa-vk"></span> </a>
+                            <!--<a class="face_login" href="">
 	                                <span class="face_icon">
 	                                    <img src="../../static/images/facebook.png" alt="fb">
 	                                </span>
@@ -25,26 +17,18 @@
 	                                <hr class="left">
 	                                <span>Или</span>
 	                                <hr class="right">
-	                            </div>-->
-	                        </div>
-			                <form method="POST" action="." data-validate-username-url="{% url 'validate_username' %}">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        {{ form|bootstrap }}
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-sm" align="center">Войти</button>
-                                </form>
-			                </div>
-			            </div>
-                    <div class="already" align="center">
-			            <p>Еще нет аккаута?</p>
-			            <a href={% url 'register' %}>Регистрация</a>
-                        <p>Забыли пароль</p>
-                        <a href={% url 'password_reset' %}>Восстановление пароля</a>
-			        </div>
-			        </div>
-			    </div>
-			</div>
-		</div>
-	</div>
-{% endblock content %}
+	                            </div>--></div>
+                        <form method="POST" action="." data-validate-username-url="{% url 'validate_username' %}"> {% csrf_token %}
+                            <div class="form-group"> {{ form|bootstrap }} </div>
+                            <button type="submit" class="btn btn-primary btn-sm" align="center">Войти</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="already" align="center">
+                    <p>Еще нет аккаута?</p> <a href={% url 'register' %}>Регистрация</a>
+                    <p>Забыли пароль</p> <a href={% url 'password_reset' %}>Восстановление пароля</a> </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div> {% endblock content %}

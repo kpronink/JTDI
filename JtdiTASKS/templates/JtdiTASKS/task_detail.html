@@ -3,113 +3,80 @@
     <div class="header">
         <h1 class="page-header">
                             Детали задачи
-        </h1>
-    </div>
+        </h1> </div>
     <div id="page-inner">
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                            <div class="card-action">
-                                Задача
-                            </div>
-                            <div class="card-content">
+                    <div class="card-action"> Задача </div>
+                    <div class="card-content">
                         <!--<form action="">-->
-                            <fieldset>
-                                    <div class="form-group">
-                                        {% if task.status != 'Finished' %}
-                                        <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse">
-                                            <i class="glyphicon glyphicon-flag" style="color: {{ task.color }};"> </i>Завершить</a>
-                                        <div class="clearfix"></div>
-                                        {% task_menu request task=task.pk user=user%}
-                                        {% else %}
-                                        {% endif %}
-                                        <div class="form-group">
-                                            <label>Заголовок задачи</label>
-                                            <input class="form-control" placeholder="Заголовок задачи" type="text" maxlength=1000 value="{{ task.title }}" readonly> </div>
-                                        <div class="form-group">
-                                            <label>Расшифровка</label>
-                                            <textarea class="form-control" placeholder="Расшифровка" rows="3" readonly> "{{ task.description }}" </textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Дата начала</label>
-                                            {{ task.date }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Время начала</label>
-                                            {{ task.time }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Дата завершения</label>
-                                            {{ task.date_time_finish }}
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="">
-                                                <input type="checkbox" value="{{ task.repeating }}">
-                                                <label for="{{ task.repeating.auto_id }}">Повторяющаяся</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="">
-                                                <input type="checkbox" value="{{ task.remind }}">
-                                                <label for="{{ task.remind.auto_id }}">Не напоминать</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Состояние задачи</label>
-                                            {{ task.status }}
-                                        </div>
-                                        <div class="card-action">
-                                            <div class="form-group">
-                                                {% if task.status == 'Wait' or task.status == 'Stoped' %}
-                                                    <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status="Started" %}">
-                                                      <i class="material-icons" style="size: 50px">play_circle_filled</i>
-                                                    </a>
-                                                {% elif task.status == 'Started' %}
-                                                    <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status="Stoped" %}">
-                                                      <i class="material-icons" style="size: 50px">pause_circle_filled</i>
-                                                    </a>
-                                                {% elif task.status == 'Finished' %}
-                                                {% endif %}
-                                            </div>
-                                        </div>
+                        <fieldset>
+                            <div class="form-group"> {% if task.status != 'Finished' %}
+                                <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }};"> </i>Завершить</a>
+                                <div class="clearfix"></div> {% task_menu request task=task.pk user=user%} {% else %} {% endif %}
+                                <div class="form-group">
+                                    <label>Заголовок задачи</label>
+                                    <input class="form-control" placeholder="Заголовок задачи" type="text" maxlength=1000 value="{{ task.title }}" readonly> </div>
+                                <div class="form-group">
+                                    <label>Расшифровка</label>
+                                    <textarea class="form-control" placeholder="Расшифровка" rows="3" readonly> "{{ task.description }}" </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Дата начала</label> {{ task.date }} </div>
+                                <div class="form-group">
+                                    <label>Время начала</label> {{ task.time }} </div>
+                                <div class="form-group">
+                                    <label>Дата завершения</label> {{ task.date_time_finish }} </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <input type="checkbox" value="{{ task.repeating }}">
+                                        <label for="{{ task.repeating.auto_id }}">Повторяющаяся</label>
                                     </div>
-                            </fieldset>
+                                </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <input type="checkbox" value="{{ task.remind }}">
+                                        <label for="{{ task.remind.auto_id }}">Не напоминать</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Состояние задачи</label> {{ task.status }} </div>
+                                <div class="card-action">
+                                    <div class="form-group"> {% if task.status == 'Wait' or task.status == 'Stoped' %}
+                                        <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status=" Started " %}"> <i class="material-icons" style="size: 50px">play_circle_filled</i> </a> {% elif task.status == 'Started' %}
+                                        <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status=" Stoped " %}"> <i class="material-icons" style="size: 50px">pause_circle_filled</i> </a> {% elif task.status == 'Finished' %} {% endif %} </div>
+                                </div>
+                            </div>
+                        </fieldset>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-image">
-                             <div id="morris-line-chart"></div>
-                            </div>
-                            <div class="card-action">
-                                <b>Основные показатели задачи</b>
-                            </div>
-                        </div>
-                        <div id="url_ajax_line_chart" url_ajax_line_chart="{% url 'get_index_task' task.pk%}"></div>
+                <div class="card">
+                    <div class="card-image">
+                        <div id="morris-line-chart"></div>
                     </div>
+                    <div class="card-action"> <b>Основные показатели задачи</b> </div>
+                </div>
+                <div id="url_ajax_line_chart" url_ajax_line_chart="{% url 'get_index_task' task.pk%}"></div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-action">
                         <div class="page-header">
-                            <h1><small class="pull-right">{{ count_comments }} Комментиев</small> </h1>
-                        </div>
+                            <h1><small class="pull-right">{{ count_comments }} Комментиев</small> </h1> </div>
                     </div>
                     <div class="card-content">
-                        <div class="comments-list" id="comments">
-
-                        </div>
+                        <div class="comments-list" id="comments"> </div>
                         <div class="tab-pane" id="add-comment" style="padding: 10px;">
-                            <form  action="/create_post/" method="POST" class="form-horizontal" id="commentForm" role="form">
+                            <form action="/create_post/" method="POST" class="form-horizontal" id="commentForm" role="form">
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-10">
-                                        {% csrf_token %}
-                                        {{ comment_form }}
-                                    </div>
+                                    <div class="col-sm-10"> {% csrf_token %} {{ comment_form }} </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10 clearfix">
