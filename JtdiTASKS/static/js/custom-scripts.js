@@ -4,7 +4,7 @@
     http://creativecommons.org/licenses/by/3.0/
 ---------------------------------------------------------  */
 
-(function ($) {
+$(document).ready((function ($) {
     "use strict";
     var mainApp = {
 
@@ -24,7 +24,7 @@
 
             /* MORRIS BAR CHART
 			-----------------------------------------*/
-            try{
+            if($('*').is('#url_ajax_chart_bar')) {try{
             $.ajax({
                     url: $("#url_ajax_chart_bar").attr('url_ajax_chart_bar'),
                     dataType: 'json',
@@ -43,11 +43,11 @@
                 resize: true
             });}})}
             catch(err)
-{ }
+{ }}
 
             /* MORRIS DONUT CHART
 			----------------------------------------*/
-            try
+             if($('*').is('#url_ajax_chart')) {try
             {
                 $.ajax({
                     url: $("#url_ajax_chart").attr('url_ajax_chart'),
@@ -62,12 +62,12 @@
       ],
                         resize: true
                     });}})}
-                             catch(err) { }
+                             catch(err) { }}
 
 
                         /* MORRIS LINE CHART
 			----------------------------------------*/
-            try{$.ajax({
+            if($('*').is('#url_ajax_line_chart')) {try{$.ajax({
                     url: $("#url_ajax_line_chart").attr('url_ajax_line_chart'),
                     dataType: 'json',
                     success: function (data){Morris.Line({
@@ -87,7 +87,7 @@
                 lineColors:['gray']
 
                     });}})}
-            catch(err) { }
+            catch(err) { }}
 
                 $('.bar-chart').cssCharts({type:"bar"});
                 $('.donut-chart').cssCharts({type:"donut"}).trigger('show-donut-chart');
@@ -124,4 +124,4 @@
 
 	$(".dropdown-button").dropdown();
 	
-}(jQuery));
+}(jQuery)));

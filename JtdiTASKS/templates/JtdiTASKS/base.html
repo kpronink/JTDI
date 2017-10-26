@@ -30,65 +30,23 @@
 
 </head>
 
-    {% block javascript %}
+{% block javascript %}
         <script type="text/javascript">
-        function openbox(id){
-            display = document.getElementById(id).style.display;
-            if(display=='none'){
-               document.getElementById(id).style.display='block';
-            }else{
-               document.getElementById(id).style.display='none';
-            }
-        }
-    </script>
-    <script>
-        function show()
-        {
-            $.ajax({
-                url: "{% url 'get_recent_task' %}",
-                dataType: 'json',
-                success: function (data) {
-                  $.each(data, function( key, value ) {
-                      var tmpl = [
-                      '<div id="myAlert5" class="alert alert-success">',
-                          '   <span class="close">&times;</span>',
-                          '   <a href="%KEY%">%value%</a>',
-                          '   <a href="%KEY%not_remind">| Не напоминать</a>',
-                      '</div>'
-                        ].join("\n");
-                        var el = document.getElementById('alert');
-
-                    //function addMore() {
-                      var html = tmpl
-                        .replace(/%KEY%/g, key)
-                        .replace(/%value%/g, value)
-                      ;
-                      el.innerHTML = html + el.innerHTML;
-                    //}
-
-                      // действия, которые будут выполняться для каждого свойства объекта
-                      // key - текущее имя свойства массива
-                      // value - значение текущего свойства объекта
-
-                      // выведем имя свойства и его значение в консоль
-                      console.log( 'Свойство: ' +key + '; Значение: ' + value );
-                      //addMore()
-
-                        $(".close").click(function(){
-                            $("#myAlert5").alert('close');
-                        });
-
-                    });
+            function openbox(id){
+                display = document.getElementById(id).style.display;
+                if(display=='none'){
+                   document.getElementById(id).style.display='block';
+                }else{
+                   document.getElementById(id).style.display='none';
                 }
-            });
-        }
-    </script>
+            }
+        </script>
 
 {% endblock %}
 
 </head>
 
-<body onload="show()">
+<body>
     <div id="wrapper">
 
                  {% if user.is_authenticated %}
@@ -145,7 +103,8 @@
 	<script type="text/javascript" src={% static "js/jquery.ganttView.js"%}></script>
 
     <script type="text/javascript">
-		$.ajax({
+		if($('*').is('#url_ajax_gantt')) {
+$(document).ready($.ajax({
                     url: $("#url_ajax_gantt").attr('url_ajax_gantt'),
                     dataType: 'json',
                     success: function (data){$(function () {
@@ -167,7 +126,7 @@
 					}
 				}
 			});
-		});}})
+		});}}))};
 	</script>
     	 <!-- DATA TABLE SCRIPTS -->
     <script src="{% static "js/dataTables/jquery.dataTables.js"%}"></script>
