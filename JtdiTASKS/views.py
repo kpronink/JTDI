@@ -19,7 +19,8 @@ from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTrac
 from django.contrib.auth import logout, login
 
 from django.views.generic.edit import FormView
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth import views as auth_views
 from qsstats import QuerySetStats
 
 from django.utils.timezone import now, pytz
@@ -52,7 +53,7 @@ class RegisterFormView(FormView):
 
         # Вызываем метод базового класса
         return super(RegisterFormView, self).form_valid(form)
-
+    
 
 class LoginFormView(FormView):
     form_class = AuthenticationForm
@@ -70,7 +71,7 @@ class LoginFormView(FormView):
         # Выполняем аутентификацию пользователя.
         login(self.request, self.user)
         return super(LoginFormView, self).form_valid(form)
-
+    
 
 def validate_username(request):
     username = request.GET.get('username', None)
