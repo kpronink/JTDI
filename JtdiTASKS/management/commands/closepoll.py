@@ -22,11 +22,11 @@ class Command(BaseCommand):
             first_day = datetime.date(1001, 1, 1)
 
             tasks_overdue = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)) \
-                .filter(date_time__range=(first_day, start_day)) \
+                .filter(date_time__range=(first_day, start_day)).filter(remind=False) \
                 .order_by('date', 'priority', 'time')
 
             tasks_today = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)) \
-                .filter(date_time__range=(start_day, end_day)) \
+                .filter(date_time__range=(start_day, end_day)).filter(remind=False) \
                 .order_by('date', 'priority', 'time')
 
             msg_html = render_to_string('JtdiTASKS/email.html', {'tasks_today': tasks_today,

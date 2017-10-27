@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/JtdiTASKS/migrations/0009_profile_mail_notify.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/forms.py" afterPath="$PROJECT_DIR$/JtdiTASKS/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py" afterPath="$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/models.py" afterPath="$PROJECT_DIR$/JtdiTASKS/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,7 +37,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="281">
@@ -70,14 +66,14 @@
       <file leaf-file-name="closepoll.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="15" column="79" lean-forward="false" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="79" />
+            <state relative-caret-position="340">
+              <caret line="28" column="83" lean-forward="false" selection-start-line="28" selection-start-column="83" selection-end-line="28" selection-end-column="83" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
@@ -103,7 +99,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
+            <state relative-caret-position="-867">
               <caret line="76" column="50" lean-forward="false" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
               <folding />
             </state>
@@ -264,9 +260,9 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py" />
       </list>
     </option>
   </component>
@@ -479,7 +475,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1934" height="1047" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28874025" sideWeight="0.60287845" order="7" side_tool="true" content_ui="tabs" />
@@ -487,12 +482,12 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.4978678" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="manage.py@JTDI" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29166666" sideWeight="0.39712155" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="manage.py@JTDI" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29166666" sideWeight="0.39712155" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22518677" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29371002" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31644145" sideWeight="0.39285713" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31644145" sideWeight="0.39285713" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -911,46 +906,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="219" column="36" lean-forward="false" selection-start-line="219" selection-start-column="36" selection-end-line="219" selection-end-column="36" />
-          <folding>
-            <element signature="e#3289#4131#0" expanded="false" />
-            <element signature="e#4168#5310#0" expanded="false" />
-            <element signature="e#5350#6558#0" expanded="false" />
-            <element signature="e#6598#7811#0" expanded="false" />
-            <element signature="e#12947#16031#0" expanded="false" />
-            <element signature="e#16066#16716#0" expanded="false" />
-            <element signature="e#16767#17139#0" expanded="false" />
-            <element signature="e#17174#19113#0" expanded="false" />
-            <element signature="e#19147#19527#0" expanded="false" />
-            <element signature="e#19576#20812#0" expanded="false" />
-            <element signature="e#20849#21462#0" expanded="false" />
-            <element signature="e#21506#21869#0" expanded="false" />
-            <element signature="e#21907#22295#0" expanded="false" />
-            <element signature="e#22339#25311#0" expanded="false" />
-            <element signature="e#25361#25763#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="15" column="79" lean-forward="false" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="76" column="50" lean-forward="false" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jtdi_venv/Lib/site-packages/django/utils/autoreload.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
@@ -976,6 +931,46 @@
             <element signature="e#7495#7543#0" expanded="false" />
             <element signature="e#7587#7809#0" expanded="false" />
             <element signature="e#7850#7926#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-867">
+          <caret line="76" column="50" lean-forward="false" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="28" column="83" lean-forward="false" selection-start-line="28" selection-start-column="83" selection-end-line="28" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="219" column="36" lean-forward="false" selection-start-line="219" selection-start-column="36" selection-end-line="219" selection-end-column="36" />
+          <folding>
+            <element signature="e#3289#4131#0" expanded="false" />
+            <element signature="e#4168#5310#0" expanded="false" />
+            <element signature="e#5350#6558#0" expanded="false" />
+            <element signature="e#6598#7811#0" expanded="false" />
+            <element signature="e#12947#16031#0" expanded="false" />
+            <element signature="e#16066#16716#0" expanded="false" />
+            <element signature="e#16767#17139#0" expanded="false" />
+            <element signature="e#17174#19113#0" expanded="false" />
+            <element signature="e#19147#19527#0" expanded="false" />
+            <element signature="e#19576#20812#0" expanded="false" />
+            <element signature="e#20849#21462#0" expanded="false" />
+            <element signature="e#21506#21869#0" expanded="false" />
+            <element signature="e#21907#22295#0" expanded="false" />
+            <element signature="e#22339#25311#0" expanded="false" />
+            <element signature="e#25361#25763#0" expanded="false" />
           </folding>
         </state>
       </provider>
