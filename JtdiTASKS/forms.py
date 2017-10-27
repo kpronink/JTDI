@@ -101,7 +101,7 @@ class UserForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        if email and User.objects.filter(email=email).exists():
+        if email and User.objects.filter(email=email).exclude(id=self.instance.id).exists():
             raise forms.ValidationError("Пользователь с таким email уже существует")
         return email
 
