@@ -13,7 +13,7 @@ class Command(BaseCommand):
     help = 'Рассылает дайджест задач на почту пользователям'
 
     def handle(self, *args, **options):
-        users = User.objects.exclude(email='')
+        users = User.objects.exclude(email='').filter(profile__mail_notify=True)
         for user in users:
             print(user)
             currentdate = datetime.datetime.today()

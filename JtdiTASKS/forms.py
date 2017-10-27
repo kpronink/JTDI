@@ -63,7 +63,7 @@ class MyUserCreationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('timezone', 'formatdate', 'firstdayweek', 'sex', 'avatar')
+        fields = ('timezone', 'formatdate', 'firstdayweek', 'mail_notify', 'sex', 'avatar')
 
         widgets = {
             'avatar': ClearableFileInput(attrs={'class': 'ask-signup-avatar-input', }),
@@ -75,7 +75,8 @@ class UserProfileForm(forms.ModelForm):
             'timezone': 'Часовой пояс',
             'formatdate': 'Формат даты',
             'sex': 'Пол',
-            'firstdayweek': 'Первый день недели'
+            'firstdayweek': 'Первый день недели',
+            'mail_notify': 'Уведомления на почту',
         }
 
 

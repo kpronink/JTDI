@@ -74,6 +74,8 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='avatars',
                                null=True, blank=True)
 
+    mail_notify = models.BooleanField(default=True)
+
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
