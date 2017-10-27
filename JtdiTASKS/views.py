@@ -554,6 +554,7 @@ def task_restore(request, pk):
     task = get_object_or_404(Task, pk=pk)
     task.finished = False
     task.active = True
+    task.status = 'Wait'
     task.save()
     if task.project is not None:
         project_pk = task.project.pk
