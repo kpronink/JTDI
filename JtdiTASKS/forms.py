@@ -91,6 +91,19 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('first_name', 'last_name', 'email')
 
+    email = forms.CharField(
+        label="Адрес электронной почты",
+        widget=forms.EmailInput,
+        strip=False,
+        validators=[EmailValidator]
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if email and User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Пользователь с таким email уже существует")
+        return email
+
 
 class TaskForm(forms.Form):
     PRIORITY_1 = '1'
