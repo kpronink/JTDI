@@ -44,8 +44,8 @@
                                     <label>Состояние задачи</label> {{ task.status }} </div>
                                 <div class="card-action">
                                     <div class="form-group"> {% if task.status == 'Wait' or task.status == 'Stoped' %}
-                                        <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status=" Started " %}"> <i class="material-icons" style="size: 50px">play_circle_filled</i> </a> {% elif task.status == 'Started' %}
-                                        <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status=" Stoped " %}"> <i class="material-icons" style="size: 50px">pause_circle_filled</i> </a> {% elif task.status == 'Finished' %} {% endif %} </div>
+                                        <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status="Started" %}"> <i class="material-icons" style="size: 50px">play_circle_filled</i> </a> {% elif task.status == 'Started' %}
+                                        <a class="btn-floating btn-large red" href="{% url 'task_start_stop' pk=task.pk status="Stoped" %}"> <i class="material-icons" style="size: 50px">pause_circle_filled</i> </a> {% elif task.status == 'Finished' %} {% endif %} </div>
                                 </div>
                             </div>
                         </fieldset>
