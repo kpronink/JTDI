@@ -4,7 +4,7 @@ import random
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
@@ -213,7 +213,11 @@ def logout_view(request):
 
 def update_profile(request):
     soc_acc = SocialAccount.objects.filter(user=request.user)
-
+    task_with_full_time =[]
+    tasks = Task.objects.filter(performer=request.user)
+    for task in tasks:
+        full_time = TasksTimeTracker.objects.filter(task__id=task.id).aggregate(Sum('full_time'))
+        task_with_full_time.append([task, full_time])
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -231,6 +235,7 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form,
         'accounts': soc_acc,
+        'task_time': task_with_full_time,
     })
 
 
@@ -406,10 +411,12 @@ def task_detail(request, pk):
         return redirect('login')
 
     task = get_object_or_404(Task, pk=pk)
+    full_time = TasksTimeTracker.objects.filter(task__pk=pk).aggregate(Sum('full_time'))
     comment_form = CommentAddForm()
 
     return render(request, 'JtdiTASKS/task_detail.html', {'task': task,
-                                                          'comment_form': comment_form
+                                                          'comment_form': comment_form,
+                                                          'full_time': full_time['full_time__sum']
                                                           })
 
 
