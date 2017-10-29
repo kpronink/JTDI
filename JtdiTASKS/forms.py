@@ -166,7 +166,7 @@ class TaskForm(forms.Form):
         else:
             all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
 
-        pass_performer = (project is None and performer is None)
+        pass_performer = performer is None
         if not pass_performer:
             for user_in_proj in all_users_in_project:
                 if user_in_proj == performer:
