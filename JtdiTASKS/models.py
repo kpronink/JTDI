@@ -150,7 +150,7 @@ class Task(models.Model):
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOISE,
                                 default=PRIORITY_4, blank=True)
     color = models.CharField(max_length=20, default='grey', blank=True)
-    firstdayweek = models.CharField(max_length=20, choices=DAY_WEEEK,
+    day_week = models.CharField(max_length=20, choices=DAY_WEEEK,
                                     default=MONDAY, blank=True)
 
     status = models.CharField(max_length=20, choices=STATUS_CHOISE,

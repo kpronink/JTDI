@@ -44,7 +44,7 @@
                         <div class="card">
                             <div class="card-action"> <b>Потраченое время на задачи</b> </div>
                             <div class="card-image">
-                                <div class="collection"> {% for task in task_time %} <a href="{% url 'task_detail' pk=task.0.pk %}" class="collection-item">{{ task.0.title }}
+                                <div class="collection"> {% for task in task_time %} <a href="{% url 'task_detail' pk=task.0.pk %}" class="collection-item">{{ task.0.title|truncatechars:30 }}
                                         <span class="badge" data-badge-caption="">{{ task.1.full_time__sum }}</span>
                                     {% endfor %}
                                 </div>
