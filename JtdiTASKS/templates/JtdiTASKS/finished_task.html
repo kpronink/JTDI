@@ -29,8 +29,8 @@
                                 </thead>
                                 <tbody> {% for task in tasks %}
                                     <tr class="odd gradeX">
-                                        <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title }}</a></td>
-                                        <td>{{ task.description|linebreaksbr }}</td> {% if task.project is not None %}
+                                        <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title|truncatechars:40 }}</a></td>
+                                        <td>{{ task.description|truncatechars:50 }}</td> {% if task.project is not None %}
                                         <td><a href="{% url 'project_tasks_list' pk=task.project.pk %}">{{ task.project }}</a></td> {% else %}
                                         <td><a href="">{{ task.project }}</a></td> {% endif %}
                                         <td>{{ task.performer }}</td>
