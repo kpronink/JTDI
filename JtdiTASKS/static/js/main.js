@@ -259,9 +259,10 @@ $("#rename_proj").on("submit", ".rename_proj_form", function () {
   });
 
 $(document).ready(function(){
+    $('#modal-task').modal()
     var task_id = window.location.hash.replace("#","");
     if (task_id !== ''){
     TaskDetail("/task/det/"+task_id+"/")
-    $('#modal-task').modal('modal-open')
+    $('#modal-task').modal('show')
     }
 });
