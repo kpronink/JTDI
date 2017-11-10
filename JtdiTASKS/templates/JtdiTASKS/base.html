@@ -26,8 +26,6 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href={% static "/js/Lightweight-Chart/cssCharts.css"%}>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
-
 </head>
 
 {% block javascript %}
@@ -86,7 +84,7 @@
         </a>
         <ul>
             <li>
-                <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" data-url="{% url 'task_create' %}">
+                <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}')">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </button>
             </li>
@@ -129,32 +127,6 @@
     <script type="text/javascript" src={% static "js/jquery-ui-1.8.4.js"%}></script>
 	<script type="text/javascript" src={% static "js/jquery.ganttView.js"%}></script>
 
-    <script type="text/javascript">
-		if($('*').is('#url_ajax_gantt')) {
-$(document).ready($.ajax({
-                    url: $("#url_ajax_gantt").attr('url_ajax_gantt'),
-                    dataType: 'json',
-                    success: function (data){$(function () {
-			$("#ganttChart").ganttView({
-				data: data,
-				slideWidth: 'inherit',
-                behavior: {
-					onClick: function (data) {
-						var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-						$("#eventMessage").text(msg);
-					},
-					onResize: function (data) {
-						var msg = "You resized an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-						$("#eventMessage").text(msg);
-					},
-					onDrag: function (data) {
-						var msg = "You dragged an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-						$("#eventMessage").text(msg);
-					}
-				}
-			});
-		});}}))};
-	</script>
     	 <!-- DATA TABLE SCRIPTS -->
     <script src="{% static "js/dataTables/jquery.dataTables.js"%}"></script>
     <script src="{% static "js/dataTables/dataTables.bootstrap.js"%}"></script>

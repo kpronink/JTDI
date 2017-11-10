@@ -699,32 +699,22 @@ def task_del(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    currentdate = datetime.datetime.today()
-    start_day = currentdate.combine(currentdate, currentdate.min.time())
-    end_day = currentdate.combine(currentdate, currentdate.max.time())
-
     data = dict()
 
+    method = request.POST['param']
+    
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user:
         task.delete()
-        if task.project is not None:
-            tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
-                filter(project=task.project.pk).order_by('date')
 
-            tasks_finish = Task.objects.filter(active=False).filter(finished=True). \
-                filter(Q(author=request.user) | Q(performer=request.user)).filter(project=task.project.pk) \
-                .filter(date_finish__range=(start_day, end_day)).order_by(
-                'date_finish')
-            data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
-                'tasks_finish': tasks_finish})
-        else:
-            tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
-                filter(project=None).order_by('date')
-            data['html_finished_tasks_list'] = ''
+        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
+        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
+            'tasks_finish': tasks_finish,
+            'param': method})
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-            'tasks': tasks})
+            'tasks': tasks,
+            'param': method})
 
     return JsonResponse(data)
 
@@ -1173,9 +1163,5 @@ def search_block(user):
     return {'user': user,
             'search_form': SearchForm()}
 
-
-@register.inclusion_tag('JtdiTASKS/gantt.html')
-def gantt_block():
-    return {}
 
 # TODO В модуле бутстрэп переписан темплейт с полями

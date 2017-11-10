@@ -53,7 +53,7 @@
                             </table>
                         </div>
                                                   <p>
-    <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" data-url="{% url 'task_create' %}">
+    <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}', 'today')">
       <span class="glyphicon glyphicon-plus-sign"></span>
     </button>
 

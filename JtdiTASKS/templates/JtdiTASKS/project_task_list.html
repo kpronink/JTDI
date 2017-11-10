@@ -27,7 +27,7 @@
                                 </thead>
                                 <tbody> {% for task in tasks %}
                                     <tr class="odd gradeX">
-                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
+                                        <td><a href="#" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
                                             data-toggle="modal" data-target="#modal-task">
                                             {{ task.title|truncatechars:40 }}</a></td>
                                         <td>{{ task.description|truncatechars:50 }}</td>
@@ -53,7 +53,7 @@
                         </div>
 
                         <p>
-                            <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" data-url="{% url 'task_create' %}">
+                            <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}', 'projects')">
                                 <span class="glyphicon glyphicon-plus-sign"></span>
                             </button>
                         </p>
@@ -129,17 +129,9 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-5">
                 <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>
-                <div id="url_ajax_gantt" url_ajax_gantt="{% url 'get_data_gantt' project%}"></div>
             </div>
             <!--/.row-->
-        </div> {% if tasks.count %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-content" id="gantt_shadow" style="all: initial"> {% gantt_block %} </div>
-                </div>
-            </div>
-        </div> {% endif %}>
+        </div>
 
     </div>
 </div>

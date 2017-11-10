@@ -257,3 +257,11 @@ $("#rename_proj").on("submit", ".rename_proj_form", function () {
     });
     return false;
   });
+
+$(document).ready(function(){
+    var task_id = window.location.hash.replace("#","");
+    if (task_id !== ''){
+    TaskDetail("/task/det/"+task_id+"/")
+    $('#modal-task').modal('modal-open')
+    }
+});

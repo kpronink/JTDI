@@ -156,8 +156,12 @@
                         <td class="content">
                             <h2>Привет {{ username }},</h2>
                             <table> {% for task in tasks_today %}
-                                <tr> <a href="http://kpronink.pythonanywhere.com/task/{{ task.pk }}/">{{ task.title }}</a> </tr> {% endfor %} {% for task in tasks_overdue %}
-                                <tr> <a href="http://kpronink.pythonanywhere.com/task/{{ task.pk }}/">{{ task.title }}</a> </tr> {% endfor %} </table>
+                                    <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}/">{{ task.title }}</a> </tr>
+                                {% endfor %}
+                                {% for task in tasks_overdue %}
+                                    <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}/">{{ task.title }}</a> </tr>
+                                {% endfor %}
+                            </table>
                             <table>
                                 <tr>
                                     <td align="center">
