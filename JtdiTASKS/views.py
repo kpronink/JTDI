@@ -61,7 +61,8 @@ def get_tasks_with_filter(filter_method, project, user):
             .filter(date_time__range=(start_day, end_day)) \
             .order_by('date', 'priority', 'time')
         tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
-            .filter(Q(author=user) | Q(performer=user)).order_by(
+            .filter(Q(author=user) | Q(performer=user)).filter(project=None) \
+            .filter(date_finish__range=(start_day, end_day)).order_by(
             'date_finish')
     elif filter_method == 'overdue':
         tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)) \
