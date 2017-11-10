@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'JtdiTASKS',
     'bootstrapform',
     'googlecharts',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

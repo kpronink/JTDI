@@ -120,7 +120,9 @@ class TaskForm(forms.Form):
     )
 
     title = forms.CharField(label='Заголовок')
-    title.widget.attrs.update({'ng-model': "data.myinput", 'placeholder': 'забить гвоздь в стену через 20 минут'})
+    title.widget.attrs.update({'ng-model': "data.myinput", 'placeholder': 'забить гвоздь в стену через 20 минут',
+                               'onChange': 'ParseDate(title)', 'oninput': 'ParseDate(title)',
+                               'onpaste': 'ParseDate(title)'})
 
     description = forms.CharField(label='Описание', widget=forms.Textarea, required=False)
 
@@ -138,6 +140,8 @@ class TaskForm(forms.Form):
         required=False,
         queryset=None,
     )
+    
+    project_field.widget.attrs.update({'onChange': 'ProjectSelect(this.value);'})
 
     priority_field = forms.ChoiceField(
         label='Важность',
@@ -252,6 +256,13 @@ class ProjectInviteUser(forms.Form):
                                          label='Добавить пользователя',
                                          required=True,
                                          )
+
+    def clean(self):
+        user_invite_field = self.data['invite_project-user_invite']
+        if user_invite_field is None:
+            raise forms.ValidationError("Поле пользователь должно быть заполнено")
+        self.cleaned_data.update({'user_invite': user_invite_field})
+        return self.cleaned_data['user_invite']
 
 
 class CommentAddForm(forms.Form):

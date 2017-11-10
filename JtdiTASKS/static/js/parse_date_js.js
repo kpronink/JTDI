@@ -1,12 +1,8 @@
-angular.module('myAppName', [])
-    .controller('MainCtrl', function ($scope) {
-    $scope.data = {};
-    $scope.data.answer = "56";
-        
-$scope.jsParseDate = function(title) {
+function ParseDate(title) {
         var mytime = "";
         var mydate = new Date();
         var newdate = new Date();
+        var title = $("#id_title").val()
         if (title !== undefined) {
         title = title.replace("одинадцать", "11").replace("двенадцать", "12").replace("тринадцать", "13").replace("четырнадцать", "14").replace("пятнадцать", "15").replace(" шестнадцать", " 16").replace(" семнадцать", " 17").replace(" двадцать", " 20").replace(" один", " 1").replace(" один", " 1").replace(" два", " 2").replace(" три", " 3").replace(" четыре", " 4").replace(" пять", " 5").replace(" шесть", " 6").replace(" семь", " 7").replace("восемь", "8").replace("девять", "9").replace("десять", "10").replace(" ноль", " 0");
         if (title) title = title.toLowerCase();
@@ -256,15 +252,19 @@ $scope.jsParseDate = function(title) {
 
         var title_date = "";
         document.getElementById('id_date').value = year + '-' + month + '-' + day
-        document.getElementById('id_date_planed').value = year + '-' + month + '-' + String((Number(day) + 3))
+        document.getElementById('id_date_planed').value = year + '-' + month + '-' + String((Number(day) + 3 ))
         if ((answer == undefined) && (add == undefined)) {title_date = ""}
         else {title_date = answer + " " + add};
-        return {
-            title: title_date,
-            date: mydate,
-            sms: sms
-        };
-    } //jsParseDate
+        document.getElementById('parse').empty()
+        document.getElementById('parse_date').empty()
+        document.getElementById('parse').appendChild(document.createTextNode(title_date))
+        document.getElementById('parse_date').appendChild(document.createTextNode(mydate.toLocaleString()))
+        // return {
+        //     title: title_date,
+        //     date: mydate,
+        //     sms: sms
+        // };
+    }//jsParseDate
 
 function nextWeekDay(date, day) { //поиск следующего дня недели
     (day = (Math.abs(+day || 0) % 7) - date.getDay()) < 0 && (day += 7);
@@ -277,4 +277,3 @@ function checkZero(data){
   }
   return data;
 }
-});

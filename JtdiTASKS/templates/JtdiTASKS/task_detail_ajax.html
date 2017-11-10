@@ -1,19 +1,14 @@
-{% extends 'JtdiTASKS/base.html' %} {% load staticfiles %} {% block content %}
-<div id="page-wrapper">
-    <div class="header">
-        <h1 class="page-header">
-                            Детали задачи
-        </h1> </div>
-    <div id="page-inner">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
+{% load staticfiles %} {% load widget_tweaks %} {% block content %}
+
+
+
+
                     <div class="card-action"> Задача </div>
                     <div class="card-content">
                         <!--<form action="">-->
                         <fieldset>
                             <div class="form-group"> {% if task.status != 'Finished' %}
-                                <a href="{% url 'task_finish' pk=task.pk %}" data-rel="collapse"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }};"> </i>Завершить</a>
+                                <a href="#"  onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }};"> </i>Завершить</a>
                                 <div class="clearfix"></div> {% task_menu request task=task.pk user=user%} {% else %} {% endif %}
                                 <div class="form-group">
                                     <label>Заголовок задачи</label>
@@ -34,60 +29,45 @@
                                     {% endif %}
                                 <div class="form-group">
                                     <div class="">
-                                        <input type="checkbox" value="{{ task.repeating }}">
+                                        <input type="checkbox" {% if task.repeating %} checked {% else %}{% endif %}>
                                         <label for="{{ task.repeating.auto_id }}">Повторяющаяся</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="">
-                                        <input type="checkbox" value="{{ task.remind }}">
+                                        <input type="checkbox" {% if  task.remind %} checked {% else %}{% endif %}>
                                         <label for="{{ task.remind.auto_id }}">Не напоминать</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="task_status">
-                                    <label>Состояние задачи</label> {{ task.status }}</div>
+                                    <label>Состояние задачи: </label> {{ task.status }}</div>
                                 <div class="form-group" id="task_full_time">
-                                    <label>Общее время работы над задачей</label> {{ full_time }} </div>
+                                    <label>Общее время работы над задачей: </label> {{ full_time }} </div>
                                 <div class="card-action">
                                     <div id="url_ajax_start" url_ajax_start="{% url 'task_start_stop' task.pk%}"></div>
                                     <div class="form-group" id="form_start_stop"> {% if task.status == 'Wait' or task.status == 'Stoped' %}
-                                        <button class="btn-floating btn-large red" id="btn_start_stop"> <i class="material-icons" style="size: 50px">play_circle_filled</i> </button> {% elif task.status == 'Started' %}
-                                        <button class="btn-floating btn-large red" id="btn_start_stop"> <i class="material-icons" style="size: 50px">pause_circle_filled</i> </button> {% elif task.status == 'Finished' %} {% endif %} </div>
+                                        <button class="btn-floating btn-large red" id="btn_start_stop" onclick="StartStop()"> <i class="material-icons" style="size: 50px">play_circle_filled</i> </button> {% elif task.status == 'Started' %}
+                                        <button class="btn-floating btn-large red" id="btn_start_stop" onclick="StartStop()"> <i class="material-icons" style="size: 50px">pause_circle_filled</i> </button> {% elif task.status == 'Finished' %} {% endif %} </div>
                                 </div>
 
                         </fieldset>
                         </form>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-image">
-                        <div id="morris-line-chart"></div>
-                    </div>
-                    <div class="card-action"> <b>Время потраченое на задачу(текущие сутки)</b> </div>
-                </div>
-                <div id="url_ajax_line_chart" url_ajax_line_chart="{% url 'get_index_task' task.pk%}"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-action">
-                        <div class="page-header">
-                            <h1><small class="pull-right">{{ count_comments }} Комментиев</small> </h1> </div>
-                    </div>
+
+
+
                     <div class="card-content">
                         <div class="comments-list" id="comments"> </div>
                         <div class="tab-pane" id="add-comment" style="padding: 10px;">
-                            <form action="/create_post/" method="POST" class="form-horizontal" id="commentForm" role="form">
+                            <form class="form-horizontal" id="commentForm">
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10"> {% csrf_token %} {{ comment_form }} </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10 clearfix">
-                                        <button class="waves-effect waves-light btn" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Оставить комментарий</button>
+                                        <button class="waves-effect waves-light btn" id="submitComment"
+                                        onclick="create_post()" type="button"><span class="glyphicon glyphicon-send"></span> Оставить комментарий</button>
                                     </div>
                                 </div>
                                 <div id="url_ajax_add_comment" url_ajax_add_comment="{% url 'add_comment' task.pk%}"></div>
@@ -95,8 +75,8 @@
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> {% endblock content %}
+
+
+
+
+{% endblock content %}

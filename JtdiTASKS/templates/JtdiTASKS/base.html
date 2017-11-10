@@ -53,20 +53,46 @@
                 {% profile_menu user%}
                 {% project_recent_list request user %}{% endif %}
 
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal-task">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                  </div>
+                  <div class="modal-body">
+                    <p></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary">Сохранить</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+
+
                 {% block content %}
                 {% endblock %}
 
      {% if user.is_authenticated %}
+
+
         <div class="fixed-action-btn horizontal click-to-toggle">
         <a class="btn-floating btn-large red">
           <i class="material-icons">menu</i>
         </a>
         <ul>
-          <li><a class="btn-floating red" href="{% url 'task_new' %}"><i class="glyphicon glyphicon-plus-sign"></i></a></li>
+            <li>
+                <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" data-url="{% url 'task_create' %}">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                </button>
+            </li>
         </ul>
       </div>
     {% endif %}
-
 
             </div>
             <!-- /. PAGE INNER  -->
@@ -95,7 +121,8 @@
 	 <script src={% static "/js/Lightweight-Chart/jquery.chart.js"%}></script>
 
     <!-- Custom Js -->
-    <script src={% static "js/parse_date.js" %}></script>
+    <script src={% static "js/parse_date_js.js" %}></script>
+
     <script src={% static "js/custom-scripts.js"%}></script>
     <script src={% static "js/main.js"%}></script>
     <script type="text/javascript" src={% static "js/date.js"%}></script>

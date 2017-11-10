@@ -29,7 +29,9 @@
                                 </thead>
                                 <tbody> {% for task in tasks %}
                                     <tr class="odd gradeX">
-                                        <td><i class="glyphicon glyphicon-ok"></i><a href="{% url 'task_detail' pk=task.pk %}">{{ task.title|truncatechars:40 }}</a></td>
+                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}'), 'finished'"
+                                            data-toggle="modal" data-target="#modal-task">
+                                            {{ task.title|truncatechars:40 }}</a></td>
                                         <td>{{ task.description|truncatechars:50 }}</td> {% if task.project is not None %}
                                         <td><a href="{% url 'project_tasks_list' pk=task.project.pk %}">{{ task.project }}</a></td> {% else %}
                                         <td><a href="">{{ task.project }}</a></td> {% endif %}
@@ -40,15 +42,22 @@
                                         <td>{{ task.time }}</td>
                                         <td>{{ task.date_time_finish }}</td>
                                         <td>
-                                            <a href="{% url 'task_restore' pk=task.pk %}" data-rel="collapse" title="Восстановить задачу"> <i class="glyphicon glyphicon-backward"></i></a>
+                                            <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}', 'finished')" title="Восстановить задачу">
+                                                <i class="glyphicon glyphicon-backward"></i></a>
                                         </td>
                                         <td>
-                                            <a href="{% url 'task_del' pk=task.pk %}" data-rel="collapse" title="Удалить задачу"> <i class="glyphicon glyphicon-trash"></i></a>
+                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'finished')" title="Удалить задачу">
+                                                <i class="glyphicon glyphicon-trash"></i></a>
                                         </td>
                                     </tr> {% endfor %} </tbody>
                             </table>
                         </div>
-                        <div> <a href="{% url 'task_new' %}" data-rel="collapse" title="Добавить задачу"><i class="glyphicon glyphicon-plus-sign" style="font-size: 30px"></i></a> </div>
+                                                  <p>
+    <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" data-url="{% url 'task_create' %}">
+      <span class="glyphicon glyphicon-plus-sign"></span>
+    </button>
+
+  </p>
                     </div>
                 </div>
                 <!--End Advanced Tables -->
