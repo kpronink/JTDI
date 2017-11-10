@@ -787,9 +787,11 @@ def task_finish(request, pk):
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
-            'tasks_finish': tasks_finish})
+            'tasks_finish': tasks_finish,
+            'param': method})
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-            'tasks': tasks})
+            'tasks': tasks,
+            'param': method})
 
     return JsonResponse(data)
 

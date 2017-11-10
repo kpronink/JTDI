@@ -35,7 +35,7 @@
                                         <td>{{ task.time }}</td>
                                         <td>{{ task.performer }}</td>
                                         <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}', 'project')" title="Завершить задачу">
+                                            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}', 'projects')" title="Завершить задачу">
                                                 <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
                                         </td>
                                         <td>
@@ -44,7 +44,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'project')" title="Удалить задачу">
+                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'projects')" title="Удалить задачу">
                                                 <i class="glyphicon glyphicon-trash"></i>
                                             </a>
                                         </td>
@@ -81,18 +81,18 @@
                                 </thead>
                                 <tbody> {% for task in tasks_finish %}
                                     <tr>
-                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}', 'project')"
+                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}', 'projects')"
                                             data-toggle="modal" data-target="#modal-task">
                                             {{ task.title|truncatechars:40 }}</a></td>
                                         <td>{{ task.description|truncatechars:50 }}</td>
                                         <td>{{ task.date }}</td>
                                         <td>{{ task.date_time_finish }}</td>
                                         <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}', 'project')" title="Восстановить задачу">
+                                            <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}', 'projects')" title="Восстановить задачу">
                                                 <i class="glyphicon glyphicon-backward"></i></a>
                                         </td>
                                         <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'project')" title="Удалить задачу"> <i class="glyphicon glyphicon-trash"></i></a>
+                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'projects')" title="Удалить задачу"> <i class="glyphicon glyphicon-trash"></i></a>
                                         </td>
                                     </tr> {% endfor %} </tbody>
                             </table>
