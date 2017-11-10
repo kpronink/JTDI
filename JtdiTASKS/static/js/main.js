@@ -183,12 +183,13 @@ function UpdateTask(url) {
   }
 
 
-function TaskDetail(task_url) {
+function TaskDetail(task_url, param) {
 
     $.ajax({
       url: task_url,
-      type: 'get',
+      type: 'post',
       dataType: 'json',
+      data: {'param':param},  
       success: function (data) {
         $("#modal-task .modal-content").html(data.html_form);
         get_comments();
@@ -198,10 +199,10 @@ function TaskDetail(task_url) {
 
 function UniversalFun(task_url, param) {
     $.ajax({
-        type: "POST",
         url: task_url,
-        data: {'param':param},
+        type: 'post',
         dataType: 'json',
+        data: {'param':param},
         success: function(result) {
             //$("[data-dismiss=modal]").trigger({ type: "click" });
             $("#task_active_table").html(result.html_active_tasks_list);

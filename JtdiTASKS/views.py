@@ -569,14 +569,16 @@ def task_detail_ajax(request, pk):
 
     data = dict()
 
+    method = request.POST['param']
+
     task = get_object_or_404(Task, pk=pk)
     full_time = TasksTimeTracker.objects.filter(task__pk=pk).aggregate(Sum('full_time'))
     comment_form = CommentAddForm()
 
     context = {'task': task,
                'comment_form': comment_form,
-               'full_time': full_time['full_time__sum']
-               }
+               'full_time': full_time['full_time__sum'],
+               'param': method}
     data['html_form'] = render_to_string('JtdiTASKS/task_detail_ajax.html',
                                          context,
                                          request=request
