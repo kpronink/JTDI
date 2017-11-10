@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/materialize/js/materialize.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/materialize/js/materialize.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,60 +39,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="1164" column="0" lean-forward="false" selection-start-line="1164" selection-start-column="0" selection-end-line="1164" selection-end-column="0" />
-              <folding>
-                <element signature="e#963#1042#0" expanded="false" />
-                <element signature="e#1073#1152#0" expanded="false" />
-                <element signature="e#1216#3597#0" expanded="false" />
-                <element signature="e#3638#4241#0" expanded="false" />
-                <element signature="e#4279#4787#0" expanded="false" />
-                <element signature="e#4830#5887#0" expanded="false" />
-                <element signature="e#5927#6692#0" expanded="false" />
-                <element signature="e#6731#7005#0" expanded="false" />
-                <element signature="e#7042#7648#0" expanded="false" />
-                <element signature="e#7691#8605#0" expanded="false" />
-                <element signature="e#8642#9784#0" expanded="false" />
-                <element signature="e#9824#9948#0" expanded="false" />
-                <element signature="e#9988#11201#0" expanded="false" />
-                <element signature="e#11234#11278#0" expanded="false" />
-                <element signature="e#11314#12478#0" expanded="false" />
-                <element signature="e#12509#13681#0" expanded="false" />
-                <element signature="e#13718#14898#0" expanded="false" />
-                <element signature="e#14937#16199#0" expanded="false" />
-                <element signature="e#16239#16595#0" expanded="false" />
-                <element signature="e#16638#19722#0" expanded="false" />
-                <element signature="e#19757#20407#0" expanded="false" />
-                <element signature="e#20468#24007#0" expanded="false" />
-                <element signature="e#24049#24712#0" expanded="false" />
-                <element signature="e#24749#27481#0" expanded="false" />
-                <element signature="e#27516#29455#0" expanded="false" />
-                <element signature="e#29489#30207#0" expanded="false" />
-                <element signature="e#30248#31850#0" expanded="false" />
-                <element signature="e#31887#32833#0" expanded="false" />
-                <element signature="e#32877#33240#0" expanded="false" />
-                <element signature="e#33278#34093#0" expanded="false" />
-                <element signature="e#34143#34545#0" expanded="false" />
-                <element signature="e#34599#35085#0" expanded="false" />
-                <element signature="e#35125#35697#0" expanded="false" />
-                <element signature="e#35746#37002#0" expanded="false" />
-                <element signature="e#37035#37320#0" expanded="false" />
-                <element signature="e#37357#37642#0" expanded="false" />
-                <element signature="e#39528#41197#0" expanded="false" />
-                <element signature="e#41247#42380#0" expanded="false" />
-                <element signature="e#42418#43193#0" expanded="false" />
-                <element signature="e#43304#44800#0" expanded="false" />
-                <element signature="e#44886#45683#0" expanded="false" />
-                <element signature="e#45912#46487#0" expanded="false" />
-                <element signature="e#46573#46635#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="task_today.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_today.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -157,17 +103,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="53" column="64" lean-forward="true" selection-start-line="53" selection-start-column="64" selection-end-line="53" selection-end-column="74" />
+            <state relative-caret-position="468">
+              <caret line="128" column="0" lean-forward="true" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="508">
@@ -186,8 +132,8 @@
       <file leaf-file-name="materialize.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/materialize/js/materialize.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="973" column="4" lean-forward="true" selection-start-line="973" selection-start-column="4" selection-end-line="973" selection-end-column="4" />
+            <state relative-caret-position="-4584">
+              <caret line="973" column="4" lean-forward="false" selection-start-line="973" selection-start-column="4" selection-end-line="973" selection-end-column="4" />
               <folding>
                 <marker date="1510306639779" expanded="true" signature="163558:163565" ph="..." />
                 <marker date="1510306639779" expanded="true" signature="236735:236764" ph="..." />
@@ -297,8 +243,8 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/index.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/materialize/js/materialize.js" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
       </list>
     </option>
   </component>
@@ -353,19 +299,6 @@
               <item name="JTDI" type="b2602c69:ProjectViewProjectNode" />
               <item name="JTDI" type="462c0819:PsiDirectoryNode" />
               <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
-              <item name="management" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JTDI" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JTDI" type="462c0819:PsiDirectoryNode" />
-              <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
-              <item name="management" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JTDI" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JTDI" type="462c0819:PsiDirectoryNode" />
-              <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -373,14 +306,6 @@
               <item name="JTDI" type="462c0819:PsiDirectoryNode" />
               <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="materialize" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="JTDI" type="b2602c69:ProjectViewProjectNode" />
-              <item name="JTDI" type="462c0819:PsiDirectoryNode" />
-              <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="materialize" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -388,9 +313,8 @@
               <item name="JTDI" type="462c0819:PsiDirectoryNode" />
               <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="materialize" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="materialize.js" type="620a8d5e:NestingTreeNode" />
+              <item name="bootstrap.js" type="620a8d5e:NestingTreeNode" />
             </path>
             <path>
               <item name="JTDI" type="b2602c69:ProjectViewProjectNode" />
@@ -427,8 +351,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="G:\Work\python\JTDI\JtdiTASKS\templates\JtdiTASKS" />
       <recent name="G:\Work\python\JTDI\JtdiTASKS\static\js" />
+      <recent name="G:\Work\python\JTDI\JtdiTASKS\templates\JtdiTASKS" />
       <recent name="G:\Work\python\JTDI\JtdiTASKS\templates\JtdiTASKS\registration" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -555,7 +479,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1934" height="1047" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28874025" sideWeight="0.60287845" order="7" side_tool="true" content_ui="tabs" />
@@ -569,7 +492,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.4978678" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23648648" sideWeight="0.39285713" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23648648" sideWeight="0.39285713" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -648,13 +571,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/morris/raphael-2.1.0.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jtdi_venv/Lib/site-packages/django/core/handlers/exception.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -1093,21 +1009,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/materialize/js/materialize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="973" column="4" lean-forward="true" selection-start-line="973" selection-start-column="4" selection-end-line="973" selection-end-column="4" />
+        <state relative-caret-position="-4584">
+          <caret line="973" column="4" lean-forward="false" selection-start-line="973" selection-start-column="4" selection-end-line="973" selection-end-column="4" />
           <folding>
             <marker date="1510306639779" expanded="true" signature="163558:163565" ph="..." />
             <marker date="1510306639779" expanded="true" signature="236735:236764" ph="..." />
             <marker date="1510306639779" expanded="true" signature="237025:237035" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="53" column="64" lean-forward="true" selection-start-line="53" selection-start-column="64" selection-end-line="53" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1122,6 +1030,22 @@
             <marker date="1510306718873" expanded="true" signature="6352:6362" ph="..." />
             <marker date="1510306718873" expanded="true" signature="9974:9975" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="128" column="0" lean-forward="true" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
