@@ -27,7 +27,7 @@
                                 </thead>
                                 <tbody> {% for task in tasks %}
                                     <tr class="odd gradeX">
-                                        <td><a href="#" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
+                                        <td><a href="#" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}', 'projects')"
                                             data-toggle="modal" data-target="#modal-task">
                                             {{ task.title|truncatechars:40 }}</a></td>
                                         <td>{{ task.description|truncatechars:50 }}</td>
