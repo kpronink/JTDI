@@ -42,8 +42,9 @@
                                                 <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
                                         </td>
                                         <td>
-                                            <a href=# class="create-task" data-toggle="modal" data-target="#modal-task" data-url="{% url 'task_update' pk=task.pk %}"
-                                               title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i></a>
+                                            <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}', 'today')" data-toggle="modal" data-target="#modal-task"
+                                               title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i>
+                                            </a>
                                         </td>
                                         <td>
                                             <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'today')" title="Удалить задачу"> <i class="glyphicon glyphicon-trash"></i></a>

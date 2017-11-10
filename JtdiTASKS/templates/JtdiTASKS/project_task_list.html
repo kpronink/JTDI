@@ -39,7 +39,7 @@
                                                 <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
                                         </td>
                                         <td>
-                                            <a href=# class="create-task" data-toggle="modal" data-target="#modal-task" data-url="{% url 'task_update' pk=task.pk %}"
+                                            <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}', 'projects')" data-toggle="modal" data-target="#modal-task"
                                                title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i>
                                             </a>
                                         </td>

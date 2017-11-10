@@ -165,13 +165,12 @@ $("#modal-task").on("submit", ".task-create-form", function () {
     return false;
   });
 
-$(function () {
 
-  $(".create-task").click(function () {
+function UpdateTask(url) {
       var btn = $(this);
       $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div> <div class='cssload-cube cssload-c3'></div> </div>");
     $.ajax({
-      url: btn.attr("data-url"),
+      url: url,
       type: 'get',
       dataType: 'json',
       success: function (data) {
@@ -181,9 +180,8 @@ $(function () {
           }
       }
     });
-  });
+  }
 
-});
 
 function TaskDetail(task_url) {
 
