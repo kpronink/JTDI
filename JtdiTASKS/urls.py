@@ -38,6 +38,7 @@ urlpatterns = [
                       name='transfer_date'),
                   url(r'^project/(?P<pk>[0-9]+)/del$', views.project_del, name='project_del'),
                   url(r'^project/(?P<pk>[0-9]+)/rename$', views.project_rename, name='project_rename'),
+                  url(r'^project_param/(?P<pk>[0-9]+)/$', views.project_param, name='project_param'),
                   url(r'^(?P<pk>[0-9]+)/finish$', views.task_finish, name='task_finish'),
                   url(r'^task/(?P<pk>[0-9]+)/start_stop$', views.task_start_stop, name='task_start_stop'),
                   url(r'^task/(?P<pk>[0-9]+)/not_remind$', views.task_do_not_remind, name='not_remind$'),

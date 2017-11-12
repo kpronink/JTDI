@@ -205,7 +205,12 @@ function UniversalFun(task_url, param) {
         data: {'param':param},
         success: function(result) {
             //$("[data-dismiss=modal]").trigger({ type: "click" });
-            $("#task_active_table").html(result.html_active_tasks_list);
+            if (result.project_param !== '') {
+                $("#modal-task .modal-content").html(result.project_param);
+            }
+            if (result.html_active_tasks_list !== '') {
+                $("#task_active_table").html(result.html_active_tasks_list);
+            }
             if (result.html_finished_tasks_list !== ''){
                 $("#task_finish_table").html(result.html_finished_tasks_list);
             }
@@ -214,7 +219,7 @@ function UniversalFun(task_url, param) {
     });
 }
 
-$("#invite_user_in_proj").on("submit", ".user_inv_form_in_proj", function () {
+$("#modal-task").on("submit", ".user_inv_form_in_proj", function () {
     var form = $(this);
     $.ajax({
       url: form.attr("action"),
@@ -237,7 +242,7 @@ $("#invite_user_in_proj").on("submit", ".user_inv_form_in_proj", function () {
     return false;
   });
 
-$("#rename_proj").on("submit", ".rename_proj_form", function () {
+$("#modal-task").on("submit", ".rename_proj_form", function () {
     var form = $(this);
     $.ajax({
       url: form.attr("action"),

@@ -705,7 +705,7 @@ def task_del(request, pk):
     data = dict()
 
     method = request.POST['param']
-    
+
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user:
         task.delete()
@@ -884,6 +884,33 @@ def project_rename(request, pk):
                 project.save()
                 data['form_is_valid'] = True
                 data['title'] = new_title
+
+    return JsonResponse(data)
+
+
+def project_param(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    data = dict()
+
+    method = request.POST['param']
+
+    invited_users = InviteUser.objects.filter(user_sender__username__exact=request.user.username) \
+        .filter(not_invited=False).filter(invited=True)
+    project_invite_form = ProjectInviteUser(prefix='invite_project')
+    project_invite_form.fields['user_invite'].queryset = User.objects \
+        .filter(pk__in=[user.user_invite.pk for user in invited_users])
+
+    data['form_is_valid'] = True
+    data['html_active_tasks_list'] = ''
+    data['html_finished_tasks_list'] = ''
+    data['project_param'] = render_to_string('JtdiTASKS/project_param.html', {
+        'project_rename_form': ProjectFormRename(prefix='rename_project'),
+        'project_invite_form': project_invite_form,
+        'project': pk,
+        'param': method},
+                                             request=request,)
 
     return JsonResponse(data)
 
@@ -1165,6 +1192,5 @@ def project_menu(request, project, project_title):
 def search_block(user):
     return {'user': user,
             'search_form': SearchForm()}
-
 
 # TODO В модуле бутстрэп переписан темплейт с полями
