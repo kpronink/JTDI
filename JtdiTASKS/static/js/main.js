@@ -267,7 +267,7 @@ $("#modal-task").on("submit", ".rename_proj_form", function () {
 $(document).ready(function(){
     var task_id = window.location.hash.replace("#","");
     if (task_id !== ''){
-    TaskDetail("/task/det/"+task_id+"/")
+    TaskDetail("/task/det/"+task_id+"/", 'today')
     $('#modal-task').modal('show')
     }
 });
