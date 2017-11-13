@@ -29,10 +29,12 @@ class Command(BaseCommand):
                 .filter(date_time__range=(start_day, end_day)).filter(remind=False) \
                 .order_by('date', 'priority', 'time')
 
-            msg_html = render_to_string('JtdiTASKS/email.html', {'tasks_today': tasks_today,
-                                                                 'tasks_overdue': tasks_overdue,
-                                                                 'username': user.username})
-            _send_email([user.email], subject='Дайджест задач', message=msg_html, sender=settings.EMAIL_HOST_USER)
+            if tasks_today.count() or tasks_today:
+
+                msg_html = render_to_string('JtdiTASKS/email.html', {'tasks_today': tasks_today,
+                                                                     'tasks_overdue': tasks_overdue,
+                                                                     'username': user.username})
+                _send_email([user.email], subject='Дайджест задач', message=msg_html, sender=settings.EMAIL_HOST_USER)
 
 
 def _send_email(to_list, subject, message, sender=''):

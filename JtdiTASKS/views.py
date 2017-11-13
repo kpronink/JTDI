@@ -485,6 +485,16 @@ def search_result(request):
 def task_create(request, project=None):
     data = dict()
 
+    if 'param' in request.POST:
+        method = request.POST['param']
+    elif 'param' in request.GET:
+        method = request.GET['param']
+    else:
+        method = 'projects'
+
+    if not request.user.is_authenticated():
+        return redirect('login')
+
     COLOR_CHOISE = {
         1: 'red',
         2: 'yellow',
@@ -546,7 +556,8 @@ def task_create(request, project=None):
                     filter(project=None).order_by('date')
             data['form_is_valid'] = True
             data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-                'tasks': tasks
+                'tasks': tasks,
+                'param': method
             })
         else:
             data['form_is_valid'] = False
@@ -555,7 +566,8 @@ def task_create(request, project=None):
         form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
         form.fields['performer'].queryset = all_users_in_project
 
-    context = {'form': form}
+    context = {'form': form,
+               'param': method}
     data['html_form'] = render_to_string('JtdiTASKS/task_create_ajax.html',
                                          context,
                                          request=request
@@ -591,6 +603,13 @@ def task_update(request, pk):
         return redirect('login')
 
     data = dict()
+
+    if 'param' in request.POST:
+        method = request.POST['param']
+    elif 'param' in request.GET:
+        method = request.GET['param']
+    else:
+        method = 'projects'
 
     COLOR_CHOISE = {
         1: 'red',
@@ -633,16 +652,20 @@ def task_update(request, pk):
                     tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
                         filter(project=None).order_by('date')
                 data['form_is_valid'] = True
+                data['msg'] = 'Задача успешно обновлена'
                 data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-                    'tasks': tasks
+                    'tasks': tasks,
+                    'param': method
                 })
     else:
         form = TaskEditForm(instance=task)
         form.fields['project'].queryset = Project.objects.filter(author=request.user)
         form.fields['performer'].queryset = all_users_in_project
+        data['msg'] = ''
 
     context = {'form': form,
-               'task': task}
+               'task': task,
+               'param': method}
     data['html_form'] = render_to_string('JtdiTASKS/task_edit_ajax.html',
                                          context,
                                          request=request
@@ -750,15 +773,18 @@ def task_start_stop(request, pk):
         time_tracker.save()
         if task.status == "Wait":
             task.status = "Started"
+            msg = 'Задача успешно запущена'
         elif task.status == "Started":
             task.status = "Stoped"
+            msg = 'Задача успешно приостановлена'
         elif task.status == "Stoped":
             task.status = "Started"
+            msg = 'Задача успешно запущена'
         task.save()
 
     tasks_time_tracking = TasksTimeTracker.objects.filter(task=task).order_by('datetime').aggregate(Sum('full_time'))
 
-    return JsonResponse({'status': task.status, 'full_time': tasks_time_tracking['full_time__sum']})
+    return JsonResponse({'status': task.status, 'full_time': tasks_time_tracking['full_time__sum'], 'msg': msg})
 
 
 def task_finish(request, pk):
@@ -785,6 +811,7 @@ def task_finish(request, pk):
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
             'tasks': tasks,
             'param': method})
+        data['msg'] = 'Задача успешно завершена'
 
     return JsonResponse(data)
 
@@ -827,6 +854,7 @@ def task_restore(request, pk):
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
             'tasks': tasks,
             'param': method})
+        data['msg'] = 'Задача успешно восстановлена'
 
     return JsonResponse(data)
 
@@ -910,7 +938,7 @@ def project_param(request, pk):
         'project_invite_form': project_invite_form,
         'project': pk,
         'param': method},
-                                             request=request,)
+                                             request=request, )
 
     return JsonResponse(data)
 

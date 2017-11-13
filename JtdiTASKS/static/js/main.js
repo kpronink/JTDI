@@ -125,6 +125,7 @@ function StartStop() {
         url: $("#url_ajax_start").attr('url_ajax_start'),
         data: {},
         success: function(result) {
+            Alert(result.msg);
             $("#form_start_stop").empty();
             $("#task_status").empty();
             $("#task_full_time").empty();
@@ -135,7 +136,7 @@ function StartStop() {
             if(result["status"] === "Wait"){
                 $("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'> <i class='material-icons' style='size: 50px'>play_circle_filled</i> </button>");
             }
-            else if (result["status"] === "Started"){$("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'><i class='material-icons' style='size: 50px'>pause_circle_filled</i> </button>");}else if (result["status"] === "Stoped"){$("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'> <i class='material-icons' style='size: 50px'>play_circle_filled</i> </button>");};;
+            else if (result["status"] === "Started"){$("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'><i class='material-icons' style='size: 50px'>pause_circle_filled</i> </button>");}else if (result["status"] === "Stoped"){$("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'> <i class='material-icons' style='size: 50px'>play_circle_filled</i> </button>");}
         },
         error: function(result) {
             alert('error');
@@ -145,9 +146,11 @@ function StartStop() {
 
 $("#modal-task").on("submit", ".task-create-form", function () {
     var form = $(this);
+    var form_data = form.serialize();
+    form_data = form_data + '&param='+ form.attr("param")
     $.ajax({
       url: form.attr("action"),
-      data: form.serialize(),
+      data: form_data,
       type: form.attr("method"),
       dataType: 'json',
       success: function (data) {
@@ -156,6 +159,7 @@ $("#modal-task").on("submit", ".task-create-form", function () {
             $("#task_active_table").html(data.html_active_tasks_list);
             $('#dataTables-example').dataTable();
             $("[data-dismiss=modal]").trigger({ type: "click" });
+            Alert('Задача успешно обновлена');
         }
         else {
           $("#modal-task .modal-content").html(data.html_form);
@@ -166,13 +170,14 @@ $("#modal-task").on("submit", ".task-create-form", function () {
   });
 
 
-function UpdateTask(url) {
+function UpdateTask(url, param) {
       var btn = $(this);
       $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div> <div class='cssload-cube cssload-c3'></div> </div>");
     $.ajax({
       url: url,
       type: 'get',
       dataType: 'json',
+      data: {'param':param},
       success: function (data) {
           $("#modal-task .modal-content").html(data.html_form);
           if($('*').is('#id_project_field')) {
@@ -215,6 +220,8 @@ function UniversalFun(task_url, param) {
                 $("#task_finish_table").html(result.html_finished_tasks_list);
             }
             $('#dataTables-example').dataTable();
+            
+            Alert(result.msg);
         }
     });
 }
@@ -271,3 +278,12 @@ $(document).ready(function(){
     $('#modal-task').modal('show')
     }
 });
+
+function Alert(msg) {
+    if (msg !== "") {
+            Materialize.toast(msg, 3000, 'rounded')
+        } else {
+            Materialize.toast(msg, 3000, 'rounded')
+        }
+
+}
