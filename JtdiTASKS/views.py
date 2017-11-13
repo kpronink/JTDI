@@ -840,16 +840,23 @@ def task_transfer_date(request, pk, days):
     if not request.user.is_authenticated():
         return redirect('login')
 
+    data = dict()
+
+    method = request.POST['param']
+
     task = get_object_or_404(Task, pk=pk)
     task.date = task.date + datetime.timedelta(days=int(days))
     task.save()
-    if task.project is not None:
-        project_pk = task.project.pk
-        success_url = redirect('project_tasks_list', pk=project_pk)
-    else:
-        success_url = redirect('/')
+    if task.author == request.user or task.performer == request.user:
+        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
+        data['form_is_valid'] = True
+        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
+            'tasks_finish': tasks_finish})
+        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
+            'tasks': tasks})
+        data['msg'] = 'Задача успешно перенесена на ' + days + ' дней'
 
-    return success_url
+    return JsonResponse(data)
 
 
 # Project view

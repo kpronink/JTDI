@@ -171,8 +171,8 @@ $("#modal-task").on("submit", ".task-create-form", function () {
 
 
 function UpdateTask(url) {
-      var btn = $(this);
-      $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div> <div class='cssload-cube cssload-c3'></div> </div>");
+    var btn = $(this);
+    PreloadModal();
     $.ajax({
       url: url,
       type: 'get',
@@ -189,7 +189,9 @@ function UpdateTask(url) {
 
 
 function TaskDetail(task_url) {
-
+    if ($("#modal-task").is(':visible')) {}
+    else{PreloadModal();
+    }
     $.ajax({
       url: task_url,
       type: 'post',
@@ -203,6 +205,9 @@ function TaskDetail(task_url) {
 }
 
 function UniversalFun(task_url) {
+    if ($("#modal-task").is(':visible')) {}
+    else{PreloadModal();
+    }
     $.ajax({
         url: task_url,
         type: 'post',
@@ -286,4 +291,8 @@ function Alert(msg) {
             Materialize.toast(msg, 3000, 'rounded')
         }
 
+}
+
+function PreloadModal() {
+    $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div> <div class='cssload-cube cssload-c3'></div> </div>");
 }

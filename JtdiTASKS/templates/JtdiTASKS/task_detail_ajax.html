@@ -6,12 +6,14 @@
                     <h4 class="modal-title"></h4>
                   </div>
 
-                    <div class="card-action"> Задача </div>
+                    <div class="card-action"></div>
                     <div class="card-content">
                         <!--<form action="">-->
                         <fieldset>
                             <div class="form-group"> {% if task.status != 'Finished' %}
+                                <div class="form-group">
                                 <a href="#"  onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }};"> </i>Завершить</a>
+                                </div>
                                 <div class="clearfix"></div> {% task_menu request task=task.pk user=user%} {% else %} {% endif %}
                                 <div class="form-group">
                                     <label>Заголовок задачи</label>
