@@ -1,6 +1,6 @@
 {% load widget_tweaks %}{% load static %}
 
-<form method="post" action="{% url 'task_create' %}" class="task-create-form" param="{{ param }}">
+<form method="post" action="{% url 'task_create' %}" class="task-create-form">
   {% csrf_token %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

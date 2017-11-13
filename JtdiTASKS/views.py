@@ -548,16 +548,10 @@ def task_create(request, project=None):
             task.color = COLOR_CHOISE[int(task.priority)]
             task.remind = False
             task.save(Task)
-            if task.project is not None:
-                tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
-                    filter(project=task.project.pk).order_by('date')
-            else:
-                tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
-                    filter(project=None).order_by('date')
+            tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
             data['form_is_valid'] = True
             data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-                'tasks': tasks,
-                'param': method
+                'tasks': tasks
             })
         else:
             data['form_is_valid'] = False
@@ -566,8 +560,7 @@ def task_create(request, project=None):
         form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
         form.fields['performer'].queryset = all_users_in_project
 
-    context = {'form': form,
-               'param': method}
+    context = {'form': form}
     data['html_form'] = render_to_string('JtdiTASKS/task_create_ajax.html',
                                          context,
                                          request=request
@@ -589,8 +582,7 @@ def task_detail_ajax(request, pk):
 
     context = {'task': task,
                'comment_form': comment_form,
-               'full_time': full_time['full_time__sum'],
-               'param': method}
+               'full_time': full_time['full_time__sum']}
     data['html_form'] = render_to_string('JtdiTASKS/task_detail_ajax.html',
                                          context,
                                          request=request
@@ -645,17 +637,11 @@ def task_update(request, pk):
                     task.color = COLOR_CHOISE[4]
                 task.date_time = task.date_time.combine(task.date, task.time)
                 task.save()
-                if task.project is not None:
-                    tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
-                        filter(project=task.project.pk).order_by('date')
-                else:
-                    tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
-                        filter(project=None).order_by('date')
+                tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
                 data['form_is_valid'] = True
                 data['msg'] = 'Задача успешно обновлена'
                 data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-                    'tasks': tasks,
-                    'param': method
+                    'tasks': tasks
                 })
     else:
         form = TaskEditForm(instance=task)
@@ -664,8 +650,7 @@ def task_update(request, pk):
         data['msg'] = ''
 
     context = {'form': form,
-               'task': task,
-               'param': method}
+               'task': task}
     data['html_form'] = render_to_string('JtdiTASKS/task_edit_ajax.html',
                                          context,
                                          request=request
@@ -736,11 +721,9 @@ def task_del(request, pk):
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
-            'tasks_finish': tasks_finish,
-            'param': method})
+            'tasks_finish': tasks_finish})
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-            'tasks': tasks,
-            'param': method})
+            'tasks': tasks})
 
     return JsonResponse(data)
 
@@ -806,11 +789,9 @@ def task_finish(request, pk):
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
-            'tasks_finish': tasks_finish,
-            'param': method})
+            'tasks_finish': tasks_finish})
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-            'tasks': tasks,
-            'param': method})
+            'tasks': tasks})
         data['msg'] = 'Задача успешно завершена'
 
     return JsonResponse(data)
@@ -849,11 +830,9 @@ def task_restore(request, pk):
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
-            'tasks_finish': tasks_finish,
-            'param': method})
+            'tasks_finish': tasks_finish})
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
-            'tasks': tasks,
-            'param': method})
+            'tasks': tasks})
         data['msg'] = 'Задача успешно восстановлена'
 
     return JsonResponse(data)
@@ -922,8 +901,6 @@ def project_param(request, pk):
 
     data = dict()
 
-    method = request.POST['param']
-
     invited_users = InviteUser.objects.filter(user_sender__username__exact=request.user.username) \
         .filter(not_invited=False).filter(invited=True)
     project_invite_form = ProjectInviteUser(prefix='invite_project')
@@ -936,8 +913,7 @@ def project_param(request, pk):
     data['project_param'] = render_to_string('JtdiTASKS/project_param.html', {
         'project_rename_form': ProjectFormRename(prefix='rename_project'),
         'project_invite_form': project_invite_form,
-        'project': pk,
-        'param': method},
+        'project': pk},
                                              request=request, )
 
     return JsonResponse(data)

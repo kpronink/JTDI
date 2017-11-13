@@ -29,7 +29,7 @@
                                 </thead>
                                 <tbody> {% for task in tasks %}
                                     <tr class="odd gradeX">
-                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}', 'today')"
+                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
                                             data-toggle="modal" data-target="#modal-task">
                                             {{ task.title|truncatechars:40 }}</a></td>
                                         <td>{{ task.description|truncatechars:50 }}</td>
@@ -38,7 +38,7 @@
                                         <td>{{ task.project }}</td>
                                         <td>{{ task.performer }}</td>
                                         <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}', 'today')" title="Завершить задачу">
+                                            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')" title="Завершить задачу">
                                                 <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
                                         </td>
                                         <td>
@@ -53,7 +53,7 @@
                             </table>
                         </div>
                                                   <p>
-    <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}', 'today')">
+    <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}')">
       <span class="glyphicon glyphicon-plus-sign"></span>
     </button>
 
@@ -80,18 +80,18 @@
                                 </thead>
                                 <tbody> {% for task in tasks_finished_today %}
                                     <tr>
-                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}', 'today')"
+                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
                                             data-toggle="modal" data-target="#modal-task">
                                             {{ task.title|truncatechars:40 }}</a></td>
                                         <td>{{ task.description|truncatechars:50 }}</td>
                                         <td>{{ task.date }}</td>
                                         <td>{{ task.date_time_finish }}</td>
                                         <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}', 'today')" title="Восстановить задачу">
+                                            <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}')" title="Восстановить задачу">
                                                 <i class="glyphicon glyphicon-backward"></i></a>
                                         </td>
                                         <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'today')" title="Удалить задачу">
+                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}')" title="Удалить задачу">
                                                 <i class="glyphicon glyphicon-trash"></i></a>
                                         </td>
                                     </tr> {% endfor %} </tbody>
@@ -118,4 +118,5 @@
         <div class="row"> </div>
     </div>
 </div>
+    <div id="views" views="today"></div>
 <!--</div>-->{% endblock content %}

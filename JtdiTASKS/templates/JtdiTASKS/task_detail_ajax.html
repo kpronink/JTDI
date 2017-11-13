@@ -11,7 +11,7 @@
                         <!--<form action="">-->
                         <fieldset>
                             <div class="form-group"> {% if task.status != 'Finished' %}
-                                <a href="#"  onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}', '{{ param }}')"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }};"> </i>Завершить</a>
+                                <a href="#"  onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')"> <i class="glyphicon glyphicon-flag" style="color: {{ task.color }};"> </i>Завершить</a>
                                 <div class="clearfix"></div> {% task_menu request task=task.pk user=user%} {% else %} {% endif %}
                                 <div class="form-group">
                                     <label>Заголовок задачи</label>

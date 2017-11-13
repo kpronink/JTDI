@@ -147,7 +147,7 @@ function StartStop() {
 $("#modal-task").on("submit", ".task-create-form", function () {
     var form = $(this);
     var form_data = form.serialize();
-    form_data = form_data + '&param='+ form.attr("param")
+    form_data = form_data + '&param='+ $("#views").attr("views")
     $.ajax({
       url: form.attr("action"),
       data: form_data,
@@ -170,14 +170,14 @@ $("#modal-task").on("submit", ".task-create-form", function () {
   });
 
 
-function UpdateTask(url, param) {
+function UpdateTask(url) {
       var btn = $(this);
       $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div> <div class='cssload-cube cssload-c3'></div> </div>");
     $.ajax({
       url: url,
       type: 'get',
       dataType: 'json',
-      data: {'param':param},
+      data: {'param':$("#views").attr("views")},
       success: function (data) {
           $("#modal-task .modal-content").html(data.html_form);
           if($('*').is('#id_project_field')) {
@@ -188,13 +188,13 @@ function UpdateTask(url, param) {
   }
 
 
-function TaskDetail(task_url, param) {
+function TaskDetail(task_url) {
 
     $.ajax({
       url: task_url,
       type: 'post',
       dataType: 'json',
-      data: {'param':param},  
+      data: {'param':$("#views").attr("views")},
       success: function (data) {
         $("#modal-task .modal-content").html(data.html_form);
         get_comments();
@@ -202,12 +202,12 @@ function TaskDetail(task_url, param) {
     });
 }
 
-function UniversalFun(task_url, param) {
+function UniversalFun(task_url) {
     $.ajax({
         url: task_url,
         type: 'post',
         dataType: 'json',
-        data: {'param':param},
+        data: {'param':$("#views").attr("views")},
         success: function(result) {
             //$("[data-dismiss=modal]").trigger({ type: "click" });
             if (result.project_param !== '') {
