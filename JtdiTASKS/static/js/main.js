@@ -281,9 +281,9 @@ $("#modal-task").on("submit", ".rename_proj_form", function () {
   });
 
 $(document).ready(function(){
-    var task_id = window.location.hash.replace("#","");
-    if (task_id !== ''){
-    TaskDetail("/task/det/"+task_id+"/", 'today')
+    var task_id = Number(window.location.hash.replace("#",""));
+    if (isFinite(task_id) && task_id !== 0) {
+    TaskDetail("/task/det/"+String(task_id)+"/", 'today')
     $('#modal-task').modal('show')
     }
     setInterval(GetNotifications, 1000)
