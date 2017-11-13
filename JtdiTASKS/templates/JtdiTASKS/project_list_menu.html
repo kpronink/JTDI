@@ -1,4 +1,4 @@
-{% load bootstrap %}
+{% load bootstrap %} {% load widget_tweaks %}
 {% for project_item in projects %}
                     <li>
                         <!--<div class="circle" style="{{ project_item.color_project }}">
@@ -13,12 +13,25 @@
                     <li>
                         <div id="box_proj" style="display: none;">
                             <fieldset>
-                                <div class="form-group">
-                                    <form method="POST" class="form"> {% csrf_token %}
-                                        <div class="form-group"> {{ project_form|bootstrap }} </div>
+                                <div id="box_proj" style="display: none;">
+                            <fieldset>
+                                <div class="form-group" id="project_create">
+                                    <form method="post" action="{% url 'project_create' %}" class="project_create_form">
+                                    {% csrf_token %}
+                                    {% for field in project_form %}
+                                        <div class="form-group{% if field.errors %} has-error{% endif %}">
+                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {% render_field field class="form-control" %}
+                                        {% for error in field.errors %}
+                                          <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                        </div>
+                                    {% endfor %}
                                         <button type="submit" class="btn btn-primary">Добавить</button>
                                     </form>
                                 </div>
+                            </fieldset>
+                            </div>
                             </fieldset>
                         </div>
                     </li>

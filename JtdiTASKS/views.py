@@ -939,6 +939,33 @@ def project_rename(request, pk):
     return JsonResponse(data)
 
 
+def project_create(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    data = dict()
+
+    if request.method == 'POST':
+        project_form = ProjectForm(request.POST, prefix='project')
+        if project_form.is_valid():
+            project = Project()
+            project.title = project_form.cleaned_data['title']
+            project.author = request.user
+            color = generate_color()
+            project.color_project = "color: " + color
+            project.group = False
+            project.save(Project)
+            data['form_is_valid'] = True
+            context = {'projects': Project.objects.filter(author=request.user),
+                       'project_form': ProjectForm(prefix='project')}
+            data['project_list'] = render_to_string('JtdiTASKS/project_list_menu.html',
+                                                    context,
+                                                    request=request
+                                                    )
+
+    return JsonResponse(data)
+
+
 def project_param(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
@@ -1181,17 +1208,6 @@ def project_recent_list(request, user, project_pk):
         project_pk = 0
     else:
         project_pk = int(project_pk)
-
-    if request.method == 'POST':
-        project_form = ProjectForm(request.POST, prefix='project')
-        if project_form.is_valid():
-            project = Project()
-            project.title = project_form.cleaned_data['title']
-            project.author = request.user
-            color = generate_color()
-            project.color_project = "color: " + color
-            project.group = False
-            project.save(Project)
 
     return {
         'projects': Project.objects.filter(author=user),

@@ -7,6 +7,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
                   url(r'^task/create/$', views.task_create, name='task_create'),
+                  url(r'^project/create/$', views.project_create, name='project_create'),
                   url(r'^task/det/(?P<pk>[0-9]+)/$', views.task_detail_ajax, name='task_det'),
                   url(r'^task/(?P<pk>\d+)/update/$', views.task_update, name='task_update'),
                   url(r'^register/$', views.RegisterFormView.as_view(), name='register'),

@@ -280,6 +280,26 @@ $("#modal-task").on("submit", ".rename_proj_form", function () {
     return false;
   });
 
+$("#project_create").on("submit", ".project_create_form", function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+            if (data.project_list !== '') {
+                $("#projects_list").html(data.project_list);
+            }
+        }
+        else {
+        }
+      }
+    });
+    return false;
+  });
+
 $(document).ready(function(){
     var task_id = Number(window.location.hash.replace("#",""));
     if (isFinite(task_id) && task_id !== 0) {
