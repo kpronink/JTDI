@@ -856,6 +856,17 @@ def task_transfer_date(request, pk, days):
             'tasks': tasks})
         data['msg'] = 'Задача успешно перенесена на ' + days + ' дней'
 
+        full_time = TasksTimeTracker.objects.filter(task__pk=pk).aggregate(Sum('full_time'))
+        comment_form = CommentAddForm()
+
+        context = {'task': task,
+                   'comment_form': comment_form,
+                   'full_time': full_time['full_time__sum']}
+        data['html_form'] = render_to_string('JtdiTASKS/task_detail_ajax.html',
+                                             context,
+                                             request=request
+                                             )
+
     return JsonResponse(data)
 
 

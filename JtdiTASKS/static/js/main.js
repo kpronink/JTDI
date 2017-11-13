@@ -224,6 +224,10 @@ function UniversalFun(task_url) {
             if (result.html_finished_tasks_list !== ''){
                 $("#task_finish_table").html(result.html_finished_tasks_list);
             }
+            if (result.html_form !== '') {
+                $("#modal-task .modal-content").html(result.html_form);
+                get_comments();
+            }
             $('#dataTables-example').dataTable();
             
             Alert(result.msg);
