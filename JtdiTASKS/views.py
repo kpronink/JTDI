@@ -43,7 +43,13 @@ def get_tasks_with_filter(filter_method, project, user):
     first_day = datetime.date(1001, 1, 1)
 
     if filter_method == 'projects':
-        if project is not None:
+        if project.author == user:
+            tasks = Task.objects.filter(active=True).filter(project=project).order_by('date')
+
+            tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(project=project.pk) \
+                .filter(date_finish__range=(start_day, end_day)).order_by(
+                'date_finish')
+        else:
             tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)). \
                 filter(project=project).order_by('date')
 
@@ -52,10 +58,6 @@ def get_tasks_with_filter(filter_method, project, user):
                 .filter(date_finish__range=(start_day, end_day)).order_by(
                 'date_finish')
 
-        else:
-            tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)). \
-                filter(project=None).order_by('date')
-            tasks_finish = ''
     elif filter_method == 'today':
         tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)) \
             .filter(date_time__range=(start_day, end_day)) \
