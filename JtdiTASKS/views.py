@@ -427,17 +427,10 @@ def project_task_list(request, pk):
         return redirect('login')
 
     currentdate = datetime.datetime.today()
-    start_day = currentdate.combine(currentdate, currentdate.min.time())
-    end_day = currentdate.combine(currentdate, currentdate.max.time())
-
-    tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)). \
-        filter(project=pk).order_by('date')
-    tasks_finish = Task.objects.filter(active=False).filter(finished=True). \
-        filter(Q(author=request.user) | Q(performer=request.user)).filter(project=pk) \
-        .filter(date_finish__range=(start_day, end_day)).order_by(
-        'date_finish')
 
     project = Project.objects.filter(pk=pk)[0]
+
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
 
     invited_users = InviteUser \
         .objects.filter(Q(user_sender__username__exact=request.user.username)
