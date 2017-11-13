@@ -496,8 +496,10 @@ def search_result(request):
 # Task view
 
 
-def task_create(request, project=None):
+def task_create(request):
     data = dict()
+
+    user = get_object_or_404(User, pk=request.user.pk)
 
     if 'param' in request.POST:
         method = request.POST['param']
@@ -505,6 +507,13 @@ def task_create(request, project=None):
         method = request.GET['param']
     else:
         method = 'projects'
+
+    if 'project' in request.POST:
+        project_pk = int(request.POST['project'])
+    elif 'project' in request.GET:
+        project_pk = int(request.GET['project'])
+    else:
+        project_pk = None
 
     if not request.user.is_authenticated():
         return redirect('login')
@@ -516,27 +525,27 @@ def task_create(request, project=None):
         4: 'grey'}
 
     invited_users = InviteUser \
-        .objects.filter(Q(user_sender__username__exact=request.user.username)
-                        | Q(user_invite__username__exact=request.user.username)) \
+        .objects.filter(Q(user_sender__username__exact=user.username)
+                        | Q(user_invite__username__exact=user.username)) \
         .filter(not_invited=False).filter(invited=True)
 
-    users_in_project = PartnerGroup.objects.filter(project=project) \
+    users_in_project = PartnerGroup.objects.filter(project=project_pk) \
         .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
 
     proj = None
 
-    if project is not None:
-        proj = get_object_or_404(Project, pk=project)
+    if project_pk is not None:
+        proj = get_object_or_404(Project, pk=project_pk)
         all_users_in_project = User.objects.filter(
             Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk))
     else:
         users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
         all_users_in_project = User.objects \
-            .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
+            .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=user.pk))
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
-        form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
+        form.fields['project_field'].queryset = Project.objects.filter(author=user)
         form.fields['performer'].queryset = all_users_in_project
         if form.is_valid():
             task = Task()
@@ -562,7 +571,7 @@ def task_create(request, project=None):
             task.color = COLOR_CHOISE[int(task.priority)]
             task.remind = False
             task.save(Task)
-            tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
+            tasks, tasks_finish = get_tasks_with_filter(method, task.project, user)
             data['form_is_valid'] = True
             data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
                 'tasks': tasks
@@ -570,8 +579,8 @@ def task_create(request, project=None):
         else:
             data['form_is_valid'] = False
     else:
-        form = TaskForm()
-        form.fields['project_field'].queryset = Project.objects.filter(author=request.user)
+        form = TaskForm(initial={'project_field': proj, 'performer': user})
+        form.fields['project_field'].queryset = Project.objects.filter(author=user)
         form.fields['performer'].queryset = all_users_in_project
 
     context = {'form': form}

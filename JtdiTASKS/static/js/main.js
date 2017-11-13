@@ -171,13 +171,13 @@ $("#modal-task").on("submit", ".task-create-form", function () {
 
 
 function UpdateTask(url) {
-    var btn = $(this);
+    
     PreloadModal();
     $.ajax({
       url: url,
       type: 'get',
       dataType: 'json',
-      data: {'param':$("#views").attr("views")},
+      data: {'param':$("#views").attr("views"), 'project':$("#project").attr("project")},
       success: function (data) {
           $("#modal-task .modal-content").html(data.html_form);
           if($('*').is('#id_project_field')) {
