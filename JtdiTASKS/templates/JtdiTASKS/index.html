@@ -19,7 +19,8 @@
                                         <th>Расшифровка</th>
                                         <th>Дата начала</th>
                                         <th>Время начала</th>
-                                        <th>Проект</th>
+                                        <th>Исполнитель</th>
+                                        <th>Статус</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -33,7 +34,8 @@
                                         <td>{{ task.description|truncatechars:50 }}</td>
                                         <td>{{ task.date }}</td>
                                         <td>{{ task.time }}</td>
-                                        <td>{{ task.project }}</td>
+                                        <td>{{ task.performer }}</td>
+                                        <td>{{ task.status }}</td>
                                         <td>
                                             <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')" title="Завершить задачу">
                                                 <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>

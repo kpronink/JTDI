@@ -77,8 +77,7 @@ def get_tasks_with_filter(filter_method, project, user):
             .filter(project=None). \
             order_by('date', 'priority', 'time')
         tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
-            .filter(Q(author=user) | Q(performer=user)). \
-            filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
+            .filter(Q(author=user) | Q(performer=user)).filter(date_finish__range=(start_day, end_day)).order_by(
             'date_finish')
 
     return tasks, tasks_finish
@@ -348,12 +347,11 @@ def task_list(request):
         .filter(project=None). \
         order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
-        .filter(Q(author=request.user) | Q(performer=request.user)). \
-        filter(project=None).order_by(
+        .filter(Q(author=request.user) | Q(performer=request.user)).order_by(
         'date_finish')
     tasks_finished_today = Task.objects.filter(active=False).filter(finished=True) \
-        .filter(Q(author=request.user) | Q(performer=request.user)). \
-        filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
+        .filter(Q(author=request.user) | Q(performer=request.user)) \
+        .filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
 
     return render(request, 'JtdiTASKS/index.html', {'tasks': tasks,
@@ -376,7 +374,7 @@ def task_list_today(request):
         .filter(Q(author=request.user) | Q(performer=request.user)).order_by(
         'date_finish')
     tasks_finished_today = Task.objects.filter(active=False).filter(finished=True) \
-        .filter(Q(author=request.user) | Q(performer=request.user)).filter(project=None) \
+        .filter(Q(author=request.user) | Q(performer=request.user)) \
         .filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
 
