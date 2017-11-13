@@ -1160,7 +1160,7 @@ def get_comments(request, pk):
 
 
 @register.inclusion_tag('JtdiTASKS/menu.html')
-def project_recent_list(request, user):
+def project_recent_list(request, user, project_pk):
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
@@ -1176,6 +1176,11 @@ def project_recent_list(request, user):
 
     projects_group = PartnerGroup.objects \
         .filter(partner=user)
+
+    if project_pk == '':
+        project_pk = 0
+    else:
+        project_pk = int(project_pk)
 
     if request.method == 'POST':
         project_form = ProjectForm(request.POST, prefix='project')
@@ -1194,7 +1199,8 @@ def project_recent_list(request, user):
         'project_form': ProjectForm(prefix='project'),
         'tasks_today_notify': tasks_today_notify,
         'tasks_overdue_notify': tasks_overdue_notify,
-        'request': request
+        'request': request,
+        'project_pk': project_pk
     }
 
 

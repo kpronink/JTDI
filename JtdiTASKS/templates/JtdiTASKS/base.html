@@ -49,7 +49,7 @@
 
                  {% if user.is_authenticated %}
                 {% profile_menu user%}
-                {% project_recent_list request user %}{% endif %}
+                {% project_recent_list request user project %}{% endif %}
 
                 {% block content %}
                 {% endblock %}

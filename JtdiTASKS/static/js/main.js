@@ -286,7 +286,7 @@ $(document).ready(function(){
     TaskDetail("/task/det/"+String(task_id)+"/", 'today')
     $('#modal-task').modal('show')
     }
-    setInterval(GetNotifications, 10000)
+    setInterval(GetNotifications, 100000)
 });
 
 function Alert(msg) {

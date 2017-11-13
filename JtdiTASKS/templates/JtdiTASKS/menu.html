@@ -13,14 +13,27 @@
             <li class="current">
                 <a href="{% url 'task_list_finished' %}" class=" {% if request.resolver_match.url_name == 'task_list_finished' %}active-menu {% endif %} waves-effect waves-dark"> <i class="glyphicon glyphicon-briefcase"></i> Завершенные задачи</a>
             </li>
-            <li > <a href="#" class=" {{ acitvemenu_project }} waves-effect waves-dark" ><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>
+        {% if project_pk == 0 %}
+            <li class="">
+            {% else %}
+            <li class="active">
+        {%  endif %}
+                <a href="#" class="waves-effect waves-dark" ><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" id="projects_list"> {% for project_item in projects %}
-                    <li>
+                    {% if project_item.pk ==  project_pk %}
+                    <li class="active">
+                    {% else %}
+                    <li class="">
+                    {% endif %}
                         <!--<div class="circle" style="{{ project_item.color_project }}">
                                        </div>-->
                         <a href="{% url 'project_tasks_list' pk=project_item.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
                     </li> {% endfor %} {% for project_item in projects_group %}
-                    <li>
+                    {% if project_item.pk == project_pk|stringformat:"i" %}
+                    <li class="active">
+                    {% else %}
+                    <li class="">
+                    {% endif %}
                         <!--<div class="circle" style="{{ project_item.project.color_project }}">
                                        </div>-->
                         <a href="{% url 'project_tasks_list' pk=project_item.project.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.project.color_project }}"></i> {{ project_item.project.title }} (Групповая)</a>
