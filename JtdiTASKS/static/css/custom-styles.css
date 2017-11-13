@@ -773,7 +773,7 @@ padding: 0 15px 0px 15px;
     display:none;
     position:fixed;
     left:0;right:0;
-    background-color:inherit;
+    background-color:transparent;
     padding:0;
     max-height:inherit;
     width:inherit;
