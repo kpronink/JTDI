@@ -286,6 +286,7 @@ $(document).ready(function(){
     TaskDetail("/task/det/"+task_id+"/", 'today')
     $('#modal-task').modal('show')
     }
+    setInterval(GetNotifications, 1000)
 });
 
 function Alert(msg) {
@@ -298,5 +299,23 @@ function Alert(msg) {
 }
 
 function PreloadModal() {
-    $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div> <div class='cssload-cube cssload-c3'></div> </div>");
+    $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div><div class='cssload-cube cssload-c3'></div> </div>");
+}
+
+function GetNotifications() {
+    $.ajax({
+      url: '/ajax/get_notifycation/',
+      data: {},
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        if (data.tasks_today_notify !== '') {
+            $('#tasks_today_notify').html(data.tasks_today_notify)
+            }
+        if (data.tasks_overdue_notify !== '') {
+            $('#tasks_overdue_notify').html(data.tasks_overdue_notify)
+            }    
+      }
+    });
+    
 }

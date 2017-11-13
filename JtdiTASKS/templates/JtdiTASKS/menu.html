@@ -2,13 +2,13 @@
 <nav class="navbar-default navbar-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
-            <li> <a class=" {% if request.resolver_match.url_name == 'task_today' %}active-menu {% endif %} waves-effect waves-dark" href="{% url 'task_today' %}"><i class="glyphicon glyphicon-home">{% if tasks_overdue_notify > 0 %}
-                               <div class="tab_counter">{{ tasks_today_notify }}</div>
+            <li> <a class=" {% if request.resolver_match.url_name == 'task_today' %}active-menu {% endif %} waves-effect waves-dark" href="{% url 'task_today' %}"><i class="glyphicon glyphicon-home">{% if tasks_today_notify > 0 %}
+                               <div class="tab_counter" id="tasks_today_notify">{{ tasks_today_notify }}</div>
                             {% endif %}</i> Задачи на сегодня</a> </li>
             <li> <a href="{% url 'task_list' %}" class=" {% if request.resolver_match.url_name == 'task_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-tasks"></i> Задачи без проекта</a> </li>
             <li class="current"><a href="{% url 'task_overdue' %}" class=" {% if request.resolver_match.url_name == 'task_overdue' %}active-menu {% endif %} waves-effect waves-dark"><i class="glyphicon glyphicon-tasks">
                             {% if tasks_overdue_notify > 0 %}
-                               <div class="tab_counter">{{ tasks_overdue_notify }}</div>
+                               <div class="tab_counter" id="tasks_overdue_notify">{{ tasks_overdue_notify }}</div>
                             {% endif %}
                         </i> Просроченые задачи</a></li>
             <li class="current">

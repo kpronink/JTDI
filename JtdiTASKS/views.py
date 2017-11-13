@@ -120,6 +120,28 @@ class LoginFormView(FormView):
         return super(LoginFormView, self).form_valid(form)
 
 
+def get_notifycation(request):
+
+    data = dict()
+    currentdate = datetime.datetime.today()
+    start_day = currentdate.combine(currentdate, currentdate.min.time())
+    end_day = currentdate.combine(currentdate, currentdate.max.time())
+    first_day = currentdate
+    first_day = first_day.combine(datetime.date(1001, 1, 1), currentdate.min.time())
+
+    tasks_today_notify = Task.objects.filter(active=True).filter(author=request.user) \
+        .filter(date_time__range=(start_day, end_day)) \
+        .order_by('date', 'priority', 'time').count()
+    tasks_overdue_notify = Task.objects.filter(active=True).filter(author=request.user) \
+        .filter(date_time__range=(first_day, start_day)) \
+        .order_by('date', 'priority', 'time').count()
+
+    data['tasks_today_notify'] = tasks_today_notify
+    data['tasks_overdue_notify'] = tasks_overdue_notify
+
+    return JsonResponse(data)
+
+
 def get_index_of_task(request, pk):
     local_timez = pytz.timezone(request.user.profile.timezone)
 

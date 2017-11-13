@@ -18,6 +18,7 @@ urlpatterns = [
                   url(r'^ajax/get_index_task/(?P<pk>[0-9]+)/$', views.get_index_task, name='get_index_task'),
                   url(r'^ajax/get_data_gantt/(?P<pk>[0-9]+)/$', views.get_data_gantt, name='get_data_gantt'),
                   url(r'^ajax/get_performers/(?P<pk>[0-9]+)/$', views.get_performers, name='get_performers'),
+                  url(r'^ajax/get_notifycation/$', views.get_notifycation, name='get_notifycation'),
                   url(r'^logout/$', views.logout_view, name='logout'),
                   url(r'^profile/$', views.update_profile, name='profile'),
                   url(r'^invite/$', views.user_invite, name='user_invite'),
