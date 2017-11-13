@@ -574,8 +574,6 @@ def task_detail_ajax(request, pk):
 
     data = dict()
 
-    method = request.POST['param']
-
     task = get_object_or_404(Task, pk=pk)
     full_time = TasksTimeTracker.objects.filter(task__pk=pk).aggregate(Sum('full_time'))
     comment_form = CommentAddForm()
