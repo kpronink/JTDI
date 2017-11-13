@@ -13,8 +13,8 @@
             <li class="current">
                 <a href="{% url 'task_list_finished' %}" class=" {% if request.resolver_match.url_name == 'task_list_finished' %}active-menu {% endif %} waves-effect waves-dark"> <i class="glyphicon glyphicon-briefcase"></i> Завершенные задачи</a>
             </li>
-            <li> <a href="#" class=" {{ acitvemenu_project }} waves-effect waves-dark"><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level"> {% for project_item in projects %}
+            <li > <a href="#" class=" {{ acitvemenu_project }} waves-effect waves-dark" ><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" id="projects_list"> {% for project_item in projects %}
                     <li>
                         <!--<div class="circle" style="{{ project_item.color_project }}">
                                        </div>-->

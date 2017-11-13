@@ -267,13 +267,13 @@ $("#modal-task").on("submit", ".rename_proj_form", function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          //alert("Task created!");  // <-- This is just a placeholder for now for testing
-            //$("#task_active_table").html(data.html_active_tasks_list);
-            //$('#dataTables-example').dataTable();
             $("#project_title").html("<h1 class='page-header'>Задачи проекта " + data.title + "</h1>");
+            $("#project_button_param").html("Параметры проекта " + data.title);
+            if (data.project_list !== '') {
+                $("#projects_list").html(data.project_list);
+            }
         }
         else {
-          //$("#modal-task .modal-content").html(data.html_form);
         }
       }
     });
@@ -286,7 +286,7 @@ $(document).ready(function(){
     TaskDetail("/task/det/"+String(task_id)+"/", 'today')
     $('#modal-task').modal('show')
     }
-    setInterval(GetNotifications, 1000)
+    setInterval(GetNotifications, 10000)
 });
 
 function Alert(msg) {

@@ -121,7 +121,6 @@ class LoginFormView(FormView):
 
 
 def get_notifycation(request):
-
     data = dict()
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
@@ -929,6 +928,13 @@ def project_rename(request, pk):
                 project.save()
                 data['form_is_valid'] = True
                 data['title'] = new_title
+
+                context = {'projects': Project.objects.filter(author=request.user),
+                           'project_form': ProjectForm(prefix='project')}
+                data['project_list'] = render_to_string('JtdiTASKS/project_list_menu.html',
+                                                        context,
+                                                        request=request
+                                                        )
 
     return JsonResponse(data)
 

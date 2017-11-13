@@ -1,0 +1,25 @@
+{% load bootstrap %}
+{% for project_item in projects %}
+                    <li>
+                        <!--<div class="circle" style="{{ project_item.color_project }}">
+                                       </div>-->
+                        <a href="{% url 'project_tasks_list' pk=project_item.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
+                    </li> {% endfor %} {% for project_item in projects_group %}
+                    <li>
+                        <!--<div class="circle" style="{{ project_item.project.color_project }}">
+                                       </div>-->
+                        <a href="{% url 'project_tasks_list' pk=project_item.project.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.project.color_project }}"></i> {{ project_item.project.title }} (Групповая)</a>
+                    </li> {% endfor %}
+                    <li>
+                        <div id="box_proj" style="display: none;">
+                            <fieldset>
+                                <div class="form-group">
+                                    <form method="POST" class="form"> {% csrf_token %}
+                                        <div class="form-group"> {{ project_form|bootstrap }} </div>
+                                        <button type="submit" class="btn btn-primary">Добавить</button>
+                                    </form>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </li>
+                    <li><a href="#" onclick="openbox('box_proj'); return false"><i class="glyphicon glyphicon-plus-sign" style="font-size: 15px; color:#428bca"></i></a></li>
