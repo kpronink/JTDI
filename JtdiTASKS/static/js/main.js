@@ -375,7 +375,7 @@ function GetPushNotifications() {
     });
 }
 
-// request permission on page load
+// request permission on page loadd
 document.addEventListener('DOMContentLoaded', function () {
   if (!Notification) {
     alert('Desktop notifications not available in your browser. Try Chromium.'); 
