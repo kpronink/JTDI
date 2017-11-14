@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/urls.py" afterPath="$PROJECT_DIR$/JtdiTASKS/urls.py" />
     </list>
@@ -167,27 +168,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="332" column="35" lean-forward="false" selection-start-line="332" selection-start-column="35" selection-end-line="332" selection-end-column="35" />
+            <state relative-caret-position="323">
+              <caret line="365" column="12" lean-forward="false" selection-start-line="365" selection-start-column="12" selection-end-line="365" selection-end-column="12" />
               <folding>
-                <marker date="1510681400679" expanded="true" signature="3652:3659" ph="×" />
-                <marker date="1510681400679" expanded="true" signature="5882:5892" ph="..." />
-                <marker date="1510681400679" expanded="true" signature="6145:6155" ph="..." />
-                <marker date="1510681400679" expanded="true" signature="6383:6393" ph="..." />
-                <marker date="1510681400679" expanded="true" signature="10432:10433" ph="..." />
+                <marker date="1510682194382" expanded="true" signature="3652:3659" ph="×" />
+                <marker date="1510682194382" expanded="true" signature="5882:5892" ph="..." />
+                <marker date="1510682194382" expanded="true" signature="6145:6155" ph="..." />
+                <marker date="1510682194382" expanded="true" signature="6383:6393" ph="..." />
+                <marker date="1510682194382" expanded="true" signature="10432:10433" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
-              <caret line="22" column="52" lean-forward="false" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+              <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -293,8 +294,8 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/mysite/settings.py" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/urls.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
       </list>
     </option>
   </component>
@@ -1062,25 +1063,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="332" column="35" lean-forward="false" selection-start-line="332" selection-start-column="35" selection-end-line="332" selection-end-column="35" />
-          <folding>
-            <marker date="1510681400679" expanded="true" signature="3652:3659" ph="×" />
-            <marker date="1510681400679" expanded="true" signature="5882:5892" ph="..." />
-            <marker date="1510681400679" expanded="true" signature="6145:6155" ph="..." />
-            <marker date="1510681400679" expanded="true" signature="6383:6393" ph="..." />
-            <marker date="1510681400679" expanded="true" signature="10432:10433" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="22" column="52" lean-forward="false" selection-start-line="22" selection-start-column="52" selection-end-line="22" selection-end-column="52" />
+          <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="365" column="12" lean-forward="false" selection-start-line="365" selection-start-column="12" selection-end-line="365" selection-end-column="12" />
+          <folding>
+            <marker date="1510682194382" expanded="true" signature="3652:3659" ph="×" />
+            <marker date="1510682194382" expanded="true" signature="5882:5892" ph="..." />
+            <marker date="1510682194382" expanded="true" signature="6145:6155" ph="..." />
+            <marker date="1510682194382" expanded="true" signature="6383:6393" ph="..." />
+            <marker date="1510682194382" expanded="true" signature="10432:10433" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

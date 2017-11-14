@@ -330,7 +330,7 @@ function PreloadModal() {
 
 function GetNotifications() {
     $.ajax({
-      url: '/ajax/get_notifycation/',
+      url: '/get_notifycation/',
       data: {},
       type: 'get',
       dataType: 'json',
@@ -363,7 +363,7 @@ function GetNotifications() {
 
 function GetPushNotifications() {
     $.ajax({
-      url: '/ajax/get_push_notifycation/',
+      url: '/get_push_notifycation/',
       data: {},
       type: 'get',
       dataType: 'json',
