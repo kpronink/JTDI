@@ -24,7 +24,7 @@ SECRET_KEY = 'mm8a%@qu1-f9h!1yr=p7a=_i@_+$4k)avgw8*xf0p=le6%k!z0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kpronink.pythonanywhere.com', '127.0.0.1']
 
 # Application definition
 
