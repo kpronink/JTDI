@@ -312,7 +312,7 @@ $(document).ready(function(){
     GetNotifications();
     GetPushNotifications();
     setInterval(GetNotifications, 50000);
-    setInterval(GetPushNotifications, 60000);
+    setInterval(GetPushNotifications, 50000);
 });
 
 function Alert(msg) {
