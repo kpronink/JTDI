@@ -6,6 +6,8 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+                  url(r'^get_notify/$', views.get_notifycation, name='get_notify'),
+                  url(r'^get_push_notify/$', views.get_push_event, name='get_push_notify'),
                   url(r'^task/create/$', views.task_create, name='task_create'),
                   url(r'^project/create/$', views.project_create, name='project_create'),
                   url(r'^task/det/(?P<pk>[0-9]+)/$', views.task_detail_ajax, name='task_det'),
@@ -19,8 +21,6 @@ urlpatterns = [
                   url(r'^ajax/get_index_task/(?P<pk>[0-9]+)/$', views.get_index_task, name='get_index_task'),
                   url(r'^ajax/get_data_gantt/(?P<pk>[0-9]+)/$', views.get_data_gantt, name='get_data_gantt'),
                   url(r'^ajax/get_performers/(?P<pk>[0-9]+)/$', views.get_performers, name='get_performers'),
-                  url(r'^get_notify/$', views.get_notifycation, name='get_notify'),
-                  url(r'^get_push_notify/$', views.get_push_event, name='get_push_notify'),
                   url(r'^logout/$', views.logout_view, name='logout'),
                   url(r'^profile/$', views.update_profile, name='profile'),
                   url(r'^invite/$', views.user_invite, name='user_invite'),
