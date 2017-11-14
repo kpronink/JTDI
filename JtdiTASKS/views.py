@@ -129,7 +129,10 @@ def get_event(user, request):
         event_obj.sees = True
         event_obj.save()
         if model == Task:
-            object_model = get_object_or_404(model, pk=event.event.object_id)
+            try:
+                object_model = get_object_or_404(model, pk=event.event.object_id)
+            except:
+                continue
             if 'прокомментировал' in event.event.event:
                 ico = 'fa fa-comment fa-fw'
             elif 'создал' in event.event.event or 'изменил' in event.event.event:
@@ -141,7 +144,10 @@ def get_event(user, request):
                           'time': event.event.date_time.strftime('%H:%M'),
                           'ico': ico})
         elif model == PartnerGroup:
-            object_model = get_object_or_404(PartnerGroup, pk=event.event.object_id)
+            try:
+                object_model = get_object_or_404(PartnerGroup, pk=event.event.object_id)
+            except:
+                continue
             ico = 'fa fa-user fa-fw'
             tasks.append({'msg': event.event.author.username + ' ' + event.event.event + object_model.partner.username,
                           'url': '',
