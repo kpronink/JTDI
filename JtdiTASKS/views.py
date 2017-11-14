@@ -2,6 +2,7 @@ import random
 
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
+from django.contrib.contenttypes.models import ContentType
 
 from django.db.models import Q, Count, Sum
 from django.http import JsonResponse
@@ -15,7 +16,8 @@ from django.templatetags.static import static
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
     ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask
+from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask, RegistrationTable, \
+    ViewsEventsTable, QueueTask
 from django.contrib.auth import logout, login
 
 from django.views.generic.edit import FormView
@@ -85,6 +87,95 @@ def get_tasks_with_filter(filter_method, project, user):
     return tasks, tasks_finish
 
 
+def register_event(event_object, user, project, event_desc):
+    local_timez = pytz.timezone(user.profile.timezone)
+    dt = datetime.datetime.now().astimezone(local_timez)
+
+    users_in_project = PartnerGroup.objects.filter(project=project)
+
+    all_users_in_project = User.objects.filter(
+        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+
+    event = RegistrationTable(author=user, project=project)
+    event.content_type = ContentType.objects.get_for_model(event_object)
+    event.object_id = event_object.pk
+    event.date = dt
+    event.date_time = dt
+    event.event = event_desc
+    event.save()
+
+    for user_proj in all_users_in_project:
+        sees = ViewsEventsTable()
+        sees.user = user_proj
+        sees.event = event
+        sees.sees = False
+        sees.save()
+
+
+def get_event(user, request):
+    projects = list(PartnerGroup.objects.filter(partner=user).values_list('project', flat=True).values_list('pk', flat=True))
+    project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
+    projects.extend(project_owner)
+    events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(event__project_id__in=projects).order_by('id').reverse()[:10]
+    count_notify = events.count()
+    if not count_notify:
+        events = ViewsEventsTable.objects.filter(sees=True).filter(user=user).filter(event__project_id__in=projects).order_by('id').reverse()[:10]
+        count_notify = 0
+
+    tasks = list()
+    for event in events:
+        model = event.event.content_type.model_class()
+        event_obj = get_object_or_404(ViewsEventsTable, pk=event.pk)
+        event_obj.sees = True
+        event_obj.save()
+        if model == Task:
+            object_model = get_object_or_404(model, pk=event.event.object_id)
+            if 'прокомментировал' in event.event.event:
+                ico = 'fa fa-comment fa-fw'
+            elif 'создал' in event.event.event or 'изменил' in event.event.event:
+                ico = 'fa fa-tasks fa-fw'
+            else:
+                ico = 'fa fa-tasks fa-fw'
+            tasks.append({'msg': event.event.author.username + ' ' + event.event.event + object_model.title,
+                          'url': '/task/det/' + str(object_model.pk)+'/',
+                          'time': event.event.date_time.strftime('%H:%M'),
+                          'ico': ico})
+        elif model == PartnerGroup:
+            object_model = get_object_or_404(PartnerGroup, pk=event.event.object_id)
+            ico = 'fa fa-user fa-fw'
+            tasks.append({'msg': event.event.author.username + ' ' + event.event.event + object_model.partner.username,
+                          'url': '',
+                          'time': event.event.date_time.strftime('%H:%M'),
+                          'ico': ico})
+
+    notify_tasks = render_to_string('JtdiTASKS/notify_menu.html',
+                                    {'tasks': tasks},
+                                    request=request
+                                    )
+
+    return notify_tasks, str(count_notify)
+
+
+def get_push_event(request):
+    data = list()
+    currentdate = datetime.datetime.today()
+    start_day = currentdate.combine(currentdate, currentdate.min.time())
+
+    tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user) \
+        .filter(date_time__range=(start_day, currentdate)) \
+        .order_by('date_time').reverse()
+
+    for task_actual in tasks_today:
+        data.append({'title': task_actual.task.title,
+                     'url': '/task/det/' + str(task_actual.task.pk) + '/',
+                     'body': task_actual.task.description})
+        reminder = get_object_or_404(QueueTask, pk=task_actual.pk)
+        reminder.reminded = True
+        reminder.save()
+
+    return JsonResponse(data, safe=False)
+    
+    
 class RegisterFormView(FormView):
     form_class = MyUserCreationForm
 
@@ -138,6 +229,8 @@ def get_notifycation(request):
 
     data['tasks_today_notify'] = tasks_today_notify
     data['tasks_overdue_notify'] = tasks_overdue_notify
+
+    data['notify_tasks'], data['count_notify'] = get_event(request.user, request)
 
     return JsonResponse(data)
 
@@ -571,6 +664,14 @@ def task_create(request):
             task.color = COLOR_CHOISE[int(task.priority)]
             task.remind = False
             task.save(Task)
+            
+            if not task.remind:
+                reminder = QueueTask(user=request.user, task=task, reminded=False, date_time=task.date_time)
+                reminder.save()
+
+            if task.project is not None:
+                register_event(task, request.user, task.project, 'создал задачу:')
+
             tasks, tasks_finish = get_tasks_with_filter(method, task.project, user)
             data['form_is_valid'] = True
             data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
@@ -658,12 +759,26 @@ def task_update(request, pk):
                     task.color = COLOR_CHOISE[4]
                 task.date_time = task.date_time.combine(task.date, task.time)
                 task.save()
+                if task.project is not None:
+                    register_event(task, request.user, task.project, 'изменил задачу:')
+
                 tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
                 data['form_is_valid'] = True
                 data['msg'] = 'Задача успешно обновлена'
                 data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
                     'tasks': tasks
                 })
+                if not task.remind:
+                    reminder = QueueTask.objects.filter(task=task).filter(user=request.user)
+                    if reminder.count():
+                        reminder = get_object_or_404(QueueTask, reminder[0])
+                        reminder.reminded = False
+                        reminder.date_time = task.date_time
+                        reminder.save()
+                    else:
+                        reminder = QueueTask(user=request.user, task=task, reminded=False, date_time=task.date_time)
+                        reminder.save()
+
     else:
         form = TaskEditForm(instance=task)
         form.fields['project'].queryset = Project.objects.filter(author=request.user)
@@ -778,12 +893,18 @@ def task_start_stop(request, pk):
         if task.status == "Wait":
             task.status = "Started"
             msg = 'Задача успешно запущена'
+            if task.project is not None:
+                register_event(task, request.user, task.project, 'начал выполнять задачу:')
         elif task.status == "Started":
             task.status = "Stoped"
             msg = 'Задача успешно приостановлена'
+            if task.project is not None:
+                register_event(task, request.user, task.project, 'приостановил выполнение задачи:')
         elif task.status == "Stoped":
             task.status = "Started"
             msg = 'Задача успешно запущена'
+            if task.project is not None:
+                register_event(task, request.user, task.project, 'начал выполнять задачу:')
         task.save()
 
     tasks_time_tracking = TasksTimeTracker.objects.filter(task=task).order_by('datetime').aggregate(Sum('full_time'))
@@ -814,6 +935,8 @@ def task_finish(request, pk):
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
             'tasks': tasks})
         data['msg'] = 'Задача успешно завершена'
+        if task.project is not None:
+            register_event(task, request.user, task.project, 'завершил задачу:')
 
     return JsonResponse(data)
 
@@ -855,6 +978,8 @@ def task_restore(request, pk):
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
             'tasks': tasks})
         data['msg'] = 'Задача успешно восстановлена'
+        if task.project is not None:
+            register_event(task, request.user, task.project, 'восстановил задачу:')
 
     return JsonResponse(data)
 
@@ -878,6 +1003,9 @@ def task_transfer_date(request, pk, days):
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
             'tasks': tasks})
         data['msg'] = 'Задача успешно перенесена на ' + days + ' дней'
+
+        if task.project is not None:
+            register_event(task, request.user, task.project, 'перенес задачу на ' + days + ' дней:')
 
         full_time = TasksTimeTracker.objects.filter(task__pk=pk).aggregate(Sum('full_time'))
         comment_form = CommentAddForm()
@@ -931,6 +1059,8 @@ def project_rename(request, pk):
                 data['form_is_valid'] = True
                 data['title'] = new_title
 
+                register_event(project, request.user, project, 'переименовал проект:')
+
                 context = {'projects': Project.objects.filter(author=request.user),
                            'project_form': ProjectForm(prefix='project')}
                 data['project_list'] = render_to_string('JtdiTASKS/project_list_menu.html',
@@ -957,6 +1087,7 @@ def project_create(request):
             project.color_project = "color: " + color
             project.group = False
             project.save(Project)
+            register_event(project, request.user, project, 'создал проект:')
             data['form_is_valid'] = True
             context = {'projects': Project.objects.filter(author=request.user),
                        'project_form': ProjectForm(prefix='project')}
@@ -1015,6 +1146,8 @@ def user_invite(request):
             invite.invited = False
             invite.save(InviteUser)
 
+            register_event(invite, request.user, None, 'пригласил пользователя:')
+
             return redirect('/invite')
 
     else:
@@ -1035,6 +1168,7 @@ def invited(request, pk):
     invite_user.not_invited = False
 
     invite_user.save()
+    register_event(invite_user, request.user, None, 'принял приглашение:')
     success_url = redirect('user_invite')
 
     return success_url
@@ -1049,6 +1183,7 @@ def not_invited(request, pk):
     invite_user.not_invited = True
 
     invite_user.save()
+    register_event(invite_user, request.user, None, 'отклонил приглашение:')
     success_url = redirect('user_invite')
 
     return success_url
@@ -1079,6 +1214,8 @@ def invite_user_in_project(request, pk):
             new_partner.project = project
             new_partner.partner = user_in_proj
             new_partner.save()
+
+            register_event(new_partner, request.user, project, 'добавлен в проект:')
 
             data['html_new_user'] = render_to_string('JtdiTASKS/user_in_proj.html', {
                 'task_count': Task.objects.filter(project=project)
@@ -1117,6 +1254,7 @@ def delete_user_in_project(request, pk):
             .filter(project=project).exists()
         if partner is not None:
             new_partner = get_object_or_404(PartnerGroup, pk=partner.pk)
+            register_event(new_partner.partner, request.user, project, 'удален из проекта:')
             new_partner.delete()
 
             data['html_new_user'] = render_to_string('JtdiTASKS/user_in_proj.html', {
@@ -1149,6 +1287,8 @@ def add_comment(request, pk):
         comment.comment = post_text
         comment.commentator = request.user
         comment.save(CommentsTask)
+
+        register_event(task, request.user, task.project, 'прокомментировал задачу:')
 
         response_data['result'] = 'Create post successful!'
         response_data['postpk'] = comment.pk

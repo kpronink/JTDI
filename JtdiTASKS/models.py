@@ -2,6 +2,7 @@ import os
 import random
 
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
@@ -151,7 +152,7 @@ class Task(models.Model):
                                 default=PRIORITY_4, blank=True)
     color = models.CharField(max_length=20, default='grey', blank=True)
     day_week = models.CharField(max_length=20, choices=DAY_WEEEK,
-                                    default=MONDAY, blank=True, null=True)
+                                default=MONDAY, blank=True, null=True)
 
     status = models.CharField(max_length=20, choices=STATUS_CHOISE,
                               default=STATUS_WAIT, blank=True)
@@ -179,7 +180,7 @@ class CommentsTask(models.Model):
     commentator = models.ForeignKey('auth.User')
     comment = models.TextField(max_length=2000, blank=True)
     date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
-    
+
 
 class PartnerGroup(models.Model):
     project = models.ForeignKey('Project', default=None)
@@ -191,3 +192,33 @@ class InviteUser(models.Model):
     user_invite = models.ForeignKey('auth.User', related_name='user_invite')
     invited = models.BooleanField(default=False)
     not_invited = models.BooleanField(default=False)
+
+
+class RegistrationTable(models.Model):
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    author = models.ForeignKey('auth.User', blank=False, null=True)
+    project = models.ForeignKey('Project', null=True, default=None,
+                                blank=True)
+    date = models.DateField(default=timezone.now, blank=True, null=True)
+    date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    new = models.BooleanField(default=True)
+    event = models.CharField(max_length=200, default='', blank=True)
+
+    def __str__(self):  # __unicode__ on Python 2
+        return self.event
+
+
+class ViewsEventsTable(models.Model):
+    user = models.ForeignKey('auth.User', blank=False, null=True)
+    event = models.ForeignKey('RegistrationTable', null=True, default=None,
+                              blank=True)
+
+    sees = models.BooleanField(default=True)
+
+
+class QueueTask(models.Model):
+    user = models.ForeignKey('auth.User', blank=False, null=True)
+    task = models.ForeignKey(Task, blank=False, null=True)
+    reminded = models.BooleanField(blank=False, default=True)
+    date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)

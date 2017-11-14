@@ -745,7 +745,7 @@ padding: 0 15px 0px 15px;
 		}
  }
 
-.tab_counter {
+.tab_counter_top {
     position: absolute;
     top: 6px;
     left: 6px;
@@ -753,6 +753,7 @@ padding: 0 15px 0px 15px;
     min-width: 9px;
     border-radius: 8px;
     padding: 0px 4px;
+    display: none;
     background-color: #e63917;
     color: #fff;
     font-weight: 600;
@@ -760,6 +761,41 @@ padding: 0 15px 0px 15px;
     -moz-osx-font-smoothing: auto;
     font-size: 11px;
 }
+
+.tab_counter_today {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: 13px;
+    min-width: 9px;
+    border-radius: 8px;
+    padding: 0px 4px;
+    display: none;
+    background-color: #e63917;
+    color: #fff;
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    font-size: 11px;
+}
+
+.tab_counter_overdue {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: 13px;
+    min-width: 9px;
+    border-radius: 8px;
+    padding: 0px 4px;
+    display: none;
+    background-color: #e63917;
+    color: #fff;
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    font-size: 11px;
+}
+
 
 .user_name{
     font-size:14px;

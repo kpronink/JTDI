@@ -12,9 +12,9 @@
         <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i class="fa fa-user fa-fw"></i> <b>{{ user.username }}</b> <i class="material-icons right">arrow_drop_down</i></a></li>
         <!--<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown4"><i class="fa fa-envelope fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
 				<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown3"><i class="fa fa-tasks fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>-->
-        <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i>{% if notify > 0 %}
-                                    <div class="tab_counter">{{ notify }}</div>
-                                    {% endif %}</a></li>
+        <li><a class="dropdown-button waves-effect waves-dark" href="#" data-activates="dropdown2"><i class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i>
+                                    <div class="tab_counter_top" id="all_notify">{{ notify }}</div>
+                                    </a></li>
     </ul>
 </nav>
 <!-- Dropdown Structure -->
@@ -25,15 +25,21 @@
     <li><a href={% url 'profile' %}> Профиль</a></li>{% endif %}
     <!--<li><a href="{% url 'user_invite' %}"><i class="fa fa-user fa-fw"></i> My Profile</a>
 </li>-->
-    <li><a href="{% url 'user_invite' %}"><i class="fa fa-gear fa-fw"></i> Пригласить пользователя</a> </li>
+    <li><a href="{% url 'user_invite' %}"><i class="fa fa-gear fa-fw"></i> Участники проекта</a> </li>
     <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out fa-fw"></i> Выйти</a> </li>
 </ul>
 <ul id="dropdown2" class="dropdown-content w250">
-    <li>
-        <div> <i class="fa fa-comment fa-fw"></i> Здесь скоро появятся уведомления <span class="pull-right text-muted small">4 min</span> </div>
+<li>
+    <a class="text-center" href="#" onclick="notifyMe()">
+        <strong>Показать все</strong>
+        <i class="fa fa-angle-right"></i>
+    </a>
+</li>
+    <!--<li>
+        <div> <i class="fa fa-comment fa-fw" ></i> Здесь скоро появятся уведомления <span class="pull-right text-muted small">4 min</span> </div>
         </a>
     </li>
-    <!--<li class="divider"></li>
+    <li class="divider"></li>
                         <li>
                                 <div>
                                     <i class="fa fa-twitter fa-fw"></i> 3 New Followers

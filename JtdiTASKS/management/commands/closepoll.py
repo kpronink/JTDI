@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 .filter(date_time__range=(start_day, end_day)).filter(remind=False) \
                 .order_by('date', 'priority', 'time')
 
-            if tasks_today.count() or tasks_today:
+            if tasks_today.count() or tasks_overdue.count():
 
                 msg_html = render_to_string('JtdiTASKS/email.html', {'tasks_today': tasks_today,
                                                                      'tasks_overdue': tasks_overdue,

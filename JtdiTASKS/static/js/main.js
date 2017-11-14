@@ -189,6 +189,7 @@ function UpdateTask(url) {
 
 
 function TaskDetail(task_url) {
+    if (task_url !==''){
     if ($("#modal-task").is(':visible')) {}
     else{PreloadModal();
     }
@@ -202,12 +203,14 @@ function TaskDetail(task_url) {
         get_comments();
       }
     });
-}
+}}
 
 function UniversalFun(task_url) {
+    if (task_url !==''){
     if ($("#modal-task").is(':visible')) {}
     else{PreloadModal();
     }
+
     $.ajax({
         url: task_url,
         type: 'post',
@@ -232,7 +235,7 @@ function UniversalFun(task_url) {
             
             Alert(result.msg);
         }
-    });
+    });}
 }
 
 $("#modal-task").on("submit", ".user_inv_form_in_proj", function () {
@@ -306,7 +309,10 @@ $(document).ready(function(){
     TaskDetail("/task/det/"+String(task_id)+"/", 'today')
     $('#modal-task').modal('show')
     }
-    setInterval(GetNotifications, 100000)
+    GetNotifications();
+    GetPushNotifications();
+    setInterval(GetNotifications, 50000);
+    setInterval(GetPushNotifications, 60000);
 });
 
 function Alert(msg) {
@@ -329,13 +335,72 @@ function GetNotifications() {
       type: 'get',
       dataType: 'json',
       success: function (data) {
-        if (data.tasks_today_notify !== '') {
+
+        var tasks_today_notify = Number(data.tasks_today_notify);
+        if (isFinite(tasks_today_notify) && tasks_today_notify !== 0) {
             $('#tasks_today_notify').html(data.tasks_today_notify)
+            $('.tab_counter_today')[0].style.display = "block";
             }
-        if (data.tasks_overdue_notify !== '') {
+        var tasks_overdue_notify = Number(data.tasks_overdue_notify);
+        if (isFinite(tasks_overdue_notify) && tasks_overdue_notify !== 0) {
             $('#tasks_overdue_notify').html(data.tasks_overdue_notify)
-            }    
+            $('.tab_counter_overdue')[0].style.display = "block";
+            }
+        if (data.notify_tasks !== '') {
+            $('#dropdown2').prepend(data.notify_tasks)
+            }
+        var count_notify = Number(data.count_notify);
+        var count_notify_now = Number($("#all_notify").text());
+        count_notify = count_notify + count_notify_now;
+        if (isFinite(count_notify) && count_notify !== 0) {
+            $('#all_notify').html(count_notify);
+            $('.tab_counter_top')[0].style.display = "block";
+            }
       }
     });
     
+}
+
+function GetPushNotifications() {
+    $.ajax({
+      url: '/ajax/get_push_notifycation/',
+      data: {},
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+          for (var item in data){
+            notifyMe(data[item].body, data[item].title, data[item].url)
+          }
+      }
+    });
+}
+
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function () {
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe(notify_body, notify_title, notify_url) {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification(notify_title, {
+      icon: '/static/img/logo_push.png',
+      body: notify_body
+    });
+
+    notification.onclick = function () {
+      TaskDetail(notify_url);
+      $('#modal-task').modal('show')
+      notification.close()
+    };
+
+  }
+
 }
