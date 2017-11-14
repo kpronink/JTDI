@@ -9,3 +9,4 @@ db.sqlite3
 .idea/inspectionProfiles/
 Would skip repository JTDI/
 jtdi_venv
+/JtdiTASKS/migrations/

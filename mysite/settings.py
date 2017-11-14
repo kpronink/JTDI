@@ -119,7 +119,7 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'  # для русской локали
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -145,9 +145,8 @@ STATICFILES_FINDERS = (
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-ACCOUNT_ACTIVATION_DAYS = 2  # кол-во дней для хранения кода активации
+ACCOUNT_ACTIVATION_DAYS = 2
 
-# для отправки кода активации
 AUTH_USER_EMAIL_UNIQUE = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
