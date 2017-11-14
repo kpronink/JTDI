@@ -769,9 +769,9 @@ def task_update(request, pk):
                     'tasks': tasks
                 })
                 if not task.remind:
-                    reminder = QueueTask.objects.filter(task=task).filter(user=request.user)
-                    if reminder.count():
-                        reminder = get_object_or_404(QueueTask, reminder[0])
+                    reminders = QueueTask.objects.filter(task=task).filter(user=request.user)
+                    if reminders.count():
+                        reminder = get_object_or_404(QueueTask, pk=reminders[0].pk)
                         reminder.reminded = False
                         reminder.date_time = task.date_time
                         reminder.save()

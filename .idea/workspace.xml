@@ -2,187 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/css/bootstrap-theme.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/css/bootstrap-theme.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/css/bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/css/bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/fonts/glyphicons-halflings-regular.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/fonts/glyphicons-halflings-regular.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/fonts/glyphicons-halflings-regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/fonts/glyphicons-halflings-regular.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/js/bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/bootstrap/js/bootstrap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/css/buttons.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/css/calendar.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/css/forms.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/css/stats.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/css/styles.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/images/facebook.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/js/calendar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/js/custom.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/js/editors.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/js/forms.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/js/parse_date.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/js/stats.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/js/tables.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/.editorconfig" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/css/bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/css/docs.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/css/font-awesome.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/fonts/FontAwesome.otf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/fonts/fontawesome-webfont.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/fonts/fontawesome-webfont.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/fonts/fontawesome-webfont.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/fonts/fontawesome-webfont.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/fonts/fontawesome-webfont.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/img/bootstrap-social.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/js/docs.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/assets/js/jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/bootstrap-social.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/bootstrap-social.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/bootstrap-social.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/bower.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/bootstrap-social-gh-pages/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/API.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/FAQ.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/LICENSE.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/NEWS.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/PLUGINS.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/component.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-eu-gdp-growth-1.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-eu-gdp-growth-2.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-eu-gdp-growth-3.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-eu-gdp-growth-4.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-eu-gdp-growth-5.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-eu-gdp-growth.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-japan-gdp-growth.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/data-usa-gdp-growth.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/ajax/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/annotating/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-interacting/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-multiple/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/date.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/africa" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/antarctica" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/asia" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/australasia" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/backward" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/etcetera" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/europe" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/factory" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/iso3166.tab" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/leapseconds" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/northamerica" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/pacificnew" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/solar87" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/solar88" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/solar89" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/southamerica" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/systemv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/yearistype.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time-zones/tz/zone.tab" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/axes-time/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/background.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/basic-canvas.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/basic-options/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/basic-usage/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/canvas/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/categories/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/examples.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/image/hs-2004-27-a-large-web.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/image/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/interacting/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/navigate/arrow-down.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/navigate/arrow-left.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/navigate/arrow-right.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/navigate/arrow-up.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/navigate/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/percentiles/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/realtime/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/resize/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/selection/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/series-errorbars/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/series-pie/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/series-toggle/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/series-types/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/shared/jquery-ui/jquery-ui.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/stacking/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/symbols/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/threshold/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/tracking/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/visitors/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/examples/zooming/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/excanvas.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/excanvas.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/flot.jquery.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.colorhelpers.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.canvas.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.categories.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.crosshair.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.errorbars.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.fillbetween.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.image.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.navigate.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.pie.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.resize.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.selection.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.stack.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.symbol.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.threshold.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.flot.time.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/flot/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/fullcalendar/fullcalendar.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/fullcalendar/fullcalendar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/fullcalendar/fullcalendar.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/fullcalendar/fullcalendar.print.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/fullcalendar/gcal.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/jquery.knob.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/morris/morris.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/morris/morris.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/morris/morris.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/static/vendor/raphael-min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/base.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/calendar.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/finished_task.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/login.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/menu.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/new_task.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/profile.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/profile_menu.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/project_menu.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/project_new.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/project_task_list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/provider_list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/registration.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/search.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/search_block.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/task_detail.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/task_edit.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/task_menu.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/task_overdue.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/task_today.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backup/templates/JtdiTASKS/user_invite.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/index.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_overdue.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_overdue.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_table_body.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_table_body.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_today.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_today.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/views.py" afterPath="$PROJECT_DIR$/JtdiTASKS/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/settings.py" afterPath="$PROJECT_DIR$/mysite/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -241,7 +63,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="finished_task.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="finished_task.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/finished_task.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="527">
@@ -251,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="158" column="28" lean-forward="false" selection-start-line="158" selection-start-column="28" selection-end-line="158" selection-end-column="28" />
+            <state relative-caret-position="412">
+              <caret line="774" column="0" lean-forward="false" selection-start-line="774" selection-start-column="0" selection-end-line="774" selection-end-column="0" />
               <folding>
                 <element signature="e#1076#1155#0" expanded="false" />
                 <element signature="e#1186#1265#0" expanded="false" />
@@ -283,28 +105,38 @@
                 <element signature="e#21653#24269#0" expanded="false" />
                 <element signature="e#24304#24954#0" expanded="false" />
                 <element signature="e#29093#29740#0" expanded="false" />
-                <element signature="e#33170#35109#0" expanded="false" />
-                <element signature="e#35143#35799#0" expanded="false" />
-                <element signature="e#35840#37999#0" expanded="false" />
-                <element signature="e#38036#39091#0" expanded="false" />
-                <element signature="e#39135#39498#0" expanded="false" />
-                <element signature="e#39536#40467#0" expanded="false" />
-                <element signature="e#40517#41993#0" expanded="false" />
-                <element signature="e#42047#42533#0" expanded="false" />
-                <element signature="e#42573#43679#0" expanded="false" />
-                <element signature="e#43715#44809#0" expanded="false" />
-                <element signature="e#44848#45750#0" expanded="false" />
-                <element signature="e#45799#47138#0" expanded="false" />
-                <element signature="e#47171#47531#0" expanded="false" />
-                <element signature="e#47568#47930#0" expanded="false" />
-                <element signature="e#47978#49854#0" expanded="false" />
-                <element signature="e#49902#51664#0" expanded="false" />
-                <element signature="e#52971#53746#0" expanded="false" />
-                <element signature="e#53869#55062#0" expanded="false" />
-                <element signature="e#55148#55945#0" expanded="false" />
-                <element signature="e#56174#56749#0" expanded="false" />
-                <element signature="e#56835#56897#0" expanded="false" />
+                <element signature="e#33179#35118#0" expanded="false" />
+                <element signature="e#35152#35808#0" expanded="false" />
+                <element signature="e#35849#38008#0" expanded="false" />
+                <element signature="e#38045#39100#0" expanded="false" />
+                <element signature="e#39144#39507#0" expanded="false" />
+                <element signature="e#39545#40476#0" expanded="false" />
+                <element signature="e#40526#42002#0" expanded="false" />
+                <element signature="e#42056#42542#0" expanded="false" />
+                <element signature="e#42582#43688#0" expanded="false" />
+                <element signature="e#43724#44818#0" expanded="false" />
+                <element signature="e#44857#45759#0" expanded="false" />
+                <element signature="e#45808#47147#0" expanded="false" />
+                <element signature="e#47180#47540#0" expanded="false" />
+                <element signature="e#47577#47939#0" expanded="false" />
+                <element signature="e#47987#49863#0" expanded="false" />
+                <element signature="e#49911#51673#0" expanded="false" />
+                <element signature="e#52980#53755#0" expanded="false" />
+                <element signature="e#53878#55071#0" expanded="false" />
+                <element signature="e#55157#55954#0" expanded="false" />
+                <element signature="e#56183#56758#0" expanded="false" />
+                <element signature="e#56844#56906#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jtdi_venv/Lib/site-packages/django/core/handlers/base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-10">
+              <caret line="150" column="46" lean-forward="true" selection-start-line="150" selection-start-column="46" selection-end-line="150" selection-end-column="46" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -313,23 +145,8 @@
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_table_body.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
-              <caret line="8" column="46" lean-forward="true" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
+              <caret line="8" column="46" lean-forward="false" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="146" column="22" lean-forward="false" selection-start-line="146" selection-start-column="4" selection-end-line="146" selection-end-column="22" />
-              <folding>
-                <element signature="e#443#744#0" expanded="false" />
-                <element signature="e#5409#5726#0" expanded="false" />
-                <element signature="e#5767#5990#0" expanded="false" />
-                <element signature="e#6167#6418#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -354,31 +171,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
-              <caret line="260" column="0" lean-forward="false" selection-start-line="260" selection-start-column="0" selection-end-line="260" selection-end-column="0" />
-              <folding>
-                <element signature="e#593#928#0" expanded="false" />
-                <element signature="e#979#1677#0" expanded="false" />
-                <element signature="e#1724#2270#0" expanded="false" />
-                <element signature="e#2311#2507#0" expanded="false" />
-                <element signature="e#5912#6035#0" expanded="false" />
-                <element signature="e#6079#7446#0" expanded="false" />
-                <element signature="e#7651#7744#0" expanded="false" />
-                <element signature="e#7788#7836#0" expanded="false" />
-                <element signature="e#8471#8547#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2130">
-              <caret line="402" column="0" lean-forward="false" selection-start-line="402" selection-start-column="0" selection-end-line="402" selection-end-column="0" />
+            <state relative-caret-position="311">
+              <caret line="390" column="16" lean-forward="false" selection-start-line="390" selection-start-column="4" selection-end-line="390" selection-end-column="16" />
               <folding>
                 <marker date="1510670036553" expanded="true" signature="3652:3659" ph="×" />
                 <marker date="1510670036553" expanded="true" signature="5882:5892" ph="..." />
@@ -386,6 +183,16 @@
                 <marker date="1510670036553" expanded="true" signature="6383:6393" ph="..." />
                 <marker date="1510670036553" expanded="true" signature="10432:10433" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="613">
+              <caret line="159" column="27" lean-forward="false" selection-start-line="159" selection-start-column="27" selection-end-line="159" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -429,10 +236,10 @@
       <find>Tasker</find>
       <find>изменил</find>
       <find>&amp;&amp;</find>
-      <find>for</find>
       <find>coun</find>
       <find>orde</find>
       <find>CharField</find>
+      <find>for</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -459,7 +266,6 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/materialize.min.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/parse_date.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile.html" />
-        <option value="$PROJECT_DIR$/mysite/settings.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/parse_date_js.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_detail.html" />
@@ -486,12 +292,13 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_table_body.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_today.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_overdue.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/index.html" />
+        <option value="$PROJECT_DIR$/mysite/settings.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
       </list>
     </option>
   </component>
@@ -777,11 +584,6 @@
           <line>31</line>
           <option name="timeStamp" value="516" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/JtdiTASKS/views.py</url>
-          <line>764</line>
-          <option name="timeStamp" value="521" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -793,7 +595,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="523" />
+      <option name="time" value="526" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1028,14 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="141" column="27" lean-forward="false" selection-start-line="141" selection-start-column="26" selection-end-line="141" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-187">
@@ -1092,33 +886,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jtdi_venv/Lib/site-packages/django/core/handlers/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="619">
-          <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="22" column="76" lean-forward="false" selection-start-line="22" selection-start-column="76" selection-end-line="22" selection-end-column="76" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2130">
-          <caret line="402" column="0" lean-forward="false" selection-start-line="402" selection-start-column="0" selection-end-line="402" selection-end-column="0" />
-          <folding>
-            <marker date="1510670036553" expanded="true" signature="3652:3659" ph="×" />
-            <marker date="1510670036553" expanded="true" signature="5882:5892" ph="..." />
-            <marker date="1510670036553" expanded="true" signature="6145:6155" ph="..." />
-            <marker date="1510670036553" expanded="true" signature="6383:6393" ph="..." />
-            <marker date="1510670036553" expanded="true" signature="10432:10433" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1164,62 +936,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="158" column="28" lean-forward="false" selection-start-line="158" selection-start-column="28" selection-end-line="158" selection-end-column="28" />
-          <folding>
-            <element signature="e#1076#1155#0" expanded="false" />
-            <element signature="e#1186#1265#0" expanded="false" />
-            <element signature="e#1329#3870#0" expanded="false" />
-            <element signature="e#3938#4699#0" expanded="false" />
-            <element signature="e#4736#6951#0" expanded="false" />
-            <element signature="e#6987#7700#0" expanded="false" />
-            <element signature="e#7749#8352#0" expanded="false" />
-            <element signature="e#8390#8898#0" expanded="false" />
-            <element signature="e#8936#9876#0" expanded="false" />
-            <element signature="e#9919#10976#0" expanded="false" />
-            <element signature="e#11016#11781#0" expanded="false" />
-            <element signature="e#11820#12094#0" expanded="false" />
-            <element signature="e#12131#12737#0" expanded="false" />
-            <element signature="e#12780#13694#0" expanded="false" />
-            <element signature="e#13731#14873#0" expanded="false" />
-            <element signature="e#14913#15037#0" expanded="false" />
-            <element signature="e#15077#16290#0" expanded="false" />
-            <element signature="e#16323#16367#0" expanded="false" />
-            <element signature="e#16403#17567#0" expanded="false" />
-            <element signature="e#17598#18717#0" expanded="false" />
-            <element signature="e#18754#19913#0" expanded="false" />
-            <element signature="e#19952#21214#0" expanded="false" />
-            <element signature="e#21254#21610#0" expanded="false" />
-            <element signature="e#21653#24269#0" expanded="false" />
-            <element signature="e#24304#24954#0" expanded="false" />
-            <element signature="e#29093#29740#0" expanded="false" />
-            <element signature="e#33170#35109#0" expanded="false" />
-            <element signature="e#35143#35799#0" expanded="false" />
-            <element signature="e#35840#37999#0" expanded="false" />
-            <element signature="e#38036#39091#0" expanded="false" />
-            <element signature="e#39135#39498#0" expanded="false" />
-            <element signature="e#39536#40467#0" expanded="false" />
-            <element signature="e#40517#41993#0" expanded="false" />
-            <element signature="e#42047#42533#0" expanded="false" />
-            <element signature="e#42573#43679#0" expanded="false" />
-            <element signature="e#43715#44809#0" expanded="false" />
-            <element signature="e#44848#45750#0" expanded="false" />
-            <element signature="e#45799#47138#0" expanded="false" />
-            <element signature="e#47171#47531#0" expanded="false" />
-            <element signature="e#47568#47930#0" expanded="false" />
-            <element signature="e#47978#49854#0" expanded="false" />
-            <element signature="e#49902#51664#0" expanded="false" />
-            <element signature="e#52971#53746#0" expanded="false" />
-            <element signature="e#53869#55062#0" expanded="false" />
-            <element signature="e#55148#55945#0" expanded="false" />
-            <element signature="e#56174#56749#0" expanded="false" />
-            <element signature="e#56835#56897#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
@@ -1256,7 +972,7 @@
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_table_body.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
-          <caret line="8" column="46" lean-forward="true" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
+          <caret line="8" column="46" lean-forward="false" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -1282,6 +998,92 @@
         <state relative-caret-position="527">
           <caret line="31" column="176" lean-forward="false" selection-start-line="31" selection-start-column="176" selection-end-line="31" selection-end-column="176" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="390" column="16" lean-forward="false" selection-start-line="390" selection-start-column="4" selection-end-line="390" selection-end-column="16" />
+          <folding>
+            <marker date="1510670036553" expanded="true" signature="3652:3659" ph="×" />
+            <marker date="1510670036553" expanded="true" signature="5882:5892" ph="..." />
+            <marker date="1510670036553" expanded="true" signature="6145:6155" ph="..." />
+            <marker date="1510670036553" expanded="true" signature="6383:6393" ph="..." />
+            <marker date="1510670036553" expanded="true" signature="10432:10433" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="159" column="27" lean-forward="false" selection-start-line="159" selection-start-column="27" selection-end-line="159" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jtdi_venv/Lib/site-packages/django/core/handlers/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10">
+          <caret line="150" column="46" lean-forward="true" selection-start-line="150" selection-start-column="46" selection-end-line="150" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="774" column="0" lean-forward="false" selection-start-line="774" selection-start-column="0" selection-end-line="774" selection-end-column="0" />
+          <folding>
+            <element signature="e#1076#1155#0" expanded="false" />
+            <element signature="e#1186#1265#0" expanded="false" />
+            <element signature="e#1329#3870#0" expanded="false" />
+            <element signature="e#3938#4699#0" expanded="false" />
+            <element signature="e#4736#6951#0" expanded="false" />
+            <element signature="e#6987#7700#0" expanded="false" />
+            <element signature="e#7749#8352#0" expanded="false" />
+            <element signature="e#8390#8898#0" expanded="false" />
+            <element signature="e#8936#9876#0" expanded="false" />
+            <element signature="e#9919#10976#0" expanded="false" />
+            <element signature="e#11016#11781#0" expanded="false" />
+            <element signature="e#11820#12094#0" expanded="false" />
+            <element signature="e#12131#12737#0" expanded="false" />
+            <element signature="e#12780#13694#0" expanded="false" />
+            <element signature="e#13731#14873#0" expanded="false" />
+            <element signature="e#14913#15037#0" expanded="false" />
+            <element signature="e#15077#16290#0" expanded="false" />
+            <element signature="e#16323#16367#0" expanded="false" />
+            <element signature="e#16403#17567#0" expanded="false" />
+            <element signature="e#17598#18717#0" expanded="false" />
+            <element signature="e#18754#19913#0" expanded="false" />
+            <element signature="e#19952#21214#0" expanded="false" />
+            <element signature="e#21254#21610#0" expanded="false" />
+            <element signature="e#21653#24269#0" expanded="false" />
+            <element signature="e#24304#24954#0" expanded="false" />
+            <element signature="e#29093#29740#0" expanded="false" />
+            <element signature="e#33179#35118#0" expanded="false" />
+            <element signature="e#35152#35808#0" expanded="false" />
+            <element signature="e#35849#38008#0" expanded="false" />
+            <element signature="e#38045#39100#0" expanded="false" />
+            <element signature="e#39144#39507#0" expanded="false" />
+            <element signature="e#39545#40476#0" expanded="false" />
+            <element signature="e#40526#42002#0" expanded="false" />
+            <element signature="e#42056#42542#0" expanded="false" />
+            <element signature="e#42582#43688#0" expanded="false" />
+            <element signature="e#43724#44818#0" expanded="false" />
+            <element signature="e#44857#45759#0" expanded="false" />
+            <element signature="e#45808#47147#0" expanded="false" />
+            <element signature="e#47180#47540#0" expanded="false" />
+            <element signature="e#47577#47939#0" expanded="false" />
+            <element signature="e#47987#49863#0" expanded="false" />
+            <element signature="e#49911#51673#0" expanded="false" />
+            <element signature="e#52980#53755#0" expanded="false" />
+            <element signature="e#53878#55071#0" expanded="false" />
+            <element signature="e#55157#55954#0" expanded="false" />
+            <element signature="e#56183#56758#0" expanded="false" />
+            <element signature="e#56844#56906#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
