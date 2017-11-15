@@ -367,7 +367,7 @@ function GetNotificationsList() {
       dataType: 'json',
       success: function (data) {
         if (data.notify_tasks !== '') {
-            $('#dropdown2').prepend(data.notify_tasks)
+            $('#dropdown2').html(data.notify_tasks)
             $('#all_notify').html(0);
             $('.tab_counter_top')[0].style.display = "none";
             }

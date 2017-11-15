@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/urls.py" afterPath="$PROJECT_DIR$/JtdiTASKS/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/views.py" afterPath="$PROJECT_DIR$/JtdiTASKS/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -133,7 +129,7 @@
       <file leaf-file-name="profile_menu.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="238">
               <caret line="14" column="105" lean-forward="false" selection-start-line="14" selection-start-column="105" selection-end-line="14" selection-end-column="105" />
               <folding />
             </state>
@@ -175,14 +171,14 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="314" column="43" lean-forward="false" selection-start-line="314" selection-start-column="43" selection-end-line="314" selection-end-column="43" />
+            <state relative-caret-position="509">
+              <caret line="369" column="32" lean-forward="false" selection-start-line="369" selection-start-column="32" selection-end-line="369" selection-end-column="32" />
               <folding>
-                <marker date="1510731517719" expanded="true" signature="3652:3659" ph="×" />
-                <marker date="1510731517719" expanded="true" signature="5882:5892" ph="..." />
-                <marker date="1510731517719" expanded="true" signature="6145:6155" ph="..." />
-                <marker date="1510731517719" expanded="true" signature="6383:6393" ph="..." />
-                <marker date="1510731517719" expanded="true" signature="10432:10433" ph="..." />
+                <marker date="1510731786097" expanded="true" signature="3652:3659" ph="×" />
+                <marker date="1510731786097" expanded="true" signature="5882:5892" ph="..." />
+                <marker date="1510731786097" expanded="true" signature="6145:6155" ph="..." />
+                <marker date="1510731786097" expanded="true" signature="6383:6393" ph="..." />
+                <marker date="1510731786097" expanded="true" signature="10432:10433" ph="..." />
               </folding>
             </state>
           </provider>
@@ -192,7 +188,7 @@
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="10" column="58" lean-forward="true" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
+              <caret line="10" column="58" lean-forward="false" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -1030,7 +1026,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="238">
           <caret line="14" column="105" lean-forward="false" selection-start-line="14" selection-start-column="105" selection-end-line="14" selection-end-column="105" />
           <folding />
         </state>
@@ -1039,21 +1035,21 @@
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="10" column="58" lean-forward="true" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
+          <caret line="10" column="58" lean-forward="false" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="314" column="43" lean-forward="false" selection-start-line="314" selection-start-column="43" selection-end-line="314" selection-end-column="43" />
+        <state relative-caret-position="509">
+          <caret line="369" column="32" lean-forward="false" selection-start-line="369" selection-start-column="32" selection-end-line="369" selection-end-column="32" />
           <folding>
-            <marker date="1510731517719" expanded="true" signature="3652:3659" ph="×" />
-            <marker date="1510731517719" expanded="true" signature="5882:5892" ph="..." />
-            <marker date="1510731517719" expanded="true" signature="6145:6155" ph="..." />
-            <marker date="1510731517719" expanded="true" signature="6383:6393" ph="..." />
-            <marker date="1510731517719" expanded="true" signature="10432:10433" ph="..." />
+            <marker date="1510731786097" expanded="true" signature="3652:3659" ph="×" />
+            <marker date="1510731786097" expanded="true" signature="5882:5892" ph="..." />
+            <marker date="1510731786097" expanded="true" signature="6145:6155" ph="..." />
+            <marker date="1510731786097" expanded="true" signature="6383:6393" ph="..." />
+            <marker date="1510731786097" expanded="true" signature="10432:10433" ph="..." />
           </folding>
         </state>
       </provider>
