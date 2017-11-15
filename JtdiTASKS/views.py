@@ -178,7 +178,7 @@ def get_push_event(request):
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
 
-    tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user)
+    tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user).filter(date_time__range=(start_day, currentdate))
         # .filter(date_time__range=(start_day, currentdate))
         #.filter(user=request.user) \
         # .filter(date_time__range=(start_day, currentdate)) \
