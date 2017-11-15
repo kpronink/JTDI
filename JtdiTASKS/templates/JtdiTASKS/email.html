@@ -33,28 +33,7 @@
             color: #333;
             text-decoration: none;
         }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .text-right {
-            text-align: right;
-        }
-        
-        .text-left {
-            text-align: left;
-        }
-        
-        .button {
-            display: inline-block;
-            color: white;
-            background: #333;
-            border: solid #333;
-            border-width: 10px 20px 8px;
-            font-weight: bold;
-            border-radius: 4px;
-        }
+
         
         h1,
         h2,
@@ -139,6 +118,7 @@
             text-decoration: none;
             font-weight: bold;
         }
+        .divider{height:1px;overflow:hidden;background-color:#e0e0e0}
     </style>
 </head>
 
@@ -156,10 +136,12 @@
                         <td class="content">
                             <h2>Привет {{ username }},</h2>
                             <table> {% for task in tasks_today %}
-                                    <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a> </tr>
+                                <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a> </tr>
+                                <div class="divider"></div>
                                 {% endfor %}
                                 {% for task in tasks_overdue %}
                                     <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a> </tr>
+                                    <div class="divider"></div>
                                 {% endfor %}
                             </table>
                             <table>
