@@ -1010,6 +1010,8 @@ button, input, optgroup, select, textarea {
 
 img.logo {
     vertical-align: middle;
-    width: auto;
-    height: -webkit-fill-available;
+    horiz-align: center;
+    width: 100%;
+    width: -moz-available;          /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
 }

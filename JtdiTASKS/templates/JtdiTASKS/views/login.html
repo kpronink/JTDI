@@ -1,5 +1,21 @@
-{% extends 'JtdiTASKS/base.html' %} {% load socialaccount %}{% load staticfiles %} {% load bootstrap %} {% block content %}
-<div class="page-content container">
+{% load socialaccount %}{% load staticfiles %} {% load bootstrap %} {% block content %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasker</title>
+
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href={% static "/materialize/css/materialize.min.css"%} media="screen,projection" />
+    <link href={% static "/css/bootstrap.css"%} rel="stylesheet" />
+    <link href={% static "/css/font-awesome.css"%} rel="stylesheet" />
+    <link href={% static "/css/custom-styles.css"%} rel="stylesheet" />
+</head>
+<body>
+    <div id="wrapper">
+    <div class="page-content container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="card">
@@ -19,7 +35,7 @@
 	                                <span>Или</span>
 	                                <hr class="right">
 	                            </div>--></div>
-                        <form method="POST" action="../" data-validate-username-url="{% url 'validate_username' %}"> {% csrf_token %}
+                        <form method="POST" > {% csrf_token %}
                             <div class="form-group"> {{ form|bootstrap }} </div>
                             <button type="submit" class="btn btn-primary btn-sm" align="center">Войти</button>
                         </form>
@@ -32,4 +48,8 @@
         </div>
     </div>
 </div>
-</div> {% endblock content %}
+</div>
+{% endblock content %}
+</body>
+
+</html>

@@ -311,8 +311,8 @@ $(document).ready(function(){
     }
     GetNotifications();
     GetPushNotifications();
-    setInterval(GetNotifications, 10000);
-    setInterval(GetPushNotifications, 10000);
+    setInterval(GetNotifications, 1000000);
+    setInterval(GetPushNotifications, 1000000);
 });
 
 function Alert(msg) {
@@ -356,7 +356,6 @@ function GetNotifications() {
             }
       }
     });
-    
 }
 
 function GetNotificationsList() {

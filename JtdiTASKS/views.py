@@ -95,20 +95,21 @@ def register_event(event_object, user, project, event_desc):
     users_in_project = PartnerGroup.objects.filter(project=project)
 
     content_type = ContentType.objects.get_for_model(event_object)
+    model_class = content_type.model_class()
 
-    if project is not None and content_type == ContentType.objects.get_for_model(Project):
+    if project is not None and model_class == Project:
         all_users = User.objects.filter(
             Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
-    elif project is not None and content_type == ContentType.objects.get_for_model(Task):
+    elif project is not None and model_class == Task:
         all_users = list()
         all_users.append(event_object.performer)
         if event_object.performer != event_object.author:
             all_users.append(event_object.author)
     else:
         all_users = list()
-        all_users.append(user)
-        if content_type == InviteUser:
+        if model_class == InviteUser:
             all_users.append(event_object.user_invite)
+            all_users.append(event_object.user_sender)
 
     event = RegistrationTable(author=user, project=project)
     event.content_type = content_type
@@ -131,12 +132,12 @@ def get_event(user, request):
         PartnerGroup.objects.filter(partner=user).values_list('project', flat=True).values_list('pk', flat=True))
     project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
     projects.extend(project_owner)
-    events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(
-        event__project_id__in=projects).order_by('id').reverse()[:10]
+    events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(Q(
+            event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:10]
     count_notify = events.count()
     if not count_notify:
-        events = ViewsEventsTable.objects.filter(sees=True).filter(user=user).filter(
-            event__project_id__in=projects).order_by('id').reverse()[:10]
+        events = ViewsEventsTable.objects.filter(sees=True).filter(user=user).filter(Q(
+            event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:10]
         count_notify = 0
 
     tasks = list()
@@ -170,6 +171,16 @@ def get_event(user, request):
                           'url': '',
                           'time': event.event.date_time.strftime('%H:%M'),
                           'ico': ico})
+        elif model == InviteUser:
+            try:
+                object_model = get_object_or_404(InviteUser, pk=event.event.object_id)
+            except:
+                continue
+            ico = 'fa fa-user fa-fw'
+            tasks.append({'msg': object_model.user_sender.username + ' ' + event.event.event + object_model.user_invite.username,
+                          'url': '',
+                          'time': event.event.date_time.strftime('%H:%M'),
+                          'ico': ico})
 
     notify_tasks = render_to_string('JtdiTASKS/menu/notify_menu.html',
                                     {'tasks': tasks},
@@ -181,7 +192,7 @@ def get_event(user, request):
 
 def get_push_event(request):
     if not request.user.is_authenticated():
-        return JsonResponse({'msg': 'пользователь не авторизован'})
+        return JsonResponse({})
 
     data = dict()
     currentdate = datetime.datetime.today()
