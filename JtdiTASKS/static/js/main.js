@@ -311,7 +311,7 @@ $(document).ready(function(){
     }
     GetNotifications();
     GetPushNotifications();
-    setInterval(GetNotifications, 1000);
+    setInterval(GetNotifications, 10000);
     setInterval(GetPushNotifications, 10000);
 });
 
@@ -367,7 +367,12 @@ function GetNotificationsList() {
       dataType: 'json',
       success: function (data) {
         if (data.notify_tasks !== '') {
-            $('#dropdown2').html(data.notify_tasks)
+            $('#dropdown2').html(data.notify_tasks).append("<li>\n" +
+                "    <a class=\"text-center\" href=\"#\" onclick=\"notifyMe()\">\n" +
+                "        <strong>Показать все</strong>\n" +
+                "        <i class=\"fa fa-angle-right\"></i>\n" +
+                "    </a>\n" +
+                "</li>")
             $('#all_notify').html(0);
             $('.tab_counter_top')[0].style.display = "none";
             }

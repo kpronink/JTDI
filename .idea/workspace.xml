@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/db.sqlite3-journal" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -129,8 +131,8 @@
       <file leaf-file-name="profile_menu.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="105" lean-forward="false" selection-start-line="14" selection-start-column="105" selection-end-line="14" selection-end-column="105" />
+            <state relative-caret-position="102">
+              <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="36" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -156,29 +158,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="0016_queuetask.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/migrations/0016_queuetask.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding>
-                <element signature="e#73#112#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="369" column="32" lean-forward="false" selection-start-line="369" selection-start-column="32" selection-end-line="369" selection-end-column="32" />
+            <state relative-caret-position="458">
+              <caret line="372" column="65" lean-forward="true" selection-start-line="372" selection-start-column="65" selection-end-line="372" selection-end-column="65" />
               <folding>
-                <marker date="1510731786097" expanded="true" signature="3652:3659" ph="×" />
-                <marker date="1510731786097" expanded="true" signature="5882:5892" ph="..." />
-                <marker date="1510731786097" expanded="true" signature="6145:6155" ph="..." />
-                <marker date="1510731786097" expanded="true" signature="6383:6393" ph="..." />
-                <marker date="1510731786097" expanded="true" signature="10432:10433" ph="..." />
+                <marker date="1510732447718" expanded="true" signature="3652:3659" ph="×" />
+                <marker date="1510732447718" expanded="true" signature="5882:5892" ph="..." />
+                <marker date="1510732447718" expanded="true" signature="6145:6155" ph="..." />
+                <marker date="1510732447718" expanded="true" signature="6383:6393" ph="..." />
+                <marker date="1510732447718" expanded="true" signature="10432:10433" ph="..." />
               </folding>
             </state>
           </provider>
@@ -1024,14 +1014,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="105" lean-forward="false" selection-start-line="14" selection-start-column="105" selection-end-line="14" selection-end-column="105" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1040,16 +1022,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="36" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="369" column="32" lean-forward="false" selection-start-line="369" selection-start-column="32" selection-end-line="369" selection-end-column="32" />
+        <state relative-caret-position="458">
+          <caret line="372" column="65" lean-forward="true" selection-start-line="372" selection-start-column="65" selection-end-line="372" selection-end-column="65" />
           <folding>
-            <marker date="1510731786097" expanded="true" signature="3652:3659" ph="×" />
-            <marker date="1510731786097" expanded="true" signature="5882:5892" ph="..." />
-            <marker date="1510731786097" expanded="true" signature="6145:6155" ph="..." />
-            <marker date="1510731786097" expanded="true" signature="6383:6393" ph="..." />
-            <marker date="1510731786097" expanded="true" signature="10432:10433" ph="..." />
+            <marker date="1510732447718" expanded="true" signature="3652:3659" ph="×" />
+            <marker date="1510732447718" expanded="true" signature="5882:5892" ph="..." />
+            <marker date="1510732447718" expanded="true" signature="6145:6155" ph="..." />
+            <marker date="1510732447718" expanded="true" signature="6383:6393" ph="..." />
+            <marker date="1510732447718" expanded="true" signature="10432:10433" ph="..." />
           </folding>
         </state>
       </provider>
