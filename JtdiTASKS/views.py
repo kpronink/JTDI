@@ -70,7 +70,7 @@ def get_tasks_with_filter(filter_method, project, user):
             'date_finish')
     elif filter_method == 'overdue':
         tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)) \
-            .filter(date_time__range=(first_day, start_day)) \
+            .filter(planed_date_finish__range=(first_day, start_day)) \
             .order_by('date', 'priority', 'time')
         tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
             .filter(Q(author=user) | Q(performer=user)). \
