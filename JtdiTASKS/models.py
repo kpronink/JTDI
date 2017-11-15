@@ -222,3 +222,11 @@ class QueueTask(models.Model):
     task = models.ForeignKey(Task, blank=False, null=True)
     reminded = models.BooleanField(blank=False, default=True)
     date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
+
+
+class QueuePushNotify(models.Model):
+    user = models.ForeignKey('auth.User', blank=False, null=True)
+    event = models.CharField(max_length=200, default='', blank=True)
+    url = models.CharField(max_length=200, default='', blank=True)
+    reminded = models.BooleanField(blank=False, default=True)
+    date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)

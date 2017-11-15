@@ -81,7 +81,7 @@
                                     </tr>
                                 </thead>
                                 <tbody> {% for task in tasks_finished_today %}
-                                    <tr>
+                                    <tr style="background-color: #bcffb8">
                                         <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
                                             data-toggle="modal" data-target="#modal-task">
                                             {{ task.title|truncatechars:40 }}</a></td>

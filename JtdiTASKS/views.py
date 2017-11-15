@@ -17,7 +17,7 @@ from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectFor
     ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask, RegistrationTable, \
-    ViewsEventsTable, QueueTask
+    ViewsEventsTable, QueueTask, QueuePushNotify
 from django.contrib.auth import logout, login
 
 from django.views.generic.edit import FormView
@@ -129,7 +129,7 @@ def register_event(event_object, user, project, event_desc):
 
 def get_event(user, request):
     projects = list(
-        PartnerGroup.objects.filter(partner=user).values_list('project', flat=True).values_list('pk', flat=True))
+        PartnerGroup.objects.filter(partner=user).values_list('project', flat=True))
     project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
     projects.extend(project_owner)
     events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(Q(
@@ -210,6 +210,18 @@ def get_push_event(request):
                             'body': task_actual.task.description}
         count += 1
         reminder = get_object_or_404(QueueTask, pk=task_actual.pk)
+        reminder.reminded = True
+        reminder.save()
+
+    other_notify = QueuePushNotify.objects.filter(reminded=False).filter(user=request.user) \
+        .filter(date_time__range=(start_day, dt.replace(tzinfo=pytz.timezone('UTC')))) \
+        .order_by('date_time').reverse()
+    for noti in other_notify:
+        data[str(count)] = {'title': request.user.username,
+                            'url': noti.url,
+                            'body': noti.event}
+        count += 1
+        reminder = get_object_or_404(QueuePushNotify, pk=noti.pk)
         reminder.reminded = True
         reminder.save()
 
@@ -1188,6 +1200,8 @@ def user_invite(request):
 
     my_invites = InviteUser.objects.filter(user_invite__username__exact=request.user.username).filter(not_invited=False)
     invites = InviteUser.objects.filter(user_sender__username__exact=request.user.username).filter(not_invited=False)
+    local_timez = pytz.timezone(request.user.profile.timezone)
+    dt = datetime.datetime.now().astimezone(local_timez)
 
     if request.method == "POST":
         form = InviteUserForm(request.POST)
@@ -1203,6 +1217,12 @@ def user_invite(request):
             invite.save(InviteUser)
 
             register_event(invite, request.user, None, 'пригласил пользователя:')
+            reminder = QueuePushNotify(user=invite.user_invite,
+                                       event='Вас пригласил ' + request.user.username,
+                                       url='/invite/',
+                                       reminded=False,
+                                       date_time=dt)
+            reminder.save()
 
             return redirect('/invite')
 
@@ -1218,6 +1238,9 @@ def user_invite(request):
 def invited(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
+    
+    local_timez = pytz.timezone(request.user.profile.timezone)
+    dt = datetime.datetime.now().astimezone(local_timez)
 
     invite_user = get_object_or_404(InviteUser, pk=pk)
     invite_user.invited = True
@@ -1227,12 +1250,22 @@ def invited(request, pk):
     register_event(invite_user, request.user, None, 'принял приглашение:')
     success_url = redirect('user_invite')
 
+    reminder = QueuePushNotify(user=invite_user.user_sender,
+                               event=invite_user.user_invite.username + ' принял приглашение',
+                               url='/invite/',
+                               reminded=False,
+                               date_time=dt)
+    reminder.save()
+
     return success_url
 
 
 def not_invited(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
+    
+    local_timez = pytz.timezone(request.user.profile.timezone)
+    dt = datetime.datetime.now().astimezone(local_timez)
 
     invite_user = get_object_or_404(InviteUser, pk=pk)
     invite_user.invited = False
@@ -1241,6 +1274,13 @@ def not_invited(request, pk):
     invite_user.save()
     register_event(invite_user, request.user, None, 'отклонил приглашение:')
     success_url = redirect('user_invite')
+    
+    reminder = QueuePushNotify(user=invite_user.user_sender,
+                               event=invite_user.user_invite.username + ' отклонил приглашение',
+                               url='/invite/',
+                               reminded=False,
+                               date_time=dt)
+    reminder.save()
 
     return success_url
 
@@ -1250,6 +1290,9 @@ def invite_user_in_project(request, pk):
         return redirect('login')
 
     data = dict()
+
+    local_timez = pytz.timezone(request.user.profile.timezone)
+    dt = datetime.datetime.now().astimezone(local_timez)
 
     if request.method == 'POST':
         project = get_object_or_404(Project, pk=pk)
@@ -1272,6 +1315,13 @@ def invite_user_in_project(request, pk):
             new_partner.save()
 
             register_event(new_partner, request.user, project, 'добавлен в проект:')
+
+            reminder = QueuePushNotify(user=new_partner.partner,
+                                       event=request.user.username + ' добавил в проект:' + project.title,
+                                       url='/project_tasks_list/'+str(project.pk)+'/',
+                                       reminded=False,
+                                       date_time=dt)
+            reminder.save()
 
             data['html_new_user'] = render_to_string('JtdiTASKS/user_in_proj.html', {
                 'task_count': Task.objects.filter(project=project)

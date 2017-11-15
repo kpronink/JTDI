@@ -161,16 +161,17 @@ class TaskForm(forms.Form):
     def clean(self):
         project = self.cleaned_data['project_field']
         performer = self.cleaned_data['performer']
-
+        all_users_in_project = list()
         users_in_project = PartnerGroup.objects.filter(project=project)
+
+        pass_performer = performer is None
 
         if project is not None:
             all_users_in_project = User.objects.filter(
                 Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
         else:
-            all_users_in_project = User.objects.filter(pk__in=[user.partner_id for user in users_in_project])
+            pass_performer = True
 
-        pass_performer = performer is None
         if not pass_performer:
             for user_in_proj in all_users_in_project:
                 if user_in_proj == performer:
