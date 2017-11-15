@@ -96,9 +96,14 @@ def register_event(event_object, user, project, event_desc):
 
     content_type = ContentType.objects.get_for_model(event_object)
 
-    if project is not None:
+    if project is not None and content_type == ContentType.objects.get_for_model(Project):
         all_users = User.objects.filter(
             Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+    elif project is not None and content_type == ContentType.objects.get_for_model(Task):
+        all_users = list()
+        all_users.append(event_object.performer)
+        if event_object.performer != event_object.author:
+            all_users.append(event_object.author)
     else:
         all_users = list()
         all_users.append(user)
