@@ -311,8 +311,8 @@ $(document).ready(function(){
     }
     GetNotifications();
     GetPushNotifications();
-    setInterval(GetNotifications, 50000);
-    setInterval(GetPushNotifications, 50000);
+    setInterval(GetNotifications, 1000);
+    setInterval(GetPushNotifications, 10000);
 });
 
 function Alert(msg) {
@@ -346,15 +346,30 @@ function GetNotifications() {
             $('#tasks_overdue_notify').html(data.tasks_overdue_notify)
             $('.tab_counter_overdue')[0].style.display = "block";
             }
-        if (data.notify_tasks !== '') {
-            $('#dropdown2').prepend(data.notify_tasks)
-            }
+
         var count_notify = Number(data.count_notify);
         var count_notify_now = Number($("#all_notify").text());
         count_notify = count_notify + count_notify_now;
         if (isFinite(count_notify) && count_notify !== 0) {
             $('#all_notify').html(count_notify);
             $('.tab_counter_top')[0].style.display = "block";
+            }
+      }
+    });
+    
+}
+
+function GetNotificationsList() {
+    $.ajax({
+      url: '/get_notify_event/',
+      data: {},
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        if (data.notify_tasks !== '') {
+            $('#dropdown2').prepend(data.notify_tasks)
+            $('#all_notify').html(0);
+            $('.tab_counter_top')[0].style.display = "none";
             }
       }
     });

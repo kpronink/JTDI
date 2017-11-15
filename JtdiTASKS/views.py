@@ -255,6 +255,16 @@ def get_notifycation(request):
     return JsonResponse(data)
 
 
+def get_notify_list(request):
+    if not request.user.is_authenticated():
+        return JsonResponse({'msg': 'пользователь не авторизован'})
+
+    data = dict()
+    data['notify_tasks'], data['count_notify'] = get_event(request.user, request)
+
+    return JsonResponse(data)
+
+
 def get_index_of_task(request, pk):
     local_timez = pytz.timezone(request.user.profile.timezone)
 
