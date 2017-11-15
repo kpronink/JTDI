@@ -19,7 +19,7 @@
 	                                <span>Или</span>
 	                                <hr class="right">
 	                            </div>--></div>
-                        <form method="POST" action="." data-validate-username-url="{% url 'validate_username' %}"> {% csrf_token %}
+                        <form method="POST" action="../" data-validate-username-url="{% url 'validate_username' %}"> {% csrf_token %}
                             <div class="form-group"> {{ form|bootstrap }} </div>
                             <button type="submit" class="btn btn-primary btn-sm" align="center">Войти</button>
                         </form>

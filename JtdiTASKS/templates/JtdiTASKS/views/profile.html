@@ -26,7 +26,7 @@
                             </form> {% else %}
                             <p>{% trans 'You currently have no social network accounts connected to this account.' %}</p> {% endif %}
                             <h4>{% trans 'Add a 3rd Party Account' %}</h4>
-                            <ul class="socialaccount_providers"> {% include "JtdiTASKS/provider_list.html" with process="connect" %} </ul>
+                            <ul class="socialaccount_providers"> {% include "JtdiTASKS/views/provider_list.html" with process="connect" %} </ul>
                         </div>
                         <form method="post" enctype="multipart/form-data" action=""> {% csrf_token %}
                             <div class="form-group"> {{ user_form|bootstrap }} {{ profile_form|bootstrap }}</div>

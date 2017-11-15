@@ -94,18 +94,26 @@ def register_event(event_object, user, project, event_desc):
 
     users_in_project = PartnerGroup.objects.filter(project=project)
 
-    all_users_in_project = User.objects.filter(
-        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+    content_type = ContentType.objects.get_for_model(event_object)
+
+    if project is not None:
+        all_users = User.objects.filter(
+            Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+    else:
+        all_users = list()
+        all_users.append(user)
+        if content_type == InviteUser:
+            all_users.append(event_object.user_invite)
 
     event = RegistrationTable(author=user, project=project)
-    event.content_type = ContentType.objects.get_for_model(event_object)
+    event.content_type = content_type
     event.object_id = event_object.pk
     event.date = dt
     event.date_time = dt
     event.event = event_desc
     event.save()
 
-    for user_proj in all_users_in_project:
+    for user_proj in all_users:
         sees = ViewsEventsTable()
         sees.user = user_proj
         sees.event = event
@@ -158,7 +166,7 @@ def get_event(user, request):
                           'time': event.event.date_time.strftime('%H:%M'),
                           'ico': ico})
 
-    notify_tasks = render_to_string('JtdiTASKS/notify_menu.html',
+    notify_tasks = render_to_string('JtdiTASKS/menu/notify_menu.html',
                                     {'tasks': tasks},
                                     request=request
                                     )
@@ -200,7 +208,7 @@ class RegisterFormView(FormView):
     success_url = "/login/"
 
     # Шаблон, который будет использоваться при отображении представления.
-    template_name = "JtdiTASKS/registration.html"
+    template_name = "JtdiTASKS/views/registration.html"
 
     def form_valid(self, form):
         # Создаём пользователя, если данные в форму были введены корректно.
@@ -214,7 +222,7 @@ class LoginFormView(FormView):
     form_class = AuthenticationForm
 
     # Аналогично регистрации, только используем шаблон аутентификации.
-    template_name = "JtdiTASKS/login.html"
+    template_name = "JtdiTASKS/views/login.html"
 
     # В случае успеха перенаправим на главную.
     success_url = "/"
@@ -452,7 +460,7 @@ def update_profile(request):
     else:
         user_form = UserForm(instance=request.user)
         profile_form = UserProfileForm(instance=request.user.profile)
-    return render(request, 'JtdiTASKS/profile.html', {
+    return render(request, 'JtdiTASKS/views/profile.html', {
         'user_form': user_form,
         'profile_form': profile_form,
         'accounts': soc_acc,
@@ -479,7 +487,7 @@ def task_list(request):
         .filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
 
-    return render(request, 'JtdiTASKS/index.html', {'tasks': tasks,
+    return render(request, 'JtdiTASKS/views/index.html', {'tasks': tasks,
                                                     'tasks_finish': tasks_finish,
                                                     'tasks_finished_today': tasks_finished_today})
 
@@ -503,7 +511,7 @@ def task_list_today(request):
         .filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
 
-    return render(request, 'JtdiTASKS/task_today.html', {'tasks': tasks,
+    return render(request, 'JtdiTASKS/views/task_today.html', {'tasks': tasks,
                                                          'tasks_finish': tasks_finish,
                                                          'tasks_finished_today': tasks_finished_today})
 
@@ -531,7 +539,7 @@ def task_list_overdue(request):
         filter(project=None).filter(date_finish__range=(start_day, end_day)).order_by(
         'date_finish')
 
-    return render(request, 'JtdiTASKS/task_overdue.html', {'tasks': tasks,
+    return render(request, 'JtdiTASKS/views/task_overdue.html', {'tasks': tasks,
                                                            'tasks_finish': tasks_finish,
                                                            'tasks_finished_today': tasks_finished_today})
 
@@ -544,7 +552,7 @@ def task_list_finished(request):
         .filter(Q(author=request.user) | Q(performer=request.user)).order_by(
         'project').order_by('date_finish')
 
-    return render(request, 'JtdiTASKS/finished_task.html', {'tasks': tasks_finish})
+    return render(request, 'JtdiTASKS/views/finished_task.html', {'tasks': tasks_finish})
 
 
 def project_task_list(request, pk):
@@ -593,7 +601,7 @@ def project_task_list(request, pk):
                     new_partner.partner = project_invite_form.cleaned_data['user_invite']
                     new_partner.save()
 
-    return render(request, 'JtdiTASKS/project_task_list.html', {'tasks': tasks,
+    return render(request, 'JtdiTASKS/views/project_task_list.html', {'tasks': tasks,
                                                                 'tasks_finish': tasks_finish,
                                                                 'project': pk,
                                                                 'project_object': project,
@@ -615,7 +623,7 @@ def search_result(request):
             .order_by(
             '-date_finish')
 
-    return render(request, 'JtdiTASKS/search.html', {'search_result_data': search_result_data})
+    return render(request, 'JtdiTASKS/views/search.html', {'search_result_data': search_result_data})
 
 
 # Task view
@@ -706,7 +714,7 @@ def task_create(request):
 
             tasks, tasks_finish = get_tasks_with_filter(method, task.project, user)
             data['form_is_valid'] = True
-            data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
+            data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
                 'tasks': tasks
             })
         else:
@@ -717,7 +725,7 @@ def task_create(request):
         form.fields['performer'].queryset = all_users_in_project
 
     context = {'form': form}
-    data['html_form'] = render_to_string('JtdiTASKS/task_create_ajax.html',
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_create_ajax.html',
                                          context,
                                          request=request
                                          )
@@ -737,7 +745,7 @@ def task_detail_ajax(request, pk):
     context = {'task': task,
                'comment_form': comment_form,
                'full_time': full_time['full_time__sum']}
-    data['html_form'] = render_to_string('JtdiTASKS/task_detail_ajax.html',
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_detail_ajax.html',
                                          context,
                                          request=request
                                          )
@@ -797,7 +805,7 @@ def task_update(request, pk):
                 tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
                 data['form_is_valid'] = True
                 data['msg'] = 'Задача успешно обновлена'
-                data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
+                data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
                     'tasks': tasks
                 })
                 if not task.remind:
@@ -819,7 +827,7 @@ def task_update(request, pk):
 
     context = {'form': form,
                'task': task}
-    data['html_form'] = render_to_string('JtdiTASKS/task_edit_ajax.html',
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_edit_ajax.html',
                                          context,
                                          request=request
                                          )
@@ -870,8 +878,8 @@ def task_edit(request, pk):
         form.fields['project'].queryset = Project.objects.filter(author=request.user)
         form.fields['performer'].queryset = all_users_in_project
 
-    return render(request, 'JtdiTASKS/task_edit.html', {'form': form
-                                                        })
+    return render(request, 'JtdiTASKS/views/task_edit.html', {'form': form
+                                                              })
 
 
 def task_del(request, pk):
@@ -888,9 +896,9 @@ def task_del(request, pk):
 
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
-        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
+        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
             'tasks_finish': tasks_finish})
-        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
+        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
             'tasks': tasks})
 
     return JsonResponse(data)
@@ -962,9 +970,9 @@ def task_finish(request, pk):
         task.save()
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
-        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
+        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
             'tasks_finish': tasks_finish})
-        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
+        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
             'tasks': tasks})
         data['msg'] = 'Задача успешно завершена'
         if task.project is not None:
@@ -1005,9 +1013,9 @@ def task_restore(request, pk):
     if task.author == request.user or task.performer == request.user:
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
-        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
+        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
             'tasks_finish': tasks_finish})
-        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
+        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
             'tasks': tasks})
         data['msg'] = 'Задача успешно восстановлена'
         if task.project is not None:
@@ -1030,9 +1038,9 @@ def task_transfer_date(request, pk, days):
     if task.author == request.user or task.performer == request.user:
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
-        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/task_table_body_finished.html', {
+        data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
             'tasks_finish': tasks_finish})
-        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/task_table_body.html', {
+        data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
             'tasks': tasks})
         data['msg'] = 'Задача успешно перенесена на ' + days + ' дней'
 
@@ -1045,7 +1053,7 @@ def task_transfer_date(request, pk, days):
         context = {'task': task,
                    'comment_form': comment_form,
                    'full_time': full_time['full_time__sum']}
-        data['html_form'] = render_to_string('JtdiTASKS/task_detail_ajax.html',
+        data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_detail_ajax.html',
                                              context,
                                              request=request
                                              )
@@ -1095,7 +1103,7 @@ def project_rename(request, pk):
 
                 context = {'projects': Project.objects.filter(author=request.user),
                            'project_form': ProjectForm(prefix='project')}
-                data['project_list'] = render_to_string('JtdiTASKS/project_list_menu.html',
+                data['project_list'] = render_to_string('JtdiTASKS/menu/project_list_menu.html',
                                                         context,
                                                         request=request
                                                         )
@@ -1123,7 +1131,7 @@ def project_create(request):
             data['form_is_valid'] = True
             context = {'projects': Project.objects.filter(author=request.user),
                        'project_form': ProjectForm(prefix='project')}
-            data['project_list'] = render_to_string('JtdiTASKS/project_list_menu.html',
+            data['project_list'] = render_to_string('JtdiTASKS/menu/project_list_menu.html',
                                                     context,
                                                     request=request
                                                     )
@@ -1146,7 +1154,7 @@ def project_param(request, pk):
     data['form_is_valid'] = True
     data['html_active_tasks_list'] = ''
     data['html_finished_tasks_list'] = ''
-    data['project_param'] = render_to_string('JtdiTASKS/project_param.html', {
+    data['project_param'] = render_to_string('JtdiTASKS/ajax_views/project_param.html', {
         'project_rename_form': ProjectFormRename(prefix='rename_project'),
         'project_invite_form': project_invite_form,
         'project': pk},
@@ -1185,10 +1193,10 @@ def user_invite(request):
     else:
         form = InviteUserForm()
 
-    return render(request, 'JtdiTASKS/user_invite.html', {'invite_form': form,
+    return render(request, 'JtdiTASKS/views/user_invite.html', {'invite_form': form,
                                                           'my_invites': my_invites,
                                                           'invites': invites,
-                                                          })
+                                                                })
 
 
 def invited(request, pk):
@@ -1360,7 +1368,7 @@ def get_comments(request, pk):
 # Include tags
 
 
-@register.inclusion_tag('JtdiTASKS/menu.html')
+@register.inclusion_tag('JtdiTASKS/menu/menu.html')
 def project_recent_list(request, user, project_pk):
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
@@ -1394,7 +1402,7 @@ def project_recent_list(request, user, project_pk):
     }
 
 
-@register.inclusion_tag('JtdiTASKS/profile_menu.html')
+@register.inclusion_tag('JtdiTASKS/menu/profile_menu.html')
 def profile_menu(user):
     today = datetime.date.today()
     week_end = today - datetime.timedelta(days=7)
@@ -1414,12 +1422,12 @@ def profile_menu(user):
             'my_invites': my_invites}
 
 
-@register.inclusion_tag('JtdiTASKS/task_menu.html')
+@register.inclusion_tag('JtdiTASKS/menu/task_menu.html')
 def task_menu(request, task, user):
     return {'task': task}
 
 
-@register.inclusion_tag('JtdiTASKS/project_menu.html')
+@register.inclusion_tag('JtdiTASKS/menu/project_menu.html')
 def project_menu(request, project, project_title):
     invited_users = InviteUser.objects.filter(user_sender__username__exact=request.user.username) \
         .filter(not_invited=False).filter(invited=True)
@@ -1432,7 +1440,7 @@ def project_menu(request, project, project_title):
             'project_invite_form': project_invite_form}
 
 
-@register.inclusion_tag('JtdiTASKS/search_block.html')
+@register.inclusion_tag('JtdiTASKS/views/search_block.html')
 def search_block(user):
     return {'user': user,
             'search_form': SearchForm()}
