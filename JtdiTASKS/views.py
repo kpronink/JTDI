@@ -114,13 +114,16 @@ def register_event(event_object, user, project, event_desc):
 
 
 def get_event(user, request):
-    projects = list(PartnerGroup.objects.filter(partner=user).values_list('project', flat=True).values_list('pk', flat=True))
+    projects = list(
+        PartnerGroup.objects.filter(partner=user).values_list('project', flat=True).values_list('pk', flat=True))
     project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
     projects.extend(project_owner)
-    events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(event__project_id__in=projects).order_by('id').reverse()[:10]
+    events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(
+        event__project_id__in=projects).order_by('id').reverse()[:10]
     count_notify = events.count()
     if not count_notify:
-        events = ViewsEventsTable.objects.filter(sees=True).filter(user=user).filter(event__project_id__in=projects).order_by('id').reverse()[:10]
+        events = ViewsEventsTable.objects.filter(sees=True).filter(user=user).filter(
+            event__project_id__in=projects).order_by('id').reverse()[:10]
         count_notify = 0
 
     tasks = list()
@@ -141,7 +144,7 @@ def get_event(user, request):
             else:
                 ico = 'fa fa-tasks fa-fw'
             tasks.append({'msg': event.event.author.username + ' ' + event.event.event + object_model.title,
-                          'url': '/task/det/' + str(object_model.pk)+'/',
+                          'url': '/task/det/' + str(object_model.pk) + '/',
                           'time': event.event.date_time.strftime('%H:%M'),
                           'ico': ico})
         elif model == PartnerGroup:
@@ -164,25 +167,26 @@ def get_event(user, request):
 
 
 def get_push_event(request):
-    data = list()
+    data = dict()
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
 
     tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user) \
         .filter(date_time__range=(start_day, currentdate)) \
         .order_by('date_time').reverse()
-
+    count = 0
     for task_actual in tasks_today:
-        data.append({'title': task_actual.task.title,
-                     'url': '/task/det/' + str(task_actual.task.pk) + '/',
-                     'body': task_actual.task.description})
+        data[str(count)] = {'title': task_actual.task.title,
+                            'url': '/task/det/' + str(task_actual.task.pk) + '/',
+                            'body': task_actual.task.description}
+        count += 1
         reminder = get_object_or_404(QueueTask, pk=task_actual.pk)
         reminder.reminded = True
         reminder.save()
 
-    return JsonResponse(data, safe=False)
-    
-    
+    return JsonResponse(data)
+
+
 class RegisterFormView(FormView):
     form_class = MyUserCreationForm
 
@@ -674,7 +678,7 @@ def task_create(request):
             task.color = COLOR_CHOISE[int(task.priority)]
             task.remind = False
             task.save(Task)
-            
+
             if not task.remind:
                 reminder = QueueTask(user=request.user, task=task, reminded=False, date_time=task.date_time)
                 reminder.save()
