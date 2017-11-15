@@ -185,7 +185,7 @@ def get_push_event(request):
     dt = datetime.datetime.now().astimezone(local_timez)
 
     tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user)\
-        .filter(date_time__range=(start_day, currentdate))\
+        .filter(date_time__range=(start_day, dt.replace(tzinfo=pytz.timezone('UTC'))))\
         .order_by('date_time').reverse()
     count = 0
     for task_actual in tasks_today:
