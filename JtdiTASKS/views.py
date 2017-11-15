@@ -169,20 +169,15 @@ def get_event(user, request):
 def get_push_event(request):
     if not request.user.is_authenticated():
         return JsonResponse({'msg': 'пользователь не авторизован'})
-    # try:
-    #     user = request.user
-    # except:
-    #     return JsonResponse({'msg': 'пользователь не авторизован'})
 
     data = dict()
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
+    local_timez = pytz.timezone(request.user.profile.timezone)
 
-    tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user).filter(date_time__range=(start_day, currentdate))
-        # .filter(date_time__range=(start_day, currentdate))
-        #.filter(user=request.user) \
-        # .filter(date_time__range=(start_day, currentdate)) \
-        # .order_by('date_time').reverse()
+    tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user)\
+        .filter(date_time__range=(start_day, currentdate.astimezone(local_timez)))\
+        .order_by('date_time').reverse()
     count = 0
     for task_actual in tasks_today:
         data[str(count)] = {'title': task_actual.task.title,
