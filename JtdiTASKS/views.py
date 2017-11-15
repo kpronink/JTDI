@@ -230,7 +230,7 @@ def get_notifycation(request):
         .filter(date_time__range=(start_day, end_day)) \
         .order_by('date', 'priority', 'time').count()
     tasks_overdue_notify = Task.objects.filter(active=True).filter(author=request.user) \
-        .filter(date_time__range=(first_day, start_day)) \
+        .filter(planed_date_finish__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time').count()
 
     data['tasks_today_notify'] = tasks_today_notify
@@ -494,7 +494,7 @@ def task_list_overdue(request):
     first_day = datetime.date(1001, 1, 1)
 
     tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)) \
-        .filter(date_time__range=(first_day, start_day)) \
+        .filter(planed_date_finish__range=(first_day, start_day)) \
         .order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
         .filter(Q(author=request.user) | Q(performer=request.user)). \

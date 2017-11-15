@@ -212,7 +212,7 @@ class RegistrationTable(models.Model):
 class ViewsEventsTable(models.Model):
     user = models.ForeignKey('auth.User', blank=False, null=True)
     event = models.ForeignKey('RegistrationTable', null=True, default=None,
-                              blank=True)
+                              blank=True, on_delete=models.CASCADE)
 
     sees = models.BooleanField(default=True)
 
