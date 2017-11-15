@@ -42,6 +42,7 @@ def get_tasks_with_filter(filter_method, project, user):
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
+    next_day = currentdate + datetime.timedelta(days=1)
     first_day = datetime.date(1001, 1, 1)
 
     if filter_method == 'projects':
@@ -70,7 +71,7 @@ def get_tasks_with_filter(filter_method, project, user):
             'date_finish')
     elif filter_method == 'overdue':
         tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)) \
-            .filter(planed_date_finish__range=(first_day, start_day)) \
+            .filter(planed_date_finish__range=(first_day, next_day)) \
             .order_by('date', 'priority', 'time')
         tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
             .filter(Q(author=user) | Q(performer=user)). \
@@ -491,10 +492,11 @@ def task_list_overdue(request):
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
     end_day = currentdate.combine(currentdate, currentdate.max.time())
+    next_day = currentdate + datetime.timedelta(days=1)
     first_day = datetime.date(1001, 1, 1)
 
     tasks = Task.objects.filter(active=True).filter(Q(author=request.user) | Q(performer=request.user)) \
-        .filter(planed_date_finish__range=(first_day, start_day)) \
+        .filter(planed_date_finish__range=(first_day, next_day)) \
         .order_by('date', 'priority', 'time')
     tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
         .filter(Q(author=request.user) | Q(performer=request.user)). \
