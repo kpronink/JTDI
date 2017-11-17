@@ -179,7 +179,7 @@ def get_event(user, request):
             ico = 'fa fa-user fa-fw'
             tasks.append(
                 {'msg': object_model.user_sender.username + ' ' + event.event.event + object_model.user_invite.username,
-                 'url': '',
+                 'url': '/invite/',
                  'time': event.event.date_time.strftime('%H:%M'),
                  'ico': ico})
 
