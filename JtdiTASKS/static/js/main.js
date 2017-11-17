@@ -415,9 +415,12 @@ function notifyMe(notify_body, notify_title, notify_url) {
     });
 
     notification.onclick = function () {
-      TaskDetail(notify_url);
-      $('#modal-task').modal('show')
-      notification.close()
+        if(notify_url.indexOf('invite')) {
+            document.location.href = notify_url;
+        }
+        else {TaskDetail(notify_url);
+            $('#modal-task').modal('show')
+            notification.close()}
     };
 
   }

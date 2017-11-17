@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/views.py" afterPath="$PROJECT_DIR$/JtdiTASKS/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,11 +38,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="211">
-              <caret line="693" column="0" lean-forward="false" selection-start-line="693" selection-start-column="0" selection-end-line="693" selection-end-column="0" />
+              <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
               <folding>
                 <element signature="e#1093#1172#0" expanded="false" />
                 <element signature="e#1346#3953#0" expanded="false" />
@@ -78,7 +79,6 @@
                 <element signature="e#45657#46768#0" expanded="false" />
                 <element signature="e#46804#47903#0" expanded="false" />
                 <element signature="e#47942#48855#0" expanded="false" />
-                <element signature="e#48904#50729#0" expanded="false" />
                 <element signature="e#50762#51559#0" expanded="false" />
                 <element signature="e#51596#52397#0" expanded="false" />
                 <element signature="e#52445#54842#0" expanded="false" />
@@ -90,6 +90,16 @@
                 <element signature="e#61182#61757#0" expanded="false" />
                 <element signature="e#61849#61911#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="email.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="543">
+              <caret line="143" column="54" lean-forward="false" selection-start-line="143" selection-start-column="54" selection-end-line="143" selection-end-column="54" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -160,17 +170,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="183" column="23" lean-forward="false" selection-start-line="183" selection-start-column="23" selection-end-line="183" selection-end-column="23" />
+            <state relative-caret-position="483">
+              <caret line="422" column="32" lean-forward="false" selection-start-line="422" selection-start-column="32" selection-end-line="422" selection-end-column="32" />
               <folding>
-                <marker date="1510747254329" expanded="true" signature="3652:3659" ph="×" />
-                <marker date="1510747254329" expanded="true" signature="5882:5892" ph="..." />
-                <marker date="1510747254329" expanded="true" signature="6145:6155" ph="..." />
-                <marker date="1510747254329" expanded="true" signature="6383:6393" ph="..." />
-                <marker date="1510747254329" expanded="true" signature="10432:10433" ph="..." />
+                <marker date="1510918380554" expanded="true" signature="3652:3659" ph="×" />
+                <marker date="1510918380554" expanded="true" signature="5882:5892" ph="..." />
+                <marker date="1510918380554" expanded="true" signature="6145:6155" ph="..." />
+                <marker date="1510918380554" expanded="true" signature="6383:6393" ph="..." />
+                <marker date="1510918380554" expanded="true" signature="10432:10433" ph="..." />
               </folding>
             </state>
           </provider>
@@ -179,7 +189,7 @@
       <file leaf-file-name="custom-scripts.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
+            <state relative-caret-position="-69">
               <caret line="112" column="9" lean-forward="false" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
               <folding />
             </state>
@@ -189,8 +199,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="36" column="25" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="59" />
+            <state relative-caret-position="255">
+              <caret line="26" column="31" lean-forward="false" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -209,7 +219,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>modal</find>
       <find>param</find>
       <find>acitvemenu_project</find>
       <find>shor</find>
@@ -239,6 +248,7 @@
       <find>invi</find>
       <find>flat</find>
       <find>ProjectSelect</find>
+      <find>get_per</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -294,10 +304,10 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/task_today.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
       </list>
     </option>
   </component>
@@ -547,6 +557,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23411371" sideWeight="0.61034113" order="7" side_tool="true" content_ui="tabs" />
@@ -559,7 +570,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29371002" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23411371" sideWeight="0.38965884" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23411371" sideWeight="0.38965884" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -617,11 +628,6 @@
           <url>file://$PROJECT_DIR$/JtdiTASKS/management/commands/closepoll.py</url>
           <line>31</line>
           <option name="timeStamp" value="516" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/JtdiTASKS/views.py</url>
-          <line>91</line>
-          <option name="timeStamp" value="564" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/JtdiTASKS/views.py</url>
@@ -984,14 +990,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="36" column="25" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/materialize.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3053">
@@ -1004,14 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
           <caret line="1011" column="23" lean-forward="false" selection-start-line="1011" selection-start-column="22" selection-end-line="1011" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="116" column="24" lean-forward="false" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1064,24 +1054,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="183" column="23" lean-forward="false" selection-start-line="183" selection-start-column="23" selection-end-line="183" selection-end-column="23" />
-          <folding>
-            <marker date="1510747254329" expanded="true" signature="3652:3659" ph="×" />
-            <marker date="1510747254329" expanded="true" signature="5882:5892" ph="..." />
-            <marker date="1510747254329" expanded="true" signature="6145:6155" ph="..." />
-            <marker date="1510747254329" expanded="true" signature="6383:6393" ph="..." />
-            <marker date="1510747254329" expanded="true" signature="10432:10433" ph="..." />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="26" column="31" lean-forward="false" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="112" column="9" lean-forward="false" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
+        <state relative-caret-position="543">
+          <caret line="143" column="54" lean-forward="false" selection-start-line="143" selection-start-column="54" selection-end-line="143" selection-end-column="54" />
           <folding />
         </state>
       </provider>
@@ -1089,7 +1073,7 @@
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
-          <caret line="693" column="0" lean-forward="false" selection-start-line="693" selection-start-column="0" selection-end-line="693" selection-end-column="0" />
+          <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
           <folding>
             <element signature="e#1093#1172#0" expanded="false" />
             <element signature="e#1346#3953#0" expanded="false" />
@@ -1126,7 +1110,6 @@
             <element signature="e#45657#46768#0" expanded="false" />
             <element signature="e#46804#47903#0" expanded="false" />
             <element signature="e#47942#48855#0" expanded="false" />
-            <element signature="e#48904#50729#0" expanded="false" />
             <element signature="e#50762#51559#0" expanded="false" />
             <element signature="e#51596#52397#0" expanded="false" />
             <element signature="e#52445#54842#0" expanded="false" />
@@ -1137,6 +1120,28 @@
             <element signature="e#60146#60943#0" expanded="false" />
             <element signature="e#61182#61757#0" expanded="false" />
             <element signature="e#61849#61911#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-69">
+          <caret line="112" column="9" lean-forward="false" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="422" column="32" lean-forward="false" selection-start-line="422" selection-start-column="32" selection-end-line="422" selection-end-column="32" />
+          <folding>
+            <marker date="1510918380554" expanded="true" signature="3652:3659" ph="×" />
+            <marker date="1510918380554" expanded="true" signature="5882:5892" ph="..." />
+            <marker date="1510918380554" expanded="true" signature="6145:6155" ph="..." />
+            <marker date="1510918380554" expanded="true" signature="6383:6393" ph="..." />
+            <marker date="1510918380554" expanded="true" signature="10432:10433" ph="..." />
           </folding>
         </state>
       </provider>
