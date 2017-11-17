@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -124,16 +124,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="materialize.min.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/materialize.min.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3053">
-              <caret line="5" column="31479" lean-forward="false" selection-start-line="5" selection-start-column="31418" selection-end-line="5" selection-end-column="31479" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/models.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -170,18 +160,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="422" column="32" lean-forward="false" selection-start-line="422" selection-start-column="32" selection-end-line="422" selection-end-column="32" />
+            <state relative-caret-position="412">
+              <caret line="423" column="16" lean-forward="false" selection-start-line="423" selection-start-column="9" selection-end-line="423" selection-end-column="16" />
               <folding>
-                <marker date="1510918380554" expanded="true" signature="3652:3659" ph="×" />
-                <marker date="1510918380554" expanded="true" signature="5882:5892" ph="..." />
-                <marker date="1510918380554" expanded="true" signature="6145:6155" ph="..." />
-                <marker date="1510918380554" expanded="true" signature="6383:6393" ph="..." />
-                <marker date="1510918380554" expanded="true" signature="10432:10433" ph="..." />
+                <marker date="1510919444461" expanded="true" signature="3652:3659" ph="×" />
+                <marker date="1510919444461" expanded="true" signature="5882:5892" ph="..." />
+                <marker date="1510919444461" expanded="true" signature="6145:6155" ph="..." />
+                <marker date="1510919444461" expanded="true" signature="6383:6393" ph="..." />
+                <marker date="1510919444461" expanded="true" signature="10432:10433" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="notify_menu.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -247,8 +247,8 @@
       <find>divi</find>
       <find>invi</find>
       <find>flat</find>
-      <find>ProjectSelect</find>
       <find>get_per</find>
+      <find>ProjectSelect</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -257,7 +257,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_done.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_form.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_confirm.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/registration/password_reset_complete.html" />
@@ -308,6 +307,7 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html" />
       </list>
     </option>
   </component>
@@ -397,6 +397,14 @@
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
               <item name="ajax_views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JTDI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JTDI" type="462c0819:PsiDirectoryNode" />
+              <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="JtdiTASKS" type="462c0819:PsiDirectoryNode" />
+              <item name="menu" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="JTDI" type="b2602c69:ProjectViewProjectNode" />
@@ -709,13 +717,6 @@
         <state relative-caret-position="472">
           <caret line="559" column="8" lean-forward="false" selection-start-line="559" selection-start-column="8" selection-end-line="559" selection-end-column="8" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1134,15 +1135,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="422" column="32" lean-forward="false" selection-start-line="422" selection-start-column="32" selection-end-line="422" selection-end-column="32" />
+        <state relative-caret-position="412">
+          <caret line="423" column="16" lean-forward="false" selection-start-line="423" selection-start-column="9" selection-end-line="423" selection-end-column="16" />
           <folding>
-            <marker date="1510918380554" expanded="true" signature="3652:3659" ph="×" />
-            <marker date="1510918380554" expanded="true" signature="5882:5892" ph="..." />
-            <marker date="1510918380554" expanded="true" signature="6145:6155" ph="..." />
-            <marker date="1510918380554" expanded="true" signature="6383:6393" ph="..." />
-            <marker date="1510918380554" expanded="true" signature="10432:10433" ph="..." />
+            <marker date="1510919444461" expanded="true" signature="3652:3659" ph="×" />
+            <marker date="1510919444461" expanded="true" signature="5882:5892" ph="..." />
+            <marker date="1510919444461" expanded="true" signature="6145:6155" ph="..." />
+            <marker date="1510919444461" expanded="true" signature="6383:6393" ph="..." />
+            <marker date="1510919444461" expanded="true" signature="10432:10433" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>

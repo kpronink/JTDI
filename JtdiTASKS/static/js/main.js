@@ -415,14 +415,17 @@ function notifyMe(notify_body, notify_title, notify_url) {
     });
 
     notification.onclick = function () {
-        if(notify_url.indexOf('invite')) {
-            document.location.href = notify_url;
+        OpenUrl(notify_url);
+        notification.close()}
+    }
+
+}
+
+function OpenUrl(any_url) {
+    if(any_url.indexOf('invite')) {
+            document.location.href = any_url;
         }
-        else {TaskDetail(notify_url);
+        else {TaskDetail(any_url);
             $('#modal-task').modal('show')
-            notification.close()}
-    };
-
-  }
-
+            }
 }
