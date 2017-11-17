@@ -133,7 +133,7 @@ def get_event(user, request):
     project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
     projects.extend(project_owner)
     events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(Q(
-            event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:10]
+        event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:10]
     count_notify = events.count()
     if not count_notify:
         events = ViewsEventsTable.objects.filter(sees=True).filter(user=user).filter(Q(
@@ -177,10 +177,11 @@ def get_event(user, request):
             except:
                 continue
             ico = 'fa fa-user fa-fw'
-            tasks.append({'msg': object_model.user_sender.username + ' ' + event.event.event + object_model.user_invite.username,
-                          'url': '',
-                          'time': event.event.date_time.strftime('%H:%M'),
-                          'ico': ico})
+            tasks.append(
+                {'msg': object_model.user_sender.username + ' ' + event.event.event + object_model.user_invite.username,
+                 'url': '',
+                 'time': event.event.date_time.strftime('%H:%M'),
+                 'ico': ico})
 
     notify_tasks = render_to_string('JtdiTASKS/menu/notify_menu.html',
                                     {'tasks': tasks},
@@ -200,8 +201,8 @@ def get_push_event(request):
     local_timez = pytz.timezone(request.user.profile.timezone)
     dt = datetime.datetime.now().astimezone(local_timez)
 
-    tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user)\
-        .filter(date_time__range=(start_day, dt.replace(tzinfo=pytz.timezone('UTC'))))\
+    tasks_today = QueueTask.objects.filter(reminded=False).filter(user=request.user) \
+        .filter(date_time__range=(start_day, dt.replace(tzinfo=pytz.timezone('UTC')))) \
         .order_by('date_time').reverse()
     count = 0
     for task_actual in tasks_today:
@@ -331,13 +332,13 @@ def get_index_of_task(request, pk):
 
 def get_performers(request, pk):
     data = []
-    invited_users = InviteUser \
-        .objects.filter(Q(user_sender__username__exact=request.user.username)
-                        | Q(user_invite__username__exact=request.user.username)) \
-        .filter(not_invited=False).filter(invited=True)
+    # invited_users = InviteUser \
+    #     .objects.filter(Q(user_sender__username__exact=request.user.username)
+    #                     | Q(user_invite__username__exact=request.user.username)) \
+    #     .filter(not_invited=False).filter(invited=True)
     project = get_object_or_404(Project, pk=pk)
     users_in_project = PartnerGroup.objects.filter(project=project) \
-        .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+        # .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
     performers = User.objects.filter(
         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
 
@@ -516,8 +517,8 @@ def task_list(request):
         'date_finish')
 
     return render(request, 'JtdiTASKS/views/index.html', {'tasks': tasks,
-                                                    'tasks_finish': tasks_finish,
-                                                    'tasks_finished_today': tasks_finished_today})
+                                                          'tasks_finish': tasks_finish,
+                                                          'tasks_finished_today': tasks_finished_today})
 
 
 def task_list_today(request):
@@ -540,8 +541,8 @@ def task_list_today(request):
         'date_finish')
 
     return render(request, 'JtdiTASKS/views/task_today.html', {'tasks': tasks,
-                                                         'tasks_finish': tasks_finish,
-                                                         'tasks_finished_today': tasks_finished_today})
+                                                               'tasks_finish': tasks_finish,
+                                                               'tasks_finished_today': tasks_finished_today})
 
 
 def task_list_overdue(request):
@@ -568,8 +569,8 @@ def task_list_overdue(request):
         'date_finish')
 
     return render(request, 'JtdiTASKS/views/task_overdue.html', {'tasks': tasks,
-                                                           'tasks_finish': tasks_finish,
-                                                           'tasks_finished_today': tasks_finished_today})
+                                                                 'tasks_finish': tasks_finish,
+                                                                 'tasks_finished_today': tasks_finished_today})
 
 
 def task_list_finished(request):
@@ -630,10 +631,10 @@ def project_task_list(request, pk):
                     new_partner.save()
 
     return render(request, 'JtdiTASKS/views/project_task_list.html', {'tasks': tasks,
-                                                                'tasks_finish': tasks_finish,
-                                                                'project': pk,
-                                                                'project_object': project,
-                                                                'users_in_project': all_users_task_count})
+                                                                      'tasks_finish': tasks_finish,
+                                                                      'project': pk,
+                                                                      'project_object': project,
+                                                                      'users_in_project': all_users_task_count})
 
 
 def search_result(request):
@@ -690,8 +691,8 @@ def task_create(request):
                         | Q(user_invite__username__exact=user.username)) \
         .filter(not_invited=False).filter(invited=True)
 
-    users_in_project = PartnerGroup.objects.filter(project=project_pk) \
-        .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+    users_in_project = PartnerGroup.objects.filter(project=project_pk)
+    # .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
 
     proj = None
 
@@ -749,7 +750,8 @@ def task_create(request):
             data['form_is_valid'] = False
     else:
         form = TaskForm(initial={'project_field': proj, 'performer': user})
-        form.fields['project_field'].queryset = Project.objects.filter(author=user)
+        form.fields['project_field'].queryset = Project.objects.filter(Q(author=user) | Q(
+            pk__in=PartnerGroup.objects.filter(partner=user).values_list('project', flat=True)))
         form.fields['performer'].queryset = all_users_in_project
 
     context = {'form': form}
@@ -1230,15 +1232,15 @@ def user_invite(request):
         form = InviteUserForm()
 
     return render(request, 'JtdiTASKS/views/user_invite.html', {'invite_form': form,
-                                                          'my_invites': my_invites,
-                                                          'invites': invites,
+                                                                'my_invites': my_invites,
+                                                                'invites': invites,
                                                                 })
 
 
 def invited(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
-    
+
     local_timez = pytz.timezone(request.user.profile.timezone)
     dt = datetime.datetime.now().astimezone(local_timez)
 
@@ -1263,7 +1265,7 @@ def invited(request, pk):
 def not_invited(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
-    
+
     local_timez = pytz.timezone(request.user.profile.timezone)
     dt = datetime.datetime.now().astimezone(local_timez)
 
@@ -1274,7 +1276,7 @@ def not_invited(request, pk):
     invite_user.save()
     register_event(invite_user, request.user, None, 'отклонил приглашение:')
     success_url = redirect('user_invite')
-    
+
     reminder = QueuePushNotify(user=invite_user.user_sender,
                                event=invite_user.user_invite.username + ' отклонил приглашение',
                                url='/invite/',
@@ -1318,7 +1320,7 @@ def invite_user_in_project(request, pk):
 
             reminder = QueuePushNotify(user=new_partner.partner,
                                        event=request.user.username + ' добавил в проект:' + project.title,
-                                       url='/project_tasks_list/'+str(project.pk)+'/',
+                                       url='/project_tasks_list/' + str(project.pk) + '/',
                                        reminded=False,
                                        date_time=dt)
             reminder.save()
