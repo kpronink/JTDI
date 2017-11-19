@@ -1018,6 +1018,7 @@ img.logo {
 
 .row .col.s3 {
     width: fit-content;
+    width: -moz-max-content;
     margin-left: auto;
     left: auto;
     right: auto;

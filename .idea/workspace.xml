@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -99,11 +93,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="email.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="email.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="357">
               <caret line="145" column="44" lean-forward="false" selection-start-line="145" selection-start-column="44" selection-end-line="145" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="custom-styles.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="452">
+              <caret line="1020" column="28" lean-forward="false" selection-start-line="1020" selection-start-column="28" selection-end-line="1020" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -131,16 +135,6 @@
                 <marker date="1510923643970" expanded="true" signature="6383:6393" ph="..." />
                 <marker date="1510923643970" expanded="true" signature="10432:10433" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="notify_menu.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -293,12 +287,12 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
       </list>
     </option>
   </component>
@@ -960,14 +954,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="577">
-          <caret line="1023" column="1" lean-forward="true" selection-start-line="1023" selection-start-column="1" selection-end-line="1023" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
@@ -1088,8 +1074,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="357">
           <caret line="145" column="44" lean-forward="false" selection-start-line="145" selection-start-column="44" selection-end-line="145" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="1020" column="28" lean-forward="false" selection-start-line="1020" selection-start-column="28" selection-end-line="1020" selection-end-column="28" />
           <folding />
         </state>
       </provider>
