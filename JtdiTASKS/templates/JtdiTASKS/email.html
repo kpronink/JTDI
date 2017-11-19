@@ -135,18 +135,15 @@
                     <tr>
                         <td class="content">
                             <h2>Привет {{ username }},</h2>
+                            <h4>Задачи на сегодня</h4>
+                            {% for task in tasks_today %}
+                                <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a><br>
+                            {% endfor %}
 
-                            <table> {% for task in tasks_today %}
-                                <h4>Задачи на сегодня</h4>
-                                <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a> </tr>
-                                <div class="divider"></div>
-                                {% endfor %}
-                                <h4>Просроченые задачи</h4>
+                            <h4>Просроченые задачи</h4>
                                 {% for task in tasks_overdue %}
-                                    <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a> </tr>
-                                    <div class="divider"></div>
+                                 <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a><br>
                                 {% endfor %}
-                            </table>
                             <table>
                                 <tr>
                                     <td align="center">

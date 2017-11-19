@@ -5,6 +5,8 @@
 ---------------------------------------------------------  */
 
 $(document).ready((function ($) {
+    google.charts.load('current', {'packages':['gantt']});
+    
     "use strict";
     var mainApp = {
 
@@ -110,25 +112,6 @@ $(document).ready((function ($) {
 	
 }(jQuery)));
 
-function ProjectSelect(val){
-    $("#id_performer")[0].style.display = (val == '') ? 'none' : ''
-    $.ajax({
-        type: "GET",
-        url: "/ajax/get_performers/"+val+"/",
-        data: {},
-        success: function(result) {
-            $("#id_performer").empty();
-            for (var item in result){
-                var option = document.createElement("option");
-                option.text = result[item][1];
-                option.value = result[item][0];
-                var select = document.getElementById("id_performer");
-                select.appendChild(option);
-               }
-        }
-    });
-    }
-
 
 function DonutChart() {
     if($('*').is('#url_ajax_chart')) {try
@@ -148,3 +131,64 @@ function DonutChart() {
                     });}})}
                              catch(err) { }}
 }
+
+
+
+function toMilliseconds(minutes) {
+      return minutes * 60 * 1000;
+    }
+
+function drawChartGantt() {
+
+      var otherData = new google.visualization.DataTable();
+      otherData.addColumn('string', 'Task ID');
+      otherData.addColumn('string', 'Task Name');
+      otherData.addColumn('string', 'Resource');
+      otherData.addColumn('date', 'Start');
+      otherData.addColumn('date', 'End');
+      otherData.addColumn('number', 'Duration');
+      otherData.addColumn('number', 'Percent Complete');
+      otherData.addColumn('string', 'Dependencies');
+      
+      $.ajax({
+        type: "GET",
+        url: "/ajax/get_performers/"+val+"/",
+        data: {},
+        success: function(result) {
+            $("#id_performer").empty();
+            for (var item in result){
+                var option = document.createElement("option");
+                option.text = result[item][1];
+                option.value = result[item][0];
+                var select = document.getElementById("id_performer");
+                select.appendChild(option);
+               }
+        }
+    });
+
+      otherData.addRows([
+        ['toTrain', 'Walk to train stop', 'walk', null, null, toMilliseconds(5), 100, null],
+        ['music', 'Listen to music', 'music', null, null, toMilliseconds(70), 100, null],
+        ['wait', 'Wait for train', 'wait', null, null, toMilliseconds(10), 100, 'toTrain'],
+        ['train', 'Train ride', 'train', null, null, toMilliseconds(45), 75, 'wait'],
+        ['toWork', 'Walk to work', 'walk', null, null, toMilliseconds(10), 0, 'train'],
+        ['work', 'Sit down at desk', null, null, null, toMilliseconds(2), 0, 'toWork'],
+
+      ]);
+
+      var options = {
+        height: 275,
+          width: $('#Gantt').width() * 0.95,
+        gantt: {
+          defaultStartDateMillis: new Date(2015, 3, 28)
+        }
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(otherData, options);
+    }
+
+$('#Gantt').resize(function(){
+    chart.draw(data, options);
+});

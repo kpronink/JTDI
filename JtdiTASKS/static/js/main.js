@@ -429,3 +429,22 @@ function OpenUrl(any_url) {
             $('#modal-task').modal('show')
             }
 }
+
+function ProjectSelect(val){
+    $("#id_performer")[0].style.display = (val == '') ? 'none' : ''
+    $.ajax({
+        type: "GET",
+        url: "/ajax/get_performers/"+val+"/",
+        data: {},
+        success: function(result) {
+            $("#id_performer").empty();
+            for (var item in result){
+                var option = document.createElement("option");
+                option.text = result[item][1];
+                option.value = result[item][0];
+                var select = document.getElementById("id_performer");
+                select.appendChild(option);
+               }
+        }
+    });
+    }
