@@ -132,6 +132,14 @@ function DonutChart() {
                              catch(err) { }}
 }
 
+function redrawDonut() {
+    var element = Morris.Donut;
+    if ($(element.el).is(":visible")) {
+        this.raphael.setSize(this.element.width(), this.element.height());
+        return this.redraw();
+    }
+    else return null;
+};
 
 
 function toMilliseconds(minutes) {

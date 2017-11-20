@@ -1690,7 +1690,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       }
       this.setData(options.data);
     }
-
+      
     Donut.prototype.redraw = function() {
       var C, cx, cy, i, idx, last, max_value, min, next, seg, total, value, w, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2, _results;
       this.raphael.clear();

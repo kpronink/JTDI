@@ -137,12 +137,12 @@
                             <h2>Привет {{ username }},</h2>
                             <h4>Задачи на сегодня</h4>
                             {% for task in tasks_today %}
-                                <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a><br>
+                                <tr> <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.date }} {{ task.title }}</a><br>
                             {% endfor %}
 
                             <h4>Просроченые задачи</h4>
                                 {% for task in tasks_overdue %}
-                                 <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.title }}</a><br>
+                                 <a href="http://kpronink.pythonanywhere.com/#{{ task.pk }}">{{ task.planed_date_finish }}  {{ task.title }}</a><br>
                                 {% endfor %}
                             <table>
                                 <tr>

@@ -15,7 +15,7 @@
                             <ul class="tabs">
                                 <li class="tab col s3"><a href="#TableTask">Таблица задач</a></li>
                                 <li class="tab col s3"><a href="#Finished">Завершенные задачи</a></li>
-                                <li class="tab col s3"><a href="#InfoProj">Информация</a></li>
+                                <li class="tab col s3"><a href="#InfoProj" onclick="redrawDonut()">Информация</a></li>
 								<li class="tab col s3 disabled"><a href="#Gantt" onclick="drawChartGantt()">Таймлайн</a></li>
                             </ul>
                         </div>
@@ -100,9 +100,9 @@
                         </div>
                         </div>
                         <div id="InfoProj" class="col s12">
-                            <div class="col-md-6">
+
                                 <div class="row">
-                                    <div class="col-xs-12">
+                                    <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-image donutpad">
                                                 <div id="morris-donut-chart"> </div>
@@ -110,7 +110,9 @@
                                             <div class="card-action"> <b>Основные показатели проекта</b> </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12">
+
+
+                                    <div class="col-md-6">
                                         <div class="card">
                                             <div class="card-action"> <b>Участники проекта</b> </div>
                                             <div class="card-image">
@@ -126,7 +128,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
                             <div class="col-xs-12 col-sm-12 col-md-5">
                                 <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>
                             </div>
