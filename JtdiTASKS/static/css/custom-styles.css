@@ -1015,11 +1015,3 @@ img.logo {
     width: 100%;
     width: -moz-available;          /* WebKit-based browsers will ignore this. */
 }
-
-.row .col.s3 {
-    width: fit-content;
-    width: -moz-max-content;
-    margin-left: auto;
-    left: auto;
-    right: auto;
-}

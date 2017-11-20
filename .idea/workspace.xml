@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -125,11 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom-styles.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="custom-styles.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="1020" column="28" lean-forward="false" selection-start-line="1020" selection-start-column="28" selection-end-line="1020" selection-end-column="28" />
+            <state relative-caret-position="537">
+              <caret line="1017" column="0" lean-forward="true" selection-start-line="1017" selection-start-column="0" selection-end-line="1017" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -175,11 +174,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom-scripts.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="custom-scripts.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="116" column="36" lean-forward="false" selection-start-line="116" selection-start-column="36" selection-end-line="116" selection-end-column="36" />
+            <state relative-caret-position="223">
+              <caret line="50" column="54" lean-forward="false" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -300,13 +299,13 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/morris/morris.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/email.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
       </list>
     </option>
   </component>
@@ -1030,14 +1029,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="1020" column="28" lean-forward="false" selection-start-line="1020" selection-start-column="28" selection-end-line="1020" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
@@ -1119,8 +1110,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="116" column="36" lean-forward="false" selection-start-line="116" selection-start-column="36" selection-end-line="116" selection-end-column="36" />
+        <state relative-caret-position="223">
+          <caret line="50" column="54" lean-forward="false" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="537">
+          <caret line="1017" column="0" lean-forward="true" selection-start-line="1017" selection-start-column="0" selection-end-line="1017" selection-end-column="0" />
           <folding />
         </state>
       </provider>

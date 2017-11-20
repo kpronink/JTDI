@@ -49,7 +49,6 @@ $(document).ready((function ($) {
 
             /* MORRIS DONUT CHART
 			----------------------------------------*/
-            DonutChart();
 
                         /* MORRIS LINE CHART
 			----------------------------------------*/
