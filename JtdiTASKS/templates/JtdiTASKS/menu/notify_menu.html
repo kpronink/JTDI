@@ -1,7 +1,7 @@
 {% for task in tasks %}
 <li>
 <a href="#"id="detail" onclick="OpenUrl('{{ task.url }}')"
-                                            data-toggle="modal" data-target="#modal-task">
+                                            >
     <div>
         <i class="{{ task.ico }}"></i> {{ task.msg }}<span class="pull-right text-muted small">{{ task.time }}</span></div>
     </a>

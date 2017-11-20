@@ -422,7 +422,7 @@ function notifyMe(notify_body, notify_title, notify_url) {
 }
 
 function OpenUrl(any_url) {
-    if(any_url.indexOf('invite')) {
+    if(any_url.indexOf('invite')+1) {
             document.location.href = any_url;
         }
         else {TaskDetail(any_url);
