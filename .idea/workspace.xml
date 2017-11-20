@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -127,8 +126,8 @@
       <file leaf-file-name="custom-styles.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
-              <caret line="1017" column="0" lean-forward="true" selection-start-line="1017" selection-start-column="0" selection-end-line="1017" selection-end-column="0" />
+            <state relative-caret-position="534">
+              <caret line="1038" column="13" lean-forward="false" selection-start-line="1038" selection-start-column="13" selection-end-line="1038" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -1118,8 +1117,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
-          <caret line="1017" column="0" lean-forward="true" selection-start-line="1017" selection-start-column="0" selection-end-line="1017" selection-end-column="0" />
+        <state relative-caret-position="534">
+          <caret line="1038" column="13" lean-forward="false" selection-start-line="1038" selection-start-column="13" selection-end-line="1038" selection-end-column="13" />
           <folding />
         </state>
       </provider>

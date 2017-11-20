@@ -1015,3 +1015,29 @@ img.logo {
     width: 100%;
     width: -moz-available;          /* WebKit-based browsers will ignore this. */
 }
+
+@media (min-width:768px){.row .col.s3 {
+    width: fit-content;
+    width: -moz-max-content;
+    width: 25%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+    white-space: unset;
+}}
+
+@media only screen and (max-width: 992px){
+
+.tabs {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 48px;
+    width: 40%;
+    background-color: #fff;
+    margin: 0 1px;
+    white-space: nowrap;
+}}
