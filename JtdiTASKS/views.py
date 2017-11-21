@@ -53,7 +53,12 @@ def get_tasks_with_filter(filter_method, project, user):
                 .filter(date_finish__range=(start_day, end_day)).order_by(
                 'date_finish')
         else:
-            tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)). \
+            users_in_project = PartnerGroup.objects.filter(project=project)
+
+            all_users_in_project = User.objects.filter(
+                Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk)).values_list('id', flat=True)
+
+            tasks = Task.objects.filter(active=True).filter(Q(author__in=all_users_in_project) | Q(performer__id__in=all_users_in_project)). \
                 filter(project=project).order_by('date')
 
             tasks_finish = Task.objects.filter(active=False).filter(finished=True). \
@@ -225,6 +230,48 @@ def get_push_event(request):
         reminder = get_object_or_404(QueuePushNotify, pk=noti.pk)
         reminder.reminded = True
         reminder.save()
+
+    return JsonResponse(data)
+
+
+# KANBAN
+
+
+def get_kanban(request):
+    if not request.user.is_authenticated():
+        return JsonResponse({})
+
+    data = dict()
+
+    data['kanban'] = render_to_string('JtdiTASKS/ajax_views/kanban.html',
+                                      request=request
+                                      )
+
+    return JsonResponse(data)
+
+
+def add_kanban_column(request):
+    if not request.user.is_authenticated():
+        return JsonResponse({})
+
+    data = dict()
+
+    data['new_column'] = render_to_string('JtdiTASKS/ajax_views/kanban_column.html',
+                                          request=request
+                                          )
+
+    return JsonResponse(data)
+
+
+def add_kanban_task(request):
+    if not request.user.is_authenticated():
+        return JsonResponse({})
+
+    data = dict()
+
+    data['new_column'] = render_to_string('JtdiTASKS/ajax_views/kanban_task.html',
+                                          request=request
+                                          )
 
     return JsonResponse(data)
 
@@ -588,16 +635,16 @@ def project_task_list(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    currentdate = datetime.datetime.today()
+    # currentdate = datetime.datetime.today()
 
     project = Project.objects.filter(pk=pk)[0]
 
     tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
 
-    invited_users = InviteUser \
-        .objects.filter(Q(user_sender__username__exact=request.user.username)
-                        | Q(user_invite__username__exact=request.user.username)) \
-        .filter(not_invited=False).filter(invited=True)
+    # invited_users = InviteUser \
+    #     .objects.filter(Q(user_sender__username__exact=request.user.username)
+    #                     | Q(user_invite__username__exact=request.user.username)) \
+    #     .filter(not_invited=False).filter(invited=True)
 
     users_in_project = PartnerGroup.objects.filter(project=project)
 
@@ -611,24 +658,24 @@ def project_task_list(request, pk):
                                     .filter(Q(author=user_in_proj) | Q(performer=user_in_proj))
                                     .filter(active=True).filter(finished=False).count()})
 
-    if request.method == 'POST':
-        if project.author == request.user:
-            project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
-            project_invite_form = ProjectInviteUser(request.POST, prefix='invite_project')
-
-            project_invite_form.fields['user_invite'].queryset = User.objects.filter(
-                pk__in=[user.user_invite.pk for user in invited_users])
-            if project_rename_form.is_valid():
-                project.title = project_rename_form.cleaned_data['title']
-                project.save()
-            if project_invite_form.is_valid():
-                exist = PartnerGroup.objects.filter(partner=project_invite_form.cleaned_data['user_invite']) \
-                    .filter(project=project).exists()
-                if not exist:
-                    new_partner = PartnerGroup()
-                    new_partner.project = project
-                    new_partner.partner = project_invite_form.cleaned_data['user_invite']
-                    new_partner.save()
+    # if request.method == 'POST':
+    #     if project.author == request.user:
+    #         project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
+    #         project_invite_form = ProjectInviteUser(request.POST, prefix='invite_project')
+    #
+    #         project_invite_form.fields['user_invite'].queryset = User.objects.filter(
+    #             pk__in=[user.user_invite.pk for user in invited_users])
+    #         if project_rename_form.is_valid():
+    #             project.title = project_rename_form.cleaned_data['title']
+    #             project.save()
+    #         if project_invite_form.is_valid():
+    #             exist = PartnerGroup.objects.filter(partner=project_invite_form.cleaned_data['user_invite']) \
+    #                 .filter(project=project).exists()
+    #             if not exist:
+    #                 new_partner = PartnerGroup()
+    #                 new_partner.project = project
+    #                 new_partner.partner = project_invite_form.cleaned_data['user_invite']
+    #                 new_partner.save()
 
     return render(request, 'JtdiTASKS/views/project_task_list.html', {'tasks': tasks,
                                                                       'tasks_finish': tasks_finish,
@@ -694,6 +741,9 @@ def task_create(request):
     users_in_project = PartnerGroup.objects.filter(project=project_pk)
     # .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
 
+    projects = list(
+        PartnerGroup.objects.filter(partner=user).values_list('project', flat=True))
+
     proj = None
 
     if project_pk is not None:
@@ -707,7 +757,7 @@ def task_create(request):
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
-        form.fields['project_field'].queryset = Project.objects.filter(author=user)
+        form.fields['project_field'].queryset = Project.objects.filter(Q(author=user) | Q(pk__in=projects))
         form.fields['performer'].queryset = all_users_in_project
         if form.is_valid():
             task = Task()
@@ -795,6 +845,13 @@ def task_update(request, pk):
     else:
         method = 'projects'
 
+    if 'project' in request.POST:
+        project_pk = int(request.POST['project'])
+    elif 'project' in request.GET:
+        project_pk = int(request.GET['project'])
+    else:
+        project_pk = None
+
     COLOR_CHOISE = {
         1: 'red',
         2: 'yellow',
@@ -806,9 +863,22 @@ def task_update(request, pk):
                         | Q(user_invite__username__exact=request.user.username)) \
         .filter(not_invited=False).filter(invited=True)
 
-    users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
-    all_users_in_project = User.objects.filter(
-        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
+    users_in_project = PartnerGroup.objects.filter(project=project_pk)
+    # .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+
+    projects = list(
+        PartnerGroup.objects.filter(partner=request.user).values_list('project', flat=True))
+
+    proj = None
+
+    if project_pk is not None:
+        proj = get_object_or_404(Project, pk=project_pk)
+        all_users_in_project = User.objects.filter(
+            Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk))
+    else:
+        users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+        all_users_in_project = User.objects \
+            .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
 
     task = get_object_or_404(Task, pk=pk)
     if task.author != request.user:
@@ -817,7 +887,7 @@ def task_update(request, pk):
     if request.method == "POST":
         if task.author == request.user:
             form = TaskEditForm(request.POST, instance=task)
-            form.fields['project'].queryset = Project.objects.filter(author=request.user)
+            form.fields['project'].queryset = Project.objects.filter(Q(author=request.user) | Q(pk__in=projects))
             form.fields['performer'].queryset = all_users_in_project
             if form.is_valid():
                 task = form.save(commit=False)
@@ -851,7 +921,8 @@ def task_update(request, pk):
 
     else:
         form = TaskEditForm(instance=task)
-        form.fields['project'].queryset = Project.objects.filter(author=request.user)
+        form.fields['project'].queryset = Project.objects.filter(Q(author=request.user) | Q(
+            pk__in=projects))
         form.fields['performer'].queryset = all_users_in_project
         data['msg'] = ''
 

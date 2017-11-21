@@ -147,7 +147,7 @@ function StartStop() {
 $("#modal-task").on("submit", ".task-create-form", function () {
     var form = $(this);
     var form_data = form.serialize();
-    form_data = form_data + '&param='+ $("#views").attr("views")
+    form_data = form_data + '&param='+ $("#views").attr("views") + '&project='+ $("#project").attr("project")
     $.ajax({
       url: form.attr("action"),
       data: form_data,
@@ -447,4 +447,40 @@ function ProjectSelect(val){
                }
         }
     });
+}
+
+
+function GetKanban() {
+    if ($("#kanban_switch").prop("checked")) {
+        $.ajax({
+            type: "GET",
+            url: "/ajax/kanban/",
+            data: {},
+            success: function (result) {
+                $('.card-content').html(result.kanban)
+            }
+        });
     }
+}
+
+function AddNewColumn() {
+    $.ajax({
+            type: "GET",
+            url: "/ajax/add_kanban_column/",
+            data: {},
+            success: function (result) {
+                $('.dd').append(result.new_column)
+            }
+        });
+}
+
+function AddNewKanbanTask() {
+    $.ajax({
+            type: "GET",
+            url: "/ajax/add_kanban_column/",
+            data: {},
+            success: function (result) {
+                $('.dd').append(result.new_column)
+            }
+        });
+}

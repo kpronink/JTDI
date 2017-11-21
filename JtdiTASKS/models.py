@@ -18,6 +18,21 @@ class Project(models.Model):
     title = models.CharField(max_length=200, null=True, blank=False)
     color_project = models.CharField(max_length=10)
     group = models.BooleanField(default=False)
+    kanban = models.BooleanField(default=False)
+
+    def publish(self):
+        self.save()
+
+    def __str__(self):
+        return self.title
+    
+    
+class KanbanStatus(models.Model):
+    author = models.ForeignKey('auth.User')
+    title = models.CharField(max_length=200, null=True, blank=False)
+    color = models.CharField(max_length=10)
+    project = models.ForeignKey('Project', null=True, default=None,
+                                blank=True) 
 
     def publish(self):
         self.save()
@@ -76,6 +91,8 @@ class Profile(models.Model):
                                null=True, blank=True)
 
     mail_notify = models.BooleanField(default=True)
+
+    kanban = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

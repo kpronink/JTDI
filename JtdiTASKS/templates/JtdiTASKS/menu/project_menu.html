@@ -1,2 +1,5 @@
 {% load bootstrap %}
-<button id="project_button_param" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-task" onclick="UniversalFun('{% url 'project_param' pk=project %}', 'projects')">Параметры проекта - {{ project_title }}</button>
+<menu class="kanban">
+    <button id="project_button_param" type="button" class="button_kanban" data-toggle="modal" data-target="#modal-task" onclick="UniversalFun('{% url 'project_param' pk=project %}',
+    'projects')"><i class="material-icons">settings</i>Параметры проекта - {{ project_title }}</button>
+</menu>

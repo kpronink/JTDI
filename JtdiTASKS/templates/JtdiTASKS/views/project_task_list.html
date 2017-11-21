@@ -9,14 +9,18 @@
             <div class="col-md-12">
                 <!-- Advanced Tables -->
                 <div class="card">
-                    <div class="card-action"> {% project_menu request project project_object.title%} </div>
+                    {% if project_object.author == user %}
+                        <div class="card-action"> {% project_menu request project project_object.title%} </div>
+                    {% else %}
+                        <div class="card-action"> </div>
+                    {% endif %}
                     <div class="card-content">
                         <div class="col">
                             <ul class="tabs">
                                 <li class="tab col s3"><a href="#TableTask">Таблица задач</a></li>
                                 <li class="tab col s3"><a href="#Finished">Завершенные задачи</a></li>
                                 <li class="tab col s3"><a href="#InfoProj" onclick="DonutChart()">Информация</a></li>
-								<li class="tab col s3 disabled"><a href="#Gantt" onclick="drawChartGantt()">Таймлайн</a></li>
+								<li class="tab col s3"><a href="#Gantt" onclick="drawChartGantt()">Таймлайн</a></li>
                             </ul>
                         </div>
                         <div class="clearBoth"><br/></div>
@@ -146,6 +150,7 @@
         </div>
     </div>
 </div>
+
 <div id="views" views="projects"></div>
 <div id="project" project="{{ project }}"></div>
 {% endblock content %}
