@@ -20,9 +20,9 @@
                                             data-toggle="modal" data-target="#modal-task">
                                             {{ task.title|truncatechars:40 }}</a></td>
                                         <td>{{ task.description|truncatechars:50 }}</td>
-                                        <td>{{ task.date }}</td>
+                                        <td>{{ task.date|date:"Y.m.d" }}</td>
                                         <td>{{ task.time }}</td>
-                                        <td>{{ task.planed_date_finish }}</td>
+                                        <td>{{ task.planed_date_finish|date:"Y.m.d" }}</td>
                                         <td>{{ task.performer }}</td>
                                         <td>{{ task.status }}</td>
                                         <td>
