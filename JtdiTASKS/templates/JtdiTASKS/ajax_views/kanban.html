@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <menu class="kanban">
-  <button class="viewlist"><i class="material-icons">view_list</i></button>
-  <button onclick="AddNewColumn()"><i class="material-icons">playlist_add</i> Добавить этап</button></menu>
+  <!--<button class="viewlist"><i class="material-icons">view_list</i></button>
+  <button onclick="AddNewColumn()"><i class="material-icons">playlist_add</i> Добавить этап</button></menu>-->
 <!-- Simple MDL Progress Bar -->
 <div id="p1" class="mdl-progress mdl-js-progress"></div>
 <script>
@@ -15,11 +15,14 @@
     <div class="kanban__title">
       <h2 class="h2_kanban"><i class="material-icons">report_problem</i> Запрос</h2></div>
    <li class="dd-item" data-id="1">
-      <h3 class="title dd-handle" >Кольцевые задачи<i class=" material-icons ">filter_none</i></h3>
+      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>Кольцевые задачи</h3>
         <div class="text" contenteditable="true">с несколькими пунктами и выполняющиеся как повторяющиеся, с отображением круговой диаграммы
 
-     </div> <i class="material-icons" id="label blue">label</i><div class="actions">
-        <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
+     </div>
+       <div><i class="material-icons" id="task_menu">menu</i></div>
+       <div class="actions">
+        <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
+       </div>
 
     </li>
     <li class="dd-item" data-id="4">
@@ -33,8 +36,8 @@
         <div class="text" contenteditable="true">Пересмотреть дизайн логина и регистрации</div><div class="actions">
         <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
 
-
-    <div class="actions">
+    </li>
+    <div class="actions_column">
       <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
     </div>
   </ol>
@@ -60,7 +63,7 @@
         <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
 
     </li>
-    <div class="actions">
+    <div class="actions_column">
       <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
     </div>
   </ol>
@@ -72,7 +75,7 @@
         <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
 
     </li>
-    <div class="actions">
+    <div class="actions_column">
       <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
     </div>
   </ol>
