@@ -20,7 +20,11 @@
     <!-- Kanban -->
     <link href={% static "/css/Kanban.css"%} rel="stylesheet" />
     <!-- Custom Styles-->
+    {% if user.profile.dark_theme %}
+    <link href={% static "/css/custom-styles_dark.css"%} rel="stylesheet" />
+    {% else %}
     <link href={% static "/css/custom-styles.css"%} rel="stylesheet" />
+    {% endif %}
 
     <link rel="stylesheet" type="text/css" href={% static "/css/jquery-ui-1.8.4.css"%} />
     <link rel="stylesheet" type="text/css" href={% static "/css/jquery.ganttView.css"%} />
@@ -99,6 +103,7 @@
     </div>
     {% endif %}
 
+
             </div>
 
             <!-- /. PAGE INNER  -->
@@ -106,6 +111,7 @@
         <!-- /. PAGE WRAPPER  -->
     </div>
     <!-- /. WRAPPER  -->
+
     <!-- JS Scripts-->
     <!-- jQuery Js -->
     <script src={% static "/js/jquery-1.10.2.js"%}></script>

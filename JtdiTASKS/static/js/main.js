@@ -477,10 +477,10 @@ function AddNewColumn() {
 function AddNewKanbanTask() {
     $.ajax({
             type: "GET",
-            url: "/ajax/add_kanban_column/",
+            url: "/ajax/add_kanban_task/",
             data: {},
             success: function (result) {
-                $('.dd').append(result.new_column)
+                $('.kanban To-do').append(result.new_task)
             }
         });
 }

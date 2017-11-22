@@ -269,7 +269,7 @@ def add_kanban_task(request):
 
     data = dict()
 
-    data['new_column'] = render_to_string('JtdiTASKS/ajax_views/kanban_task.html',
+    data['new_task'] = render_to_string('JtdiTASKS/ajax_views/kanban_task.html',
                                           request=request
                                           )
 

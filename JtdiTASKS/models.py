@@ -94,6 +94,8 @@ class Profile(models.Model):
 
     kanban = models.BooleanField(default=False)
 
+    dark_theme = models.BooleanField(default=False)
+
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
