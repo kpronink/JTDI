@@ -169,8 +169,8 @@ ol.kanban.Done {
 ol.kanban {
   border-top: 5px solid #78909C;
   width: 100%;
-  height: auto;
   margin: 0.1%;
+  height: 800px;
   max-width: 250px;
   min-width: 250px;
   display: inline-block;
@@ -183,6 +183,7 @@ ol.kanban {
   background: #fff;
   padding: 1em;
   border-radius: 2px;
+  overflow-y: auto;
 }
 
 /**
