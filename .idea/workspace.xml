@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/forms.py" afterPath="$PROJECT_DIR$/JtdiTASKS/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -98,7 +98,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="217">
@@ -128,11 +128,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom-styles_dark.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="custom-styles_dark.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="113" column="16" lean-forward="false" selection-start-line="113" selection-start-column="16" selection-end-line="113" selection-end-column="16" />
+            <state relative-caret-position="345">
+              <caret line="477" column="73" lean-forward="false" selection-start-line="477" selection-start-column="73" selection-end-line="477" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -317,10 +317,10 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/kanban.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/forms.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
       </list>
     </option>
   </component>
@@ -1035,14 +1035,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="113" column="16" lean-forward="false" selection-start-line="113" selection-start-column="16" selection-end-line="113" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
@@ -1143,6 +1135,14 @@
             <element signature="e#7764#7812#0" expanded="false" />
             <element signature="e#7856#8406#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="477" column="73" lean-forward="false" selection-start-line="477" selection-start-column="73" selection-end-line="477" selection-end-column="73" />
+          <folding />
         </state>
       </provider>
     </entry>
