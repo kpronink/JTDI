@@ -63,7 +63,7 @@ class MyUserCreationForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('timezone', 'formatdate', 'firstdayweek', 'mail_notify', 'sex', 'avatar')
+        fields = ('timezone', 'formatdate', 'firstdayweek', 'mail_notify', 'sex', 'avatar', 'dark_theme')
 
         widgets = {
             'avatar': ClearableFileInput(attrs={'class': 'ask-signup-avatar-input', }),
