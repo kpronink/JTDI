@@ -1,7 +1,8 @@
-<ol class="kanban progress">
-    <h2 class="h2_kanban"><i class="material-icons">build</i> В процессе</h2>
-    <div id="task_contant"></div>
-    <div class="actions_column">
-      <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
+<ol class="kanban {{ kanban_column.pk }}" id="{{ status_kanban.pk }}" style="border-top: 5px solid {{ status_kanban.color }}">
+    <div class="kanban__title">
+        <h2 class="h2_kanban"><i class="material-icons">report_problem</i> {{ kanban_column.title }}</h2>
+        <div class="actions_column">
+            <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
+        </div>
     </div>
 </ol>

@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.forms import Textarea, ClearableFileInput
 from django.forms.widgets import Input
 
-from JtdiTASKS.models import Profile, Task, User, Project, PartnerGroup, InviteUser
+from JtdiTASKS.models import Profile, Task, User, Project, PartnerGroup, InviteUser, KanbanStatus
 
 year = datetime.date.today().year
 
@@ -234,6 +234,16 @@ class TaskEditForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
+        fields = ('title',)
+
+        labels = {
+            'title': '',
+        }
+        
+
+class KanbanColumnForm(forms.ModelForm):
+    class Meta:
+        model = KanbanStatus
         fields = ('title',)
 
         labels = {

@@ -10,9 +10,27 @@
                 <!-- Advanced Tables -->
                 <div class="card">
                     {% if project_object.author == user %}
-                        <div class="card-action"> {% project_menu request project project_object.title%} </div>
+                        <div class="card-action"> {% project_menu request project project_object.title%}
+                            <div class="switch">
+                                <label>
+                                      Таблица
+                                      <input type="checkbox" id="kanban_switch" onclick="GetKanban()">
+                                      <span class="lever"></span>
+                                      Kanban
+                                </label>
+                            </div>
+                        </div>
                     {% else %}
-                        <div class="card-action"> </div>
+                        <div class="card-action">
+                            <div class="switch">
+                                <label>
+                                      Таблица
+                                      <input type="checkbox" id="kanban_switch" onclick="GetKanban()">
+                                      <span class="lever"></span>
+                                      Kanban
+                                </label>
+                            </div>
+                        </div>
                     {% endif %}
                     <div class="card-content">
                         <div class="col">

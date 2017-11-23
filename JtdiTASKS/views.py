@@ -14,10 +14,10 @@ from django.template.loader import render_to_string
 from django.templatetags.static import static
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
-    ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm
+    ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm, KanbanColumnForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask, RegistrationTable, \
-    ViewsEventsTable, QueueTask, QueuePushNotify
+    ViewsEventsTable, QueueTask, QueuePushNotify, KanbanStatus
 from django.contrib.auth import logout, login
 
 from django.views.generic.edit import FormView
@@ -56,9 +56,11 @@ def get_tasks_with_filter(filter_method, project, user):
             users_in_project = PartnerGroup.objects.filter(project=project)
 
             all_users_in_project = User.objects.filter(
-                Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk)).values_list('id', flat=True)
+                Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk)).values_list('id',
+                                                                                                                flat=True)
 
-            tasks = Task.objects.filter(active=True).filter(Q(author__in=all_users_in_project) | Q(performer__id__in=all_users_in_project)). \
+            tasks = Task.objects.filter(active=True).filter(
+                Q(author__in=all_users_in_project) | Q(performer__id__in=all_users_in_project)). \
                 filter(project=project).order_by('date')
 
             tasks_finish = Task.objects.filter(active=False).filter(finished=True). \
@@ -234,46 +236,108 @@ def get_push_event(request):
     return JsonResponse(data)
 
 
-# KANBAN
+# KANBAN +
 
 
-def get_kanban(request):
+def create_first_canban_status(user, project, title):
+    kanban_first_column = KanbanStatus()
+    kanban_first_column.project = project
+    kanban_first_column.author = user
+    kanban_first_column.color = generate_color()
+    kanban_first_column.title = title
+    kanban_first_column.save()
+
+    return kanban_first_column
+
+
+def get_kanban(request, pk):
     if not request.user.is_authenticated():
         return JsonResponse({})
 
     data = dict()
+    kanban = dict()
+
+    project = Project.objects.filter(pk=pk)[0]
+    kanban_status = KanbanStatus.objects.filter(project=project)
+    if not kanban_status.__len__():
+        kanban_column = create_first_canban_status(request.user, project, 'Запрос')
+        kanban_status = list()
+        kanban_status.append(kanban_column)
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
+    for status in kanban_status:
+        kanban[status] = []
+        for task in tasks:
+            if task.kanban_status == status:
+                kanban[status].append(task)
+            elif task.kanban_status is None and status.title == 'Запрос':
+                kanban[status].append(task)
 
     data['kanban'] = render_to_string('JtdiTASKS/ajax_views/kanban.html',
+                                      {'kanban': kanban},
                                       request=request
                                       )
 
     return JsonResponse(data)
 
 
-def add_kanban_column(request):
+def add_kanban_column(request, pk):
+    if not request.user.is_authenticated():
+        return JsonResponse({})
+
+    data = dict()
+    if request.method == 'POST':
+        form = KanbanColumnForm(request.POST)
+        if form.is_valid():
+            project = Project.objects.filter(pk=pk)[0]
+            kanban_column = create_first_canban_status(request.user, project, form.cleaned_data['title'])
+            data['new_column'] = render_to_string('JtdiTASKS/ajax_views/kanban_column.html',
+                                                  {'kanban_column': kanban_column},
+                                                  request=request
+                                                  )
+            data['form_is_valid'] = True
+    else:
+        form = KanbanColumnForm()
+        data['kanban_column_form'] = render_to_string('JtdiTASKS/ajax_views/new_kanban_column.html',
+                                                      {'add_kanban_column_form': form,
+                                                       'project': pk},
+                                                      request=request
+                                                      )
+
+    return JsonResponse(data)
+
+
+def change_kanban_status(request):
     if not request.user.is_authenticated():
         return JsonResponse({})
 
     data = dict()
 
-    data['new_column'] = render_to_string('JtdiTASKS/ajax_views/kanban_column.html',
-                                          request=request
-                                          )
+    task_pk = request.POST['task_pk']
+    status_kanban_pk = request.POST['status_kanban_pk']
+    
+    task = get_object_or_404(Task, pk=task_pk)
+    status_kanban = get_object_or_404(KanbanStatus, pk=status_kanban_pk)
+    
+    task.kanban_status = status_kanban
+    task.save()
 
     return JsonResponse(data)
 
 
-def add_kanban_task(request):
+def add_kanban_task(request, pk):
     if not request.user.is_authenticated():
         return JsonResponse({})
 
     data = dict()
 
     data['new_task'] = render_to_string('JtdiTASKS/ajax_views/kanban_task.html',
-                                          request=request
-                                          )
+                                        request=request
+                                        )
 
     return JsonResponse(data)
+
+
+# KANBAN -
 
 
 class RegisterFormView(FormView):
@@ -635,16 +699,9 @@ def project_task_list(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    # currentdate = datetime.datetime.today()
-
     project = Project.objects.filter(pk=pk)[0]
 
     tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
-
-    # invited_users = InviteUser \
-    #     .objects.filter(Q(user_sender__username__exact=request.user.username)
-    #                     | Q(user_invite__username__exact=request.user.username)) \
-    #     .filter(not_invited=False).filter(invited=True)
 
     users_in_project = PartnerGroup.objects.filter(project=project)
 
@@ -657,25 +714,6 @@ def project_task_list(request, pk):
                                         , 'task_count': Task.objects.filter(project=project)
                                     .filter(Q(author=user_in_proj) | Q(performer=user_in_proj))
                                     .filter(active=True).filter(finished=False).count()})
-
-    # if request.method == 'POST':
-    #     if project.author == request.user:
-    #         project_rename_form = ProjectFormRename(request.POST, prefix='rename_project')
-    #         project_invite_form = ProjectInviteUser(request.POST, prefix='invite_project')
-    #
-    #         project_invite_form.fields['user_invite'].queryset = User.objects.filter(
-    #             pk__in=[user.user_invite.pk for user in invited_users])
-    #         if project_rename_form.is_valid():
-    #             project.title = project_rename_form.cleaned_data['title']
-    #             project.save()
-    #         if project_invite_form.is_valid():
-    #             exist = PartnerGroup.objects.filter(partner=project_invite_form.cleaned_data['user_invite']) \
-    #                 .filter(project=project).exists()
-    #             if not exist:
-    #                 new_partner = PartnerGroup()
-    #                 new_partner.project = project
-    #                 new_partner.partner = project_invite_form.cleaned_data['user_invite']
-    #                 new_partner.save()
 
     return render(request, 'JtdiTASKS/views/project_task_list.html', {'tasks': tasks,
                                                                       'tasks_finish': tasks_finish,
@@ -717,15 +755,16 @@ def task_create(request):
     else:
         method = 'projects'
 
-    if 'project' in request.POST:
-        project_pk = int(request.POST['project'])
-    elif 'project' in request.GET:
-        project_pk = int(request.GET['project'])
+    if method == 'projects':
+        if 'project_param' in request.POST:
+            project_pk = int(request.POST['project'])
+        elif 'project_param' in request.GET:
+            project_pk = int(request.GET['project'])
     else:
         project_pk = None
 
-    if not request.user.is_authenticated():
-        return redirect('login')
+        if not request.user.is_authenticated():
+            return redirect('login')
 
     COLOR_CHOISE = {
         1: 'red',
@@ -743,6 +782,8 @@ def task_create(request):
 
     projects = list(
         PartnerGroup.objects.filter(partner=user).values_list('project', flat=True))
+    project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
+    projects.extend(project_owner)
 
     proj = None
 
@@ -845,12 +886,19 @@ def task_update(request, pk):
     else:
         method = 'projects'
 
-    if 'project' in request.POST:
-        project_pk = int(request.POST['project'])
-    elif 'project' in request.GET:
-        project_pk = int(request.GET['project'])
-    else:
-        project_pk = None
+    # if method == 'projects':
+    #     if 'project' in request.POST:
+    #         project_pk = int(request.POST['project'])
+    #     elif 'project' in request.GET:
+    #         project_pk = int(request.GET['project'])
+    # else:
+    #     project_pk = None
+
+    task = get_object_or_404(Task, pk=pk)
+    if task.author != request.user:
+        return redirect('task_detail', pk=task.pk)
+    if task.project is not None:
+        project_pk = task.project.pk
 
     COLOR_CHOISE = {
         1: 'red',
@@ -868,6 +916,8 @@ def task_update(request, pk):
 
     projects = list(
         PartnerGroup.objects.filter(partner=request.user).values_list('project', flat=True))
+    project_owner = list(Project.objects.filter(author=request.user).values_list('pk', flat=True))
+    projects.extend(project_owner)
 
     proj = None
 
@@ -879,10 +929,6 @@ def task_update(request, pk):
         users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
         all_users_in_project = User.objects \
             .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
-
-    task = get_object_or_404(Task, pk=pk)
-    if task.author != request.user:
-        return redirect('task_detail', pk=task.pk)
 
     if request.method == "POST":
         if task.author == request.user:
@@ -1178,6 +1224,10 @@ def project_del(request, pk):
         for task in tasks:
             task_obj = get_object_or_404(Task, pk=task.pk)
             task_obj.delete()
+        kanban_status = KanbanStatus.objects.filter(project__id=pk)
+        for kanban_column in kanban_status:
+            column_obj = get_object_or_404(KanbanStatus, pk=kanban_column)
+            column_obj.delete()
         project.delete()
 
     return success_url
@@ -1228,6 +1278,9 @@ def project_create(request):
             project.color_project = "color: " + color
             project.group = False
             project.save(Project)
+
+            create_first_canban_status(request.user, project, 'Запрос')
+
             register_event(project, request.user, project, 'создал проект:')
             data['form_is_valid'] = True
             context = {'projects': Project.objects.filter(author=request.user),

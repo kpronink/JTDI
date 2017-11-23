@@ -291,6 +291,13 @@
             el[0].parentNode.removeChild(el[0]);
             this.placeEl.replaceWith(el);
 
+            var id_task = $(el[0]).attr('data-id');
+            var parent_ddlist = $(el[0]).parent();
+            var parent_status = $(parent_ddlist).parent();
+            var get_id_status = $(parent_status[0]).attr('id');
+
+            ChangeKanbanStatus(id_task, get_id_status);
+
             this.dragEl.remove();
             this.el.trigger('change');
             if (this.hasNewRoot) {
@@ -408,7 +415,7 @@
                 this.pointEl = this.pointEl.parent(opt.itemNodeName);
             }
             // здесь явно костыль
-            if (this.pointEl[0].tagName === 'OL' && this.pointEl.children('.dd-empty').length <= 0) {
+            if (this.pointEl[0].tagName === 'OL' && this.pointEl.children('.dd-empty').length <= 0 && this.pointEl.children('.dd-placeholder').length <= 0 && this.pointEl.children('.dd-list').length <= 0) {
                 this.pointEl.append('<div class="' + opt.emptyClass + '"/>');
                 }
             if (this.pointEl.hasClass(opt.emptyClass)) {

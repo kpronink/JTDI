@@ -147,7 +147,7 @@ function StartStop() {
 $("#modal-task").on("submit", ".task-create-form", function () {
     var form = $(this);
     var form_data = form.serialize();
-    form_data = form_data + '&param='+ $("#views").attr("views") + '&project='+ $("#project").attr("project")
+    form_data = form_data + '&param='+ $("#views").attr("views") + '&project_param='+ $("#project").attr("project")
     $.ajax({
       url: form.attr("action"),
       data: form_data,
@@ -177,7 +177,7 @@ function UpdateTask(url) {
       url: url,
       type: 'get',
       dataType: 'json',
-      data: {'param':$("#views").attr("views"), 'project':$("#project").attr("project")},
+      data: {'param':$("#views").attr("views"), 'project_param':$("#project").attr("project")},
       success: function (data) {
           $("#modal-task .modal-content").html(data.html_form);
           if($('*').is('#id_project_field')) {
@@ -454,7 +454,7 @@ function GetKanban() {
     if ($("#kanban_switch").prop("checked")) {
         $.ajax({
             type: "GET",
-            url: "/ajax/kanban/",
+            url: "/ajax/kanban/"+$("#project").attr("project")+"/",
             data: {},
             success: function (result) {
                 $('.card-content').html(result.kanban)
@@ -466,13 +466,39 @@ function GetKanban() {
 function AddNewColumn() {
     $.ajax({
             type: "GET",
-            url: "/ajax/add_kanban_column/",
+            url: "/ajax/add_kanban_column/"+$("#project").attr("project")+"/",
             data: {},
+            dataType: 'json',
             success: function (result) {
-                $('.dd').append(result.new_column)
+                if (result.kanban_column_form !== '') {
+                    $("#modal-task .modal-content").html(result.kanban_column_form);
+                    $('#modal-task').modal('show')
+
+                }
             }
         });
 }
+
+$("#modal-task").on("submit", ".add_kanban_column_form", function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+            if (data.new_column !== '') {
+                    $('.dd').append(data.new_column)
+                   $('#modal-task').modal('hide')
+                }
+        }
+        else {
+        }
+      }
+    });
+    return false;
+  });
 
 function AddNewKanbanTask() {
     $.ajax({
@@ -484,3 +510,17 @@ function AddNewKanbanTask() {
             }
         });
 }
+
+function ChangeKanbanStatus(task_pk, status_kanban_pk) {
+    $.ajax({
+            type: "POST",
+            url: "/ajax/change_kanban_status/",
+            data: {'task_pk': task_pk, 'status_kanban_pk': status_kanban_pk},
+            success: function (result) {
+            }
+        });
+}
+
+$('#dd-item').on("change", function(){
+   alert('hui')
+});

@@ -18,7 +18,6 @@ class Project(models.Model):
     title = models.CharField(max_length=200, null=True, blank=False)
     color_project = models.CharField(max_length=10)
     group = models.BooleanField(default=False)
-    kanban = models.BooleanField(default=False)
 
     def publish(self):
         self.save()
@@ -77,7 +76,6 @@ class Profile(models.Model):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     timezone = models.CharField(max_length=50, default='Europe/Moscow',
                                 blank=True)
     formatdate = models.CharField(max_length=20, choices=FORMAT_DATE_CHOISE,
@@ -86,14 +84,9 @@ class Profile(models.Model):
                                     default=MONDAY, blank=True)
     sex = models.CharField(max_length=20, choices=SEX_CHOISE,
                            default=MALE, blank=True)
-
     avatar = models.ImageField(upload_to='avatars',
                                null=True, blank=True)
-
     mail_notify = models.BooleanField(default=True)
-
-    kanban = models.BooleanField(default=False)
-
     dark_theme = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
@@ -108,6 +101,13 @@ class Profile(models.Model):
             profile = Profile(user=user)
             profile.save()'''
         instance.profile.save()
+        
+        
+class UserProjectFilter(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    project = models.ForeignKey('Project', null=True, default=None,
+                                blank=True)
+    kanban = models.BooleanField(default=False)
 
 
 class Task(models.Model):
@@ -155,6 +155,7 @@ class Task(models.Model):
     performer = models.ForeignKey('auth.User', related_name='performer', blank=True, null=True)
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
+    kanban_status = models.ForeignKey('KanbanStatus', null=True, default=None)
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=2000, blank=True)
     repeating = models.BooleanField(default=False, blank=True)

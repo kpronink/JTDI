@@ -1041,3 +1041,16 @@ img.logo {
     margin: 0 1px;
     white-space: nowrap;
 }}
+
+textarea.form-control {
+    height: 100px;
+}
+
+.card .card-action {
+    position: relative;
+    background-color: inherit;
+    border-top: 1px solid rgba(160, 160, 160, 0.2);
+    padding: 20px;
+    font-weight: bold;
+    max-height: 77px;
+}

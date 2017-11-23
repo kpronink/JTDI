@@ -1,84 +1,38 @@
 {% load staticfiles %}
-<menu class="kanban">
-  <!--<button class="viewlist"><i class="material-icons">view_list</i></button>
-  <button onclick="AddNewColumn()"><i class="material-icons">playlist_add</i> Добавить этап</button></menu>-->
-<!-- Simple MDL Progress Bar -->
+
 <div id="p1" class="mdl-progress mdl-js-progress"></div>
 <script>
   document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
     this.MaterialProgress.setProgress(44);
   });
 </script>
-<div class="dd">
-
-  <ol class="kanban To-do">
+<div class="dd" id="kanban_desc">
+    {% for status_kanban, tasks in kanban.items %}
+    <ol class="kanban {{ status_kanban.pk }}" id="{{ status_kanban.pk }}" style="border-top: 5px solid {{ status_kanban.color }}">
     <div class="kanban__title">
-      <h2 class="h2_kanban"><i class="material-icons">report_problem</i> Запрос</h2></div>
-   <li class="dd-item" data-id="1">
-      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>Кольцевые задачи</h3>
-        <div class="text" contenteditable="true">с несколькими пунктами и выполняющиеся как повторяющиеся, с отображением круговой диаграммы
-
-     </div>
-       <div><i class="material-icons" id="task_menu">menu</i></div>
-       <div class="actions">
-        <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
-       </div>
-
-    </li>
-    <li class="dd-item" data-id="4">
-      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>Диаграммы</h3>
-        <div class="text" contenteditable="true">Обновлять графики и диаграммы динамически</div><div class="actions">
-        <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
-
-    </li>
-    <li class="dd-item" data-id="3">
-      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>Дизайн</h3>
-        <div class="text" contenteditable="true">Пересмотреть дизайн логина и регистрации</div><div class="actions">
-        <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
-
-    </li>
-    <div class="actions_column">
-      <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
+        <h2 class="h2_kanban"><i class="material-icons">report_problem</i>{{ status_kanban.title }}</h2>
+        <div class="actions_column">
+            <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
+        </div>
     </div>
+    {% if tasks|length %}
+    <ol class="dd-list">
+    {% for task in tasks %}
+
+        <li class="dd-item" data-id="{{ task.pk }}">
+            <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>{{ task.title }}</h3>
+            <div class="text" contenteditable="true">{{ task.description }}
+            </div>
+            <i class="material-icons" id="task_menu">menu</i>
+            <div class="actions">
+                <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
+            </div>
+        </li>
+
+    {% endfor %}
+    </ol>
+    {% endif %}
   </ol>
-  <ol class="kanban progress">
-    <h2 class="h2_kanban"><i class="material-icons">build</i> В процессе</h2>
-      <li class="dd-item" data-id="5">
-      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>  Задача при завершении</h3>
-        <div class="text" contenteditable="true">Повторяющаяся задача должна пересоздаваться</div><div class="actions">
-        <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
-
-    </li>
-  </ol>
-  <ol class="kanban  Done">
-    <h2 class="h2_kanban"><i class="material-icons">check_circle</i> Выполнены</h2>
-      <li class="dd-item" data-id="5">
-      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>  прикрутить REST API</h3>
-        <div class="text" contenteditable="true">тут и добавить не чего</div><div class="actions">
-        <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
-
-    </li></li><li class="dd-item" data-id="2">
-      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>  Сделать таблицу изменений данных</h3>
-        <div class="text" contenteditable="true">для оповещения через ajax</div><div class="actions">
-        <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
-
-    </li>
-    <div class="actions_column">
-      <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
-    </div>
-  </ol>
-  <ol class="kanban Gone">
-    <h2 class="h2_kanban"><i class="material-icons">delete</i> Архив</h2>
-     <li class="dd-item" data-id="5">
-      <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>  Перенос задачи</h3>
-        <div class="text" contenteditable="true">Возможность быстро отсрочить задачу или изменить время</div><div class="actions">
-        <i class="material-icons">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i></div>
-
-    </li>
-    <div class="actions_column">
-      <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>
-    </div>
-  </ol>
-
+    {% endfor %}
 </div>
 <script src={% static "js/Kanban.js"%}></script>
