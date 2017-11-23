@@ -10,7 +10,7 @@
                 <!-- Advanced Tables -->
                 <div class="card">
                     {% if project_object.author == user %}
-                        <div class="card-action"> {% project_menu request project project_object.title%}
+                        <div class="card-action">
                             <div class="switch">
                                 <label>
                                       Таблица
@@ -19,6 +19,7 @@
                                       Kanban
                                 </label>
                             </div>
+                            {% project_menu request project project_object.title%}
                         </div>
                     {% else %}
                         <div class="card-action">
