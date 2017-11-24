@@ -20,10 +20,17 @@
     {% for task in tasks %}
 
         <li class="dd-item" data-id="{{ task.pk }}">
-            <h3 class="title dd-handle"><i class=" material-icons ">filter_none</i>{{ task.title|truncatechars:30 }}</h3>
+            <h3 class="title dd-handle">
+                {% if task.performer.profile.avatar %}
+                <img src="{{ task.performer.profile.avatar.url }}" class="circle" width="30" height="30" border="20">
+                {% else %}
+                <img src="/static/img/avatar_2x.png" class="circle" width="30" height="30" border="20">
+                {% endif %}
+                {{ task.title|truncatechars:30 }}
+            </h3>
             <div class="text" contenteditable="true">{{ task.description|truncatechars:100 }}
             </div>
-            <i class="material-icons" id="task_menu">menu</i>
+            <i class="material-icons" id="task_menu" tabindex="1">menu</i>
             <div class="actions">
                 <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
             </div>

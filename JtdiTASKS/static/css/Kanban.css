@@ -236,6 +236,9 @@ ol.kanban {
 #task_menu:hover ~ .actions{
   bottom: -1px;
 }
+.actions:hover {
+  bottom: -1px;
+}
 
 .kanban__title{
 
@@ -286,7 +289,7 @@ ol.kanban {
   line-height: 18px;
   overflow: hidden;
   padding: 16px;
-  width: 90%;
+  width: 100%;
 }
 
 .actions {

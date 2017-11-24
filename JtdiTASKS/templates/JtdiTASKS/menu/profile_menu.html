@@ -20,9 +20,9 @@
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content"> {% if user.profile.avatar %}
     <li>
-        <a href={% url 'profile' %}> <img src="{{ user.profile.avatar.url }}" class="circle-avatar" width="40" height="40" border="20">Профиль </a>
+        <a href={% url 'profile' %}> <img src="{{ user.profile.avatar.url }}" class="circle" width="40" height="40" border="20">  Профиль </a>
     </li> {% else %}
-    <li><a href={% url 'profile' %}> Профиль</a></li>{% endif %}
+    <li><a href={% url 'profile' %}> <img src="/static/img/avatar_2x.png" class="circle" width="40" height="40" border="20">  Профиль</a></li>{% endif %}
     <!--<li><a href="{% url 'user_invite' %}"><i class="fa fa-user fa-fw"></i> My Profile</a>
 </li>-->
     <li><a href="{% url 'user_invite' %}"><i class="fa fa-gear fa-fw"></i> Участники проекта</a> </li>
