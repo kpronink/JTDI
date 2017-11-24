@@ -1060,3 +1060,8 @@ textarea.form-control {
     font-weight: bold;
     max-height: 94px;
 }
+
+@font-face {
+    font-family: Pompadur; /* Гарнитура шрифта */
+    src: url(fonts/pompadur.ttf); /* Путь к файлу со шрифтом */
+   }

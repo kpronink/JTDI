@@ -30,9 +30,13 @@
             </h3>
             <div class="text" contenteditable="true">{{ task.description|truncatechars:200 }}
             </div>
-            <i class="material-icons" id="task_menu" tabindex="1">menu</i>
+            <i class="material-icons" id="task_menu">menu</i>
             <div class="actions">
-                <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
+                <i class="material-icons" id="color">palette</i>
+                <a href=# class="action_href" onclick="UpdateTask('{% url 'task_det' pk=task.pk %}')" data-toggle="modal" data-target="#modal-task"
+                   title="Редактировать задачу"><i class="material-icons">edit</i></a>
+                <i class="material-icons">insert_link</i>
+                <i class="material-icons">attach_file</i>
             </div>
         </li>
 
