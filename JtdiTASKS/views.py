@@ -757,9 +757,9 @@ def task_create(request):
 
     if method == 'projects':
         if 'project_param' in request.POST:
-            project_pk = int(request.POST['project'])
+            project_pk = int(request.POST['project_param'])
         elif 'project_param' in request.GET:
-            project_pk = int(request.GET['project'])
+            project_pk = int(request.GET['project_param'])
     else:
         project_pk = None
 
