@@ -489,8 +489,8 @@ $("#modal-task").on("submit", ".add_kanban_column_form", function () {
       success: function (data) {
         if (data.form_is_valid) {
             if (data.new_column !== '') {
-                    $('.dd').append(data.new_column)
-                   $('#modal-task').modal('hide')
+                $('.dd').append(data.new_column);
+                $('#modal-task').modal('hide')
                 }
         }
         else {
