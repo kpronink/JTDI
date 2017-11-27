@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/settings.py" afterPath="$PROJECT_DIR$/mysite/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,8 +42,8 @@
       <file leaf-file-name="custom-styles_dark.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="1071" column="4" lean-forward="false" selection-start-line="1071" selection-start-column="4" selection-end-line="1072" selection-end-column="52" />
+            <state relative-caret-position="449">
+              <caret line="1093" column="0" lean-forward="false" selection-start-line="1093" selection-start-column="0" selection-end-line="1101" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -51,14 +52,14 @@
       <file leaf-file-name="custom-styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="1069" column="0" lean-forward="false" selection-start-line="1069" selection-start-column="0" selection-end-line="1085" selection-end-column="1" />
+            <state relative-caret-position="478">
+              <caret line="1091" column="1" lean-forward="true" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Kanban.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Kanban.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="474">
@@ -81,8 +82,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1719">
-              <caret line="875" column="29" lean-forward="false" selection-start-line="875" selection-start-column="29" selection-end-line="875" selection-end-column="29" />
+            <state relative-caret-position="4990">
+              <caret line="799" column="0" lean-forward="false" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#1125#1204#0" expanded="false" />
@@ -90,7 +91,6 @@
                 <element signature="e#1378#4421#0" expanded="false" />
                 <element signature="e#4489#5792#0" expanded="false" />
                 <element signature="e#5829#8740#0" expanded="false" />
-                <element signature="e#8776#10304#0" expanded="false" />
                 <element signature="e#13415#13716#0" expanded="false" />
                 <element signature="e#14969#16088#0" expanded="false" />
                 <element signature="e#16125#16364#0" expanded="false" />
@@ -110,7 +110,6 @@
                 <element signature="e#27934#28296#0" expanded="false" />
                 <element signature="e#28339#29649#0" expanded="false" />
                 <element signature="e#29684#30340#0" expanded="false" />
-                <element signature="e#30387#34881#0" expanded="false" />
                 <element signature="e#34923#35581#0" expanded="false" />
                 <element signature="e#35618#40075#0" expanded="false" />
                 <element signature="e#40110#42061#0" expanded="false" />
@@ -136,6 +135,16 @@
                 <element signature="e#65442#66017#0" expanded="false" />
                 <element signature="e#66109#66171#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mysite/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="79" column="22" lean-forward="false" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -222,8 +231,8 @@
       <find>action</find>
       <find>UpdateTask</find>
       <find>red</find>
-      <find>.red</find>
       <find>dr</find>
+      <find>.red</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -248,7 +257,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/task_overdue.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/profile_menu.html" />
-        <option value="$PROJECT_DIR$/mysite/settings.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_create_ajax.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/finished_task.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html" />
@@ -280,9 +288,10 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/login.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/login.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/registration.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" />
+        <option value="$PROJECT_DIR$/mysite/settings.py" />
       </list>
     </option>
   </component>
@@ -618,16 +627,6 @@
           <line>957</line>
           <option name="timeStamp" value="304" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/JtdiTASKS/views.py</url>
-          <line>799</line>
-          <option name="timeStamp" value="574" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/JtdiTASKS/views.py</url>
-          <line>748</line>
-          <option name="timeStamp" value="593" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -669,13 +668,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
           <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="165" column="30" lean-forward="false" selection-start-line="165" selection-start-column="30" selection-end-line="165" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1025,26 +1017,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="1069" column="0" lean-forward="false" selection-start-line="1069" selection-start-column="0" selection-end-line="1085" selection-end-column="1" />
+        <state relative-caret-position="474">
+          <caret line="395" column="52" lean-forward="false" selection-start-line="395" selection-start-column="52" selection-end-line="395" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="1071" column="4" lean-forward="false" selection-start-line="1071" selection-start-column="4" selection-end-line="1072" selection-end-column="52" />
+        <state relative-caret-position="449">
+          <caret line="1093" column="0" lean-forward="false" selection-start-line="1093" selection-start-column="0" selection-end-line="1101" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="1091" column="1" lean-forward="true" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1719">
-          <caret line="875" column="29" lean-forward="false" selection-start-line="875" selection-start-column="29" selection-end-line="875" selection-end-column="29" />
+        <state relative-caret-position="4990">
+          <caret line="799" column="0" lean-forward="false" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
             <element signature="e#1125#1204#0" expanded="false" />
@@ -1052,7 +1052,6 @@
             <element signature="e#1378#4421#0" expanded="false" />
             <element signature="e#4489#5792#0" expanded="false" />
             <element signature="e#5829#8740#0" expanded="false" />
-            <element signature="e#8776#10304#0" expanded="false" />
             <element signature="e#13415#13716#0" expanded="false" />
             <element signature="e#14969#16088#0" expanded="false" />
             <element signature="e#16125#16364#0" expanded="false" />
@@ -1072,7 +1071,6 @@
             <element signature="e#27934#28296#0" expanded="false" />
             <element signature="e#28339#29649#0" expanded="false" />
             <element signature="e#29684#30340#0" expanded="false" />
-            <element signature="e#30387#34881#0" expanded="false" />
             <element signature="e#34923#35581#0" expanded="false" />
             <element signature="e#35618#40075#0" expanded="false" />
             <element signature="e#40110#42061#0" expanded="false" />
@@ -1101,10 +1099,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css">
+    <entry file="file://$PROJECT_DIR$/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="395" column="52" lean-forward="false" selection-start-line="395" selection-start-column="52" selection-end-line="395" selection-end-column="52" />
+        <state relative-caret-position="391">
+          <caret line="79" column="22" lean-forward="false" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
           <folding />
         </state>
       </provider>

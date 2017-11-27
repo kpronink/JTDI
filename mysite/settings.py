@@ -77,7 +77,7 @@ TEMPLATES = [
 ]
 
 SITE_ID = 3
-
+SECURE_SSL_REDIRECT = True
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database

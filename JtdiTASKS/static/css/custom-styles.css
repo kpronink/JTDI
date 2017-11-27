@@ -1084,3 +1084,13 @@ textarea.form-control {
     box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1), 0 0 0 20px rgba(102, 102, 102, 0);
   }
 }
+
+::-webkit-scrollbar {
+
+width: 0px;
+
+}
+
+::-moz-scrollbar {
+    width: 0px;
+}
