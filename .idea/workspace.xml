@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/settings.py" afterPath="$PROJECT_DIR$/mysite/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,7 +40,7 @@
       <file leaf-file-name="custom-styles_dark.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
+            <state relative-caret-position="398">
               <caret line="1093" column="0" lean-forward="false" selection-start-line="1093" selection-start-column="0" selection-end-line="1101" selection-end-column="1" />
               <folding />
             </state>
@@ -52,8 +50,8 @@
       <file leaf-file-name="custom-styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="1091" column="1" lean-forward="true" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
+            <state relative-caret-position="427">
+              <caret line="1091" column="1" lean-forward="false" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -142,8 +140,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="79" column="22" lean-forward="false" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
+            <state relative-caret-position="459">
+              <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -1027,7 +1025,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
+        <state relative-caret-position="398">
           <caret line="1093" column="0" lean-forward="false" selection-start-line="1093" selection-start-column="0" selection-end-line="1101" selection-end-column="1" />
           <folding />
         </state>
@@ -1035,8 +1033,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="1091" column="1" lean-forward="true" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
+        <state relative-caret-position="427">
+          <caret line="1091" column="1" lean-forward="false" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -1101,8 +1099,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="79" column="22" lean-forward="false" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
+        <state relative-caret-position="459">
+          <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
           <folding />
         </state>
       </provider>
