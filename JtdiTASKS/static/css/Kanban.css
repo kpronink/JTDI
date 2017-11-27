@@ -1,7 +1,12 @@
 menu {
   position: relative;
+  display: flex;
   right: 31px;
   top: 0px;
+}
+
+@media (max-width:768px){
+  menu{height:35px;}
 }
 
 menu.kanban .viewlist,

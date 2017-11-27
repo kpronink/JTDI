@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" afterPath="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/settings.py" afterPath="$PROJECT_DIR$/mysite/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,8 +43,8 @@
       <file leaf-file-name="custom-styles_dark.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="1093" column="0" lean-forward="false" selection-start-line="1093" selection-start-column="0" selection-end-line="1101" selection-end-column="1" />
+            <state relative-caret-position="501">
+              <caret line="833" column="0" lean-forward="false" selection-start-line="833" selection-start-column="0" selection-end-line="833" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -50,18 +53,18 @@
       <file leaf-file-name="custom-styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="1091" column="1" lean-forward="false" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
+            <state relative-caret-position="271">
+              <caret line="718" column="16" lean-forward="false" selection-start-line="718" selection-start-column="16" selection-end-line="718" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Kanban.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Kanban.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="474">
-              <caret line="395" column="52" lean-forward="false" selection-start-line="395" selection-start-column="52" selection-end-line="395" selection-end-column="52" />
+            <state relative-caret-position="68">
+              <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -137,11 +140,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
+            <state relative-caret-position="2448">
+              <caret line="158" column="27" lean-forward="false" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -201,7 +204,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>create_first_canban_status</find>
       <find>actio</find>
       <find>&amp;project</find>
       <find>show</find>
@@ -231,6 +233,7 @@
       <find>red</find>
       <find>dr</find>
       <find>.red</find>
+      <find>men</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -286,10 +289,10 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/login.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/css/login.css" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/registration.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
         <option value="$PROJECT_DIR$/mysite/settings.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css" />
       </list>
     </option>
   </component>
@@ -1015,30 +1018,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="395" column="52" lean-forward="false" selection-start-line="395" selection-start-column="52" selection-end-line="395" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="1093" column="0" lean-forward="false" selection-start-line="1093" selection-start-column="0" selection-end-line="1101" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="1091" column="1" lean-forward="false" selection-start-line="1091" selection-start-column="1" selection-end-line="1091" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4990">
@@ -1099,8 +1078,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="158" column="26" lean-forward="false" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
+        <state relative-caret-position="2448">
+          <caret line="158" column="27" lean-forward="false" selection-start-line="158" selection-start-column="27" selection-end-line="158" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="718" column="16" lean-forward="false" selection-start-line="718" selection-start-column="16" selection-end-line="718" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/custom-styles_dark.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="833" column="0" lean-forward="false" selection-start-line="833" selection-start-column="0" selection-end-line="833" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/css/Kanban.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           <folding />
         </state>
       </provider>
