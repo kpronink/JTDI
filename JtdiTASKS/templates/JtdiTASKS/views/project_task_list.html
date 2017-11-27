@@ -1,12 +1,12 @@
 {% extends 'JtdiTASKS/base.html' %} {% load staticfiles %} {% block content %}
 <div id="page-wrapper">
-    <div class="header" id="project_title">
-        <h1 class="page-header">
-                            Задачи проекта {{ project_object.title }}
-                        </h1> </div>
+{#    <div class="header" id="project_title">#}
+{#        <h1 class="page-header">#}
+{#                            Задачи проекта {{ project_object.title }}#}
+{#                        </h1> </div>#}
     <div id="page-inner">
-        <div class="row">
-            <div class="col-md-12">
+{#        <div class="row">#}
+{#            <div class="col-md-12">#}
                 <!-- Advanced Tables -->
                 <div class="card">
                     {% if project_object.author == user %}
@@ -167,8 +167,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+{#    </div>#}
+{#</div>#}
 
 <div id="views" views="projects"></div>
 <div id="project" project="{{ project }}"></div>

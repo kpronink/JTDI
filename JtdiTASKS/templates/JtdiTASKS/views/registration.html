@@ -1,22 +1,46 @@
-{% extends 'JtdiTASKS/base.html' %} {% load bootstrap %} {% load staticfiles %} {% block content %}
-<div class="page-content container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="card">
-                <div class="card-content">
-                    <div class="content-wrap">
-                        <h4 align="center">Регистрация</h4>
-                        <form method="post" action=""> {% csrf_token %}
-                            <div class="form-group"> {{ form|bootstrap }} </div>
-                            <div class="action">
-                                <button type="submit" class="btn btn-primary btn-sm" align="center">Зарегистрироваться</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="already" align="center">
-                    <p>Уже есть аккаут?</p> <a href={% url 'login' %}>Войти</a> </div>
-            </div>
-        </div>
+{% load socialaccount %}{% load staticfiles %} {% load bootstrap %} {% block content %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Tasker: регистрация</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+      <link rel="stylesheet" href={% static "css/login.css"%}>
+
+
+</head>
+
+<body>
+
+<div class="pen-title">
+
+</div>
+
+<div class="module form-module">
+
+    <div class="form">
+        <h2>Завести аккаунт</h2>
+        <form method="post" action=""> {% csrf_token %}
+            <div class="form-group"> {{ form|bootstrap }} </div>
+            <button type="submit" class="btn btn-primary btn-sm" align="center">Зарегистрироваться</button>
+        </form>
     </div>
-</div> {% endblock %}
+    <div class="form">
+        <h2>Завести аккаунт</h2>
+        <form method="post" action=""> {% csrf_token %}
+            <div class="form-group"> {{ form|bootstrap }} </div>
+            <button type="submit" class="btn btn-primary btn-sm" align="center">Зарегистрироваться</button>
+        </form>
+    </div>
+    <div class="cta"> <a href={% url 'login' %}>Уже есть аккаут?</a> </div>
+    <div class="cta"> <a href={% url 'password_reset' %}>Восстановление пароля</a> </div>
+
+</div>
+
+{% endblock content %}
+</body>
