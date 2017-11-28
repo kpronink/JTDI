@@ -912,8 +912,8 @@ def task_update(request, pk):
 
     project_pk = None
     task = get_object_or_404(Task, pk=pk)
-    if task.author != request.user:
-        return redirect('task_detail', pk=task.pk)
+    if task.author != request.user or task.project.author != request.user:
+        return task_detail_ajax(request, pk)
     if task.project is not None:
         project_pk = task.project.pk
 
@@ -945,7 +945,7 @@ def task_update(request, pk):
             .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
 
     if request.method == "POST":
-        if task.author == request.user:
+        if task.author == request.user or task.project.author == request.user:
             form = TaskEditForm(request.POST, instance=task)
             form.fields['project'].queryset = Project.objects.filter(Q(author=request.user) | Q(pk__in=projects))
             form.fields['performer'].queryset = all_users_in_project
@@ -993,81 +993,6 @@ def task_update(request, pk):
                                          request=request
                                          )
     return JsonResponse(data)
-
-
-# TASKS -
-
-
-# NOTES +
-
-def note_create(request, pk):
-    if not request.user.is_authenticated():
-        return {'login': False}
-
-    data = dict()
-
-    user = get_object_or_404(User, pk=request.user.pk)
-    note = None
-    if pk != '0':
-        note = get_object_or_404(Notes, pk=pk)
-
-    if request.method == 'POST':
-        if note is not None:
-            form = NoteForm(request.POST, instance=note)
-        else:
-            form = NoteForm(request.POST)
-
-        if form.is_valid():
-            if note is not None:
-                note = form.save(commit=False)
-                note.save()
-            else:
-                note = Notes()
-                note.title = form.cleaned_data['title']
-                note.description = form.cleaned_data['description']
-                note.author = user
-                note.save(Notes)
-
-            data['form_is_valid'] = True
-            data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
-                'notes': Notes.objects.filter(author=request.user).order_by('title')
-            })
-        else:
-            data['form_is_valid'] = False
-    else:
-        if note is not None:
-            form = NoteForm(instance=note)
-        else:
-            form = NoteForm()
-
-    context = {'form': form,
-               'pk': pk}
-    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/note_ajax.html',
-                                         context,
-                                         request=request
-                                         )
-    return JsonResponse(data)
-
-
-def note_del(request, pk):
-    if not request.user.is_authenticated():
-        return redirect('login')
-
-    data = dict()
-
-    note = get_object_or_404(Notes, pk=pk)
-    if note.author == request.user:
-        note.delete()
-
-        data['form_is_valid'] = True
-        data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
-            'notes': Notes.objects.filter(author=request.user).order_by('title')})
-
-    return JsonResponse(data)
-
-
-# NOTES -
-
 
 # def task_copy(request, pk):
 
@@ -1119,7 +1044,6 @@ def note_del(request, pk):
 #
 #     return render(request, 'JtdiTASKS/views/task_edit.html', {'form': form
 #                                                               })
-
 
 
 def task_del(request, pk):
@@ -1304,6 +1228,77 @@ def task_transfer_date(request, pk, days):
 
 
 # TASKS -
+
+
+# NOTES +
+
+def note_create(request, pk):
+    if not request.user.is_authenticated():
+        return {'login': False}
+
+    data = dict()
+
+    user = get_object_or_404(User, pk=request.user.pk)
+    note = None
+    if pk != '0':
+        note = get_object_or_404(Notes, pk=pk)
+
+    if request.method == 'POST':
+        if note is not None:
+            form = NoteForm(request.POST, instance=note)
+        else:
+            form = NoteForm(request.POST)
+
+        if form.is_valid():
+            if note is not None:
+                note = form.save(commit=False)
+                note.save()
+            else:
+                note = Notes()
+                note.title = form.cleaned_data['title']
+                note.description = form.cleaned_data['description']
+                note.author = user
+                note.save(Notes)
+
+            data['form_is_valid'] = True
+            data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
+                'notes': Notes.objects.filter(author=request.user).order_by('title')
+            })
+        else:
+            data['form_is_valid'] = False
+    else:
+        if note is not None:
+            form = NoteForm(instance=note)
+        else:
+            form = NoteForm()
+
+    context = {'form': form,
+               'pk': pk}
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/note_ajax.html',
+                                         context,
+                                         request=request
+                                         )
+    return JsonResponse(data)
+
+
+def note_del(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    data = dict()
+
+    note = get_object_or_404(Notes, pk=pk)
+    if note.author == request.user:
+        note.delete()
+
+        data['form_is_valid'] = True
+        data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
+            'notes': Notes.objects.filter(author=request.user).order_by('title')})
+
+    return JsonResponse(data)
+
+
+# NOTES -
 
 
 # PROJECTS +

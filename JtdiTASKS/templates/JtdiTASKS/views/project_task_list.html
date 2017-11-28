@@ -72,8 +72,10 @@
                                             <td>{{ task.performer }}</td>
                                             <td>{{ task.status }}</td>
                                             <td>
+                                                {% if task.performer == user %}
                                                 <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')" title="Завершить задачу">
                                                     <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
+                                                {% endif %}
                                             </td>
                                             <td>
                                                 <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')" data-toggle="modal" data-target="#modal-task"
@@ -81,9 +83,11 @@
                                                 </a>
                                             </td>
                                             <td>
+                                                {% if task.author == user or task.project.author == user %}
                                                 <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}')" title="Удалить задачу">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </a>
+                                                {% endif %}
                                             </td>
                                         </tr> {% endfor %} </tbody>
                                 </table>
