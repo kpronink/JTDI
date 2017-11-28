@@ -14,10 +14,10 @@ from django.template.loader import render_to_string
 from django.templatetags.static import static
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
-    ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm, KanbanColumnForm
+    ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm, KanbanColumnForm, NoteForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask, RegistrationTable, \
-    ViewsEventsTable, QueueTask, QueuePushNotify, KanbanStatus
+    ViewsEventsTable, QueueTask, QueuePushNotify, KanbanStatus, Notes
 from django.contrib.auth import logout, login
 
 from django.views.generic.edit import FormView
@@ -376,6 +376,8 @@ class LoginFormView(FormView):
         return super(LoginFormView, self).form_valid(form)
 
 
+# NOTIFY +
+
 def get_notifycation(request):
     if not request.user.is_authenticated():
         return JsonResponse({'msg': 'пользователь не авторизован'})
@@ -413,6 +415,30 @@ def get_notify_list(request):
     return JsonResponse(data)
 
 
+def get_recent_task(request):
+    if request.user.is_authenticated():
+        today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+        today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).filter(
+            remind=True) \
+            .filter(time__range=(today_min, today_max)).order_by('date')
+        data = {}
+        for task in tasks_alert:
+            data['/task/' + str(task.pk) + '/'] = task.title
+
+    else:
+
+        data = {
+
+        }
+
+    return JsonResponse(data)
+
+# NOTIFY -
+
+
+# DIAGRAMS +
+
 def get_index_of_task(request, pk):
     local_timez = pytz.timezone(request.user.profile.timezone)
 
@@ -439,55 +465,6 @@ def get_index_of_task(request, pk):
                      'a': time_work})
 
     return data
-
-
-def get_performers(request, pk):
-    data = []
-    # invited_users = InviteUser \
-    #     .objects.filter(Q(user_sender__username__exact=request.user.username)
-    #                     | Q(user_invite__username__exact=request.user.username)) \
-    #     .filter(not_invited=False).filter(invited=True)
-    project = get_object_or_404(Project, pk=pk)
-    users_in_project = PartnerGroup.objects.filter(project=project) \
-        # .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
-    performers = User.objects.filter(
-        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
-
-    data.append({'': '---------'})
-    for performer in performers:
-        data.append([str(performer.pk), str(performer.username)])
-
-    return JsonResponse(data, safe=False)
-
-
-def validate_username(request):
-    username = request.GET.get('username', None)
-    data = {
-        'is_taken': User.objects.filter(username__iexact=username).exists()
-    }
-    if not data['is_taken']:
-        data['error_message'] = 'Пользователя с таким именем не существует'
-    return JsonResponse(data)
-
-
-def get_recent_task(request):
-    if request.user.is_authenticated():
-        today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-        today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-        tasks_alert = Task.objects.filter(active=True).filter(author=request.user).filter(project=None).filter(
-            remind=True) \
-            .filter(time__range=(today_min, today_max)).order_by('date')
-        data = {}
-        for task in tasks_alert:
-            data['/task/' + str(task.pk) + '/'] = task.title
-
-    else:
-
-        data = {
-
-        }
-
-    return JsonResponse(data)
 
 
 def get_index_project(request, pk):
@@ -574,6 +551,39 @@ def get_data_gantt(request, pk):
             count += 1
         return JsonResponse(data, safe=False)
 
+# DIAGRAMS -
+
+
+def get_performers(request, pk):
+    data = []
+    # invited_users = InviteUser \
+    #     .objects.filter(Q(user_sender__username__exact=request.user.username)
+    #                     | Q(user_invite__username__exact=request.user.username)) \
+    #     .filter(not_invited=False).filter(invited=True)
+    project = get_object_or_404(Project, pk=pk)
+    users_in_project = PartnerGroup.objects.filter(project=project) \
+        # .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+    performers = User.objects.filter(
+        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+
+    data.append({'': '---------'})
+    for performer in performers:
+        data.append([str(performer.pk), str(performer.username)])
+
+    return JsonResponse(data, safe=False)
+
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    if not data['is_taken']:
+        data['error_message'] = 'Пользователя с таким именем не существует'
+    return JsonResponse(data)
+
+
+# VIEWS +
 
 def logout_view(request):
     logout(request)
@@ -740,10 +750,24 @@ def search_result(request):
     return render(request, 'JtdiTASKS/views/search.html', {'search_result_data': search_result_data})
 
 
-# Task view
+def notes_list(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    notes = Notes.objects.filter(author=request.user).order_by('title')
+
+    return render(request, 'JtdiTASKS/views/notes_list.html', {'notes': notes})
+
+# VIEWS -
+
+
+# TASKS +
 
 
 def task_create(request):
+    if not request.user.is_authenticated():
+        return {'login':False}
+
     data = dict()
 
     user = get_object_or_404(User, pk=request.user.pk)
@@ -762,9 +786,6 @@ def task_create(request):
             project_pk = int(request.GET['project_param'])
     else:
         project_pk = None
-
-        if not request.user.is_authenticated():
-            return redirect('login')
 
     COLOR_CHOISE = {
         1: 'red',
@@ -875,7 +896,7 @@ def task_detail_ajax(request, pk):
 
 def task_update(request, pk):
     if not request.user.is_authenticated():
-        return redirect('login')
+        return {'login':False}
 
     data = dict()
 
@@ -886,14 +907,7 @@ def task_update(request, pk):
     else:
         method = 'projects'
 
-    # if method == 'projects':
-    #     if 'project' in request.POST:
-    #         project_pk = int(request.POST['project'])
-    #     elif 'project' in request.GET:
-    #         project_pk = int(request.GET['project'])
-    # else:
-    #     project_pk = None
-
+    project_pk = None
     task = get_object_or_404(Task, pk=pk)
     if task.author != request.user:
         return redirect('task_detail', pk=task.pk)
@@ -912,14 +926,11 @@ def task_update(request, pk):
         .filter(not_invited=False).filter(invited=True)
 
     users_in_project = PartnerGroup.objects.filter(project=project_pk)
-    # .filter(partner_id__in=[user.user_invite.pk for user in invited_users])
 
     projects = list(
         PartnerGroup.objects.filter(partner=request.user).values_list('project', flat=True))
     project_owner = list(Project.objects.filter(author=request.user).values_list('pk', flat=True))
     projects.extend(project_owner)
-
-    proj = None
 
     if project_pk is not None:
         proj = get_object_or_404(Project, pk=project_pk)
@@ -980,53 +991,130 @@ def task_update(request, pk):
                                          )
     return JsonResponse(data)
 
+# TASKS -
 
-def task_edit(request, pk):
+
+# NOTES +
+
+def note_create(request, pk):
+    if not request.user.is_authenticated():
+        return {'login': False}
+
+    data = dict()
+
+    user = get_object_or_404(User, pk=request.user.pk)
+    note = None
+    if pk != '0':
+        note = get_object_or_404(Notes, pk=pk)
+
+    if request.method == 'POST':
+        if note is not None:
+            form = NoteForm(request.POST, instance=note)
+        else:
+            form = NoteForm(request.POST)
+
+        if form.is_valid():
+            if note is not None:
+                note = form.save(commit=False)
+                note.save()
+            else:
+                note = Notes()
+                note.title = form.cleaned_data['title']
+                note.description = form.cleaned_data['description']
+                note.author = user
+                note.save(Notes)
+
+            data['form_is_valid'] = True
+            data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
+                'notes': Notes.objects.filter(author=request.user).order_by('title')
+            })
+        else:
+            data['form_is_valid'] = False
+    else:
+        if note is not None:
+            form = NoteForm(instance=note)
+        else:
+            form = NoteForm()
+
+    context = {'form': form,
+               'pk': pk}
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/note_ajax.html',
+                                         context,
+                                         request=request
+                                         )
+    return JsonResponse(data)
+
+
+def note_del(request, pk):
     if not request.user.is_authenticated():
         return redirect('login')
 
-    COLOR_CHOISE = {
-        1: 'red',
-        2: 'yellow',
-        3: 'green',
-        4: 'grey'}
+    data = dict()
 
-    invited_users = InviteUser \
-        .objects.filter(Q(user_sender__username__exact=request.user.username)
-                        | Q(user_invite__username__exact=request.user.username)) \
-        .filter(not_invited=False).filter(invited=True)
+    note = get_object_or_404(Notes, pk=pk)
+    if note.author == request.user:
+        note.delete()
 
-    users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
-    all_users_in_project = User.objects.filter(
-        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
+        data['form_is_valid'] = True
+        data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
+            'notes': Notes.objects.filter(author=request.user).order_by('title')})
 
-    task = get_object_or_404(Task, pk=pk)
-    if task.author != request.user:
-        return redirect('task_detail', pk=task.pk)
+    return JsonResponse(data)
 
-    if request.method == "POST":
-        if task.author == request.user:
-            form = TaskEditForm(request.POST, instance=task)
-            form.fields['project'].queryset = Project.objects.filter(author=request.user)
-            form.fields['performer'].queryset = all_users_in_project
-            if form.is_valid():
-                task = form.save(commit=False)
-                task.author = request.user
-                task.active = True
-                if task.priority is not None:
-                    task.color = COLOR_CHOISE[int(task.priority)]
-                else:
-                    task.color = COLOR_CHOISE[4]
-                task.date_time = task.date_time.combine(task.date, task.time)
-                task.save()
-                return redirect('task_detail', pk=task.pk)
-    else:
-        form = TaskEditForm(instance=task)
-        form.fields['project'].queryset = Project.objects.filter(author=request.user)
-        form.fields['performer'].queryset = all_users_in_project
+# NOTES -
 
-    return render(request, 'JtdiTASKS/views/task_edit.html', {'form': form
-                                                              })
+
+# def task_copy(request, pk):
+
+
+
+# def task_edit(request, pk):
+#     if not request.user.is_authenticated():
+#         return redirect('login')
+#
+#     COLOR_CHOISE = {
+#         1: 'red',
+#         2: 'yellow',
+#         3: 'green',
+#         4: 'grey'}
+#
+#     invited_users = InviteUser \
+#         .objects.filter(Q(user_sender__username__exact=request.user.username)
+#                         | Q(user_invite__username__exact=request.user.username)) \
+#         .filter(not_invited=False).filter(invited=True)
+#
+#     users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+#     all_users_in_project = User.objects.filter(
+#         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
+#
+#     task = get_object_or_404(Task, pk=pk)
+#     if task.author != request.user:
+#         return redirect('task_detail', pk=task.pk)
+#
+#     if request.method == "POST":
+#         if task.author == request.user:
+#             form = TaskEditForm(request.POST, instance=task)
+#             form.fields['project'].queryset = Project.objects.filter(author=request.user)
+#             form.fields['performer'].queryset = all_users_in_project
+#             if form.is_valid():
+#                 task = form.save(commit=False)
+#                 task.author = request.user
+#                 task.active = True
+#                 if task.priority is not None:
+#                     task.color = COLOR_CHOISE[int(task.priority)]
+#                 else:
+#                     task.color = COLOR_CHOISE[4]
+#                 task.date_time = task.date_time.combine(task.date, task.time)
+#                 task.save()
+#                 return redirect('task_detail', pk=task.pk)
+#     else:
+#         form = TaskEditForm(instance=task)
+#         form.fields['project'].queryset = Project.objects.filter(author=request.user)
+#         form.fields['performer'].queryset = all_users_in_project
+#
+#     return render(request, 'JtdiTASKS/views/task_edit.html', {'form': form
+#                                                               })
+
 
 
 def task_del(request, pk):
@@ -1181,6 +1269,8 @@ def task_transfer_date(request, pk, days):
 
     task = get_object_or_404(Task, pk=pk)
     task.date = task.date + datetime.timedelta(days=int(days))
+    # Планируюмую дату заввершения переносим на тоже количество дней плюс неделя
+    task.planed_date_finish = task.planed_date_finish + datetime.timedelta(days=(int(days)+7))
     task.save()
     if task.author == request.user or task.performer == request.user:
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
@@ -1207,8 +1297,10 @@ def task_transfer_date(request, pk, days):
 
     return JsonResponse(data)
 
+# TASKS -
 
-# Project view
+
+# PROJECTS +
 
 
 def project_del(request, pk):
@@ -1317,7 +1409,10 @@ def project_param(request, pk):
     return JsonResponse(data)
 
 
-# User invite
+# PROJECTS -
+
+
+# USER INVITE +
 
 
 def user_invite(request):
@@ -1502,7 +1597,10 @@ def delete_user_in_project(request, pk):
     return JsonResponse(data)
 
 
-# Comments
+# USER INVITE -
+
+
+# COMMENTS +
 
 
 def add_comment(request, pk):
@@ -1555,6 +1653,9 @@ def get_comments(request, pk):
         data.append(response_data)
 
     return JsonResponse(data, safe=False)
+
+
+# COMMENTS -
 
 
 # Include tags

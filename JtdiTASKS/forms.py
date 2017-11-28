@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.forms import Textarea, ClearableFileInput
 from django.forms.widgets import Input
 
-from JtdiTASKS.models import Profile, Task, User, Project, PartnerGroup, InviteUser, KanbanStatus
+from JtdiTASKS.models import Profile, Task, User, Project, PartnerGroup, InviteUser, KanbanStatus, Notes
 
 year = datetime.date.today().year
 
@@ -33,6 +33,23 @@ class CharFieldWidget(Input):
         self.empty_value = empty_value
         super(CharFieldWidget, self).__init__(*args, **kwargs)
 
+
+class KanbanColumnForm(forms.ModelForm):
+    class Meta:
+        model = KanbanStatus
+        fields = ('title',)
+
+        labels = {
+            'title': '',
+        }
+
+
+class SearchForm(forms.Form):
+    search_field = forms.CharField()
+    search_field.widget.attrs.update({'class': "form-control", 'placeholder': "Поиск..."})
+
+
+# USER PROFILE +
 
 class MyUserCreationForm(UserCreationForm):
     class Meta:
@@ -105,6 +122,10 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError("Пользователь с таким email уже существует")
         return email
 
+# USER PROFILE -
+
+
+# TASKS +
 
 class TaskForm(forms.Form):
     PRIORITY_1 = '1'
@@ -140,7 +161,7 @@ class TaskForm(forms.Form):
         required=False,
         queryset=None,
     )
-    
+
     project_field.widget.attrs.update({'onChange': 'ProjectSelect(this.value);'})
 
     priority_field = forms.ChoiceField(
@@ -188,11 +209,6 @@ class TaskForm(forms.Form):
         return self.cleaned_data
 
 
-class SearchForm(forms.Form):
-    search_field = forms.CharField()
-    search_field.widget.attrs.update({'class': "form-control", 'placeholder': "Поиск..."})
-
-
 class TaskEditForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -230,6 +246,30 @@ class TaskEditForm(forms.ModelForm):
         time_field = forms.TimeField(label='Время', required=False)
         time_field.widget.input_type = 'time'
 
+# TASKS -
+
+
+# NOTES +
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Notes
+        fields = ('title', 'description')
+
+        labels = {
+            'title': 'Заголовок',
+            'description': 'Расшифровка',
+        }
+    # title = forms.CharField(label='Заголовок')
+    # title.widget.attrs.update({'placeholder': 'Заголовок',})
+    # 
+    # description = forms.CharField(label='Описание', widget=forms.Textarea, required=False)
+
+
+# NOTES -
+
+
+# PROJECTS +
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -240,23 +280,6 @@ class ProjectForm(forms.ModelForm):
             'title': '',
         }
         
-
-class KanbanColumnForm(forms.ModelForm):
-    class Meta:
-        model = KanbanStatus
-        fields = ('title',)
-
-        labels = {
-            'title': '',
-        }
-
-
-class FormMoveInProject(forms.Form):
-    project_field = forms.ChoiceField(
-        label='Переместить',
-        required=False,
-    )
-
 
 class ProjectFormRename(forms.Form):
     title = forms.CharField(label='Новый заголовок')
@@ -276,5 +299,19 @@ class ProjectInviteUser(forms.Form):
         return self.cleaned_data['user_invite']
 
 
+class FormMoveInProject(forms.Form):
+    project_field = forms.ChoiceField(
+        label='Переместить',
+        required=False,
+    )
+
+
+# PROJECTS -
+
+
+# COMMENTS +
+
 class CommentAddForm(forms.Form):
     addComment = forms.CharField(label='', widget=forms.Textarea, required=True)
+
+# COMMENTS -

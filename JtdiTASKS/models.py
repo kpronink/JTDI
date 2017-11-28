@@ -200,6 +200,13 @@ class CommentsTask(models.Model):
     commentator = models.ForeignKey('auth.User')
     comment = models.TextField(max_length=2000, blank=True)
     date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    
+    
+class Notes(models.Model):
+    author = models.ForeignKey('auth.User')
+
+    title = models.CharField(max_length=200)
+    description = models.TextField(max_length=2000, blank=True)
 
 
 class PartnerGroup(models.Model):

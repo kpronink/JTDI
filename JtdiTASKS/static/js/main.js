@@ -169,6 +169,30 @@ $("#modal-task").on("submit", ".task-create-form", function () {
     return false;
   });
 
+$("#modal-task").on("submit", ".note-create-form", function () {
+    var form = $(this);
+    var form_data = form.serialize();
+
+    $.ajax({
+      url: form.attr("action"),
+      data: form_data,
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+            $("#notes_active_table").html(data.html_active_notes_list);
+            $('#dataTables-example').dataTable();
+            $("[data-dismiss=modal]").trigger({ type: "click" });
+            Alert('Задача успешно обновлена');
+        }
+        else {
+          $("#modal-task .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  });
+
 
 function UpdateTask(url) {
     
@@ -183,6 +207,20 @@ function UpdateTask(url) {
           if($('*').is('#id_project_field')) {
               ProjectSelect($("#id_project_field")[0].value);
           }
+      }
+    });
+  }
+
+function UpdateNote(url) {
+
+    PreloadModal();
+    $.ajax({
+      url: url,
+      type: 'get',
+      dataType: 'json',
+      data: {},
+      success: function (data) {
+          $("#modal-task .modal-content").html(data.html_form);
       }
     });
   }
@@ -223,6 +261,9 @@ function UniversalFun(task_url) {
             }
             if (result.html_active_tasks_list !== '') {
                 $("#task_active_table").html(result.html_active_tasks_list);
+            }
+            if (result.html_active_notes_list !== '') {
+                $("#notes_active_table").html(result.html_active_notes_list);
             }
             if (result.html_finished_tasks_list !== ''){
                 $("#task_finish_table").html(result.html_finished_tasks_list);

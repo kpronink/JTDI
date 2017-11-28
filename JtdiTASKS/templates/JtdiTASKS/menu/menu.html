@@ -3,13 +3,16 @@
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
             <li> <a class=" {% if request.resolver_match.url_name == 'task_today' %}active-menu {% endif %} waves-effect waves-dark" href="{% url 'task_today' %}"><i class="glyphicon glyphicon-home"><div class="tab_counter_today" id="tasks_today_notify">{{ tasks_today_notify }}</div>
-                  </i> Задачи на сегодня</a> </li>
-            <li> <a href="{% url 'task_list' %}" class=" {% if request.resolver_match.url_name == 'task_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-tasks"></i> Задачи без проекта</a> </li>
+                  </i> Задачи на сегодня</a>
+            </li>
+            <li> <a href="{% url 'task_list' %}" class=" {% if request.resolver_match.url_name == 'task_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-tasks"></i> Задачи без проекта</a>
+            </li>
             <li class="current"><a href="{% url 'task_overdue' %}" class=" {% if request.resolver_match.url_name == 'task_overdue' %}active-menu {% endif %} waves-effect waves-dark"><i class="glyphicon glyphicon-tasks">
 
                                <div class="tab_counter_overdue" id="tasks_overdue_notify">{{ tasks_overdue_notify }}</div>
 
-                        </i> Просроченые задачи</a></li>
+                        </i> Просроченые задачи</a>
+            </li>
             <li class="current">
                 <a href="{% url 'task_list_finished' %}" class=" {% if request.resolver_match.url_name == 'task_list_finished' %}active-menu {% endif %} waves-effect waves-dark"> <i class="glyphicon glyphicon-briefcase"></i> Завершенные задачи</a>
             </li>
@@ -61,6 +64,8 @@
                     </li>
                     <li><a href="#" onclick="openbox('box_proj'); return false"><i class="glyphicon glyphicon-plus-sign" style="font-size: 15px; color:#428bca"></i></a></li>
                 </ul>
+            </li>
+            <li> <a href="{% url 'notes_list' %}" class=" {% if request.resolver_match.url_name == 'note_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-tasks"></i> Заметки</a>
             </li>
         </ul>
     </div>
