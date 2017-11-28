@@ -75,7 +75,7 @@ function create_post() {
             $('#id_addComment').val(''); // remove the value from the input
             //console.log(json); // log the returned json to the console
             $("#comments").append("<div class='media' id='comment'><p class='pull-right'><small>"+json.created+"</small></p><a class='media-left' href='#'>" +
-                "<img src="+json.avatar+" class='circle-avatar' width='40' height='40' border='20'></a><div class='media-body'>" +
+                "<img src="+json.avatar+" class='circle' width='40' height='40' border='20'></a><div class='media-body'>" +
                 "<h4 class='media-heading user_name'>"+json.author+"</h4>"+json.text+"</div></div>");
             //console.log("success"); // another sanity check
         },
@@ -105,7 +105,7 @@ function get_comments() {
             $('.comments-list').empty();
             for (var item in json){
             $("#comments").append("<div class='media' id='comment'><p class='pull-right'><small>"+json[ item ].created+"</small></p><a class='media-left' href='#'>" +
-                "<img src="+json[ item ].avatar+" class='circle-avatar' width='40' height='40' border='20'></a><div class='media-body'>" +
+                "<img src="+json[ item ].avatar+" class='circle' width='40' height='40' border='20'></a><div class='media-body'>" +
                 "<h4 class='media-heading user_name'>"+json[ item ].author+"</h4>"+json[ item ].text+"</div></div>");
             //console.log("success");
                 } // another sanity check
@@ -499,6 +499,18 @@ function GetKanban() {
             data: {},
             success: function (result) {
                 $('.card-content').html(result.kanban)
+            }
+        });
+    }
+    else {
+        $.ajax({
+            type: "GET",
+            url: "/ajax/project_task_list/"+$("#project").attr("project")+"/",
+            data: {},
+            success: function (result) {
+                $('.card-content').html(result.project)
+                $('#dataTables-example').dataTable();
+                $('ul.tabs').tabs();
             }
         });
     }

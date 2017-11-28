@@ -314,10 +314,10 @@ def change_kanban_status(request):
 
     task_pk = request.POST['task_pk']
     status_kanban_pk = request.POST['status_kanban_pk']
-    
+
     task = get_object_or_404(Task, pk=task_pk)
     status_kanban = get_object_or_404(KanbanStatus, pk=status_kanban_pk)
-    
+
     task.kanban_status = status_kanban
     task.save()
 
@@ -433,6 +433,7 @@ def get_recent_task(request):
         }
 
     return JsonResponse(data)
+
 
 # NOTIFY -
 
@@ -550,6 +551,7 @@ def get_data_gantt(request, pk):
                  'url': redirect('task_edit', pk=val.pk).url})
             count += 1
         return JsonResponse(data, safe=False)
+
 
 # DIAGRAMS -
 
@@ -758,6 +760,7 @@ def notes_list(request):
 
     return render(request, 'JtdiTASKS/views/notes_list.html', {'notes': notes})
 
+
 # VIEWS -
 
 
@@ -766,7 +769,7 @@ def notes_list(request):
 
 def task_create(request):
     if not request.user.is_authenticated():
-        return {'login':False}
+        return {'login': False}
 
     data = dict()
 
@@ -896,7 +899,7 @@ def task_detail_ajax(request, pk):
 
 def task_update(request, pk):
     if not request.user.is_authenticated():
-        return {'login':False}
+        return {'login': False}
 
     data = dict()
 
@@ -991,6 +994,7 @@ def task_update(request, pk):
                                          )
     return JsonResponse(data)
 
+
 # TASKS -
 
 
@@ -1060,6 +1064,7 @@ def note_del(request, pk):
             'notes': Notes.objects.filter(author=request.user).order_by('title')})
 
     return JsonResponse(data)
+
 
 # NOTES -
 
@@ -1270,7 +1275,7 @@ def task_transfer_date(request, pk, days):
     task = get_object_or_404(Task, pk=pk)
     task.date = task.date + datetime.timedelta(days=int(days))
     # Планируюмую дату заввершения переносим на тоже количество дней плюс неделя
-    task.planed_date_finish = task.planed_date_finish + datetime.timedelta(days=(int(days)+7))
+    task.planed_date_finish = task.planed_date_finish + datetime.timedelta(days=(int(days) + 7))
     task.save()
     if task.author == request.user or task.performer == request.user:
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
@@ -1296,6 +1301,7 @@ def task_transfer_date(request, pk, days):
                                              )
 
     return JsonResponse(data)
+
 
 # TASKS -
 
@@ -1406,6 +1412,36 @@ def project_param(request, pk):
         'project': pk},
                                              request=request, )
 
+    return JsonResponse(data)
+
+
+def get_project_task_list(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    data = dict()
+    project = Project.objects.filter(pk=pk)[0]
+
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
+
+    users_in_project = PartnerGroup.objects.filter(project=project)
+
+    all_users_in_project = User.objects.filter(
+        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+
+    all_users_task_count = []
+    for user_in_proj in all_users_in_project:
+        all_users_task_count.append({'user': user_in_proj
+                                        , 'task_count': Task.objects.filter(project=project)
+                                    .filter(Q(author=user_in_proj) | Q(performer=user_in_proj))
+                                    .filter(active=True).filter(finished=False).count()})
+
+    data['project'] = render_to_string('JtdiTASKS/ajax_views/project_task_list.html', {'tasks': tasks,
+                                                                                       'tasks_finish': tasks_finish,
+                                                                                       'project': pk,
+                                                                                       'project_object': project,
+                                                                                       'users_in_project': all_users_task_count},
+                                       request=request)
     return JsonResponse(data)
 
 

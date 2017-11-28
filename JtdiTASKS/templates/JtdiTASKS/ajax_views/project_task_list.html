@@ -1,0 +1,130 @@
+{% load staticfiles %}
+
+<div class="col">
+                            <ul class="tabs">
+                                <li class="tab col s3"><a href="#TableTask">Таблица задач</a></li>
+                                <li class="tab col s3"><a href="#Finished">Завершенные задачи</a></li>
+                                <li class="tab col s3"><a href="#InfoProj" onclick="DonutChart()">Информация</a></li>
+								<li class="tab col s3 disabled"><a href="#Gantt" onclick="drawChartGantt()">Таймлайн</a></li>
+                            </ul>
+                        </div>
+<div class="clearBoth"><br/></div>
+<div id="TableTask" class="col s12">
+                            <div class="table-responsive" id="task_active_table">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Задача</th>
+                                            <th>Расшифровка</th>
+                                            <th>Дата начала</th>
+                                            <th>Время начала</th>
+                                            <th>Дата завершения</th>
+                                            <th>Исполнитель</th>
+                                            <th>Статус</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> {% for task in tasks %}
+                                        <tr class="odd gradeX">
+                                            <td><a href="#" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
+                                                data-toggle="modal" data-target="#modal-task">
+                                                {{ task.title|truncatechars:40 }}</a></td>
+                                            <td>{{ task.description|truncatechars:50 }}</td>
+                                            <td>{{ task.date|date:"Y.m.d" }}</td>
+                                            <td>{{ task.time }}</td>
+                                            <td>{{ task.planed_date_finish|date:"Y.m.d" }}</td>
+                                            <td>{{ task.performer }}</td>
+                                            <td>{{ task.status }}</td>
+                                            <td>
+                                                <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')" title="Завершить задачу">
+                                                    <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
+                                            </td>
+                                            <td>
+                                                <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')" data-toggle="modal" data-target="#modal-task"
+                                                   title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}')" title="Удалить задачу">
+                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr> {% endfor %} </tbody>
+                                </table>
+                            </div>
+                        </div>
+<div id="Gantt" class="col s12">
+                            <div id="chart_div"></div>
+                        </div>
+<div id="Finished" class="col s12">
+                            <div class="table-responsive" id="task_finish_table">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Задача</th>
+                                        <th>Расшифровка</th>
+                                        <th>Дата начала</th>
+                                        <th>Дата завершения</th>
+                                    </tr>
+                                </thead>
+                                <tbody> {% for task in tasks_finish %}
+                                    <tr style="background-color: #bcffb8">
+                                        <td><a href="#"  data-url="{% url 'task_det' pk=task.pk %}" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
+                                            data-toggle="modal" data-target="#modal-task">
+                                            {{ task.title|truncatechars:40 }}</a></td>
+                                        <td>{{ task.description|truncatechars:50 }}</td>
+                                        <td>{{ task.date|date:"Y.m.d" }}</td>
+                                        <td>{{ task.date_time_finish|date:"Y.m.d" }}</td>
+                                        <td>
+                                            <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}')" title="Восстановить задачу">
+                                                <i class="glyphicon glyphicon-backward"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}')" title="Удалить задачу"> <i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+                                    </tr> {% endfor %} </tbody>
+                            </table>
+                        </div>
+                        </div>
+<div id="InfoProj" class="col s12">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-image donutpad">
+                                                <div id="morris-donut-chart"> </div>
+                                            </div>
+                                            <div class="card-action"> <b>Основные показатели проекта</b> </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-action"> <b>Участники проекта</b> </div>
+                                            <div class="card-image">
+                                                <div class="collection" id="user_collection"> {% for user_in_proj in users_in_project %} <a href="#" class="collection-item" id="{{ user_in_proj.user.pk }}">{{ user_in_proj.user.username }} ({{ user_in_proj.user.first_name }})
+                                                    {% if project_object.author == user_in_proj.user %}
+                                                         Владелец
+                                                        <span class="new badge red" data-badge-caption="">{{ user_in_proj.task_count }}</span>
+                                                     {% else %}
+                                                        <span class="badge" data-badge-caption="">{{ user_in_proj.task_count }}</span>
+                                                    {% endif %}</a> {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-5">
+                                <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project%}"></div>
+                            </div>
+                        </div>
+<div class="clearBoth"><br/></div>
+<p>
+    <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}')">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+    </button>
+</p>

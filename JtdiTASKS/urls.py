@@ -26,6 +26,7 @@ urlpatterns = [
                   url(r'^ajax/get_data_gantt/(?P<pk>[0-9]+)/$', views.get_data_gantt, name='get_data_gantt'),
                   url(r'^ajax/get_performers/(?P<pk>[0-9]+)/$', views.get_performers, name='get_performers'),
                   url(r'^ajax/kanban/(?P<pk>[0-9]+)/$', views.get_kanban, name='kanban'),
+                  url(r'^ajax/project_task_list/(?P<pk>[0-9]+)/$', views.get_project_task_list, name='project_task_list'),
                   url(r'^ajax/add_kanban_column/(?P<pk>[0-9]+)/$', views.add_kanban_column, name='add_kanban_column'),
                   url(r'^ajax/change_kanban_status/$', views.change_kanban_status, name='change_kanban_status'),
                   url(r'^ajax/add_kanban_task/(?P<pk>[0-9]+)/$', views.add_kanban_task, name='add_kanban_task'),
