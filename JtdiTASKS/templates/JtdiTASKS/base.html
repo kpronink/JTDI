@@ -74,8 +74,11 @@
         </a>
         <ul>
             <li>
-                <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}')">
+                <button title="Создать задачу" type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}')">
                     <span class="glyphicon glyphicon-plus-sign"></span>
+                </button>
+                <button title="Создать заметку" type="button" class="btn-floating green" data-toggle="modal" data-target="#modal-task" onclick="UpdateNote('{% url 'note_create_update' pk='0'%}')">
+                    <span class="glyphicon glyphicon-book"></span>
                 </button>
             </li>
         </ul>
