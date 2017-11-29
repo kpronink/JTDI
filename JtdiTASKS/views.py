@@ -51,8 +51,7 @@ def get_tasks_with_filter(filter_method, project, user):
             tasks = Task.objects.filter(active=True).filter(project=project).order_by('date')
 
             tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(project=project.pk) \
-                .filter(date_finish__range=(start_day, end_day)).order_by(
-                'date_finish')
+                .order_by('date_finish')
         else:
             users_in_project = PartnerGroup.objects.filter(project=project)
 
@@ -66,8 +65,7 @@ def get_tasks_with_filter(filter_method, project, user):
 
             tasks_finish = Task.objects.filter(active=False).filter(finished=True). \
                 filter(Q(author=user) | Q(performer=user)).filter(project=project.pk) \
-                .filter(date_finish__range=(start_day, end_day)).order_by(
-                'date_finish')
+                .order_by('date_finish')
 
     elif filter_method == 'today':
         tasks = Task.objects.filter(active=True).filter(Q(author=user) | Q(performer=user)) \
@@ -92,6 +90,11 @@ def get_tasks_with_filter(filter_method, project, user):
         tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
             .filter(Q(author=user) | Q(performer=user)).filter(date_finish__range=(start_day, end_day)).order_by(
             'date_finish')
+    elif filter_method == 'finished':
+        tasks = []
+        tasks_finish = Task.objects.filter(active=False).filter(finished=True) \
+            .filter(Q(author=user) | Q(performer=user)).order_by(
+            'project').order_by('date_finish')
 
     return tasks, tasks_finish
 
@@ -958,9 +961,10 @@ def task_update(request, pk):
 
     project_pk = None
     task = get_object_or_404(Task, pk=pk)
-    if task.author != request.user or task.project.author != request.user:
-        return task_detail_ajax(request, pk)
     if task.project is not None:
+        if task.author != request.user or task.project.author != request.user:
+            return task_detail_ajax(request, pk)
+     
         project_pk = task.project.pk
 
     COLOR_CHOISE = {
