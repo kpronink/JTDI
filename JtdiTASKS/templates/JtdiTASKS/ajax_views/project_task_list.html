@@ -119,6 +119,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <select name="users_assigned" multiple class="form-control">
+                                        <option value="">Не выбрано...</option>
+                                        {% for user_in_proj in users_in_project %}
+                                        <option value="{{ user_in_proj.pk }}">{{ user_in_proj.user.username }} ({{ user_in_proj.user.first_name }})</option>
+                                        {% endfor %}
+                                        </select>
+
                                     </div>
                                 </div>
 

@@ -9,6 +9,7 @@ urlpatterns = [
                   url(r'^get_push_notify/$', views.get_push_event, name='get_push_notify'),
                   url(r'^get_notify/$', views.get_notifycation, name='get_notify'),
                   url(r'^get_notify_event/$', views.get_notify_list, name='get_notify_event'),
+                  url(r'^ajax/install_filter/(?P<pk>[0-9]+)/$', views.install_filter, name='install_filter'),
                   url(r'^task/create/$', views.task_create, name='task_create'),
                   url(r'^project/create/$', views.project_create, name='project_create'),
                   url(r'^task/det/(?P<pk>[0-9]+)/$', views.task_detail_ajax, name='task_det'),

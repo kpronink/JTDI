@@ -24,14 +24,14 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-    
-    
+
+
 class KanbanStatus(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200, null=True, blank=False)
     color = models.CharField(max_length=10)
     project = models.ForeignKey('Project', null=True, default=None,
-                                blank=True) 
+                                blank=True)
 
     def publish(self):
         self.save()
@@ -101,13 +101,21 @@ class Profile(models.Model):
             profile = Profile(user=user)
             profile.save()'''
         instance.profile.save()
-        
-        
+
+
 class UserProjectFilter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
     kanban = models.BooleanField(default=False)
+    performers = models.ForeignKey('PerformersAssigned', null=True, default=None,
+                                   blank=True)
+
+
+class PerformersAssigned(models.Model):
+    filter = models.ForeignKey('UserProjectFilter', null=True, default=None, blank=True)
+    performer = models.OneToOneField(User, on_delete=models.CASCADE)
+    selected = models.BooleanField(default=False)
 
 
 class Task(models.Model):
@@ -200,8 +208,8 @@ class CommentsTask(models.Model):
     commentator = models.ForeignKey('auth.User')
     comment = models.TextField(max_length=2000, blank=True)
     date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
-    
-    
+
+
 class Notes(models.Model):
     author = models.ForeignKey('auth.User')
 

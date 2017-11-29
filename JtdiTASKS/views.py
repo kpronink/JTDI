@@ -3,6 +3,7 @@ import random
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
+import json
 
 from django.db.models import Q, Count, Sum
 from django.http import JsonResponse
@@ -17,7 +18,7 @@ from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectFor
     ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm, KanbanColumnForm, NoteForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask, RegistrationTable, \
-    ViewsEventsTable, QueueTask, QueuePushNotify, KanbanStatus, Notes
+    ViewsEventsTable, QueueTask, QueuePushNotify, KanbanStatus, Notes, UserProjectFilter
 from django.contrib.auth import logout, login
 
 from django.views.generic.edit import FormView
@@ -555,6 +556,45 @@ def get_data_gantt(request, pk):
 
 # DIAGRAMS -
 
+# FILTERS +
+
+def install_filter(request, pk):
+    filter_name = request.POST['filter']
+    value = json.loads(request.POST['value'])
+
+    project = Project.objects.filter(pk=pk)[0]
+    project_filters = UserProjectFilter.objects.filter(project=project).filter(user=request.user)
+    if project_filters.count():
+        project_filter = project_filters[0]
+    else:
+        project_filter = None
+
+    if project_filter is None:
+        project_filter = UserProjectFilter()
+        project_filter.user = request.user
+        project_filter.project = project
+        project_filter.save()
+
+    project_filter_obj = get_object_or_404(UserProjectFilter, pk=project_filter.pk)
+    project_filter_obj.__setattr__(filter_name, value)
+    project_filter_obj.save()
+    
+    return JsonResponse({})
+
+
+def get_filter(user, project):
+
+    project = Project.objects.filter(pk=project)[0]
+    project_filters = UserProjectFilter.objects.filter(project=project).filter(user=user)
+    if project_filters.count():
+        project_filter = project_filters[0]
+    else:
+        return None
+
+    return project_filter
+
+# FILTERS -    
+
 
 def get_performers(request, pk):
     data = []
@@ -712,7 +752,12 @@ def project_task_list(request, pk):
         return redirect('login')
 
     project = Project.objects.filter(pk=pk)[0]
-
+    project_filter = get_filter(request.user, pk)
+    if project_filter is not None:
+        kanban_view = project_filter.kanban
+    else:
+        kanban_view = False
+        
     tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
 
     users_in_project = PartnerGroup.objects.filter(project=project)
@@ -731,7 +776,8 @@ def project_task_list(request, pk):
                                                                       'tasks_finish': tasks_finish,
                                                                       'project': pk,
                                                                       'project_object': project,
-                                                                      'users_in_project': all_users_task_count})
+                                                                      'users_in_project': all_users_task_count,
+                                                                      'kanban_view': kanban_view})
 
 
 def search_result(request):
@@ -1723,6 +1769,32 @@ def project_recent_list(request, user, project_pk):
         'tasks_overdue_notify': tasks_overdue_notify,
         'request': request,
         'project_pk': project_pk
+    }
+
+
+@register.inclusion_tag('JtdiTASKS/ajax_views/kanban.html')
+def kanban(request, pk):
+
+    kanban = dict()
+
+    project = Project.objects.filter(pk=pk)[0]
+    kanban_status = KanbanStatus.objects.filter(project=project)
+    if not kanban_status.__len__():
+        kanban_column = create_first_canban_status(request.user, project, 'Запрос')
+        kanban_status = list()
+        kanban_status.append(kanban_column)
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
+    for status in kanban_status:
+        kanban[status] = []
+        for task in tasks:
+            if task.kanban_status == status:
+                kanban[status].append(task)
+            elif task.kanban_status is None and status.title == 'Запрос':
+                kanban[status].append(task)
+    
+    return {
+        'request': request,
+        'kanban': kanban,
     }
 
 

@@ -14,12 +14,16 @@
                             <div class="switch">
                                 <label>
                                       Таблица
-                                      <input type="checkbox" id="kanban_switch" onclick="GetKanban()">
+                                      <input type="checkbox" id="kanban_switch" onclick="GetKanban()"
+                                      {% if kanban_view %}
+                                          checked
+                                      {% endif %}
+                                      >
                                       <span class="lever"></span>
                                       Kanban
                                 </label>
                             </div>
-                            {% project_menu request project project_object.title%}
+                            {% project_menu request project project_object.title %}
                         </div>
                     {% else %}
                         <div class="card-action">
@@ -34,6 +38,7 @@
                         </div>
                     {% endif %}
                     <div class="card-content">
+                    {% if not kanban_view %}
                         <div class="col">
                             <ul class="tabs">
                                 <li class="tab col s3"><a href="#TableTask">Таблица задач</a></li>
@@ -153,6 +158,16 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                    <select name="users_assigned" multiple class="form-control">
+                                        <option value="">Не выбрано...</option>
+                                        {% for user_in_proj in users_in_project %}
+                                        <option value="{{ user_in_proj.pk }}">{{ user_in_proj.user.username }} ({{ user_in_proj.user.first_name }})</option>
+                                        {% endfor %}
+                                    </select>
+
+
+
                                     </div>
                                 </div>
 
@@ -166,7 +181,9 @@
                                 <span class="glyphicon glyphicon-plus-sign"></span>
                             </button>
                         </p>
-
+                    {% else %}
+                        {% kanban request project %}
+                    {% endif %}
                     </div>
                 </div>
             </div>

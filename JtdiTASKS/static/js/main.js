@@ -498,7 +498,8 @@ function GetKanban() {
             url: "/ajax/kanban/"+$("#project").attr("project")+"/",
             data: {},
             success: function (result) {
-                $('.card-content').html(result.kanban)
+                InstallFilter('kanban', true);
+                $('.card-content').html(result.kanban);
             }
         });
     }
@@ -508,7 +509,8 @@ function GetKanban() {
             url: "/ajax/project_task_list/"+$("#project").attr("project")+"/",
             data: {},
             success: function (result) {
-                $('.card-content').html(result.project)
+                InstallFilter('kanban', false);
+                $('.card-content').html(result.project);
                 $('#dataTables-example').dataTable();
                 $('ul.tabs').tabs();
             }
@@ -574,6 +576,13 @@ function ChangeKanbanStatus(task_pk, status_kanban_pk) {
         });
 }
 
-$('#dd-item').on("change", function(){
-   alert('hui')
-});
+function InstallFilter(filter, value) {
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: "/ajax/install_filter/"+$("#project").attr("project")+"/",
+        data: {'filter': filter, 'value': value},
+        success: function (result) {
+        }
+    });
+}

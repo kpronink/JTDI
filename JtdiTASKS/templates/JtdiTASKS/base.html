@@ -28,14 +28,14 @@
 
     <link rel="stylesheet" type="text/css" href={% static "/css/jquery-ui-1.8.4.css"%} />
     <link rel="stylesheet" type="text/css" href={% static "/css/jquery.ganttView.css"%} />
+    <link rel="stylesheet" type="text/css" href={% static "/css/jquery.multiselect.css"%}/>
 
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href={% static "/js/Lightweight-Chart/cssCharts.css"%}>
+    <link href={% static "/js/Lightweight-Chart/cssCharts.css"%}>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
-
 
 </head>
 
@@ -74,10 +74,10 @@
         </a>
         <ul>
             <li>
-                <button title="Создать задачу" type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}')">
+                <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task" onclick="UpdateTask('{% url 'task_create'%}')">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </button>
-                <button title="Создать заметку" type="button" class="btn-floating green" data-toggle="modal" data-target="#modal-task" onclick="UpdateNote('{% url 'note_create_update' pk='0'%}')">
+                <button title="Создать заметку" type="button" class="btn-floating green" data-toggle="modal" data-target="#modal-task" onclick="UpdateNote('/note_create_update/0/')">
                     <span class="glyphicon glyphicon-book"></span>
                 </button>
             </li>
@@ -148,10 +148,16 @@
     	 <!-- DATA TABLE SCRIPTS -->
     <script src="{% static "js/dataTables/jquery.dataTables.js"%}"></script>
     <script src="{% static "js/dataTables/dataTables.bootstrap.js"%}"></script>
+
+    <script src="{% static "js/jquery.multiselect.js"%}"></script>
+
     <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+            $('select[multiple]').multiselect({
+                columns: 2,
+                placeholder: 'Выберите фильтр'});
+        });
     </script>
 
 </body>

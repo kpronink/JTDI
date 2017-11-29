@@ -52,8 +52,8 @@
                                 <div class="card-action">
                                     <div id="url_ajax_start" url_ajax_start="{% url 'task_start_stop' task.pk%}"></div>
                                     <div class="form-group" id="form_start_stop"> {% if task.status == 'Wait' or task.status == 'Stoped' %}
-                                        <button class="btn-floating btn-large red" id="btn_start_stop" onclick="StartStop()"> <i class="material-icons" style="size: 50px">play_circle_filled</i> </button> {% elif task.status == 'Started' %}
-                                        <button class="btn-floating btn-large red" id="btn_start_stop" onclick="StartStop()"> <i class="material-icons" style="size: 50px">pause_circle_filled</i> </button> {% elif task.status == 'Finished' %} {% endif %} </div>
+                                        <button class="btn-floating btn-large red" id="btn_start_stop" onclick="StartStop()"> <i class="material-icons" style="size: 50px;position: initial">play_circle_filled</i> </button> {% elif task.status == 'Started' %}
+                                        <button class="btn-floating btn-large red" id="btn_start_stop" onclick="StartStop()"> <i class="material-icons" style="size: 50px;position: initial">pause_circle_filled</i> </button> {% elif task.status == 'Finished' %} {% endif %} </div>
                                 </div>
                                 {% endif %}
 
