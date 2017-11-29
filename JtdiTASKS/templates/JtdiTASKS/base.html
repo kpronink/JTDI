@@ -28,7 +28,6 @@
 
     <link rel="stylesheet" type="text/css" href={% static "/css/jquery-ui-1.8.4.css"%} />
     <link rel="stylesheet" type="text/css" href={% static "/css/jquery.ganttView.css"%} />
-    <link rel="stylesheet" type="text/css" href={% static "/css/jquery.multiselect.css"%}/>
 
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -148,15 +147,11 @@
     	 <!-- DATA TABLE SCRIPTS -->
     <script src="{% static "js/dataTables/jquery.dataTables.js"%}"></script>
     <script src="{% static "js/dataTables/dataTables.bootstrap.js"%}"></script>
-
-    <script src="{% static "js/jquery.multiselect.js"%}"></script>
-
+    <script src={% static "js/Kanban.js"%}></script>
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
-            $('select[multiple]').multiselect({
-                columns: 2,
-                placeholder: 'Выберите фильтр'});
+            $('#users_assigned').material_select();
         });
     </script>
 

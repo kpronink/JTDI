@@ -1055,11 +1055,6 @@ textarea.form-control {
     max-height: 94px;
 }
 
-@font-face {
-    font-family: Pompadur; /* Гарнитура шрифта */
-    src: url(fonts/pompadur.ttf); /* Путь к файлу со шрифтом */
-   }
-
 .btn-floating.btn-large {
     width: 56px;
     height: 56px;
@@ -1085,12 +1080,16 @@ textarea.form-control {
   }
 }
 
-::-webkit-scrollbar {
+/* хром, сафари */
+body::-webkit-scrollbar { width: 0; }
 
-width: 0px;
+/* ie 10+ */
+body { -ms-overflow-style: none; }
 
-}
+/* фф (свойство больше не работает, других способов тоже нет)*/
+body { overflow: -moz-scrollbars-none; }
 
-::-moz-scrollbar {
-    width: 0px;
-}
+.kanban::-webkit-scrollbar { width: 0; }
+.kanban { -ms-overflow-style: none; }
+
+.kanban { overflow: -moz-scrollbars-none; }
