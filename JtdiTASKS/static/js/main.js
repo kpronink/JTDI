@@ -511,7 +511,6 @@ function GetKanban() {
             success: function (result) {
                 InstallFilter('kanban', false);
                 $('.card-content').html(result.project);
-                $('#dataTables-example').dataTable();
                 $('ul.tabs').tabs();
             }
         });

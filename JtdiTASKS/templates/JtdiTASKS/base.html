@@ -150,8 +150,13 @@
     <script src={% static "js/Kanban.js"%}></script>
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-            $('#users_assigned').material_select();
+            $('#dataTables-example').dataTable({pageLength:{{ count_visible_tasks}}});
+            $('#dataTables-finish').dataTable({pageLength:{{ count_visible_tasks}}});
+
+            $('#dataTables-example').on( 'length.dt', function ( e, settings, len ) {
+                console.log( 'New page length: '+len );
+                InstallFilter('count_visible_tasks', len);
+            } );
         });
     </script>
 

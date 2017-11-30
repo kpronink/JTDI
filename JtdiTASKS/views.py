@@ -18,7 +18,7 @@ from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectFor
     ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm, KanbanColumnForm, NoteForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Task, Project, User, InviteUser, PartnerGroup, TasksTimeTracker, CommentsTask, RegistrationTable, \
-    ViewsEventsTable, QueueTask, QueuePushNotify, KanbanStatus, Notes, UserProjectFilter
+    ViewsEventsTable, QueueTask, QueuePushNotify, KanbanStatus, Notes, UserProjectFilter, PerformersAssigned
 from django.contrib.auth import logout, login
 
 from django.views.generic.edit import FormView
@@ -38,7 +38,7 @@ def local_time(dt, tz):
     return dt.astimezone(tz)
 
 
-def get_tasks_with_filter(filter_method, project, user):
+def get_tasks_with_filter(filter_method, project, user, assigned_performers=None):
     global tasks, tasks_finish
     currentdate = datetime.datetime.today()
     start_day = currentdate.combine(currentdate, currentdate.min.time())
@@ -48,7 +48,11 @@ def get_tasks_with_filter(filter_method, project, user):
 
     if filter_method == 'projects':
         if project.author == user:
-            tasks = Task.objects.filter(active=True).filter(project=project).order_by('date')
+            if assigned_performers.count():
+                tasks = Task.objects.filter(active=True).filter(project=project)\
+                    .filter(performer__pk__in=assigned_performers).order_by('date')
+            else:
+                tasks = Task.objects.filter(active=True).filter(project=project).order_by('date')
 
             tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(project=project.pk) \
                 .order_by('date_finish')
@@ -263,11 +267,17 @@ def get_kanban(request, pk):
 
     project = Project.objects.filter(pk=pk)[0]
     kanban_status = KanbanStatus.objects.filter(project=project)
+    project_filter = get_filter(request.user, pk)
+    if project_filter is not None:
+        assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True)\
+            .values_list('performer', flat=True)
+    else:
+        assigned_performers = None
     if not kanban_status.__len__():
         kanban_column = create_first_canban_status(request.user, project, 'Запрос')
         kanban_status = list()
         kanban_status.append(kanban_column)
-    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user, assigned_performers)
     for status in kanban_status:
         kanban[status] = []
         for task in tasks:
@@ -578,15 +588,29 @@ def install_filter(request, pk):
         project_filter.project = project
         project_filter.save()
 
-    project_filter_obj = get_object_or_404(UserProjectFilter, pk=project_filter.pk)
-    project_filter_obj.__setattr__(filter_name, value)
-    project_filter_obj.save()
-    
+    if filter_name == 'performers':
+        assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(performer__pk=value)
+        performer = get_object_or_404(User, pk=value)
+        if assigned_performers.count():
+            assigned_performer = assigned_performers[0]
+            assigned_performer = get_object_or_404(PerformersAssigned, pk=assigned_performer.pk)
+            assigned_performer.selected = not assigned_performer.selected
+            assigned_performer.save()
+        else:
+            assigned_performer = PerformersAssigned()
+            assigned_performer.performer = performer
+            assigned_performer.filter = project_filter
+            assigned_performer.selected = True
+            assigned_performer.save()
+    else:
+        project_filter_obj = get_object_or_404(UserProjectFilter, pk=project_filter.pk)
+        project_filter_obj.__setattr__(filter_name, value)
+        project_filter_obj.save()
+
     return JsonResponse({})
 
 
 def get_filter(user, project):
-
     project = Project.objects.filter(pk=project)[0]
     project_filters = UserProjectFilter.objects.filter(project=project).filter(user=user)
     if project_filters.count():
@@ -595,6 +619,7 @@ def get_filter(user, project):
         return None
 
     return project_filter
+
 
 # FILTERS -    
 
@@ -758,10 +783,15 @@ def project_task_list(request, pk):
     project_filter = get_filter(request.user, pk)
     if project_filter is not None:
         kanban_view = project_filter.kanban
+        count_visible_tasks = project_filter.count_visible_tasks
+        assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True)\
+            .values_list('performer', flat=True)
     else:
         kanban_view = False
-        
-    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
+        count_visible_tasks = 10
+        assigned_performers = None
+
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user, assigned_performers)
 
     users_in_project = PartnerGroup.objects.filter(project=project)
 
@@ -771,7 +801,7 @@ def project_task_list(request, pk):
     all_users_task_count = []
     for user_in_proj in all_users_in_project:
         all_users_task_count.append({'user': user_in_proj
-                                        , 'task_count': Task.objects.filter(project=project)
+                                    , 'task_count': Task.objects.filter(project=project)
                                     .filter(Q(author=user_in_proj) | Q(performer=user_in_proj))
                                     .filter(active=True).filter(finished=False).count()})
 
@@ -780,7 +810,9 @@ def project_task_list(request, pk):
                                                                       'project': pk,
                                                                       'project_object': project,
                                                                       'users_in_project': all_users_task_count,
-                                                                      'kanban_view': kanban_view})
+                                                                      'kanban_view': kanban_view,
+                                                                      'count_visible_tasks': count_visible_tasks,
+                                                                      'assigned_performers': assigned_performers})
 
 
 def search_result(request):
@@ -964,7 +996,7 @@ def task_update(request, pk):
     if task.project is not None:
         if task.author != request.user or task.project.author != request.user:
             return task_detail_ajax(request, pk)
-     
+
         project_pk = task.project.pk
 
     COLOR_CHOISE = {
@@ -1044,57 +1076,6 @@ def task_update(request, pk):
                                          )
     return JsonResponse(data)
 
-# def task_copy(request, pk):
-
-
-
-# def task_edit(request, pk):
-#     if not request.user.is_authenticated():
-#         return redirect('login')
-#
-#     COLOR_CHOISE = {
-#         1: 'red',
-#         2: 'yellow',
-#         3: 'green',
-#         4: 'grey'}
-#
-#     invited_users = InviteUser \
-#         .objects.filter(Q(user_sender__username__exact=request.user.username)
-#                         | Q(user_invite__username__exact=request.user.username)) \
-#         .filter(not_invited=False).filter(invited=True)
-#
-#     users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
-#     all_users_in_project = User.objects.filter(
-#         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
-#
-#     task = get_object_or_404(Task, pk=pk)
-#     if task.author != request.user:
-#         return redirect('task_detail', pk=task.pk)
-#
-#     if request.method == "POST":
-#         if task.author == request.user:
-#             form = TaskEditForm(request.POST, instance=task)
-#             form.fields['project'].queryset = Project.objects.filter(author=request.user)
-#             form.fields['performer'].queryset = all_users_in_project
-#             if form.is_valid():
-#                 task = form.save(commit=False)
-#                 task.author = request.user
-#                 task.active = True
-#                 if task.priority is not None:
-#                     task.color = COLOR_CHOISE[int(task.priority)]
-#                 else:
-#                     task.color = COLOR_CHOISE[4]
-#                 task.date_time = task.date_time.combine(task.date, task.time)
-#                 task.save()
-#                 return redirect('task_detail', pk=task.pk)
-#     else:
-#         form = TaskEditForm(instance=task)
-#         form.fields['project'].queryset = Project.objects.filter(author=request.user)
-#         form.fields['performer'].queryset = all_users_in_project
-#
-#     return render(request, 'JtdiTASKS/views/task_edit.html', {'form': form
-#                                                               })
-
 
 def task_del(request, pk):
     if not request.user.is_authenticated():
@@ -1114,6 +1095,7 @@ def task_del(request, pk):
             'tasks_finish': tasks_finish})
         data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
             'tasks': tasks})
+        data['msg'] = 'Задача успешно удалена'
 
     return JsonResponse(data)
 
@@ -1220,10 +1202,8 @@ def task_restore(request, pk):
     method = request.POST['param']
 
     task = get_object_or_404(Task, pk=pk)
-    task.finished = False
-    task.active = True
-    task.status = 'Wait'
-    task.save()
+    task.restore()
+
     if task.author == request.user or task.performer == request.user:
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
@@ -1314,6 +1294,7 @@ def note_create(request, pk):
             data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
                 'notes': Notes.objects.filter(author=request.user).order_by('title')
             })
+            data['msg'] = 'Заметка успешно создана'
         else:
             data['form_is_valid'] = False
     else:
@@ -1344,6 +1325,7 @@ def note_del(request, pk):
         data['form_is_valid'] = True
         data['html_active_notes_list'] = render_to_string('JtdiTASKS/ajax_views/notes_table_body.html', {
             'notes': Notes.objects.filter(author=request.user).order_by('title')})
+        data['msg'] = 'Заметка успешно удалена'
 
     return JsonResponse(data)
 
@@ -1466,8 +1448,16 @@ def get_project_task_list(request, pk):
 
     data = dict()
     project = Project.objects.filter(pk=pk)[0]
+    project_filter = get_filter(request.user, pk)
+    if project_filter is not None:
+        count_visible_tasks = project_filter.count_visible_tasks
+        assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True) \
+            .values_list('performer', flat=True)
+    else:
+        count_visible_tasks = 10
+        assigned_performers = None
 
-    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user, assigned_performers)
 
     users_in_project = PartnerGroup.objects.filter(project=project)
 
@@ -1485,7 +1475,9 @@ def get_project_task_list(request, pk):
                                                                                        'tasks_finish': tasks_finish,
                                                                                        'project': pk,
                                                                                        'project_object': project,
-                                                                                       'users_in_project': all_users_task_count},
+                                                                                       'users_in_project': all_users_task_count,
+                                                                                       'count_visible_tasks': count_visible_tasks,
+                                                                                       'assigned_performers': assigned_performers},
                                        request=request)
     return JsonResponse(data)
 
@@ -1778,16 +1770,21 @@ def project_recent_list(request, user, project_pk):
 
 @register.inclusion_tag('JtdiTASKS/ajax_views/kanban.html')
 def kanban(request, pk):
-
     kanban = dict()
 
     project = Project.objects.filter(pk=pk)[0]
+    project_filter = get_filter(request.user, pk)
+    if project_filter is not None:
+        assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True)\
+            .values_list('performer', flat=True)
+    else:
+        assigned_performers = None
     kanban_status = KanbanStatus.objects.filter(project=project)
     if not kanban_status.__len__():
         kanban_column = create_first_canban_status(request.user, project, 'Запрос')
         kanban_status = list()
         kanban_status.append(kanban_column)
-    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user)
+    tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user, assigned_performers)
     for status in kanban_status:
         kanban[status] = []
         for task in tasks:
@@ -1795,7 +1792,7 @@ def kanban(request, pk):
                 kanban[status].append(task)
             elif task.kanban_status is None and status.title == 'Запрос':
                 kanban[status].append(task)
-    
+
     return {
         'request': request,
         'kanban': kanban,

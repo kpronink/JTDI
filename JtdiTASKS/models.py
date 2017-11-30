@@ -108,8 +108,7 @@ class UserProjectFilter(models.Model):
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
     kanban = models.BooleanField(default=False)
-    performers = models.ForeignKey('PerformersAssigned', null=True, default=None,
-                                   blank=True)
+    count_visible_tasks = models.CharField(max_length=3, default='10', blank=True)
 
 
 class PerformersAssigned(models.Model):
@@ -119,6 +118,7 @@ class PerformersAssigned(models.Model):
 
 
 class Task(models.Model):
+        
     STATUS_WAIT = 'Wait'
     STATUS_STARTED = 'Started'
     STATUS_STOPED = 'Stoped'
@@ -187,8 +187,10 @@ class Task(models.Model):
 
     remind = models.BooleanField(default=True)
 
-    def publish(self):
-        self.published_date = timezone.now
+    def restore(self):
+        self.finished = False
+        self.active = True
+        self.status = 'Wait'
         self.save()
 
     def __str__(self):
