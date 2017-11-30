@@ -334,6 +334,11 @@ def change_kanban_status(request):
     task = get_object_or_404(Task, pk=task_pk)
     status_kanban = get_object_or_404(KanbanStatus, pk=status_kanban_pk)
 
+    if task.project is not None:
+        register_event(task, request.user, task.project, 'изменил статус задачи с '+ task.kanban_status.title + ' на '+ status_kanban.title +':')
+
+    data['msg'] = 'Успешно изменен статус задачи'
+        
     task.kanban_status = status_kanban
     task.save()
 

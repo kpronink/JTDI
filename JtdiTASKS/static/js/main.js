@@ -571,6 +571,7 @@ function ChangeKanbanStatus(task_pk, status_kanban_pk) {
             url: "/ajax/change_kanban_status/",
             data: {'task_pk': task_pk, 'status_kanban_pk': status_kanban_pk},
             success: function (result) {
+            Alert(result.msg)    
             }
         });
 }
