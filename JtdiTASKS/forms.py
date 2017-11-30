@@ -122,6 +122,7 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError("Пользователь с таким email уже существует")
         return email
 
+
 # USER PROFILE -
 
 
@@ -220,8 +221,8 @@ class TaskEditForm(forms.ModelForm):
             'date': DataTimeInput(attrs={'input_type': 'date'}),
             'planed_date_finish': DataTimeInput(attrs={'input_type': 'date'}),
             'time': TimeInput(attrs={'input_type': 'date'}),
-
         }
+
         labels = {
             'title': 'Заголовок',
             'description': 'Описание',
@@ -232,6 +233,7 @@ class TaskEditForm(forms.ModelForm):
             'project': 'Проект',
             'performer': 'Исполнитель',
             'planed_date_finish': 'Планируемая дата сдачи',
+            'priority': 'Важность',
         }
 
         date = forms.DateField(label='Дата начала', initial=datetime.date.today)
@@ -240,11 +242,15 @@ class TaskEditForm(forms.ModelForm):
         planed_date_finish = forms.DateField(label='Планируемая дата сдачи')
         planed_date_finish.widget.input_type = 'date'
 
-        project = forms.ModelChoiceField(queryset=None)
+        project = forms.ModelChoiceField(label='Проект',
+                                         required=False,
+                                         queryset=None, )
+        project.widget.attrs.update({'onChange': 'ProjectSelect(this.value);'})
         performer = forms.ModelChoiceField(queryset=None)
 
         time_field = forms.TimeField(label='Время', required=False)
         time_field.widget.input_type = 'time'
+
 
 # TASKS -
 
@@ -260,10 +266,6 @@ class NoteForm(forms.ModelForm):
             'title': 'Заголовок',
             'description': 'Расшифровка',
         }
-    # title = forms.CharField(label='Заголовок')
-    # title.widget.attrs.update({'placeholder': 'Заголовок',})
-    # 
-    # description = forms.CharField(label='Описание', widget=forms.Textarea, required=False)
 
 
 # NOTES -
@@ -279,7 +281,7 @@ class ProjectForm(forms.ModelForm):
         labels = {
             'title': '',
         }
-        
+
 
 class ProjectFormRename(forms.Form):
     title = forms.CharField(label='Новый заголовок')
