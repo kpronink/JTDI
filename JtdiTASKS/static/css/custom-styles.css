@@ -1062,6 +1062,24 @@ textarea.form-control {
           animation: at-ripple 0.6s linear infinite;
 }
 
+.card-action{
+  display: none;
+}
+.project_settings{
+    color: #f44336;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    padding: 0 0 0 15px;
+    z-index: 100;
+}
+.project_settings:hover ~ .card-action{
+  display: block;
+}
+.card-action:hover {
+  display: block;
+}
+
 @-webkit-keyframes at-ripple {
   0% {
     box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 0 rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1);
