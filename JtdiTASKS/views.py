@@ -48,12 +48,14 @@ def get_tasks_with_filter(filter_method, project, user, assigned_performers=None
 
     if filter_method == 'projects':
         if project.author == user:
-            if assigned_performers.count():
-                tasks = Task.objects.filter(active=True).filter(project=project)\
-                    .filter(performer__pk__in=assigned_performers).order_by('date')
+            if assigned_performers is not None:
+                if assigned_performers.count():
+                    tasks = Task.objects.filter(active=True).filter(project=project)\
+                        .filter(performer__pk__in=assigned_performers).order_by('date')
+                else:
+                    tasks = Task.objects.filter(active=True).filter(project=project).order_by('date')
             else:
                 tasks = Task.objects.filter(active=True).filter(project=project).order_by('date')
-
             tasks_finish = Task.objects.filter(active=False).filter(finished=True).filter(project=project.pk) \
                 .order_by('date_finish')
         else:
