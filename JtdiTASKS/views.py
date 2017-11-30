@@ -311,6 +311,7 @@ def add_kanban_column(request, pk):
                                                   request=request
                                                   )
             data['form_is_valid'] = True
+            data['msg'] = 'Статус успешно создан'
     else:
         form = KanbanColumnForm()
         data['kanban_column_form'] = render_to_string('JtdiTASKS/ajax_views/new_kanban_column.html',

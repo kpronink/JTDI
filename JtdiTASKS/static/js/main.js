@@ -527,7 +527,7 @@ function AddNewColumn() {
                 if (result.kanban_column_form !== '') {
                     $("#modal-task .modal-content").html(result.kanban_column_form);
                     $('#modal-task').modal('show')
-
+                    Alert(result.msg)
                 }
             }
         });
@@ -571,7 +571,7 @@ function ChangeKanbanStatus(task_pk, status_kanban_pk) {
             url: "/ajax/change_kanban_status/",
             data: {'task_pk': task_pk, 'status_kanban_pk': status_kanban_pk},
             success: function (result) {
-            Alert(result.msg)    
+            Alert(result.msg)
             }
         });
 }
