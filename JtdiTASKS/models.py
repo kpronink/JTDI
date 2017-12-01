@@ -112,9 +112,17 @@ class UserProjectFilter(models.Model):
 
 
 class PerformersAssigned(models.Model):
-    filter = models.ForeignKey('UserProjectFilter', null=True, default=None, blank=True)
+    filter = models.ForeignKey('UserProjectFilter', null=True, default=None, blank=True, on_delete=models.CASCADE)
     performer = models.OneToOneField(User, on_delete=models.CASCADE)
     selected = models.BooleanField(default=False)
+
+
+class ProjectPermission:
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    project = models.ForeignKey('Project', null=True, default=None,
+                                blank=True, on_delete=models.CASCADE)
+    view_only = models.BooleanField(default=False)
+    change_task = models.BooleanField(default=False)
 
 
 class Task(models.Model):
@@ -198,7 +206,7 @@ class Task(models.Model):
 
 
 class TasksTimeTracker(models.Model):
-    task = models.ForeignKey('Task')
+    task = models.ForeignKey('Task', on_delete=models.CASCADE)
     datetime = models.DateTimeField(default=None, blank=True, null=True)
     start = models.DateTimeField(default=None, blank=True, null=True)
     finish = models.DateTimeField(default=None, blank=True, null=True)
@@ -206,7 +214,7 @@ class TasksTimeTracker(models.Model):
 
 
 class CommentsTask(models.Model):
-    task = models.ForeignKey('Task')
+    task = models.ForeignKey('Task', on_delete=models.CASCADE)
     commentator = models.ForeignKey('auth.User')
     comment = models.TextField(max_length=2000, blank=True)
     date_time = models.DateTimeField(default=timezone.now, blank=True, null=True)
@@ -220,7 +228,7 @@ class Notes(models.Model):
 
 
 class PartnerGroup(models.Model):
-    project = models.ForeignKey('Project', default=None)
+    project = models.ForeignKey('Project', default=None, on_delete=models.CASCADE)
     partner = models.ForeignKey('auth.User')
 
 
