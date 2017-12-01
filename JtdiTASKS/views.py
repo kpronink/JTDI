@@ -355,6 +355,9 @@ def change_kanban_status(request):
     if status_kanban.finished:
         task.active = False
         task.finished = True
+        task.date_finish = datetime.datetime.today()
+        task.date_time_finish = datetime.datetime.today()
+        task.status = 'Finished'
     task.save()
 
     return JsonResponse(data)

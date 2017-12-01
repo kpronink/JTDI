@@ -37,10 +37,11 @@ class CharFieldWidget(Input):
 class KanbanColumnForm(forms.ModelForm):
     class Meta:
         model = KanbanStatus
-        fields = ('title',)
+        fields = ('title', 'finished')
 
         labels = {
             'title': '',
+            'finished': 'Завершающий статус'
         }
 
 
