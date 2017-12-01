@@ -2,48 +2,52 @@
 
 <div id="p1" class="mdl-progress mdl-js-progress"></div>
 <script>
-  document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
-    this.MaterialProgress.setProgress(44);
-  });
+    document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
+        this.MaterialProgress.setProgress(44);
+    });
 </script>
 <div class="dd" id="kanban_desc">
     {% for status_kanban, tasks in kanban.items %}
-    <ol class="kanban {{ status_kanban.pk }}" id="{{ status_kanban.pk }}" style="border-top: 5px solid {{ status_kanban.color }}">
-    <div class="kanban__title">
-        <h2 class="h2_kanban">{{ status_kanban.title }}</h2>
-        <div class="actions_column">
-{#            <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>#}
-        </div>
-    </div>
-    {% if tasks|length %}
-    <ol class="dd-list">
-    {% for task in tasks %}
+        <ol class="kanban {{ status_kanban.pk }}" id="{{ status_kanban.pk }}"
+            style="border-top: 5px solid {{ status_kanban.color }}">
+            <div class="kanban__title">
+                <h2 class="h2_kanban">{{ status_kanban.title }}</h2>
+                <div class="actions_column">
 
-        <li class="dd-item" data-id="{{ task.pk }}">
-            <h3 class="title dd-handle">
-                {% if task.performer.profile.avatar %}
-                <img src="{{ task.performer.profile.avatar.url }}" class="circle" width="30" height="30" border="20">
-                {% else %}
-                <img src="/static/img/avatar_2x.png" class="circle" width="30" height="30" border="20">
-                {% endif %}
-                {{ task.title|truncatechars:30 }}
-            </h3>
-            <div class="text" contenteditable="true">{{ task.description|truncatechars:200 }}
+                </div>
             </div>
-            <i class="material-icons" id="task_menu">menu</i>
-            <div class="actions">
-                <i class="material-icons" id="color">palette</i>
-                <a href=# class="action_href" onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')" data-toggle="modal" data-target="#modal-task"
-                   title="Редактировать задачу"><i class="material-icons">edit</i></a>
-                <i class="material-icons">insert_link</i>
-                <i class="material-icons">attach_file</i>
-            </div>
-        </li>
+            {% if tasks|length %}
+                <ol class="dd-list">
+                    {% for task in tasks %}
 
-    {% endfor %}
-    </ol>
-    {% endif %}
-  </ol>
+                        <li class="dd-item" data-id="{{ task.pk }}">
+                            <h3 class="title dd-handle">
+                                {% if task.performer.profile.avatar %}
+                                    <img src="{{ task.performer.profile.avatar.url }}" class="circle" width="30"
+                                         height="30" border="20">
+                                {% else %}
+                                    <img src="/static/img/avatar_2x.png" class="circle" width="30" height="30"
+                                         border="20">
+                                {% endif %}
+                                {{ task.title|truncatechars:30 }}
+                            </h3>
+                            <div class="text" contenteditable="true">{{ task.description|truncatechars:200 }}
+                            </div>
+                            <i class="material-icons" id="task_menu">menu</i>
+                            <div class="actions">
+                                <i class="material-icons" id="color">palette</i>
+                                <a href=# class="action_href" onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')"
+                                   data-toggle="modal" data-target="#modal-task"
+                                   title="Редактировать задачу"><i class="material-icons">edit</i></a>
+                                <i class="material-icons">insert_link</i>
+                                <i class="material-icons">attach_file</i>
+                            </div>
+                        </li>
+
+                    {% endfor %}
+                </ol>
+            {% endif %}
+        </ol>
     {% endfor %}
 </div>
-<script src={% static "js/Kanban.js"%}></script>
+<script src={% static "js/Kanban.js" %}></script>
