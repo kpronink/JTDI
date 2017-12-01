@@ -40,7 +40,7 @@ class KanbanColumnForm(forms.ModelForm):
         fields = ('title', 'finished')
 
         labels = {
-            'title': '',
+            'title': 'Заголовок статуса',
             'finished': 'Завершающий статус'
         }
 

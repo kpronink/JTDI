@@ -251,7 +251,7 @@ def get_push_event(request):
 
 def create_first_canban_status(user, project, title, finished):
     finished_status = KanbanStatus.objects.filter(project=project).filter(finished=True).count()
-    if finished_status:
+    if finished_status and finished:
         return None
 
     kanban_first_column = KanbanStatus()
@@ -353,11 +353,7 @@ def change_kanban_status(request):
         
     task.kanban_status = status_kanban
     if status_kanban.finished:
-        task.active = False
-        task.finished = True
-        task.date_finish = datetime.datetime.today()
-        task.date_time_finish = datetime.datetime.today()
-        task.status = 'Finished'
+        task.finish()
     task.save()
 
     return JsonResponse(data)
@@ -1183,12 +1179,7 @@ def task_finish(request, pk):
 
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user or task.performer == request.user:
-        task.finished = True
-        task.active = False
-        task.date_finish = datetime.datetime.today()
-        task.date_time_finish = datetime.datetime.today()
-        task.status = 'Finished'
-        task.save()
+        task.finish()
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
@@ -1252,10 +1243,7 @@ def task_transfer_date(request, pk, days):
     method = request.POST['param']
 
     task = get_object_or_404(Task, pk=pk)
-    task.date = task.date + datetime.timedelta(days=int(days))
-    # Планируюмую дату заввершения переносим на тоже количество дней плюс неделя
-    task.planed_date_finish = task.planed_date_finish + datetime.timedelta(days=(int(days) + 7))
-    task.save()
+    task.transfer_date(days=int(days))
     if task.author == request.user or task.performer == request.user:
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True

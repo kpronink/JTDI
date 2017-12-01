@@ -1,3 +1,4 @@
+import datetime
 import os
 import random
 
@@ -200,6 +201,20 @@ class Task(models.Model):
         self.finished = False
         self.active = True
         self.status = 'Wait'
+        self.save() 
+        
+    def finish(self):
+        self.active = False
+        self.finished = True
+        self.date_finish = datetime.datetime.today()
+        self.date_time_finish = datetime.datetime.today()
+        self.status = 'Finished'
+        self.save()
+        
+    def transfer_date(self, days):
+        self.date = self.date + datetime.timedelta(days=int(days))
+        # Планируюмую дату заввершения переносим на тоже количество дней плюс неделя
+        self.planed_date_finish = self.planed_date_finish + datetime.timedelta(days=(int(days) + 7))
         self.save()
 
     def __str__(self):

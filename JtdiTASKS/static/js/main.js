@@ -545,6 +545,7 @@ $("#modal-task").on("submit", ".add_kanban_column_form", function () {
             if (data.new_column !== '') {
                 $('.dd').append(data.new_column);
                 $('#modal-task').modal('hide')
+                Alert(data.msg);
                 }
         }
         else {
