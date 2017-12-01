@@ -249,12 +249,17 @@ def get_push_event(request):
 # KANBAN +
 
 
-def create_first_canban_status(user, project, title):
+def create_first_canban_status(user, project, title, finished):
+    finished_status = KanbanStatus.objects.filter(project=project).filter(finished=True).count()
+    if finished_status:
+        return None
+
     kanban_first_column = KanbanStatus()
     kanban_first_column.project = project
     kanban_first_column.author = user
     kanban_first_column.color = generate_color()
     kanban_first_column.title = title
+    kanban_first_column.finished = finished
     kanban_first_column.save()
 
     return kanban_first_column
@@ -305,13 +310,17 @@ def add_kanban_column(request, pk):
         form = KanbanColumnForm(request.POST)
         if form.is_valid():
             project = Project.objects.filter(pk=pk)[0]
-            kanban_column = create_first_canban_status(request.user, project, form.cleaned_data['title'])
-            data['new_column'] = render_to_string('JtdiTASKS/ajax_views/kanban_column.html',
+            kanban_column = create_first_canban_status(request.user, project, form.cleaned_data['title'], form.cleaned_data['finished'])
+            if kanban_column is not None:
+                data['new_column'] = render_to_string('JtdiTASKS/ajax_views/kanban_column.html',
                                                   {'kanban_column': kanban_column},
                                                   request=request
                                                   )
-            data['form_is_valid'] = True
-            data['msg'] = 'Статус успешно создан'
+                data['form_is_valid'] = True
+                data['msg'] = 'Статус успешно создан'
+            else:
+                data['form_is_valid'] = False
+                data['msg'] = 'Завершающий статус уже создан'
     else:
         form = KanbanColumnForm()
         data['kanban_column_form'] = render_to_string('JtdiTASKS/ajax_views/new_kanban_column.html',
@@ -343,6 +352,9 @@ def change_kanban_status(request):
     data['msg'] = 'Успешно изменен статус задачи'
         
     task.kanban_status = status_kanban
+    if status_kanban.finished:
+        task.active = False
+        task.finished = True
     task.save()
 
     return JsonResponse(data)

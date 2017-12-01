@@ -32,6 +32,7 @@ class KanbanStatus(models.Model):
     color = models.CharField(max_length=10)
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
+    finished = models.BooleanField(default=False)
 
     def publish(self):
         self.save()
