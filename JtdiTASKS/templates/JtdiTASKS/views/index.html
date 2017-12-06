@@ -25,6 +25,7 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody> {% for task in tasks %}
@@ -46,6 +47,12 @@
                                         <td>
                                             <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')" data-toggle="modal" data-target="#modal-task"
                                                title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href=# onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')" data-toggle="modal"
+                                               data-target="#modal-task"
+                                               title="Скопировать задачу"> <i class="fa fa-files-o" aria-hidden="true"></i>
                                             </a>
                                         </td>
                                         <td>
@@ -78,6 +85,9 @@
                                         <th>Расшифровка</th>
                                         <th>Дата начала</th>
                                         <th>Дата завершения</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody> {% for task in tasks_finished_today %}
@@ -91,6 +101,12 @@
                                         <td>
                                             <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}')" title="Восстановить задачу">
                                                 <i class="glyphicon glyphicon-backward"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href=# onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')" data-toggle="modal"
+                                               data-target="#modal-task"
+                                               title="Скопировать задачу"> <i class="fa fa-files-o" aria-hidden="true"></i>
+                                            </a>
                                         </td>
                                         <td>
                                             <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}')" title="Удалить задачу">
