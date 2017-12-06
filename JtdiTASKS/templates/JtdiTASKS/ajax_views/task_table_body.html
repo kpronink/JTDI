@@ -12,6 +12,7 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody> {% for task in tasks %}
@@ -32,6 +33,12 @@
                                         <td>
                                             <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')" data-toggle="modal" data-target="#modal-task"
                                                title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href=# onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')" data-toggle="modal"
+                                               data-target="#modal-task"
+                                               title="Скопировать задачу"> <i class="fa fa-files-o" aria-hidden="true"></i>
                                             </a>
                                         </td>
                                         <td>

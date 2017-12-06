@@ -917,10 +917,16 @@ def task_create(request):
         proj = get_object_or_404(Project, pk=project_pk)
         all_users_in_project = User.objects.filter(
             Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk))
+        project_filter = get_filter(request.user, project_pk)
+        if project_filter is not None:
+            kanban = project_filter.kanban
+        else:
+            kanban = False
     else:
         users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
         all_users_in_project = User.objects \
             .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=user.pk))
+        kanban = False
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -963,7 +969,7 @@ def task_create(request):
             data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
                 'tasks': tasks
             })
-            if task.project is not None:
+            if task.project is not None and kanban:
                 data['kanban'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
         else:
             data['form_is_valid'] = False
@@ -975,26 +981,6 @@ def task_create(request):
 
     context = {'form': form}
     data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_create_ajax.html',
-                                         context,
-                                         request=request
-                                         )
-    return JsonResponse(data)
-
-
-def task_detail_ajax(request, pk):
-    if not request.user.is_authenticated():
-        return redirect('login')
-
-    data = dict()
-
-    task = get_object_or_404(Task, pk=pk)
-    full_time = TasksTimeTracker.objects.filter(task__pk=pk).aggregate(Sum('full_time'))
-    comment_form = CommentAddForm()
-
-    context = {'task': task,
-               'comment_form': comment_form,
-               'full_time': full_time['full_time__sum']}
-    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_detail_ajax.html',
                                          context,
                                          request=request
                                          )
@@ -1044,10 +1030,16 @@ def task_update(request, pk):
         proj = get_object_or_404(Project, pk=project_pk)
         all_users_in_project = User.objects.filter(
             Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk))
+        project_filter = get_filter(request.user, project_pk)
+        if project_filter is not None:
+            kanban = project_filter.kanban
+        else:
+            kanban = False
     else:
         users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
         all_users_in_project = User.objects \
             .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
+        kanban = False
 
     if request.method == "POST":
         if task.author == request.user or task.project.author == request.user:
@@ -1073,7 +1065,7 @@ def task_update(request, pk):
                 data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
                     'tasks': tasks
                 })
-                if task.project is not None:
+                if task.project is not None and kanban:
                     data['kanban'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
                 if not task.remind:
                     reminders = QueueTask.objects.filter(task=task).filter(user=request.user)
@@ -1096,6 +1088,86 @@ def task_update(request, pk):
     context = {'form': form,
                'task': task}
     data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_edit_ajax.html',
+                                         context,
+                                         request=request
+                                         )
+    return JsonResponse(data)
+
+
+def task_copy(request, pk):
+    if not request.user.is_authenticated():
+        return {'login': False}
+
+    data = dict()
+
+    if 'param' in request.POST:
+        method = request.POST['param']
+    elif 'param' in request.GET:
+        method = request.GET['param']
+    else:
+        method = 'projects'
+
+    project_pk = None
+    task = get_object_or_404(Task, pk=pk)
+    task.pk = None
+    task.save()
+
+    if task.project is not None:
+        if task.author != request.user or task.project.author != request.user:
+            return task_detail_ajax(request, pk)
+
+        project_pk = task.project.pk
+
+    invited_users = InviteUser \
+        .objects.filter(Q(user_sender__username__exact=request.user.username)
+                        | Q(user_invite__username__exact=request.user.username)) \
+        .filter(not_invited=False).filter(invited=True)
+
+    users_in_project = PartnerGroup.objects.filter(project=project_pk)
+
+    projects = list(
+        PartnerGroup.objects.filter(partner=request.user).values_list('project', flat=True))
+    project_owner = list(Project.objects.filter(author=request.user).values_list('pk', flat=True))
+    projects.extend(project_owner)
+
+    if project_pk is not None:
+        proj = get_object_or_404(Project, pk=project_pk)
+        all_users_in_project = User.objects.filter(
+            Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=proj.author.pk))
+    else:
+        users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
+        all_users_in_project = User.objects \
+            .filter(Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=request.user.pk))
+
+    form = TaskEditForm(instance=task)
+    form.fields['project'].queryset = Project.objects.filter(Q(author=request.user) | Q(
+            pk__in=projects))
+    form.fields['performer'].queryset = all_users_in_project
+    data['msg'] = ''
+
+    context = {'form': form,
+               'task': task}
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_edit_ajax.html',
+                                         context,
+                                         request=request
+                                         )
+    return JsonResponse(data)
+
+
+def task_detail_ajax(request, pk):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    data = dict()
+
+    task = get_object_or_404(Task, pk=pk)
+    full_time = TasksTimeTracker.objects.filter(task__pk=pk).aggregate(Sum('full_time'))
+    comment_form = CommentAddForm()
+
+    context = {'task': task,
+               'comment_form': comment_form,
+               'full_time': full_time['full_time__sum']}
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_detail_ajax.html',
                                          context,
                                          request=request
                                          )
