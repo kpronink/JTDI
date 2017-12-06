@@ -39,6 +39,9 @@
                                 <a href=# class="action_href" onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')"
                                    data-toggle="modal" data-target="#modal-task"
                                    title="Редактировать задачу"><i class="material-icons">edit</i></a>
+                                <a href=# class="action_href" onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')"
+                                   data-toggle="modal" data-target="#modal-task"
+                                   title="Копировать задачу"><i class="material-icons">insert_drive_file</i></a>
                                 <i class="material-icons">insert_link</i>
                                 <i class="material-icons">attach_file</i>
                             </div>
