@@ -963,6 +963,8 @@ def task_create(request):
             data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
                 'tasks': tasks
             })
+            if task.project is not None:
+                data['kanban'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
         else:
             data['form_is_valid'] = False
     else:
@@ -1071,6 +1073,8 @@ def task_update(request, pk):
                 data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
                     'tasks': tasks
                 })
+                if task.project is not None:
+                    data['kanban'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
                 if not task.remind:
                     reminders = QueueTask.objects.filter(task=task).filter(user=request.user)
                     if reminders.count():
