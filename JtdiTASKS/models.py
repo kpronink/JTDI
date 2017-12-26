@@ -34,6 +34,7 @@ class KanbanStatus(models.Model):
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
     finished = models.BooleanField(default=False)
+    visible = models.BooleanField(default=True)
 
     def publish(self):
         self.save()
@@ -106,7 +107,8 @@ class Profile(models.Model):
 
 
 class UserProjectFilter(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, default=None,
+                             blank=True)
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
     kanban = models.BooleanField(default=False)
@@ -115,8 +117,18 @@ class UserProjectFilter(models.Model):
 
 class PerformersAssigned(models.Model):
     filter = models.ForeignKey('UserProjectFilter', null=True, default=None, blank=True, on_delete=models.CASCADE)
-    performer = models.OneToOneField(User, on_delete=models.CASCADE)
+    performer = models.ForeignKey(User, null=True, default=None,
+                                  blank=True)
     selected = models.BooleanField(default=False)
+
+
+class ProjectAccess(models.Model):
+    user = models.ForeignKey(User, null=True, default=None,
+                             blank=True)
+    project = models.ForeignKey('Project', null=True, default=None,
+                                blank=True)
+    full_rights = models.BooleanField(default=False)
+    read_only = models.BooleanField(default=True)
 
 
 class ProjectPermission:
@@ -128,7 +140,6 @@ class ProjectPermission:
 
 
 class Task(models.Model):
-        
     STATUS_WAIT = 'Wait'
     STATUS_STARTED = 'Started'
     STATUS_STOPED = 'Stoped'
@@ -173,6 +184,8 @@ class Task(models.Model):
     performer = models.ForeignKey('auth.User', related_name='performer', blank=True, null=True)
     project = models.ForeignKey('Project', null=True, default=None,
                                 blank=True)
+    owner_task = models.ForeignKey('Task', null=True, default=None,
+                                   blank=True)
     kanban_status = models.ForeignKey('KanbanStatus', null=True, default=None)
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=2000, blank=True)
@@ -201,8 +214,8 @@ class Task(models.Model):
         self.finished = False
         self.active = True
         self.status = 'Wait'
-        self.save() 
-        
+        self.save()
+
     def finish(self):
         self.active = False
         self.finished = True
@@ -210,7 +223,7 @@ class Task(models.Model):
         self.date_time_finish = datetime.datetime.today()
         self.status = 'Finished'
         self.save()
-        
+
     def transfer_date(self, days):
         self.date = self.date + datetime.timedelta(days=int(days))
         # Планируюмую дату заввершения переносим на тоже количество дней плюс неделя
@@ -241,6 +254,7 @@ class Notes(models.Model):
 
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=2000, blank=True)
+    lock = models.BooleanField(default=False)
 
 
 class PartnerGroup(models.Model):

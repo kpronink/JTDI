@@ -11,3 +11,5 @@ Would skip repository JTDI/
 jtdi_venv
 /JtdiTASKS/migrations/
 /mysite/settings.py
+/important_static/
+JtdiTASKS/static/plugins/

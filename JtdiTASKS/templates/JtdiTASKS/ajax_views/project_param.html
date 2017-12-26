@@ -1,42 +1,109 @@
-{% load bootstrap %}{% load widget_tweaks %}
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title"></h4>
-</div>
-<div class="form-group">
-            <fieldset id="rename_proj">
-                <form method="post" action="{% url 'project_rename' pk=project%}" class="rename_proj_form">
-                    {% csrf_token %}
-                    {% for field in project_rename_form %}
-                        <div class="form-group{% if field.errors %} has-error{% endif %}">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {% render_field field class="form-control" %}
-                        {% for error in field.errors %}
-                          <p class="help-block">{{ error }}</p>
-                        {% endfor %}
-                        </div>
-                    {% endfor %}
-                    <button type="submit" class="save btn btn-primary">Переименовать</button>
-                </form>
-            </fieldset>
-</div>
-<span></span>
-<div class="form-group">
-            <fieldset id="invite_user_in_proj">
-                <form method="post" action="{% url 'invite_in_proj' pk=project%}" class="user_inv_form_in_proj">
-                    {% csrf_token %}
-                    {% for field in project_invite_form %}
-                        <div class="form-group{% if field.errors %} has-error{% endif %}">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {% render_field field class="form-control" %}
-                        {% for error in field.errors %}
-                          <p class="help-block">{{ error }}</p>
-                        {% endfor %}
-                        </div>
-                    {% endfor %}
-                    <button type="submit" class="save btn btn-primary">Пригласить</button>
-                </form>
-            </fieldset>
-</div>
+{% load widget_tweaks %}
 
-<div class="card-action"> <a href="{% url 'project_del' pk=project %}"><i class="glyphicon glyphicon-trash"></i> Удалить проект</a> </div>
+
+{#            <fieldset id="rename_proj">#}
+<form method="post" action="{% url 'project_rename' pk=project %}" class="ui form" id="rename_proj_form">
+    {% csrf_token %}
+    {% for field in project_rename_form %}
+        <div class="field {% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field class="field" %}
+            {% for error in field.errors %}
+                <p class="help-block">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="ui button blue">Переименовать</button>
+</form>
+{#            </fieldset>#}
+
+<div class="divider"></div>
+
+{#            <fieldset id="invite_user_in_proj">#}
+<form method="post" action="{% url 'invite_in_proj' pk=project %}" class="ui form user_inv_form_in_proj">
+    {% csrf_token %}
+    {% for field in project_invite_form %}
+        <div class="field {% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field class="field" %}
+            {% for error in field.errors %}
+                <p class="help-block">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="ui button blue">Пригласить</button>
+</form>
+{#            </fieldset>#}
+<form class="ui form">
+    <h4 class="ui dividing header">Права пользователей</h4>
+    <div class="field">
+        <div class="two fields">
+            <div class="field">
+                <select name="read_only" multiple="" class="ui dropdown" id="read_only">
+                    <option value="">Только чтение</option>
+                    {% for user_in_proj in users_in_project %}
+                        <option value="{{ user_in_proj.pk }}">{{ user_in_proj.username }}
+                            ({{ user_in_proj.first_name }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <select name="full_rights" multiple="" class="ui dropdown" id="full_rights">
+                    <option value="">Полные права</option>
+                    {% for user_in_proj in users_in_project %}
+                        <option value="{{ user_in_proj.pk }}">{{ user_in_proj.username }}
+                            ({{ user_in_proj.first_name }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<a href="{% url 'project_del' pk=project %}"><i class="trash icon"></i> Удалить проект</a>
+
+<script>
+    $(document).ready(function () {
+{#        $('.ui.dropdown').dropdown();#}
+
+        $('#read_only')
+            .dropdown('set selected',
+                [
+                    {% for user_in_proj in users_in_project %}
+                        {% for user_read_only in read_only %}
+                            {% if user_in_proj.user.pk == user_read_only.user.pk %}
+                                '{{ user_in_proj.user.pk }}',
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                ]
+            )
+        ;
+
+        $('#read_only').change(function () {
+            ChangeRules('read_only', $(this).val() + "");
+        });
+
+        $('#full_rights')
+            .dropdown('set selected',
+                [
+                    {% for user_in_proj in users_in_project %}
+                        {% for user_full_rights in full_rights %}
+                            {% if user_in_proj.user.pk == user_full_rights.user.pk %}
+                                '{{ user_in_proj.user.pk }}',
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                ]
+            )
+        ;
+
+        $('#full_rights').change(function () {
+            ChangeRules('full_rights', $(this).val() + "");
+        });
+    });
+</script>
+

@@ -1,69 +1,110 @@
-{% extends 'JtdiTASKS/base.html' %} {% load bootstrap %} {% load staticfiles %} {% block content %}
-<div id="page-wrapper">
-    <div class="header">
-        <h1 class="page-header">
-                            Участники проектов
-                        </h1> </div>
-    <div id="page-inner">
-        <div class="row">
-            <div class="col-md-6">
-                <!-- Advanced Tables -->
-                <div class="card">
-                    <div class="card-action"> Пригласить пользователя </div>
-                    <div class="card-content">
-                        <form method="POST" class="form">
-                            <fieldset>
-                                <div class="form-group"> {% csrf_token %} {{ invite_form|bootstrap }} </div>
-                            </fieldset>
-                            <button type="submit" class="btn btn-primary">Пригласить</button>
-                        </form>
-                    </div>
+{% extends 'JtdiTASKS/base.html' %} {% load staticfiles %} {% block content %}
+    <div class="ui fluid card">
+        <div class="content">
+            <div class="ui huge header">Участники проектов</div>
+            <div class="ui three column grid">
+                <div class="column">
+                    <form method="POST" class="ui form">
+                        <div class="ui fluid card">
+                            <div class="content">
+                                <div class="header"> Пригласить пользователя</div>
+
+                                {% csrf_token %} {{ invite_form }}
+
+
+                            </div>
+                            <button type="submit" class="ui bottom attached button"><i class="add icon"></i>Пригласить
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <!-- Advanced Tables -->
-                <div class="card">
-                    <div class="card-action"> Мои приглашения </div>
-                    <div class="card-content">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
+                <div class="column">
+                    <div class="ui fluid card">
+                        <div class="content">
+                            <div class="header"> Мои приглашения</div>
+                            <table class="ui celled table">
                                 <thead>
-                                    <tr>
-                                        <th>Пользователь</th>
-                                        <th>Статус</th>
-                                    </tr>
+                                <tr>
+                                    <th>Пользователь</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody> {% for invite in my_invites %}
                                     <tr>
-                                        <td>{{ invite.user_sender }}</td>
-                                        <td>{% if invite.invited and not invite.not_invited%}Принято{% elif not invite.invited and invite.not_invited%}Отклонен{% elif not invite.invited and not invite.not_invited%}Ожидает{% endif %}</td>
-                                        <td>{% if not invite.invited and not invite.not_invited%}
-                                            <a href="{% url 'invited' pk=invite.pk %}" data-rel="collapse" title="Принять"> <i class="glyphicon glyphicon-ok" style="color: {{ task.color }}"></i></a>{% endif %}</td>
+                                        {% if invite.user_sender.profile.avatar %}
+                                            <td>
+                                                <h4 class="ui image header">
+                                                    <img src="{{ invite.user_sender.profile.avatar.url }}"
+                                                         class="ui mini rounded image">
+                                                    <div class="content">{{ invite.user_sender }}</div>
+                                                </h4>
+                                            </td>
+                                        {% else %}
+                                            <td>
+                                                <h4 class="ui image header">
+                                                    <img src="/static/img/avatar_2x.png" class="ui mini rounded image">
+                                                    <div class="content">{{ invite.user_sender }}</div>
+                                                </h4>
+                                            </td>
+                                        {% endif %}
+                                        <td>{% if invite.invited and not invite.not_invited %}
+                                            Принято{% elif not invite.invited and invite.not_invited %}
+                                            Отклонен{% elif not invite.invited and not invite.not_invited %}
+                                            Ожидает{% endif %}</td>
+                                        <td>{% if not invite.invited and not invite.not_invited %}
+                                            <a href="{% url 'invited' pk=invite.pk %}" data-rel="collapse"
+                                               title="Принять">
+                                                <i class="checkmark icon"
+                                                   style="color: {{ task.color }}"></i></a>{% endif %}</td>
                                         <td>
-                                            <a href="{% url 'not_invited' pk=invite.pk %}" data-rel="collapse" title="Отклонить"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                            <a href="{% url 'not_invited' pk=invite.pk %}" data-rel="collapse"
+                                               title="Отклонить"> <i class="remove icon"></i></a>
                                         </td>
                                     </tr> {% endfor %} </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-action"> Приглашения от меня </div>
-                    <div class="card-content">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
+                <div class="column">
+                    <div class="ui fluid card">
+                        <div class="content">
+                            <div class="header"> Приглашения от меня</div>
+                            <table class="ui celled table">
                                 <thead>
-                                    <tr>
-                                        <th>Пользователь</th>
-                                        <th>Статус</th>
-                                    </tr>
+                                <tr>
+                                    <th>Пользователь</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody> {% for invite in invites %}
                                     <tr>
-                                        <td>{{ invite.user_invite }}</td>
-                                        <td>{% if invite.invited and not invite.not_invited%}Принято{% elif not invite.invited and invite.not_invited%}Отклонен{% elif not invite.invited and not invite.not_invited%}Ожидает{% endif %}</td>
+                                        {% if invite.user_invite.profile.avatar %}
+                                            <td>
+                                                <h4 class="ui image header">
+                                                    <img src="{{ invite.user_invite.profile.avatar.url }}"
+                                                         class="ui mini rounded image">
+                                                    <div class="content">{{ invite.user_invite }}</div>
+                                                </h4>
+                                            </td>
+                                        {% else %}
+                                            <td>
+                                                <h4 class="ui image header">
+                                                    <img src="/static/img/avatar_2x.png" class="ui mini rounded image">
+                                                    <div class="content">{{ invite.user_invite }}</div>
+                                                </h4>
+                                            </td>
+                                        {% endif %}
+                                        {#                                <td>{{ invite.user_invite }}</td>#}
+                                        <td>{% if invite.invited and not invite.not_invited %}
+                                            Принято{% elif not invite.invited and invite.not_invited %}
+                                            Отклонен{% elif not invite.invited and not invite.not_invited %}
+                                            Ожидает{% endif %}</td>
                                         <td>
-                                            <a href="{% url 'not_invited' pk=invite.pk %}" data-rel="collapse" title="Выгнать"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                            <a href="{% url 'not_invited' pk=invite.pk %}" data-rel="collapse"
+                                               title="Выгнать"> <i class="remove icon"></i></a>
                                         </td>
                                     </tr> {% endfor %} </tbody>
                             </table>
@@ -72,6 +113,4 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</div> {% endblock content %}
+    </div>{% endblock content %}

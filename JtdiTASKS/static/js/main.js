@@ -66,9 +66,10 @@ function create_post() {
         // handle a successful response
         success: function (result) {
             $('#id_addComment').val(''); // remove the value from the input
-            $("#comments").append("<div class='media' id='comment'><p class='pull-right'><small>" + result.created + "</small></p><a class='media-left' href='#'>" +
-                "<img src=" + result.avatar + " class='circle' width='40' height='40' border='20'></a><div class='media-body'>" +
-                "<h4 class='media-heading user_name'>" + result.author + "</h4>" + result.text + "</div></div>");
+            $('#comments').append(result.comments)
+            // $("#comments").append("<div class='media' id='comment'><p class='pull-right'><small>" + result.created + "</small></p><a class='media-left' href='#'>" +
+            //     "<img src=" + result.avatar + " class='circle' width='40' height='40' border='20'></a><div class='media-body'>" +
+            //     "<h4 class='media-heading user_name'>" + result.author + "</h4>" + result.text + "</div></div>");
         },
 
         // handle a non-successful response
@@ -84,7 +85,7 @@ function create_post() {
 
 
 function get_comments() {
-    if ($('*').is('.comments-list')) {
+    if ($('*').is('#comments')) {
         $.ajax({
             url: $("#url_ajax_get_comments").attr('url_ajax_get_comments'), // the endpoint
             type: "POST", // http method
@@ -92,12 +93,13 @@ function get_comments() {
 
             // handle a successful response
             success: function (result) {
-                $('.comments-list').empty();
-                for (var item in result) {
-                    $("#comments").append("<div class='media' id='comment'><p class='pull-right'><small>" + result[item].created + "</small></p><a class='media-left' href='#'>" +
-                        "<img src=" + result[item].avatar + " class='circle' width='40' height='40' border='20'></a><div class='media-body'>" +
-                        "<h4 class='media-heading user_name'>" + result[item].author + "</h4>" + result[item].text + "</div></div>");
-                } // another sanity check
+                $('#comments').empty();
+                $('#comments').prepend(result.comments)
+                // for (var item in result) {
+                //     $("#comments").append("<div class='media' id='comment'><p class='pull-right'><small>" + result[item].created + "</small></p><a class='media-left' href='#'>" +
+                //         "<img src=" + result[item].avatar + " class='circle' width='40' height='40' border='20'></a><div class='media-body'>" +
+                //         "<h4 class='media-heading user_name'>" + result[item].author + "</h4>" + result[item].text + "</div></div>");
+                // } // another sanity check
             }
 
         });
@@ -137,7 +139,7 @@ function StartStop() {
     });
 }
 
-$("#modal-task").on("submit", ".task-create-form", function () {
+$(".modal").on("submit", "#task_create_form", function () {
     var form = $(this);
     var form_data = form.serialize();
     form_data = form_data + '&param=' + $("#views").attr("views") + '&project_param=' + $("#project").attr("project")
@@ -148,21 +150,21 @@ $("#modal-task").on("submit", ".task-create-form", function () {
         dataType: 'json',
         success: function (result) {
             if (result.form_is_valid) {
-                $("#task_active_table").html(result.html_active_tasks_list);
-                $('#dataTables-example').dataTable();
+                $("#TaskActive").html(result.html_active_tasks_list);
+                $('#TasksTables').dataTable({pageLength: result.count_visible_tasks});
                 $('.card-content').html(result.kanban);
-                $("[data-dismiss=modal]").trigger({type: "click"});
+                CloseModal()
                 Alert('Задача успешно обновлена');
             }
             else {
-                $("#modal-task .modal-content").html(result.html_form);
+                $("#modal_content").html(result.html_form);
             }
         }
     });
     return false;
 });
 
-$("#modal-task").on("submit", ".note-create-form", function () {
+$(".modal").on("submit", "#note_create_form", function () {
     var form = $(this);
     var form_data = form.serialize();
 
@@ -173,14 +175,14 @@ $("#modal-task").on("submit", ".note-create-form", function () {
         dataType: 'json',
         success: function (result) {
             if (result.form_is_valid) {
-                $("#notes_active_table").html(result.html_active_notes_list);
-                $('#dataTables-example').dataTable();
+                $("#NotesTables").html(result.html_active_notes_list);
+                $('#TasksTables').dataTable();
                 $('.card-content').html(result.kanban);
-                $("[data-dismiss=modal]").trigger({type: "click"});
-                Alert('Задача успешно обновлена');
+                CloseModal()
+                Alert('Заметка успешно обновлена');
             }
             else {
-                $("#modal-task .modal-content").html(result.html_form);
+                $("#modal_content").html(result.html_form);
             }
         }
     });
@@ -190,16 +192,21 @@ $("#modal-task").on("submit", ".note-create-form", function () {
 
 function UpdateTask(url) {
 
-    PreloadModal();
     $.ajax({
         url: url,
         type: 'get',
         dataType: 'json',
         data: {'param': $("#views").attr("views"), 'project_param': $("#project").attr("project")},
         success: function (result) {
-            $("#modal-task .modal-content").html(result.html_form);
-            if ($('*').is('#id_project_field')) {
-                ProjectSelect($("#id_project_field")[0].value);
+            if (result.html_form !== undefined) {
+                $("#modal_content").html(result.html_form);
+                if ($('*').is('#id_project_field')) {
+                    ProjectSelect($("#id_project_field")[0].value);
+                }
+                OpenModal();
+            }
+            else {
+                Alert(result.msg)
             }
         }
     });
@@ -207,15 +214,16 @@ function UpdateTask(url) {
 
 function UpdateNote(url) {
 
-    PreloadModal();
     $.ajax({
         url: url,
         type: 'get',
         dataType: 'json',
         data: {},
         success: function (result) {
-            $("#modal-task .modal-content").html(result.html_form);
+            $("#modal_content").html(result.html_form);
+            OpenModal();
         }
+
     });
 }
 
@@ -225,15 +233,15 @@ function TaskDetail(task_url) {
         if ($("#modal-task").is(':visible')) {
         }
         else {
-            PreloadModal();
         }
+        OpenModal();
         $.ajax({
             url: task_url,
             type: 'post',
             dataType: 'json',
             data: {'param': $("#views").attr("views")},
             success: function (result) {
-                $("#modal-task .modal-content").html(result.html_form);
+                $("#modal_content").html(result.html_form);
                 get_comments();
             }
         });
@@ -245,7 +253,6 @@ function UniversalFun(task_url) {
         if ($("#modal-task").is(':visible')) {
         }
         else {
-            PreloadModal();
         }
 
         $.ajax({
@@ -255,23 +262,26 @@ function UniversalFun(task_url) {
             data: {'param': $("#views").attr("views")},
             success: function (result) {
                 //$("[data-dismiss=modal]").trigger({ type: "click" });
-                if (result.project_param !== '') {
-                    $("#modal-task .modal-content").html(result.project_param);
+                if (result.project_param !== '' && result.project_param !== undefined) {
+                    // $("#modal-task .modal-content").html(result.project_param);
+                    $("#modal_content").html(result.project_param);
+                    OpenModal();
                 }
                 if (result.html_active_tasks_list !== '') {
-                    $("#task_active_table").html(result.html_active_tasks_list);
+                    $("#TaskActive").html(result.html_active_tasks_list);
                 }
                 if (result.html_active_notes_list !== '') {
-                    $("#notes_active_table").html(result.html_active_notes_list);
+                    $("#NotesTables").html(result.html_active_notes_list);
                 }
                 if (result.html_finished_tasks_list !== '') {
-                    $("#task_finish_table").html(result.html_finished_tasks_list);
+                    $("#TasksFinished").html(result.html_finished_tasks_list);
                 }
                 if (result.html_form !== '') {
                     $("#modal-task .modal-content").html(result.html_form);
                     get_comments();
                 }
-                $('#dataTables-example').dataTable();
+                $('#TasksTables').dataTable();
+                $('#TasksTablesFinished').dataTable();
 
                 Alert(result.msg);
             }
@@ -279,7 +289,7 @@ function UniversalFun(task_url) {
     }
 }
 
-$("#modal-task").on("submit", ".user_inv_form_in_proj", function () {
+$(".modal").on("submit", "#user_inv_form_in_proj", function () {
     var form = $(this);
     $.ajax({
         url: form.attr("action"),
@@ -298,7 +308,7 @@ $("#modal-task").on("submit", ".user_inv_form_in_proj", function () {
     return false;
 });
 
-$("#modal-task").on("submit", ".rename_proj_form", function () {
+$(".modal").on("submit", "#rename_proj_form", function () {
     var form = $(this);
     $.ajax({
         url: form.attr("action"),
@@ -307,10 +317,9 @@ $("#modal-task").on("submit", ".rename_proj_form", function () {
         dataType: 'json',
         success: function (result) {
             if (result.form_is_valid) {
-                $("#project_title").html("<h1 class='page-header'>Задачи проекта " + result.title + "</h1>");
-                $("#project_button_param").html("Параметры проекта " + result.title);
                 if (result.project_list !== '') {
                     $("#projects_list").html(result.project_list);
+                    $('.ui.accordion').accordion({exclusive: false});
                 }
             }
             else {
@@ -340,30 +349,49 @@ $("#project_create").on("submit", ".project_create_form", function () {
     return false;
 });
 
+
 $(document).ready(function () {
     var task_id = Number(window.location.hash.replace("#", ""));
     if (isFinite(task_id) && task_id !== 0) {
         TaskDetail("/task/det/" + String(task_id) + "/", 'today')
-        $('#modal-task').modal('show')
+
     }
     GetNotifications();
     GetPushNotifications();
     setInterval(GetNotifications, 10000);
     setInterval(GetPushNotifications, 10000);
+    $('.ui.dropdown').dropdown();
+    $('.ui.accordion').accordion({exclusive: false});
+    $('.menu .item').tab();
+
+    google.charts.load("current", {packages: ["gantt", "table"]});
+
+    $('#get_story')
+        .on('click', function () {
+            // programmatically activating tab
+            $.tab('change tab', 'StoryLine');
+        })
+    ;
+
 });
 
 function Alert(msg) {
-    if (msg !== "") {
-        Materialize.toast(msg, 3000, 'rounded')
+    if (msg !== "" && msg !== undefined) {
+        $.uiAlert({
+            textHead: '',
+            text: msg,
+            bgcolor: '#252525',
+            textcolor: '#fff',
+            position: 'top-right', // top And bottom ||  left / center / right
+            icon: 'checkmark box',
+            time: 3
+        });
     } else {
-        Materialize.toast(msg, 3000, 'rounded')
+        // Materialize.toast(msg, 3000, 'rounded')
     }
 
 }
 
-function PreloadModal() {
-    $("#modal-task .modal-content").html("<div class='cssload-thecube'> <div class='cssload-cube cssload-c1'></div> <div class='cssload-cube cssload-c2'></div> <div class='cssload-cube cssload-c'></div><div class='cssload-cube cssload-c3'></div> </div>");
-}
 
 function GetNotifications() {
     $.ajax({
@@ -395,7 +423,23 @@ function GetNotifications() {
     });
 }
 
-function GetNotificationsList() {
+function getStory(project) {
+    $.ajax({
+        url: '/ajax/get_story/' + String(project) + '/',
+        data: {},
+        type: 'get',
+        dataType: 'json',
+        success: function (result) {
+            if (result.story !== '') {
+                $('#StoryLine').html(result.story)
+            }
+        }
+    });
+
+}
+
+function GetNotificationsList(elem) {
+    elem.addClass('loading');
     $.ajax({
         url: '/get_notify_event/',
         data: {},
@@ -403,14 +447,10 @@ function GetNotificationsList() {
         dataType: 'json',
         success: function (result) {
             if (result.notify_tasks !== '') {
-                $('#dropdown2').html(result.notify_tasks).append("<li>\n" +
-                    "    <a class=\"text-center\" href=\"#\" onclick=\"notifyMe()\">\n" +
-                    "        <strong>Показать все</strong>\n" +
-                    "        <i class=\"fa fa-angle-right\"></i>\n" +
-                    "    </a>\n" +
-                    "</li>");
+                $('#notify_list').html(result.notify_tasks)
                 $('#all_notify').html(0);
                 $('.tab_counter_top')[0].style.display = "none";
+                elem.removeClass('loading')
             }
         }
     });
@@ -465,7 +505,7 @@ function OpenUrl(any_url) {
     }
     else {
         TaskDetail(any_url);
-        $('#modal-task').modal('show')
+        OpenModal();
     }
 }
 
@@ -489,15 +529,20 @@ function ProjectSelect(val) {
 }
 
 
-function GetKanban() {
+function GetKanban(update) {
+    $('.loader').addClass('active');
     if ($("#kanban_switch").prop("checked")) {
         $.ajax({
             type: "GET",
             url: "/ajax/kanban/" + $("#project").attr("project") + "/",
             data: {},
             success: function (result) {
-                InstallFilter('kanban', true);
-                $('.card-content').html(result.kanban);
+                if (update === undefined) {
+                    InstallFilter('kanban', true);
+                }
+                $('#TaskActive').html(result.kanban);
+                $('.loader').removeClass('active');
+                $('.loader').addClass('disable');
             }
         });
     }
@@ -507,9 +552,12 @@ function GetKanban() {
             url: "/ajax/project_task_list/" + $("#project").attr("project") + "/",
             data: {},
             success: function (result) {
-                InstallFilter('kanban', false);
-                $('.card-content').html(result.project);
-                $('ul.tabs').tabs();
+                if (update === undefined) {
+                    InstallFilter('kanban', false);
+                }
+                $('#TaskActive').html(result.project);
+                $('.loader').removeClass('active');
+                $('.loader').addClass('disable');
             }
         });
     }
@@ -523,15 +571,51 @@ function AddNewColumn() {
         dataType: 'json',
         success: function (result) {
             if (result.kanban_column_form !== '') {
-                $("#modal-task .modal-content").html(result.kanban_column_form);
-                $('#modal-task').modal('show');
+                $("#modal_content").html(result.kanban_column_form);
+                OpenModal();
                 Alert(result.msg)
             }
         }
     });
 }
 
-$("#modal-task").on("submit", ".add_kanban_column_form", function () {
+function HideColumn(id_elem) {
+    $.ajax({
+        type: "GET",
+        url: "/ajax/hide_vis_kanban_column/" + String(id_elem),
+        data: {},
+        success: function (result) {
+            var visible = result.visible;
+            var kanban_column = $('#' + String(id_elem) + ', .ol.kanban');
+            var icon = $('#hide_icon' + String(id_elem));
+            if (!visible) {
+                kanban_column[0].style.width = '27px';
+                kanban_column[0].style.minWidth = '27px';
+                kanban_column[0].style.maxWidth = '27px';
+                icon.removeClass('hide');
+                icon.addClass('unhide');
+                if (kanban_column[0].lastElementChild.className === 'dd-list') {
+                    kanban_column[0].lastElementChild.style.display = 'none';
+                }
+                kanban_column[0].firstElementChild.firstElementChild.style.display = 'none';
+            }
+            else {
+                kanban_column[0].style.width = '100%';
+                kanban_column[0].style.minWidth = '220px';
+                kanban_column[0].style.maxWidth = '220px';
+                icon.removeClass('unhide');
+                icon.addClass('hide');
+                if (kanban_column[0].lastElementChild.className === 'dd-list') {
+                    kanban_column[0].lastElementChild.style.display = 'block';
+                }
+                kanban_column[0].firstElementChild.firstElementChild.style.display = 'flex';
+            }
+        }
+    })
+
+}
+
+$(".modal").on("submit", "#add_kanban_column_form", function () {
     var form = $(this);
     $.ajax({
         url: form.attr("action"),
@@ -542,7 +626,7 @@ $("#modal-task").on("submit", ".add_kanban_column_form", function () {
             if (data.form_is_valid) {
                 if (data.new_column !== '') {
                     $('.dd').append(data.new_column);
-                    $('#modal-task').modal('hide')
+                    CloseModal();
                     Alert(data.msg);
                 }
             }
@@ -582,6 +666,44 @@ function InstallFilter(filter, value) {
         url: "/ajax/install_filter/" + $("#project").attr("project") + "/",
         data: {'filter': filter, 'value': value},
         success: function (result) {
+            GetKanban(true)
         }
     });
+}
+
+function ChangeRules(filter, value) {
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: "/ajax/set_access/" + $("#project").attr("project") + "/",
+        data: {'filter': filter, 'value': value},
+        success: function (result) {
+            // GetKanban(true)
+        }
+    });
+}
+
+function OpenSidebarLeft() {
+    $('#sidebar_left').sidebar('toggle');
+}
+
+function OpenSidebarRight() {
+    $('#sidebar_right').sidebar('toggle');
+}
+
+function OpenModal() {
+    $('.ui.modal')
+        .modal({
+            blurring: true,
+        })
+        .modal('setting', 'transition', 'fade up')
+        .modal('show')
+    ;
+}
+
+function CloseModal() {
+    $('.ui.modal')
+        .modal('hide')
+    ;
+
 }

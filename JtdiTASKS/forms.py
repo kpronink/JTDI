@@ -148,6 +148,7 @@ class TaskForm(forms.Form):
                                'onpaste': 'ParseDate(title)'})
 
     description = forms.CharField(label='Описание', widget=forms.Textarea, required=False)
+    description.widget.attrs.update({'rows': 2})
 
     date = forms.DateField(label='Дата начала', initial=datetime.date.today)
     date.widget.input_type = 'date'
@@ -165,6 +166,12 @@ class TaskForm(forms.Form):
     )
 
     project_field.widget.attrs.update({'onChange': 'ProjectSelect(this.value);'})
+
+    owner_task = forms.ModelChoiceField(
+        label='Головная задача',
+        required=False,
+        queryset=None,
+    )
 
     priority_field = forms.ChoiceField(
         label='Важность',
@@ -214,11 +221,20 @@ class TaskForm(forms.Form):
 class TaskEditForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ("title", "description", "date", "time", "repeating", "remind", "project"
-                  , "priority", "performer", "planed_date_finish")
+        fields = ("title"
+                  , "description"
+                  , "date"
+                  , "time"
+                  , "planed_date_finish"
+                  , "repeating"
+                  , "remind"
+                  , "project"
+                  , "owner_task"
+                  , "performer"
+                  , "priority")
 
         widgets = {
-            'description': Textarea(attrs={'cols': 80, 'rows': 20}),
+            'description': Textarea(attrs={'cols': 80, 'rows': 2}),
             'date': DataTimeInput(attrs={'input_type': 'date'}),
             'planed_date_finish': DataTimeInput(attrs={'input_type': 'date'}),
             'time': TimeInput(attrs={'input_type': 'date'}),
@@ -232,6 +248,7 @@ class TaskEditForm(forms.ModelForm):
             'repeating': 'Повторяющаяся задача',
             'remind': 'Не напоминать',
             'project': 'Проект',
+            'owner_task': 'Головная задача',
             'performer': 'Исполнитель',
             'planed_date_finish': 'Планируемая дата сдачи',
             'priority': 'Важность',
@@ -261,11 +278,12 @@ class TaskEditForm(forms.ModelForm):
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Notes
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'lock')
 
         labels = {
             'title': 'Заголовок',
             'description': 'Расшифровка',
+            'lock': 'Закрепить'
         }
 
 
@@ -281,6 +299,10 @@ class ProjectForm(forms.ModelForm):
 
         labels = {
             'title': '',
+        }
+        widgets = {
+            'title': CharFieldWidget(attrs={'data - content': "Добавить пользователей на ваш канал",
+                                            'class': "ui mini focus input"})
         }
 
 
@@ -316,5 +338,6 @@ class FormMoveInProject(forms.Form):
 
 class CommentAddForm(forms.Form):
     addComment = forms.CharField(label='', widget=forms.Textarea, required=True)
+    addComment.widget.attrs.update({'rows': 3})
 
 # COMMENTS -

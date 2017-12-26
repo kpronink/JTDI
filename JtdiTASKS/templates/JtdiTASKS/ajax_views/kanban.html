@@ -1,56 +1,86 @@
 {% load staticfiles %}
-
-<div id="p1" class="mdl-progress mdl-js-progress"></div>
-<script>
-    document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
-        this.MaterialProgress.setProgress(44);
-    });
-</script>
-<div class="dd" id="kanban_desc">
-    {% for status_kanban, tasks in kanban.items %}
-        <ol class="kanban {{ status_kanban.pk }}" id="{{ status_kanban.pk }}"
-            style="border-top: 5px solid {{ status_kanban.color }}">
-            <div class="kanban__title">
-                <h2 class="h2_kanban">{{ status_kanban.title }}</h2>
-                <div class="actions_column">
-
+<div id="TaskActive" class="ui bottom attached tab segment active" data-tab="TableTask">
+    <div id="p1" class="mdl-progress mdl-js-progress"></div>
+    <script>
+        document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
+            this.MaterialProgress.setProgress(44);
+        });
+    </script>
+    <div class="dd" id="kanban_desc">
+        {% for status_kanban, tasks in kanban.items %}
+            <ol class="kanban {{ status_kanban.pk }}" id="{{ status_kanban.pk }}" title="{{ status_kanban.title }}"
+                    {% if status_kanban.visible %}
+                style="border-top: 5px solid {{ status_kanban.color }}"
+                    {% else %}
+                style="border-top: 5px solid {{ status_kanban.color }}; width: 27px;
+                        min-width: 27px;
+                        max-width: 27px;"
+                    {% endif %}>
+                <div class="kanban_title">
+                    {% if status_kanban.visible %}
+                        <h2 class="h2_kanban">{{ status_kanban.title }}</h2>
+                    {% else %}
+                        <h2 class="h2_kanban" style="display: none">{{ status_kanban.title }}</h2>
+                    {% endif %}
+                    <button class="ui mini icon button" style="position: absolute;top: 5px;right: 40px;"
+                            onclick="UpdateTask('{% url 'task_create' %}')">
+                        <i class="ellipsis horizontal icon"></i>
+                    </button>
+                    <button class="ui mini icon button" style="position: absolute;top: 5px;right: 3px;"
+                            onclick="HideColumn({{ status_kanban.pk }})">
+                        {% if status_kanban.visible %}
+                            <i class="hide icon" id="hide_icon{{ status_kanban.pk }}"></i>
+                        {% else %}
+                            <i class="unhide icon" id="hide_icon"></i>
+                        {% endif %}
+                    </button>
+                    {#                    <div class="actions_column">#}
+                    {#                        #}
+                    {#                    </div>#}
                 </div>
-            </div>
-            {% if tasks|length %}
-                <ol class="dd-list">
-                    {% for task in tasks %}
+                {% if tasks|length %}
+                    <ol class="dd-list" {% if status_kanban.visible %}
 
-                        <li class="dd-item" data-id="{{ task.pk }}">
-                            <h3 class="title dd-handle">
-                                {% if task.performer.profile.avatar %}
-                                    <img src="{{ task.performer.profile.avatar.url }}" class="circle" width="30"
-                                         height="30" border="20">
-                                {% else %}
-                                    <img src="/static/img/avatar_2x.png" class="circle" width="30" height="30"
-                                         border="20">
-                                {% endif %}
-                                {{ task.title|truncatechars:30 }}
-                            </h3>
-                            <div class="text" contenteditable="true">{{ task.description|truncatechars:200 }}
-                            </div>
-                            <i class="material-icons" id="task_menu">menu</i>
-                            <div class="actions">
-                                <i class="material-icons" id="color">palette</i>
-                                <a href=# class="action_href" onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')"
-                                   data-toggle="modal" data-target="#modal-task"
-                                   title="Редактировать задачу"><i class="material-icons">edit</i></a>
-                                <a href=# class="action_href" onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')"
-                                   data-toggle="modal" data-target="#modal-task"
-                                   title="Копировать задачу"><i class="material-icons">insert_drive_file</i></a>
-                                <i class="material-icons">insert_link</i>
-                                <i class="material-icons">attach_file</i>
-                            </div>
-                        </li>
+                    {% else %} style="display: none"
+                    {% endif %}>
+                        {% for task in tasks %}
 
-                    {% endfor %}
-                </ol>
-            {% endif %}
-        </ol>
-    {% endfor %}
+                            <li class="dd-item" data-id="{{ task.pk }}">
+                                <h4 class="title dd-handle">
+                                    {% if task.performer.profile.avatar %}
+                                        <img src="{{ task.performer.profile.avatar.url }}" class="ui avatar image"
+                                             width="30"
+                                             height="30" border="20">
+                                    {% else %}
+                                        <img src="/static/img/avatar_2x.png" class="ui avatar image" width="30"
+                                             height="30"
+                                             border="20">
+                                    {% endif %}
+                                    {{ task.title|truncatechars:30 }}
+                                </h4>
+                                <div class="text_dd" contenteditable="true">{{ task.description|truncatechars:200 }}
+                                </div>
+                                <i class="material-icons" id="task_menu">menu</i>
+                                <div class="actions">
+                                    <i class="material-icons" id="color">palette</i>
+                                    <a href=# class="action_href"
+                                       onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')"
+                                       data-toggle="modal" data-target="#modal-task"
+                                       title="Редактировать задачу"><i class="material-icons">edit</i></a>
+                                    <a href=# class="action_href"
+                                       onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')"
+                                       data-toggle="modal" data-target="#modal-task"
+                                       title="Копировать задачу"><i class="material-icons">insert_drive_file</i></a>
+                                    <i class="material-icons">insert_link</i>
+                                    <i class="material-icons">attach_file</i>
+                                </div>
+                            </li>
+
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </ol>
+        {% endfor %}
+    </div>
 </div>
 <script src={% static "js/Kanban.js" %}></script>

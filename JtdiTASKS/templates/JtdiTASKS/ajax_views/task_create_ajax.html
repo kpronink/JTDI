@@ -1,34 +1,106 @@
 {% load widget_tweaks %}{% load static %}
 
-<form method="post" action="{% url 'task_create' %}" class="task-create-form">
-  {% csrf_token %}
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h4 class="modal-title">Создание задачи</h4>
-  </div>
-  <div class="modal-body">
-    {% for field in form %}
-      <div class="form-group{% if field.errors %} has-error{% endif %}">
-      {% if field.name == 'repeating' or  field.name == 'remind' %}
-          {% render_field field class="form-control" %}
-          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-          {% else %}
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {% render_field field class="form-control" %}
-      {% endif %}
-        {% for error in field.errors %}
-          <p class="help-block">{{ error }}</p>
-        {% endfor %}
-      </div>
-    {% endfor %}
-    {% verbatim %} <span>Распознано как:</span> <b id="parse"></b>
-                                <br/> <span>Дата:</span> <b id="parse_date"></b> {% endverbatim %}
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-  </div>
+<form method="post" action="{% url 'task_create' %}" class="ui form" id="task_create_form">
+    {% csrf_token %}
+    <h4 class="ui dividing header">Создание задачи</h4>
+    <div class="field">
+        {{ form.non_field_errors }}
+        <div class="two fields">
+            <div class="required field">
+                {{ form.title.errors }}
+                <label for="{{ form.title.id_for_label }}">{{ form.title.label }}:</label>
+                {{ form.title }}
+            </div>
+            <div class="required field">
+                {{ form.date.errors }}
+                <label for="{{ form.date.id_for_label }}">{{ form.date.label }}:</label>
+                {{ form.date }}
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        {{ form.non_field_errors }}
+        <div class="two fields">
+            <div class="field">
+                {{ form.description.errors }}
+                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>
+                {{ form.description }}
+            </div>
+            <div class="required field">
+                {{ form.time_field.errors }}
+                <label for="{{ form.time_field.id_for_label }}">{{ form.time_field.label }}:</label>
+                {{ form.time_field }}
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        {{ form.non_field_errors }}
+        <div class="two fields">
+            <div class="field">
+                {{ form.priority_field.errors }}
+                <label for="{{ form.priority_field.id_for_label }}">{{ form.priority_field.label }}:</label>
+                {{ form.priority_field }}
+            </div>
+            <div class="field">
+                {{ form.date_planed.errors }}
+                <label for="{{ form.date_planed.id_for_label }}">{{ form.date_planed.label }}:</label>
+                {{ form.date_planed }}
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        {{ form.non_field_errors }}
+        <div class="two fields">
+            <div class="field">
+                {{ form.project_field.errors }}
+                <label for="{{ form.project_field.id_for_label }}">{{ form.project_field.label }}:</label>
+                {{ form.project_field }}
+            </div>
+            <div class="field">
+                {{ form.performer.errors }}
+                <label for="{{ form.performer.id_for_label }}">{{ form.performer.label }}:</label>
+                {{ form.performer }}
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        {{ form.non_field_errors }}
+        <div class="two fields">
+            <div class="field">
+                {{ form.owner_task.errors }}
+                <label for="{{ form.owner_task.id_for_label }}">{{ form.owner_task.label }}:</label>
+                {{ form.owner_task }}
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        {{ form.non_field_errors }}
+        <div class="two fields">
+            <div class="field">
+                {{ form.repeating.errors }}
+                <div class="ui toggle checkbox">
+                    {{ form.repeating }}
+                    <label for="{{ form.repeating.id_for_label }}">{{ form.repeating.label }}:</label>
+                </div>
+            </div>
+            <div class="field">
+                {{ form.remind.errors }}
+                <div class="ui toggle checkbox">
+                    {{ form.remind }}
+                    <label for="{{ form.remind.id_for_label }}">{{ form.remind.label }}:</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        {% verbatim %} <span>Распознано как:</span> <b id="parse"></b>
+        <br/> <span>Дата:</span> <b id="parse_date"></b> {% endverbatim %}
+    </div>
+
+    <button type="button" class="ui black deny button" onclick="CloseModal()">Закрыть</button>
+    <button type="submit" class="ui positive right labeled icon button">Сохранить</button>
+
 </form>
+
 

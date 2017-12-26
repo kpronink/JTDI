@@ -1,12 +1,12 @@
 {% load bootstrap %}
-<div class="form-group">
+<div class="fields">
     <a href="#" title="Перенести задачу на день" onclick="UniversalFun('{% url 'transfer_date' pk=task days=1 %}')">
-        <i class="glyphicon glyphicon-time"></i> Перенести задачу на день
+        <i class="time icon"></i> Перенести задачу на день
     </a>
     <a href="#" title="Перенести задачу на неделю" onclick="UniversalFun('{% url 'transfer_date' pk=task days=7 %}')">
-        <i class="glyphicon glyphicon-time"></i> Перенести задачу на неделю
+        <i class="time icon"></i> Перенести задачу на неделю
     </a>
     <a href="#" title="Перенести задачу на 30 дней" onclick="UniversalFun('{% url 'transfer_date' pk=task days=30 %}')">
-        <i class="glyphicon glyphicon-time"></i> Перенести задачу на 30 дней
+        <i class="time icon"></i> Перенести задачу на 30 дней
     </a>
 </div>

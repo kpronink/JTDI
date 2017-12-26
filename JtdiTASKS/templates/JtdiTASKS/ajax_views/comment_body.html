@@ -1,0 +1,22 @@
+{% load tz%}
+{% for comment in comments %}
+    <div class="comment">
+        <a class="avatar">
+            {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}">
+            {% else %}
+                <img src="/static/img/avatar_2x.png">
+            {% endif %}
+        </a>
+        <div class="content">
+            <a class="author">{{ comment.commentator.username }}</a>
+            <div class="metadata">
+                <span class="date">{{ comment.date_time|localtime }}</span>
+            </div>
+            <div class="text">{{ comment.comment }}</div>
+            <div class="actions">
+                <a class="reply">Reply</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

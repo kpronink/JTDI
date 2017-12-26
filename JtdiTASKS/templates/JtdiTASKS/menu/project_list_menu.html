@@ -1,38 +1,23 @@
-{% load bootstrap %} {% load widget_tweaks %}
+{% load widget_tweaks %}
 {% for project_item in projects %}
-                    <li>
-                        <!--<div class="circle" style="{{ project_item.color_project }}">
-                                       </div>-->
-                        <a href="{% url 'project_tasks_list' pk=project_item.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
-                    </li> {% endfor %} {% for project_item in projects_group %}
-                    <li>
-                        <!--<div class="circle" style="{{ project_item.project.color_project }}">
-                                       </div>-->
-                        <a href="{% url 'project_tasks_list' pk=project_item.project.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.project.color_project }}"></i> {{ project_item.project.title }} (Групповая)</a>
-                    </li> {% endfor %}
-                    <li>
-                        <div id="box_proj" style="display: none;">
-                            <fieldset>
-                                <div id="box_proj" style="display: none;">
-                            <fieldset>
-                                <div class="form-group" id="project_create">
-                                    <form method="post" action="{% url 'project_create' %}" class="project_create_form">
-                                    {% csrf_token %}
-                                    {% for field in project_form %}
-                                        <div class="form-group{% if field.errors %} has-error{% endif %}">
-                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                        {% render_field field class="form-control" %}
-                                        {% for error in field.errors %}
-                                          <p class="help-block">{{ error }}</p>
-                                        {% endfor %}
-                                        </div>
-                                    {% endfor %}
-                                        <button type="submit" class="btn btn-primary">Добавить</button>
-                                    </form>
-                                </div>
-                            </fieldset>
-                            </div>
-                            </fieldset>
-                        </div>
-                    </li>
-                    <li><a href="#" onclick="openbox('box_proj'); return false"><i class="glyphicon glyphicon-plus-sign" style="font-size: 15px; color:#428bca"></i></a></li>
+    <a class="item" href="{% url 'project_tasks_list' pk=project_item.pk %}"><i class="trello icon"
+                                                                                style="{{ project_item.color_project }}"></i>
+        {{ project_item.title }}</a>
+{% endfor %}
+<div class="divider"></div>
+<div class="ui form" id="project_create" data-tooltip="Введите наименование проекта">
+    <form method="post" action="{% url 'project_create' %}" class="project_create_form">
+        {% csrf_token %}
+        {% for field in project_form %}
+            <div class="ui fluid action input {% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field %}
+            {% for error in field.errors %}
+                <p class="help-block">{{ error }}</p>
+            {% endfor %}
+
+        {% endfor %}
+        <button type="submit" class="ui teal right icon button"><i class="add circle icon"></i></button>
+        </div>
+    </form>
+</div>

@@ -1,21 +1,64 @@
 {% load staticfiles %} {% block content %}
-<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                <thead>
-                                    <tr>
-                                        <th>Заголовок</th>
-                                        <th>Расшифровка</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody> {% for note in notes %}
-                                    <tr class="odd gradeX">
-                                        <td><a href="#"  onclick="UpdateNote('{% url 'note_create_update' pk=note.pk %}')"
-                                            data-toggle="modal" data-target="#modal-task">
-                                            {{ note.title|truncatechars:40 }}</a></td>
-                                        <td>{{ note.description|truncatechars:50 }}</td>
-                                        <td>
-                                            <a href="#" onclick="UniversalFun('{% url 'note_del' pk=note.pk %}')" title="Удалить заметку"> <i class="glyphicon glyphicon-trash"></i></a>
-                                        </td>
-                                    </tr> {% endfor %} </tbody>
-                            </table>
+    <div class="column">
+        <div class="ui four doubling cards">
+            {% for locked_note in locked_notes %}
+                <div class="ui red card">
+                    <div class="content">
+                        <a class="header" href="#"
+                           onclick="UpdateNote('{% url 'note_create_update' pk=locked_note.pk %}')">
+                            {{ locked_note.title|truncatechars:20 }}</a>
+                        <div class="meta">
+                            <span class="right floated time">2 дня назад</span>
+                            {#                                <span class="category">Животные</span>#}
+                        </div>
+                        <div class="description">
+                            <p>{{ locked_note.description|truncatechars:100 }}</p>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        {% if locked_note.author.profile.avatar %}
+                            <div class="right floated author"><img class="ui avatar image"
+                                                                   src="{{ locked_note.author.profile.avatar.url }}"> {{ locked_note.author.username }}
+                            </div>
+                        {% else %}
+                            <div class="right floated author"><img class="ui avatar image"
+                                                                   src="/static/img/avatar_2x.png"> {{ locked_note.author.username }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="ui bottom attached button"
+                         onclick="UniversalFun('{% url 'note_del' pk=locked_note.pk %}')"><i class="trash icon"></i>
+                        Удалить заметку
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="column">
+        <table class="ui celled table" id="TasksTables">
+            <thead>
+            <tr>
+                <th>Заголовок</th>
+                <th>Расшифровка</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody> {% for note in notes %}
+                <tr class="odd gradeX">
+                    <td><a href="#" onclick="UpdateNote('{% url 'note_create_update' pk=note.pk %}')"
+                           data-toggle="modal" data-target="#modal-task">
+                        {{ note.title|truncatechars:40 }}</a></td>
+                    <td>{{ note.description|truncatechars:50 }}</td>
+                    <td>
+                        <a href="#" onclick="UniversalFun('{% url 'note_del' pk=note.pk %}')"
+                           title="Удалить заметку"> <i
+                                class="trash icon"></i></a>
+                    </td>
+                </tr> {% endfor %} </tbody>
+        </table>
+        <button class="ui icon button" onclick="UpdateNote('{% url 'note_create_update' pk='0' %}')">
+            <i class="add circle icon"></i>
+        </button>
+    </div>
 {% endblock %}

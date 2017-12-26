@@ -1,187 +1,70 @@
 {% load staticfiles %}
 
-<div class="clearBoth"><br/></div>
-<div id="TableTask" class="col s12">
-    <div class="table-responsive" id="task_active_table">
-        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-            <thead>
-            <tr>
-                <th>Задача</th>
-                <th>Расшифровка</th>
-                <th>Дата начала</th>
-                <th>Время начала</th>
-                <th>Дата завершения</th>
-                <th>Исполнитель</th>
-                <th>Статус</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody> {% for task in tasks %}
-                <tr class="odd gradeX">
-                    <td><a href="#" id="detail" onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
-                           data-toggle="modal" data-target="#modal-task">
-                        {{ task.title|truncatechars:40 }}</a></td>
-                    <td>{{ task.description|truncatechars:50 }}</td>
-                    <td>{{ task.date|date:"Y.m.d" }}</td>
-                    <td>{{ task.time }}</td>
-                    <td>{{ task.planed_date_finish|date:"Y.m.d" }}</td>
-                    <td>{{ task.performer }}</td>
-                    <td>{{ task.status }}</td>
-                    <td>
-                        {% if task.performer == user %}
-                            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')"
-                               title="Завершить задачу">
-                                <i class="glyphicon glyphicon-flag" style="color: {{ task.color }}"></i></a>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')" data-toggle="modal"
-                           data-target="#modal-task"
-                           title="Редактировать задачу"> <i class="glyphicon glyphicon-cog"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href=# onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')" data-toggle="modal"
-                           data-target="#modal-task"
-                           title="Скопировать задачу"> <i class="fa fa-files-o" aria-hidden="true"></i>
-                        </a>
-                    </td>
-                    <td>
-                        {% if task.author == user or task.project.author == user %}
-                            <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}')"
-                               title="Удалить задачу">
-                                <i class="glyphicon glyphicon-trash"></i>
-                            </a>
-                        {% endif %}
-                    </td>
-                </tr> {% endfor %} </tbody>
-        </table>
-    </div>
-</div>
-<div id="Gantt" class="col s12">
-    <div id="chart_div"></div>
-</div>
-<div id="Finished" class="col s12">
-    <div class="table-responsive" id="task_finish_table">
-        <table class="table table-striped table-bordered table-hover" id="dataTables-finish">
-            <thead>
-            <tr>
-                <th>Задача</th>
-                <th>Расшифровка</th>
-                <th>Проект</th>
-                <th>Исполнитель</th>
-                <th>Дата начала</th>
-                <th></th>
-                <th>Время начала</th>
-                <th>Дата завершения</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody> {% for task in tasks_finish %}
-                <tr class="odd gradeX" style="background-color: #bcffb873">
-                    <td><a href="#" data-url="{% url 'task_det' pk=task.pk %}" id="detail"
-                           onclick="TaskDetail('{% url 'task_det' pk=task.pk %}', 'finished'), 'finished'"
-                           data-toggle="modal" data-target="#modal-task">
-                        {{ task.title|truncatechars:40 }}</a></td>
-                    <td>{{ task.description|truncatechars:50 }}</td> {% if task.project is not None %}
-                    <td><a href="{% url 'project_tasks_list' pk=task.project.pk %}">{{ task.project }}</a>
-                    </td> {% else %}
-                    <td><a href="">{{ task.project }}</a></td> {% endif %}
-                    <td>{{ task.performer }}</td>
-                    <td>{{ task.date }}</td> {% if task.repeating %}
-                    <td><i class="glyphicon glyphicon-refresh"></i></td> {% else %}
-                    <td></td> {% endif %}
-                    <td>{{ task.time }}</td>
-                    <td>{{ task.date_time_finish }}</td>
-                    <td>
-                        <a href="#" onclick="UniversalFun('{% url 'task_restore' pk=task.pk %}', 'finished')"
-                           title="Восстановить задачу">
-                            <i class="glyphicon glyphicon-backward"></i></a>
-                    </td>
-                    <td>
-                        <a href=# onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')" data-toggle="modal"
-                           data-target="#modal-task"
-                           title="Скопировать задачу"> <i class="fa fa-files-o" aria-hidden="true"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#" onclick="UniversalFun('{% url 'task_del' pk=task.pk %}', 'finished')"
-                           title="Удалить задачу">
-                            <i class="glyphicon glyphicon-trash"></i></a>
-                    </td>
-                </tr> {% endfor %} </tbody>
-        </table>
-    </div>
-</div>
-<div id="InfoProj" class="col s12">
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-image donutpad">
-                    <div id="morris-donut-chart"></div>
-                </div>
-                <div class="card-action"><b>Основные показатели проекта</b></div>
-            </div>
-        </div>
-
-
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-action"><b>Отображать задачи</b></div>
-                <div class="card-image">
-                    <div class="collection" id="user_collection">
-                        {% for user_in_proj in users_in_project %}
-                            <a class="collection-item">
-                                <input type="checkbox"
-                                       onchange="InstallFilter( 'performers', {{ user_in_proj.user.pk }})"
-                                       class="form-control" id="{{ user_in_proj.user.pk }}"
-                                        {% for assig_user in assigned_performers %}
-                                            {% if user_in_proj.user.pk == assig_user %} checked {% endif %}
-                                        {% endfor %}>
-                                <label for="{{ user_in_proj.user.pk }}">{{ user_in_proj.user.username }}
-                                    ({{ user_in_proj.user.first_name }})
-                                    {% if project_object.author == user_in_proj.user %}
-                                        Владелец
-                                        <span class="new badge red"
-                                              data-badge-caption="">{{ user_in_proj.task_count }}</span>
-                                    {% else %}
-                                        <span class="badge" data-badge-caption="">{{ user_in_proj.task_count }}</span>
-                                    {% endif %}
-                                </label>
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-5">
-        <div id="url_ajax_chart" url_ajax_chart="{% url 'get_index_project' project %}"></div>
-    </div>
-</div>
-<div class="clearBoth"><br/></div>
-<p>
-    <button type="button" class="btn-floating red create-task" data-toggle="modal" data-target="#modal-task"
-            onclick="UpdateTask('{% url 'task_create' %}')">
-        <span class="glyphicon glyphicon-plus-sign"></span>
-    </button>
-</p>
+<table class="ui celled table" id="TasksTables">
+    <thead>
+    <tr>
+        <th>Задача</th>
+        <th>Расшифровка</th>
+        <th>Дата начала</th>
+        <th>Время начала</th>
+        <th>Дата завершения</th>
+        <th>Исполнитель</th>
+        <th>Статус</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody> {% for task in tasks %}
+        <tr class="odd gradeX">
+            <td><a href="#" id="detail"
+                   onclick="TaskDetail('{% url 'task_det' pk=task.pk %}')"
+                   data-toggle="modal" data-target="#modal-task">
+                {{ task.title|truncatechars:40 }}</a></td>
+            <td>{{ task.description|truncatechars:50 }}</td>
+            <td>{{ task.date|date:"Y.m.d" }}</td>
+            <td>{{ task.time }}</td>
+            <td>{{ task.planed_date_finish|date:"Y.m.d" }}</td>
+            <td>{{ task.performer }}</td>
+            <td>{{ task.status }}</td>
+            <td>
+                {% if task.performer == user %}
+                    <a href="#"
+                       onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')"
+                       title="Завершить задачу">
+                        <i class="flag icon"
+                           style="color: {{ task.color }}"></i></a>
+                {% endif %}
+            </td>
+            <td>
+                <a href=# onclick="UpdateTask('{% url 'task_update' pk=task.pk %}')"
+                   data-toggle="modal" data-target="#modal-task"
+                   title="Редактировать задачу"> <i class="setting icon"></i>
+                </a>
+            </td>
+            <td>
+                <a href=# onclick="UpdateTask('{% url 'task_copy' pk=task.pk %}')"
+                   data-toggle="modal"
+                   data-target="#modal-task"
+                   title="Скопировать задачу"> <i class="copy icon"
+                                                  aria-hidden="true"></i>
+                </a>
+            </td>
+            <td>
+                {% if task.author == user or task.project.author == user %}
+                    <a href="#"
+                       onclick="UniversalFun('{% url 'task_del' pk=task.pk %}')"
+                       title="Удалить задачу">
+                        <i class="trash icon"></i>
+                    </a>
+                {% endif %}
+            </td>
+        </tr> {% endfor %} </tbody>
+</table>
 <script>
     $(document).ready(function () {
-        $('#dataTables-example').dataTable({pageLength:{{ count_visible_tasks}}});
-        $('#dataTables-finish').dataTable({pageLength:{{ count_visible_tasks}}});
-
-        $('#dataTables-example').on('length.dt', function (e, settings, len) {
-            console.log('New page length: ' + len);
-            InstallFilter('count_visible_tasks', len);
-        });
+        $('#TasksTables').dataTable({pageLength:{{ count_visible_tasks}}});
+{#        $('#dataTables-finish').dataTable({pageLength:{{ count_visible_tasks}}});#}
     });
 </script>

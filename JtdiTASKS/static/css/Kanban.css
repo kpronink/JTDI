@@ -1,198 +1,202 @@
 menu {
-  position: relative;
-  display: flex;
-  right: 31px;
-  top: 0px;
+    position: relative;
+    display: flex;
+    right: 31px;
+    top: 0px;
 }
 
-@media (max-width:768px){
-  menu{height:35px;}
+@media (max-width: 768px) {
+    menu {
+        height: 35px;
+    }
 }
 
 menu.kanban .viewlist,
 menu.list .viewkanban {
-  display: inline;
+    display: inline;
 }
 
 menu.kanban .viewkanban,
 menu.list .viewlist {
-  display: none;
+    display: none;
 }
 
 .dd {
-  max-width: 100%;
-  top: 10px;
-  margin: 0 auto;
-  display: block;
-  vertical-align: top;
-  box-sizing: unset;
-  width: 100%;
-  overflow-x: auto;
+    max-width: 100%;
+    top: 0px;
+    margin: 0 auto;
+    display: block;
+    vertical-align: top;
+    box-sizing: unset;
+    width: 100%;
+    overflow-x: auto;
 }
 
 ol {
-  transition: border-color 2s ease, all 0.1s ease;
-  width: 100%;
+    transition: border-color 2s ease, all 0.1s ease;
+    width: 100%;
 }
 
 ol.list {
-  padding-top: 2em;
-  padding-left: 15px;
-  max-width: 650px;
-  margin: 0 auto;
-  width: 100%;
+    padding-top: 2em;
+    padding-left: 15px;
+    max-width: 650px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 ol.list .text {
-  float: right;
-  width: 60%;
+    float: right;
+    width: 60%;
 }
 
 ol.list h3,
 ol.list .actions,
 ol.list label {
-  float: left;
-  width: 30%;
+    float: left;
+    width: 30%;
 }
 
 ol.list > li,
 ol.list > h3 {
-  max-width: 600px;
-  margin: 0 auto;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 ol.list > h2 {
-  padding-bottom: 6px;
+    padding-bottom: 6px;
 }
 
 ol.list.To-do {
-  border-left: 2px solid #FFB300;
+    border-left: 2px solid #FFB300;
 }
 
 ol.list.Gone {
-  border-left: 2px solid #FF3D00;
+    border-left: 2px solid #FF3D00;
 }
 
 ol.list.progress {
-  border-left: 2px solid #29B6F6;
+    border-left: 2px solid #29B6F6;
 }
 
 ol.list.Done {
-  border-left: 2px solid #8BC34A;
+    border-left: 2px solid #8BC34A;
 }
 
 H2,
 h1,
-button {
-  margin-left: 5px;
-  font-family: sans-serif;
-}
+    /*button {*/
+    /*margin-left: 5px;*/
+    /*font-family: sans-serif;*/
+    /*}*/
 
 h2 {
-  color: #607D8B;
-  margin-top: -5px !important;
-  margin-bottom: 5px !important;
-  font-family: Roboto;
-  font-size: 25px;
+    color: #607D8B;
+    margin-top: -5px !important;
+    margin-bottom: 5px !important;
+    font-family: Roboto;
+    font-size: 15px;
+    word-wrap: break-word;
 }
 
 h2 .material-icons {
-  color: #B0BEC5;
-  line-height: 1.5;
+    color: #B0BEC5;
+    line-height: 1.5;
 }
 
 .dd-handle .material-icons {
-  color: #B0BEC5;
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 2rem;
-  position: relative;
-  right: 0;
-  color: #607D8B;
-  padding: 5px 16px;
+    color: #B0BEC5;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 2rem;
+    position: relative;
+    right: 0;
+    color: #607D8B;
+    padding: 5px 16px;
+    cursor: move;
 }
 
-button>.material-icons {
-  line-height: 0.2;
-  position:relative;
-  top:7px;
-}
+/*button>.material-icons {*/
+/*line-height: 0.2;*/
+/*position:relative;*/
+/*top:7px;*/
+/*}*/
 
-.dd-item:hover,
-button:hover {
-  color: #00838F;
-  will-change: box-shadow;
-  transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
-  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, .14), 0 3px 1px -6px rgba(0, 0, 0, .2), 2px 5px 3px 0 rgba(0, 0, 0, .12);
-}
+/*.dd-item:hover,*/
+/*button:hover {*/
+/*color: #00838F;*/
+/*will-change: box-shadow;*/
+/*transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);*/
+/*box-shadow: 0 5px 6px 0 rgba(0, 0, 0, .14), 0 3px 1px -6px rgba(0, 0, 0, .2), 2px 5px 3px 0 rgba(0, 0, 0, .12);*/
+/*}*/
 
-button.addbutt {
-  background-color: #EEEEEE;
-  color: #607D8B;
-  width: 100%;
-}
+/*button.addbutt {*/
+/*background-color: #EEEEEE;*/
+/*color: #607D8B;*/
+/*width: 100%;*/
+/*}*/
 
-.list > button.addbutt {
-  max-width: 330px;
-}
+/*.list > button.addbutt {*/
+/*max-width: 330px;*/
+/*}*/
 
-button:active, button:down, button:focus {box-shadow: 0 0 0 0, 0 0 0 0 rgba(0, 0, 0, .2), 0 0 0 0 rgba(0, 0, 0, .12);color:#00838F;}
-button {
-  align-items: center;
-  background-color: #EEEEEE;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  color: #607D8B;
-  position: relative;
-  margin: 0;
-  min-width: 44px;
-  padding: 10px 16px;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1;
-  overflow: hidden;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-    }
+/*button:active, button:down, button:focus {box-shadow: 0 0 0 0, 0 0 0 0 rgba(0, 0, 0, .2), 0 0 0 0 rgba(0, 0, 0, .12);color:#00838F;}*/
+/*button {*/
+/*align-items: center;*/
+/*background-color: #EEEEEE;*/
+/*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);*/
+/*border: 1px solid #ccc;*/
+/*border-radius: 2px;*/
+/*color: #607D8B;*/
+/*position: relative;*/
+/*margin: 0;*/
+/*min-width: 44px;*/
+/*padding: 10px 16px;*/
+/*display: inline-block;*/
+/*font-size: 14px;*/
+/*font-weight: 600;*/
+/*text-transform: uppercase;*/
+/*letter-spacing: 1;*/
+/*overflow: hidden;*/
+/*outline: none;*/
+/*cursor: pointer;*/
+/*text-decoration: none;*/
+/*}*/
 
 ol.kanban.To-do {
-  border-top: 5px solid #FFB300;
+    border-top: 5px solid #FFB300;
 }
 
 ol.kanban.Gone {
-  border-top: 5px solid #FF3D00;
+    border-top: 5px solid #FF3D00;
 }
 
 ol.kanban.progress {
-  border-top: 5px solid #29B6F6;
+    border-top: 5px solid #29B6F6;
 }
 
 ol.kanban.Done {
-  border-top: 5px solid #8BC34A;
+    border-top: 5px solid #8BC34A;
 }
 
 ol.kanban {
-  border-top: 5px solid #78909C;
-  width: 100%;
-  margin: 0.1%;
-  height: 800px;
-  max-width: 250px;
-  min-width: 250px;
-  display: inline-block;
-  vertical-align: top;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-  flex-direction: column;
-  min-height: 200px;
-  z-index: 1;
-  position: relative;
-  background: #fff;
-  padding: 1em;
-  border-radius: 2px;
-  overflow-y: auto;
+    border-top: 5px solid #78909C;
+    width: 100%;
+    margin: 0.1% 0.7% 0.0% 0.0%;
+    height: 800px;
+    max-width: 220px;
+    min-width: 220px;
+    display: inline-block;
+    vertical-align: top;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    flex-direction: column;
+    min-height: 200px;
+    z-index: 1;
+    position: relative;
+    background: #e8e8e83b;
+    padding: 1em 0.5em 1em 0.5em;
+    border-radius: 2px;
+    overflow-y: auto;
 }
 
 /**
@@ -200,221 +204,227 @@ ol.kanban {
  */
 
 .dd {
-  position: relative;
-  display: flex;
-  list-style: none;
+    position: relative;
+    display: flex;
+    list-style: none;
 }
 
 .dd-list {
-  display: block;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .dd-list .dd-list {
-  padding-left: 30px;
+    padding-left: 30px;
 }
 
 .dd-collapsed .dd-list {
-  display: none;
+    display: none;
 }
 
 .dd-item {
-  display: block;
-  margin: 15px 0;
-  padding: 5px 10px;
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-  border: 1px solid #e6e6e6;
-  background: #fafafa;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
+    display: block;
+    margin: 8px 0;
+    padding: 5px 10px;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #e6e6e6;
+    background: #fafafa;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 .dd-item:hover {
-  background: #fff;
+    background: #fff;
 }
 
 #task_menu {
-  height: 20px;
-  width: 20px;
+    height: 20px;
+    width: 20px;
 }
 
-#task_menu:hover ~ .actions{
-  display: block;
+#task_menu:hover ~ .actions {
+    display: block;
 }
+
 .actions:hover {
-  display: block;
+    display: block;
 }
 
-.kanban__title{
+.kanban_title {
+
+    display: flex;
 
 }
 
 .dd-item {
-  display: inline-block;
-  position: relative;
-  list-style: none;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  min-height: 48px;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  font-size: 16px;
-  min-height: 120px;
-  overflow: hidden;
-  z-index: 1;
-  position: relative;
-  background: #fff;
-  border-radius: 2px;
-  box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    list-style: none;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    min-height: 48px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-size: 16px;
+    min-height: 120px;
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.title {
-  align-self: flex-start;
-  text-align: right;
-  color: inherit;
-  display: block;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  font-size: 18px;
-  line-height: normal;
-  overflow: hidden;
-  -webkit-transform-origin: 149px 48px;
-  transform-origin: 149px 48px;
-  margin: 0;
+.title_kanban {
+    align-self: flex-start;
+    text-align: right;
+    color: inherit;
+    display: block;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 18px;
+    line-height: normal;
+    overflow: hidden;
+    -webkit-transform-origin: 149px 48px;
+    transform-origin: 149px 48px;
+    margin: 0;
+    cursor: pointer;
 }
 
-.text {
-  color: grey;
-  /*border-top: 1px solid;*/
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 18px;
-  overflow: hidden;
-  padding: 16px;
-  width: 100%;
+.text_dd {
+    color: grey;
+    /*border-top: 1px solid;*/
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 18px;
+    overflow: hidden;
+    padding: 16px;
+    width: 100%;
 }
 
 .actions {
-  /*border-top: 1px solid rgba(0, 0, 0, .1);*/
-  font-size: 8px;
-  line-height: normal;
-  width: 100%;
-  color: #B0BEC5;
-  padding: 2px;
-  box-sizing: border-box;
-  display: none;
-  bottom: -1px;
-  position: absolute;
-  margin-left: 20px;
-  opacity: 0.9;
+    /*border-top: 1px solid rgba(0, 0, 0, .1);*/
+    font-size: 8px;
+    line-height: normal;
+    width: 100%;
+    color: #B0BEC5;
+    padding: 2px;
+    box-sizing: border-box;
+    display: none;
+    bottom: -1px;
+    position: absolute;
+    margin-left: 20px;
+    opacity: 0.9;
 }
 
 .actions_column {
-  border-top: 1px solid rgba(0, 0, 0, .1);
-  font-size: 8px;
-  line-height: normal;
-  width: 210px;
-  color: #B0BEC5;
-  padding: 8px;
-  box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    font-size: 8px;
+    line-height: normal;
+    width: 210px;
+    color: #B0BEC5;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
 .dd-item > button {
-  display: block;
-  position: relative;
-  cursor: move;
-  float: left;
-  width: 25px;
-  height: 20px;
-  margin: 5px 0;
-  padding: 0;
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  border: 0;
-  background: transparent;
-  font-size: 12px;
-  line-height: 1;
-  text-align: center;
-  font-weight: bold;
+    display: block;
+    position: relative;
+    cursor: move;
+    float: left;
+    width: 25px;
+    height: 20px;
+    margin: 5px 0;
+    padding: 0;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    font-size: 12px;
+    line-height: 1;
+    text-align: center;
+    font-weight: bold;
 }
 
 .dd-item > button:before {
-  content: '+';
-  display: block;
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  text-indent: 0;
+    content: '+';
+    display: block;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    text-indent: 0;
 }
 
 .dd-item > button[data-action="collapse"]:before {
-  content: '<i class="material-icons">filter_none</i>';
+    content: '-';
 }
 
 .dd-placeholder,
 .dd-empty {
-  margin: 5px 0;
-  padding: 0;
-  min-height: 30px;
-  background: #E0E0E0;
-  border: 1px dashed #b6bcbf;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
+    margin: 5px 0;
+    padding: 0;
+    min-height: 30px;
+    background: #E0E0E0;
+    border: 1px dashed #b6bcbf;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 .dd-empty {
-  border: 1px dashed #bbb;
-  min-height: 100px;
-  background-color: #E0E0E0;
-  background-size: 60px 60px;
-  background-position: 0 0, 30px 30px;
+    border: 1px dashed #bbb;
+    min-height: 100px;
+    background-color: #E0E0E0;
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
 }
 
 .dd-dragel {
-  position: absolute;
-  pointer-events: none;
-  z-index: 9999;
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999;
 }
 
 .dd-dragel > .dd-item .dd-handle {
-  margin-top: 0;
-  cursor: move;
+    margin-top: 0;
+    cursor: move;
 }
 
 .dd-dragel .dd-item {
-  -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .5);
-  box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .5);
-  cursor: move;
-      -webkit-animation: at-ripple 0.6s linear infinite;
-          animation: at-ripple 0.6s linear infinite;
+    -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .5);
+    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .5);
+    cursor: move;
+    -webkit-animation: at-ripple 0.6s linear infinite;
+    animation: at-ripple 0.6s linear infinite;
 }
 
 @-webkit-keyframes at-ripple {
-  0% {
-    box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 0 rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1);
-  }
-  100% {
-    box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1), 0 0 0 20px rgba(102, 102, 102, 0);
-  }
+    0% {
+        box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 0 rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1);
+    }
+    100% {
+        box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1), 0 0 0 20px rgba(102, 102, 102, 0);
+    }
 }
 
 @keyframes at-ripple {
-  0% {
-    box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 0 rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1);
-  }
-  100% {
-    box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1), 0 0 0 20px rgba(102, 102, 102, 0);
-  }
+    0% {
+        box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 0 rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1);
+    }
+    100% {
+        box-shadow: 0 4px 10px rgba(102, 102, 102, 0.1), 0 0 0 5px rgba(102, 102, 102, 0.1), 0 0 0 10px rgba(102, 102, 102, 0.1), 0 0 0 20px rgba(102, 102, 102, 0);
+    }
 }

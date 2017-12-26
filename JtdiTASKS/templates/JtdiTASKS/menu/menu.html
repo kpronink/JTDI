@@ -1,73 +1,123 @@
-{% load bootstrap %}{% load widget_tweaks %}
-<nav class="navbar-default navbar-side" role="navigation">
-    <div class="sidebar-collapse">
-        <ul class="nav" id="main-menu">
-            <li> <a class=" {% if request.resolver_match.url_name == 'task_today' %}active-menu {% endif %} waves-effect waves-dark" href="{% url 'task_today' %}"><i class="glyphicon glyphicon-home"><div class="tab_counter_today" id="tasks_today_notify">{{ tasks_today_notify }}</div>
-                  </i> Задачи на сегодня</a>
-            </li>
-            <li> <a href="{% url 'task_list' %}" class=" {% if request.resolver_match.url_name == 'task_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-tasks"></i> Задачи без проекта</a>
-            </li>
-            <li class="current"><a href="{% url 'task_overdue' %}" class=" {% if request.resolver_match.url_name == 'task_overdue' %}active-menu {% endif %} waves-effect waves-dark"><i class="glyphicon glyphicon-tasks">
+{% load widget_tweaks %}
 
-                               <div class="tab_counter_overdue" id="tasks_overdue_notify">{{ tasks_overdue_notify }}</div>
+<div class="ui left vertical sidebar menu" id="sidebar_left">
+    <div class="ui divider"></div>
+    <div class="ui divider"></div>
+    <a class="item" href="{% url 'task_today' %}"><i class="tasks icon"></i>
+        <div class="tab_counter_today" id="tasks_today_notify">{{ tasks_overdue_notify }}</div>
+        Задачи на сегодня
+    </a>
+    <a class="item" href="{% url 'task_list' %}"><i class="list layout icon"></i>
+        Задачи без проекта
+    </a>
+    <a class="item" href="{% url 'task_overdue' %}"><i class="delete calendar icon"></i>
+        <div class="tab_counter_overdue" id="tasks_overdue_notify">{{ tasks_overdue_notify }}</div>
+        Просроченые задачи
+    </a>
+    <a class="item" href="{% url 'task_list_finished' %}"><i class="checked calendar icon"></i>
+        Завершенные задачи
+    </a>
+    <a class="item" href="{% url 'notes_list' %}"><i class="sticky note icon"></i>
+        Заметки
+    </a>
+    <div class="ui fluid accordion">
+        <div class="title"><i class="dropdown icon"></i> Проекты </div>
+        <div class="content" id="projects_list">
+            {% for project_item in projects %}
+                <a class="item" href="{% url 'project_tasks_list' pk=project_item.pk %}"><i class="trello icon" style="{{ project_item.color_project }}"></i>
+                    {{ project_item.title }}</a>
+            {% endfor %}
+            {% for project_item in projects_group %}
+                <a class="item" href="{% url 'project_tasks_list' pk=project_item.project.pk %}"><i class="trello icon" style="{{ project_item.project.color_project }}"></i>
+                    {{ project_item.project.title }}(Групповой)</a>
+            {% endfor %}
+            <div class="divider"></div>
+            <div class="ui form" id="project_create" data-tooltip="Введите наименование проекта">
+                <form method="post" action="{% url 'project_create' %}" class="project_create_form">
+                    {% csrf_token %}
+                    {% for field in project_form %}
+                        <div class="ui fluid action input {% if field.errors %} has-error{% endif %}">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {% render_field field %}
+                            {% for error in field.errors %}
+                                <p class="help-block">{{ error }}</p>
+                            {% endfor %}
 
-                        </i> Просроченые задачи</a>
-            </li>
-            <li class="current">
-                <a href="{% url 'task_list_finished' %}" class=" {% if request.resolver_match.url_name == 'task_list_finished' %}active-menu {% endif %} waves-effect waves-dark"> <i class="glyphicon glyphicon-briefcase"></i> Завершенные задачи</a>
-            </li>
-        {% if project_pk == 0 %}
-            <li class="">
-            {% else %}
-            <li class="active">
-        {%  endif %}
-                <a href="#" class="waves-effect waves-dark" ><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" id="projects_list"> {% for project_item in projects %}
-                    {% if project_item.pk ==  project_pk %}
-                    <li class="active">
-                    {% else %}
-                    <li class="">
-                    {% endif %}
-                        <!--<div class="circle" style="{{ project_item.color_project }}">
-                                       </div>-->
-                        <a href="{% url 'project_tasks_list' pk=project_item.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>
-                    </li> {% endfor %} {% for project_item in projects_group %}
-                    {% if project_item.pk == project_pk|stringformat:"i" %}
-                    <li class="active">
-                    {% else %}
-                    <li class="">
-                    {% endif %}
-                        <!--<div class="circle" style="{{ project_item.project.color_project }}">
-                                       </div>-->
-                        <a href="{% url 'project_tasks_list' pk=project_item.project.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.project.color_project }}"></i> {{ project_item.project.title }} (Групповая)</a>
-                    </li> {% endfor %}
-                    <li>
-                        <div id="box_proj" style="display: none;">
-                            <fieldset>
-                                <div class="form-group" id="project_create">
-                                    <form method="post" action="{% url 'project_create' %}" class="project_create_form">
-                                    {% csrf_token %}
-                                    {% for field in project_form %}
-                                        <div class="form-group{% if field.errors %} has-error{% endif %}">
-                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                        {% render_field field class="form-control" %}
-                                        {% for error in field.errors %}
-                                          <p class="help-block">{{ error }}</p>
-                                        {% endfor %}
-                                        </div>
-                                    {% endfor %}
-                                        <button type="submit" class="btn btn-primary">Добавить</button>
-                                    </form>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </li>
-                    <li><a href="#" onclick="openbox('box_proj'); return false"><i class="glyphicon glyphicon-plus-sign" style="font-size: 15px; color:#428bca"></i></a></li>
-                </ul>
-            </li>
-            <li> <a href="{% url 'notes_list' %}" class=" {% if request.resolver_match.url_name == 'notes_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-book"></i> Заметки</a>
-            </li>
-        </ul>
+                    {% endfor %}
+                    <button type="submit" class="ui teal right icon button"><i class="add circle icon"></i></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
     </div>
-</nav>
-<!-- /. NAV SIDE  -->
+</div>
+{#            <li> <a class=" {% if request.resolver_match.url_name == 'task_today' %}active-menu {% endif %} waves-effect waves-dark" href="{% url 'task_today' %}"><i class="glyphicon glyphicon-home"><div class="tab_counter_today" id="tasks_today_notify">{{ tasks_today_notify }}</div>#}
+{#                  </i> Задачи на сегодня</a>#}
+{#            </li>#}
+{#            <li> <a href="{% url 'task_list' %}" class=" {% if request.resolver_match.url_name == 'task_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-tasks"></i> Задачи без проекта</a>#}
+{#            </li>#}
+{#            <li class="current"><a href="{% url 'task_overdue' %}" class=" {% if request.resolver_match.url_name == 'task_overdue' %}active-menu {% endif %} waves-effect waves-dark"><i class="glyphicon glyphicon-tasks">#}
+{##}
+{#                               <div class="tab_counter_overdue" id="tasks_overdue_notify">{{ tasks_overdue_notify }}</div>#}
+{##}
+{#                        </i> Просроченые задачи</a>#}
+{#            </li>#}
+{#            <li class="current">#}
+{#                <a href="{% url 'task_list_finished' %}" class=" {% if request.resolver_match.url_name == 'task_list_finished' %}active-menu {% endif %} waves-effect waves-dark"> <i class="glyphicon glyphicon-briefcase"></i> Завершенные задачи</a>#}
+{#            </li>#}
+{#        {% if project_pk == 0 %}#}
+{#            <li class="">#}
+{#            {% else %}#}
+{#            <li class="active">#}
+{#        {%  endif %}#}
+{#                <a href="#" class="waves-effect waves-dark" ><i class="fa fa-sitemap"></i> Проекты<span class="fa arrow"></span></a>#}
+{#                <ul class="nav nav-second-level" id="projects_list"> {% for project_item in projects %}#}
+{#                    {% if project_item.pk ==  project_pk %}#}
+{#                    <li class="active">#}
+{#                    {% else %}#}
+{#                    <li class="">#}
+{#                    {% endif %}#}
+{#                        <!--<div class="circle" style="{{ project_item.color_project }}">#}
+{#                                       </div>-->#}
+{#                        <a href="{% url 'project_tasks_list' pk=project_item.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.color_project }}"></i> {{ project_item.title }} </a>#}
+{#                    </li> {% endfor %} {% for project_item in projects_group %}#}
+{#                    {% if project_item.pk == project_pk|stringformat:"i" %}#}
+{#                    <li class="active">#}
+{#                    {% else %}#}
+{#                    <li class="">#}
+{#                    {% endif %}#}
+{#                        <!--<div class="circle" style="{{ project_item.project.color_project }}">#}
+{#                                       </div>-->#}
+{#                        <a href="{% url 'project_tasks_list' pk=project_item.project.pk %}"> <i class="glyphicon glyphicon-bookmark" style="{{ project_item.project.color_project }}"></i> {{ project_item.project.title }} (Групповая)</a>#}
+{#                    </li> {% endfor %}#}
+{#                    <li>#}
+{#                        <div id="box_proj" style="display: none;">#}
+{#                            <fieldset>#}
+{#                                <div class="form-group" id="project_create">#}
+{#                                    <form method="post" action="{% url 'project_create' %}" class="project_create_form">#}
+{#                                    {% csrf_token %}#}
+{#                                    {% for field in project_form %}#}
+{#                                        <div class="form-group{% if field.errors %} has-error{% endif %}">#}
+{#                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>#}
+{#                                        {% render_field field class="form-control" %}#}
+{#                                        {% for error in field.errors %}#}
+{#                                          <p class="help-block">{{ error }}</p>#}
+{#                                        {% endfor %}#}
+{#                                        </div>#}
+{#                                    {% endfor %}#}
+{#                                        <button type="submit" class="btn btn-primary">Добавить</button>#}
+{#                                    </form>#}
+{#                                </div>#}
+{#                            </fieldset>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li><a href="#" onclick="openbox('box_proj'); return false"><i class="glyphicon glyphicon-plus-sign" style="font-size: 15px; color:#428bca"></i></a></li>#}
+{#                </ul>#}
+{#            </li>#}
+{#            <li> <a href="{% url 'notes_list' %}" class=" {% if request.resolver_match.url_name == 'notes_list' %}active-menu {% endif %}waves-effect waves-dark"><i class="glyphicon glyphicon-book"></i> Заметки</a>#}
+{#            </li>#}
+{#        </ul>#}
+{#    </div>#}
+{#</nav>#}
+{#<!-- /. NAV SIDE  -->#}
