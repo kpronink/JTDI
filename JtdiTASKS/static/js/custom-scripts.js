@@ -141,7 +141,8 @@ function DonutChart() {
                             '#A6A6A6', '#414e63',
                             '#e96562'
                         ],
-                        resize: true
+                        resize: true,
+                        height: '500px'
                     });
                 }
             })
@@ -149,11 +150,6 @@ function DonutChart() {
         catch (err) {
         }
     }
-}
-
-
-function toMilliseconds(minutes) {
-    return minutes * 60 * 1000;
 }
 
 function drawChartGantt(url) {
@@ -225,6 +221,12 @@ function drawChartGantt(url) {
 }
 
 function drawBurndownChart(url) {
+    var jsonData = $.ajax({
+        url: url,
+        dataType: "json",
+        async: false
+    }).responseText;
+    var my_data = JSON.parse(jsonData);
     google.charts.load('current', {'packages':['line'], 'language': 'ru'});
     google.charts.setOnLoadCallback(drawChart);
 
@@ -235,22 +237,24 @@ function drawBurndownChart(url) {
       data.addColumn('number', 'Идеальная линия выполнения задач, на которую и следует опираться');
       data.addColumn('number', 'Реальная история выполнения   задач');
 
-      data.addRows([
-        [14,  12, 14],
-        [13,  18, 16],
-        [12,  24,   25],
-        [11,  30, 28],
-        [10,  36, 35],
-        [9,   42, 40],
-        [8,   48, 52],
-        [7,  54, 50],
-        [6,  60, 60],
-        [5, 66, 68],
-        [4,  72,  75],
-        [3,  78,  74],
-        [2,  84,  85],
-        [1,  90,  90]
-      ]);
+
+    data.addRows(my_data);
+      // data.addRows([
+      //   [14,  12, 14],
+      //   [13,  18, 16],
+      //   [12,  24,   25],
+      //   [11,  30, 28],
+      //   [10,  36, 35],
+      //   [9,   42, 40],
+      //   [8,   48, 52],
+      //   [7,  54, 50],
+      //   [6,  60, 60],
+      //   [5, 66, 68],
+      //   [4,  72,  75],
+      //   [3,  78,  74],
+      //   [2,  84,  85],
+      //   [1,  90,  90]
+      // ]);
 
       var options = {
         chart: {

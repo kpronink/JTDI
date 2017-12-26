@@ -1,30 +1,25 @@
 {% load bootstrap %}{% load widget_tweaks %}
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
-    <h4 class="modal-title"></h4>
-</div>
-<div class="form-group">
-    <fieldset id="add_kanban_column">
-        <form method="post" action="{% url 'add_kanban_column' pk=project %}" class="add_kanban_column_form">
+
+    <div id="add_kanban_column">
+        <form method="post" action="{% url 'add_kanban_column' pk=project %}" id="add_kanban_column_form" class="ui form">
             {% csrf_token %}
             {% for field in add_kanban_column_form %}
-                <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <div class="field {% if field.errors %} has-error{% endif %}">
                     {% if field.name == 'finished' %}
-                        {% render_field field class="form-control" %}
+                        {% render_field field class="field" %}
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {% else %}
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {% render_field field class="form-control" %}
+                        {% render_field field class="field" %}
                     {% endif %}
                     {% for error in field.errors %}
                         <p class="help-block">{{ error }}</p>
                     {% endfor %}
                 </div>
             {% endfor %}
-            <button type="submit" class="save btn btn-primary">Добавить</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <button type="submit" class="ui positive right labeled icon button">Добавить</button>
+            <button type="button" class="ui black deny button">Закрыть</button>
         </form>
-    </fieldset>
-</div>
+    </div>
+
 

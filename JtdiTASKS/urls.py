@@ -26,6 +26,7 @@ urlpatterns = [
                   url(r'^ajax/get_index_tasks/$', views.get_index_tasks, name='get_index_tasks'),
                   url(r'^ajax/get_index_task/(?P<pk>[0-9]+)/$', views.get_index_task, name='get_index_task'),
                   url(r'^ajax/get_data_gantt/(?P<pk>[0-9]+)/$', views.get_data_gantt, name='get_data_gantt'),
+                  url(r'^ajax/get_burndown_chart/(?P<pk>[0-9]+)/$', views.get_burndown_chart, name='get_burndown_chart'),
                   url(r'^ajax/get_story/(?P<pk>[0-9]+)/$', views.get_story, name='get_story'),
                   url(r'^ajax/get_performers/(?P<pk>[0-9]+)/$', views.get_performers, name='get_performers'),
                   url(r'^ajax/kanban/(?P<pk>[0-9]+)/$', views.get_kanban, name='kanban'),

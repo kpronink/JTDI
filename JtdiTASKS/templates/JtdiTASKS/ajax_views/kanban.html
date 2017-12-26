@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles %} {% block content %}
 <div id="TaskActive" class="ui bottom attached tab segment active" data-tab="TableTask">
     <div id="p1" class="mdl-progress mdl-js-progress"></div>
     <script>
@@ -18,9 +18,9 @@
                     {% endif %}>
                 <div class="kanban_title">
                     {% if status_kanban.visible %}
-                        <h2 class="h2_kanban">{{ status_kanban.title }}</h2>
+                        <h2 class="h2_kanban">{{ status_kanban.title|truncatechars:20 }}</h2>
                     {% else %}
-                        <h2 class="h2_kanban" style="display: none">{{ status_kanban.title }}</h2>
+                        <h2 class="h2_kanban" style="display: none">{{ status_kanban.title|truncatechars:20 }}</h2>
                     {% endif %}
                     <button class="ui mini icon button" style="position: absolute;top: 5px;right: 40px;"
                             onclick="UpdateTask('{% url 'task_create' %}')">
@@ -84,3 +84,4 @@
     </div>
 </div>
 <script src={% static "js/Kanban.js" %}></script>
+{% endblock %}

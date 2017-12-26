@@ -1,8 +1,31 @@
-<ol class="kanban {{ kanban_column.pk }}" id="{{ kanban_column.pk }}" style="border-top: 5px solid {{ kanban_column.color }}">
-    <div class="kanban__title">
-        <h2 class="h2_kanban"> {{ kanban_column.title }}</h2>
-        <div class="actions_column">
-{#            <button class="addbutt" onclick="AddNewKanbanTask()"><i class="material-icons">control_point</i> Создать</button>#}
-        </div>
+<ol class="kanban {{ kanban_column.pk }}" id="{{ kanban_column.pk }}" title="{{ kanban_column.title }}"
+        {% if kanban_column.visible %}
+    style="border-top: 5px solid {{ kanban_column.color }}"
+        {% else %}
+    style="border-top: 5px solid {{ kanban_column.color }}; width: 27px;
+            min-width: 27px;
+            max-width: 27px;"
+        {% endif %}>
+    <div class="kanban_title">
+        {% if kanban_column.visible %}
+            <h2 class="h2_kanban">{{ kanban_column.title|truncatechars:20 }}</h2>
+        {% else %}
+            <h2 class="h2_kanban" style="display: none">{{ kanban_column.title|truncatechars:20 }}</h2>
+        {% endif %}
+        <button class="ui mini icon button" style="position: absolute;top: 5px;right: 40px;"
+                onclick="UpdateTask('{% url 'task_create' %}')">
+            <i class="ellipsis horizontal icon"></i>
+        </button>
+        <button class="ui mini icon button" style="position: absolute;top: 5px;right: 3px;"
+                onclick="HideColumn({{ kanban_column.pk }})">
+            {% if status_kanban.visible %}
+                <i class="hide icon" id="hide_icon{{ kanban_column.pk }}"></i>
+            {% else %}
+                <i class="unhide icon" id="hide_icon"></i>
+            {% endif %}
+        </button>
+        {#                    <div class="actions_column">#}
+        {#                        #}
+        {#                    </div>#}
     </div>
 </ol>

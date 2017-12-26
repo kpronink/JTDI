@@ -4,7 +4,7 @@
         <a class="item red active" data-tab="TableTask">Таблица задач</a>
         <a class="item green" data-tab="Finished">Завершенные задачи</a>
         <a class="item purple" data-tab="StoryLine" onclick="getStory({{ project }})">История проекта</a>
-        <a class="item blue" data-tab="InfoProj" onclick="DonutChart();drawBurndownChart()">Информация</a>
+        <a class="item blue" data-tab="InfoProj" onclick="DonutChart();drawBurndownChart('{% url 'get_burndown_chart' project %}')">Информация</a>
         <a class="item pink" data-tab="Gantt" onclick="drawChartGantt('{% url 'get_data_gantt' project %}')">Таймлайн</a>
         {% project_menu request project project_object users_in_project kanban_view filter_count %}
     </div>

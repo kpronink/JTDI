@@ -568,9 +568,8 @@ def get_index_project(request, pk):
     all_users_in_project = 0
     if request.user.is_authenticated():
         proj = get_object_or_404(Project, pk=pk)
-        tasks_total = Task.objects.filter().filter(Q(author=request.user) | Q(performer=request.user)) \
-            .filter(project=proj).order_by('date').count()
-        tasks_finished = Task.objects.filter(finished=True).filter(author=request.user).filter(project=proj).order_by(
+        tasks_total = Task.objects.filter(project=proj).order_by('date').count()
+        tasks_finished = Task.objects.filter(finished=True).filter(project=proj).order_by(
             'date').count()
 
         users_in_project = PartnerGroup.objects.filter(project=proj)
@@ -680,12 +679,37 @@ def get_data_gantt(request, pk):
 
 def get_burndown_chart(request, pk):
     if request.user.is_authenticated():
-        data = dict()
-        tasks = Task.objects.filter(project__pk=pk).order_by('date')
-        count_tasks = tasks.count()
+        data = list()
+        tasks = list(Task.objects.filter(project__pk=pk).order_by('date'))
+
+        count_tasks = tasks.__len__()
         start_day = tasks[0:1][0].date
-        finish_day = tasks[0:-1][0].date
+        finish_day = tasks[-1:][0].date
         count_day = finish_day - start_day
+        step = round(count_tasks / count_day.days)
+        stepp = step
+
+        finished_tasks_list = list(
+            Task.objects.filter(project__pk=pk).filter(finished=True).values('date_finish').annotate(Count('id')))
+        for finished in finished_tasks_list:
+            if finished['date_finish'] is not None:
+                finish_day = finished['date_finish'] - start_day
+                finished['day'] = finish_day.days
+            else:
+                finished['day'] = 1
+
+        for day in range(1, count_day.days):
+            finished_tasks = 0
+            for finished in finished_tasks_list:
+                if finished['day'] == (count_day.days - day):
+                    finished_tasks = finished['id__count']
+                    break
+
+            data.append([count_day.days - day, stepp, finished_tasks])
+            stepp += step
+    else:
+        data = dict()
+        data['msg'] = 'Вы не авторизованы'
 
     return JsonResponse(data, safe=False)
 
