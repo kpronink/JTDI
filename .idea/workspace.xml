@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -165,7 +163,7 @@
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="305">
-              <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+              <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -188,13 +186,13 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="708" column="21" lean-forward="false" selection-start-line="708" selection-start-column="21" selection-end-line="708" selection-end-column="21" />
+            <state relative-caret-position="344">
+              <caret line="705" column="28" lean-forward="false" selection-start-line="705" selection-start-column="28" selection-end-line="705" selection-end-column="28" />
               <folding>
-                <marker date="1514286260607" expanded="true" signature="3346:3353" ph="×" />
-                <marker date="1514286260607" expanded="true" signature="5573:5583" ph="..." />
-                <marker date="1514286260607" expanded="true" signature="5854:5864" ph="..." />
-                <marker date="1514286260607" expanded="true" signature="6124:6134" ph="..." />
+                <marker date="1514286316303" expanded="true" signature="3346:3353" ph="×" />
+                <marker date="1514286316303" expanded="true" signature="5573:5583" ph="..." />
+                <marker date="1514286316303" expanded="true" signature="5854:5864" ph="..." />
+                <marker date="1514286316303" expanded="true" signature="6124:6134" ph="..." />
               </folding>
             </state>
           </provider>
@@ -1152,20 +1150,20 @@
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
-          <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="708" column="21" lean-forward="false" selection-start-line="708" selection-start-column="21" selection-end-line="708" selection-end-column="21" />
+        <state relative-caret-position="344">
+          <caret line="705" column="28" lean-forward="false" selection-start-line="705" selection-start-column="28" selection-end-line="705" selection-end-column="28" />
           <folding>
-            <marker date="1514286260607" expanded="true" signature="3346:3353" ph="×" />
-            <marker date="1514286260607" expanded="true" signature="5573:5583" ph="..." />
-            <marker date="1514286260607" expanded="true" signature="5854:5864" ph="..." />
-            <marker date="1514286260607" expanded="true" signature="6124:6134" ph="..." />
+            <marker date="1514286316303" expanded="true" signature="3346:3353" ph="×" />
+            <marker date="1514286316303" expanded="true" signature="5573:5583" ph="..." />
+            <marker date="1514286316303" expanded="true" signature="5854:5864" ph="..." />
+            <marker date="1514286316303" expanded="true" signature="6124:6134" ph="..." />
           </folding>
         </state>
       </provider>

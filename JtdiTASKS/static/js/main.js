@@ -703,8 +703,7 @@ function OpenSidebarRight() {
 
 function OpenModal() {
     $('.ui.modal').modal( {
-        observeChanges: true,
-        blurring: true
+        observeChanges: true
       })
       .modal('show');
 }
