@@ -3,7 +3,7 @@
 
     <div class="ui form"> {% if task.status != 'Finished' %}
         <div class="field">
-            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}')"> <i
+            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}', true)"> <i
                     class="flag icon" style="color: {{ task.color }};"> </i>Завершить</a>
         </div>
 

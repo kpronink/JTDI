@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/views.py" afterPath="$PROJECT_DIR$/JtdiTASKS/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,7 +39,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="452">
@@ -160,11 +161,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="story_line.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/story_line.html">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="28" lean-forward="false" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
+            <state relative-caret-position="305">
+              <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -184,17 +185,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="154" column="57" lean-forward="false" selection-start-line="154" selection-start-column="37" selection-end-line="154" selection-end-column="57" />
+            <state relative-caret-position="378">
+              <caret line="708" column="21" lean-forward="false" selection-start-line="708" selection-start-column="21" selection-end-line="708" selection-end-column="21" />
               <folding>
-                <marker date="1514284712052" expanded="true" signature="3346:3353" ph="×" />
-                <marker date="1514284712052" expanded="true" signature="5573:5583" ph="..." />
-                <marker date="1514284712052" expanded="true" signature="5854:5864" ph="..." />
-                <marker date="1514284712052" expanded="true" signature="6124:6134" ph="..." />
+                <marker date="1514286260607" expanded="true" signature="3346:3353" ph="×" />
+                <marker date="1514286260607" expanded="true" signature="5573:5583" ph="..." />
+                <marker date="1514286260607" expanded="true" signature="5854:5864" ph="..." />
+                <marker date="1514286260607" expanded="true" signature="6124:6134" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="task_detail_ajax.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="88" lean-forward="false" selection-start-line="5" selection-start-column="88" selection-end-line="5" selection-end-column="88" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -225,8 +236,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>task_time</find>
-      <find>change</find>
       <find>coll</find>
       <find>proj</find>
       <find>acc</find>
@@ -253,8 +262,10 @@
       <find>burn</find>
       <find>-1</find>
       <find>add_kanban_column_form</find>
-      <find>values_list</find>
       <find>.html(result.kanban)</find>
+      <find>values_list</find>
+      <find>Univ</find>
+      <find>ready</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -298,10 +309,8 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_create_ajax.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/project_list_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/menu.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/profile_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/user_invite.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/models.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/notify_menu.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/project_param.html" />
@@ -312,8 +321,10 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/urls.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
       </list>
     </option>
   </component>
@@ -637,7 +648,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js</url>
-          <line>356</line>
+          <line>359</line>
           <option name="timeStamp" value="672" />
         </line-breakpoint>
       </breakpoints>
@@ -871,14 +882,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="98" column="60" lean-forward="false" selection-start-line="98" selection-start-column="60" selection-end-line="98" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/profile_menu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
@@ -958,16 +961,6 @@
         <state relative-caret-position="169">
           <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="23" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="122" column="0" lean-forward="false" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
-          <folding>
-            <marker date="1513943216268" expanded="false" signature="4346:4353" ph="×" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1071,19 +1064,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="154" column="57" lean-forward="false" selection-start-line="154" selection-start-column="37" selection-end-line="154" selection-end-column="57" />
-          <folding>
-            <marker date="1514284712052" expanded="true" signature="3346:3353" ph="×" />
-            <marker date="1514284712052" expanded="true" signature="5573:5583" ph="..." />
-            <marker date="1514284712052" expanded="true" signature="5854:5864" ph="..." />
-            <marker date="1514284712052" expanded="true" signature="6124:6134" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
@@ -1157,6 +1137,35 @@
             <element signature="e#84960#85757#0" expanded="false" />
             <element signature="e#86042#87234#0" expanded="false" />
             <element signature="e#87326#87388#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="88" lean-forward="false" selection-start-line="5" selection-start-column="88" selection-end-line="5" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="708" column="21" lean-forward="false" selection-start-line="708" selection-start-column="21" selection-end-line="708" selection-end-column="21" />
+          <folding>
+            <marker date="1514286260607" expanded="true" signature="3346:3353" ph="×" />
+            <marker date="1514286260607" expanded="true" signature="5573:5583" ph="..." />
+            <marker date="1514286260607" expanded="true" signature="5854:5864" ph="..." />
+            <marker date="1514286260607" expanded="true" signature="6124:6134" ph="..." />
           </folding>
         </state>
       </provider>

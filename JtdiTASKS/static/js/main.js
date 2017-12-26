@@ -248,7 +248,7 @@ function TaskDetail(task_url) {
     }
 }
 
-function UniversalFun(task_url) {
+function UniversalFun(task_url, close_modal) {
     if (task_url !== '') {
         if ($("#modal-task").is(':visible')) {
         }
@@ -282,6 +282,9 @@ function UniversalFun(task_url) {
                 }
                 $('#TasksTables').dataTable();
                 $('#TasksTablesFinished').dataTable();
+                if (close_modal !== undefined) {
+                    CloseModal();
+                }
 
                 Alert(result.msg);
             }
@@ -371,6 +374,10 @@ $(document).ready(function () {
             // programmatically activating tab
             $.tab('change tab', 'StoryLine');
         })
+    ;
+
+    $('.ui.modal')
+        .modal().update()
     ;
 
 });
@@ -695,13 +702,11 @@ function OpenSidebarRight() {
 }
 
 function OpenModal() {
-    $('.ui.modal')
-        .modal({
-            blurring: true,
-        })
-        .modal('setting', 'transition', 'fade up')
-        .modal('show')
-    ;
+    $('.ui.modal').modal( {
+        observeChanges: true,
+        blurring: true
+      })
+      .modal('show');
 }
 
 function CloseModal() {

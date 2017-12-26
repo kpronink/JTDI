@@ -10,27 +10,18 @@
 
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    {#	<link rel="stylesheet" href={% static "/materialize/css/materialize.min.css"%} media="screen,projection" />#}
-    <!--Bootstrap Styles>-->
-    {#    <link href={% static "/css/bootstrap.css"%} rel="stylesheet" />#}
-    {#    <!-- FontAwesome Styles-->#}
-    {#    <link href={% static "/css/font-awesome.css"%} rel="stylesheet" />#}
+
     <link href={% static "/css/custom-styles.css" %} rel="stylesheet"/>
     <link href={% static "/semantic.css" %} rel="stylesheet"/>
     <link href={% static "/css/Semantic-UI-Alert.css" %} rel="stylesheet"/>
     <link href={% static "/components/table.css" %} rel="stylesheet"/>
     <script src={% static "/jquery-3.2.1.js" %}></script>
     <script src={% static "/semantic.js" %}></script>
-    {#    <link href={% static "/components/menu.css"%} rel="stylesheet" />#}
+
     <!-- Morris Chart Styles-->
     <link href={% static "/js/morris/morris-0.4.3.min.css" %} rel="stylesheet"/>
     <!-- Kanban -->
     <link href={% static "/css/Kanban.css" %} rel="stylesheet"/>
-    {#    <!-- Custom Styles-->#}
-    {#    {% if user.profile.dark_theme %}#}
-    {#        <link href={% static "/css/custom-styles_dark.css" %} rel="stylesheet"/>#}
-    {#    {% else %}#}
-    {#    {% endif %}#}
 
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
@@ -40,83 +31,23 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
 </head>
 
-{% block javascript %}
-    <script type="text/javascript">
-        function openbox(id) {
-            display = document.getElementById(id).style.display;
-            if (display == 'none') {
-                document.getElementById(id).style.display = 'block';
-            } else {
-                document.getElementById(id).style.display = 'none';
-            }
-        }
-    </script>
-
-{% endblock %}
-
-
-
 <body>
-
 
 {% if user.is_authenticated %}
     {% profile_menu user %}
     {% project_recent_list request user project %}
 {% endif %}
 
-{#<div class="ui hidden divider"></div>#}
 <div class="pusher">
     <div class="ui fluid container">
-        {#        <div class="ui hidden divider"></div>#}
-        {#        <div class="ui fluid segment">#}
-
         {% block content %}
-
-
         {% endblock %}
-        {#        </div>#}
+
     </div>
 </div>
 
 {% if user.is_authenticated %}
 
-
-    {#    <div class="fixed-action-btn horizontal click-to-toggle">#}
-    {#        <a class="btn-floating btn-large red">#}
-    {#            <i class="material-icons">menu</i>#}
-    {#        </a>#}
-    {#        <ul>#}
-    {#            <li>#}
-    {#                <button type="button" class="ui black big launch right attached fixed button" data-toggle="modal"#}
-    {#                        data-target="#modal-task" onclick="UpdateTask('{% url 'task_create' %}')">#}
-    {#                    <span class="glyphicon glyphicon-plus-sign"></span>#}
-    {#                </button>#}
-    {#                <button title="Создать заметку" type="button" class="btn-floating green" data-toggle="modal"#}
-    {#                        data-target="#modal-task" onclick="UpdateNote('/note_create_update/0/')">#}
-    {#                    <span class="glyphicon glyphicon-book"></span>#}
-    {#                </button>#}
-    {#            </li>#}
-    {#        </ul>#}
-    {#    </div>#}
-    {##}
-    {#    <div class="modal fade" tabindex="-1" role="dialog" id="modal-task">#}
-    {#        <div class="modal-dialog" role="document">#}
-    {#            <div class="modal-content">#}
-    {#                <div class="modal-header">#}
-    {#                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span#}
-    {#                            aria-hidden="true">&times;</span></button>#}
-    {#                    <h4 class="modal-title"></h4>#}
-    {#                </div>#}
-    {#                <div class="modal-body">#}
-    {#                    <p></p>#}
-    {#                </div>#}
-    {#                <div class="modal-footer">#}
-    {#                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>#}
-    {#                    <button type="button" class="btn btn-primary">Сохранить</button>#}
-    {#                </div>#}
-    {#            </div><!-- /.modal-content -->#}
-    {#        </div><!-- /.modal-dialog -->#}
-    {#    </div><!-- /.modal -->#}
     <div class="ui medium modal">
         <i class="close icon"></i>
         <div class="scrolling content" id="modal_content">
@@ -125,14 +56,6 @@
     </div>
 
 {% endif %}
-
-<!-- JS Scripts-->
-<!-- jQuery Js -->
-
-
-<!-- Bootstrap Js -->
-{#    <script src={% static "/js/bootstrap.min.js"%}></script>#}
-
 
 <!-- Morris Chart Js -->
 <script src={% static "/js/morris/raphael-2.1.0.min.js" %}></script>
@@ -151,10 +74,6 @@
 
 <script type="text/javascript" src={% static "js/date.js" %}></script>
 
-
-<!-- DATA TABLE SCRIPTS -->
-{#    <script src="{% static "js/dataTables/jquery.dataTables.js"%}"></script>#}
-{#    <script src="{% static "js/dataTables/dataTables.bootstrap.js"%}"></script>#}
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.semanticui.min.js"></script>
 <script src={% static "js/Semantic-UI-Alert.js" %}></script>
@@ -177,12 +96,7 @@
             apiSettings: {
                 url: '/search?q={query}'
             },
-            {#            fields: {#}
-            {#                results: 'results',#}
-            {#                title: 'title',#}
-            {#                url: 'url',#}
-            {#                description: 'description'#}
-            {#            },#}
+
             minCharacters: 3,
             debug: true,
             onSelect: function (result, response) {
