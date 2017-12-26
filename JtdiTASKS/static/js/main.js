@@ -152,7 +152,7 @@ $(".modal").on("submit", "#task_create_form", function () {
             if (result.form_is_valid) {
                 $("#TaskActive").html(result.html_active_tasks_list);
                 $('#TasksTables').dataTable({pageLength: result.count_visible_tasks});
-                $('.card-content').html(result.kanban);
+                // $('.card-content').html(result.kanban);
                 CloseModal()
                 Alert('Задача успешно обновлена');
             }
@@ -177,7 +177,7 @@ $(".modal").on("submit", "#note_create_form", function () {
             if (result.form_is_valid) {
                 $("#NotesTables").html(result.html_active_notes_list);
                 $('#TasksTables').dataTable();
-                $('.card-content').html(result.kanban);
+                // $('.card-content').html(result.kanban);
                 CloseModal()
                 Alert('Заметка успешно обновлена');
             }

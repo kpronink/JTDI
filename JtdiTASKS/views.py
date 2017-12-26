@@ -1160,7 +1160,7 @@ def task_create(request):
             })
             data['count_visible_tasks'] = count_visible_tasks
             if task.project is not None and kanban:
-                data['kanban'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
+                data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
         else:
             data['form_is_valid'] = False
     else:
@@ -1262,7 +1262,7 @@ def task_update(request, pk):
                 })
                 data['count_visible_tasks'] = count_visible_tasks
                 if task.project is not None and kanban:
-                    data['kanban'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
+                    data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
                 if not task.remind:
                     reminders = QueueTask.objects.filter(task=task).filter(user=request.user)
                     if reminders.count():
