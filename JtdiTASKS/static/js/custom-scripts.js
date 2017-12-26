@@ -5,7 +5,7 @@
 ---------------------------------------------------------  */
 
 $(document).ready((function ($) {
-    google.charts.load('current', {'packages': ['gantt']});
+    google.charts.load('current', {'packages': ['gantt'], 'language': 'ru'});
 
     "use strict";
     var mainApp = {
@@ -214,27 +214,19 @@ function drawChartGantt(url) {
         } else {
             var selection = selections[0];
             console.info(selection);
-            // alert('You selected ' + selection + ' ' +
-            //     (selection.row == null ? 'something' : 'row: ' + selection.row + ' = ' + data.getValue(selection.row, 0)));
             TaskDetail('/task/det/'+data.getValue(selection.row, 0)+'/')
         }
     }
 
-
-    // google.visualization.events.addListener(chart, 'ready', changeColors);
-    // google.visualization.events.addListener(chart, 'onmouseover', changeColors);
-    // google.visualization.events.addListener(chart, 'onmouseout', changeColors);
     google.visualization.events.addListener(chart, 'select', selectHandler);
-    // google.visualization.events.addListener(chart, 'error', changeColors);
-    // google.visualization.events.addListener(chart, 'click', changeColors);
-    // google.visualization.events.addListener(chart, 'animationfinish', changeColors);
+
     chart.draw(data, options);
 
 }
 
 function drawBurndownChart(url) {
-    google.charts.load('current', {'packages':['line']});
-      google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', {'packages':['line'], 'language': 'ru'});
+    google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
 

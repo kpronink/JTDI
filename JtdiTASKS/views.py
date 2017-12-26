@@ -194,9 +194,10 @@ def get_event(user, request, render=True, slice=10):
 
             tasks.append({'msg': event.event.author.username + ' ' + event.event.event + object_model.title,
                           'url': '/task/det/' + str(object_model.pk) + '/',
-                          'time': event.event.date_time.strftime('%H:%M'),
+                          'time': event.event.date_time.strftime('%a, %d %b %Y %H:%M'),
                           'avatar': avatar,
-                          'ico': ico})
+                          'ico': ico,
+                          'user': event.event.author})
         elif model == PartnerGroup:
             try:
                 object_model = get_object_or_404(PartnerGroup, pk=event.event.object_id)
@@ -206,9 +207,10 @@ def get_event(user, request, render=True, slice=10):
 
             tasks.append({'msg': event.event.author.username + ' ' + event.event.event + object_model.partner.username,
                           'url': '',
-                          'time': event.event.date_time.strftime('%H:%M'),
+                          'time': event.event.date_time.strftime('%a, %d %b %Y %H:%M'),
                           'avatar': avatar,
-                          'ico': ico})
+                          'ico': ico,
+                          'user': event.event.author})
         elif model == InviteUser:
             try:
                 object_model = get_object_or_404(InviteUser, pk=event.event.object_id)
@@ -218,9 +220,10 @@ def get_event(user, request, render=True, slice=10):
             tasks.append(
                 {'msg': object_model.user_sender.username + ' ' + event.event.event + object_model.user_invite.username,
                  'url': '/invite/',
-                 'time': event.event.date_time.strftime('%H:%M'),
+                 'time': event.event.date_time.strftime('%a, %d %b %Y %H:%M'),
                  'avatar': avatar,
-                 'ico': ico})
+                 'ico': ico,
+                 'user': event.event.author})
 
     if render:
         notify_tasks = render_to_string('JtdiTASKS/menu/notify_menu.html',
@@ -273,7 +276,10 @@ def get_push_event(request):
 
 def get_story(request, pk):
     data = dict()
+
+    notify_tasks, count_notify = get_event(request.user, request, False, None)
     data['story'] = render_to_string('JtdiTASKS/ajax_views/story_line.html',
+                                     {'notify_tasks': notify_tasks},
                                      request=request
                                      )
     return JsonResponse(data)
@@ -672,30 +678,15 @@ def get_data_gantt(request, pk):
         return JsonResponse(data, safe=False)
 
 
-def get_burndown_chart(request):
+def get_burndown_chart(request, pk):
     if request.user.is_authenticated():
-        today = datetime.date.today()
-        week_end = today - datetime.timedelta(days=7)
-        tasks_finish_base = Task.objects.filter(active=False).filter(finished=True).filter(
-            author=request.user).filter(
-            date_finish__range=(week_end, today)).order_by(
-            'date_finish')
-        tasks_create = Task.objects.filter(author=request.user).filter(
-            date__range=(week_end, today)).order_by(
-            'date')
-        qsstats = QuerySetStats(tasks_finish_base, date_field='date_finish', aggregate=Count('id'))
-        qsstats2 = QuerySetStats(tasks_create, date_field='date', aggregate=Count('id'))
+        data = dict()
+        tasks = Task.objects.filter(project__pk=pk).order_by('date')
+        count_tasks = tasks.count()
+        start_day = tasks[0:1][0].date
+        finish_day = tasks[0:-1][0].date
+        count_day = finish_day - start_day
 
-        # ...в день за указанный период
-        data = []
-        values = qsstats.time_series(week_end, today, interval='days')
-        values2 = qsstats2.time_series(week_end, today, interval='days')
-        count = 0
-        for val in values:
-            data.append({'y': str(val[0].day) + '.' + str(val[0].month),
-                         'b': values2[count][1],
-                         'a': val[1]})
-            count += 1
     return JsonResponse(data, safe=False)
 
 

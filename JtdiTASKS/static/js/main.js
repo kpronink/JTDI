@@ -424,6 +424,7 @@ function GetNotifications() {
 }
 
 function getStory(project) {
+    $('.loader').addClass('active');
     $.ajax({
         url: '/ajax/get_story/' + String(project) + '/',
         data: {},
@@ -433,6 +434,8 @@ function getStory(project) {
             if (result.story !== '') {
                 $('#StoryLine').html(result.story)
             }
+            $('.loader').removeClass('active');
+            $('.loader').addClass('disable');
         }
     });
 
