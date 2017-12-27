@@ -114,13 +114,12 @@ function drawBurndownChart(url) {
             title: 'Диаграмма сгорания задач',
             subtitle: 'Данный график является основным средством для отслеживания выполненных задач в спринте или во всем проекте'
         },
+        width: 900,
         height: 500
     };
 
     var chart = new google.charts.Line(document.getElementById('burndown_chart'));
-
     chart.draw(data, google.charts.Line.convertOptions(options));
-    
 }
 
 
