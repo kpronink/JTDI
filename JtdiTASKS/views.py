@@ -858,10 +858,14 @@ def set_access(request, pk):
             if rule.user.pk in value:
                 rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
                 rule_access.__setattr__(filter_name, True)
+                if filter_name == 'full_right':
+                    rule_access.read_only = False
                 rule_access.save()
             else:
                 rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
                 rule_access.__setattr__(filter_name, False)
+                if filter_name == 'full_right':
+                    rule_access.read_only = True
                 rule_access.save()
     elif value != 0:
         performer = get_object_or_404(User, pk=value)
@@ -870,6 +874,8 @@ def set_access(request, pk):
             if rule.user.pk in value:
                 rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
                 rule_access.__setattr__(filter_name, False)
+                if filter_name == 'full_right':
+                    rule_access.read_only = True
                 rule_access.save()
     # else:
     #     project_filter_obj = get_object_or_404(UserProjectFilter, pk=project_filter.pk)
