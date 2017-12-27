@@ -12,8 +12,7 @@
             </div>
         </div>
         {% if project_object.author == user %}
-            <div class="item" onclick="UniversalFun('{% url 'project_param' pk=project %}',
-                    'projects')">
+            <div class="item" onclick="UniversalFun('{% url 'project_param' pk=project %}')">
         {% else %}
             <div class="item disabled">
         {% endif %}

@@ -11,7 +11,7 @@
                         <div class="summary"><a>{{ event.user.username }}</a>
                             <div class="date">{{ event.time }}</div>
                         </div>
-                        <div class="extra text">{{ event.msg }}
+                        <div class="extra text" onclick="UniversalFun('{{ event.url }}')">{{ event.msg }}
                         </div>
                         <div class="meta">
                             {#                        <a class="like"><i class="like icon"></i> 5 Likes </a>#}

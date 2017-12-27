@@ -73,9 +73,9 @@
             .dropdown('set selected',
                 [
                     {% for user_in_proj in users_in_project %}
-                        {% for user_read_only in read_only %}
-                            {% if user_in_proj.user.pk == user_read_only.user.pk %}
-                                '{{ user_in_proj.user.pk }}',
+                        {% for user_read_only in read_only_users %}
+                            {% if user_in_proj.pk == user_read_only.user.pk %}
+                                '{{ user_in_proj.pk }}',
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
@@ -91,9 +91,9 @@
             .dropdown('set selected',
                 [
                     {% for user_in_proj in users_in_project %}
-                        {% for user_full_rights in full_rights %}
-                            {% if user_in_proj.user.pk == user_full_rights.user.pk %}
-                                '{{ user_in_proj.user.pk }}',
+                        {% for user_full_rights in full_rights_user %}
+                            {% if user_in_proj.pk == user_full_rights.user.pk %}
+                                '{{ user_in_proj.pk }}',
                             {% endif %}
                         {% endfor %}
                     {% endfor %}

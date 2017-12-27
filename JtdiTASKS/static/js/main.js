@@ -688,7 +688,6 @@ function ChangeRules(filter, value) {
         url: "/ajax/set_access/" + $("#project").attr("project") + "/",
         data: {'filter': filter, 'value': value},
         success: function (result) {
-            // GetKanban(true)
         }
     });
 }

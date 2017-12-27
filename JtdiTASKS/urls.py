@@ -10,6 +10,7 @@ urlpatterns = [
                   url(r'^get_notify/$', views.get_notifycation, name='get_notify'),
                   url(r'^get_notify_event/$', views.get_notify_list, name='get_notify_event'),
                   url(r'^ajax/install_filter/(?P<pk>[0-9]+)/$', views.install_filter, name='install_filter'),
+                  url(r'^ajax/set_access/(?P<pk>[0-9]+)/$', views.set_access, name='set_access'),
                   url(r'^task/create/$', views.task_create, name='task_create'),
                   url(r'^task/copy/(?P<pk>[0-9]+)/$', views.task_copy, name='task_copy'),
                   url(r'^project/create/$', views.project_create, name='project_create'),

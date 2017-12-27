@@ -13,3 +13,4 @@ jtdi_venv
 /mysite/settings.py
 /important_static/
 JtdiTASKS/static/plugins/
+/db.sqlite3-journal

@@ -261,7 +261,7 @@ function drawBurndownChart(url) {
           title: 'Диаграмма сгорания задач',
           subtitle: 'Данный график является основным средством для отслеживания выполненных задач в спринте или во всем проекте'
         },
-        width: $('#burndown_chart').width() * 1,
+        // width: $('#burndown_chart').width() * 1,
         height: 500
       };
 

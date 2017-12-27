@@ -33,18 +33,6 @@ def generate_color():
     return '#%02X%02X%02X' % (r(), r(), r())
 
 
-def get_access_project(user, project):
-    rules = ProjectAccess.objects.filter(project=project).filter(user=user)
-    if not rules.count():
-        new_rules = ProjectAccess(project=project, user=user)
-        new_rules.full_rights = (project.author == user)
-        new_rules.read_only = not (project.author == user)
-        new_rules.save()
-        return new_rules.read_only, new_rules.full_rights
-    else:
-        return rules[0].read_only, rules[0].full_rights
-
-
 def local_time(dt, tz):
     if dt.tzinfo is None:
         dt = tz.localize(dt)
@@ -823,6 +811,74 @@ def validate_username(request):
     if not data['is_taken']:
         data['error_message'] = 'Пользователя с таким именем не существует'
     return JsonResponse(data)
+
+
+# ACCESS +
+
+def get_access_project(user, project):
+    rules = ProjectAccess.objects.filter(project=project).filter(user=user)
+    if not rules.count():
+        new_rules = ProjectAccess(project=project, user=user)
+        new_rules.full_rights = (project.author == user)
+        new_rules.read_only = not (project.author == user)
+        new_rules.save()
+        return new_rules.read_only, new_rules.full_rights
+    else:
+        return rules[0].read_only, rules[0].full_rights
+
+
+def set_access(request, pk):
+
+    filter_name = request.POST['filter']
+    if ',' not in request.POST['value'] and request.POST['value'] != '':
+        value = json.loads(request.POST['value'])
+    else:
+        if request.POST['value'] != '':
+            value = list(request.POST['value'].split(','))
+            value = [int(val) for val in value]
+        else:
+            value = 0
+
+    project = Project.objects.filter(pk=pk)[0]
+
+    users_in_project = PartnerGroup.objects.filter(project=project)
+
+    all_users_in_project = User.objects.filter(
+        Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+    rules_users = ProjectAccess.objects.filter(project=project)
+    if all_users_in_project.count() != rules_users.count():
+        for user_in_proj in all_users_in_project:
+            rule_access = ProjectAccess.objects.filter(project=project).filter(user=user_in_proj)
+            if not rule_access.count():
+                new_rule = ProjectAccess(project=project, user=user_in_proj, full_rights=False, read_only=True)
+                new_rule.save()
+
+    if type(value) is not int:
+        for rule in rules_users:
+            if rule.user.pk in value:
+                rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
+                rule_access.__setattr__(filter_name, True)
+                rule_access.save()
+            else:
+                rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
+                rule_access.__setattr__(filter_name, False)
+                rule_access.save()
+    elif value != 0:
+        performer = get_object_or_404(User, pk=value)
+        rules_users = ProjectAccess.objects.filter(project=project).exclude(user=performer)
+        for rule in rules_users:
+            if rule.user.pk in value:
+                rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
+                rule_access.__setattr__(filter_name, False)
+                rule_access.save()
+    # else:
+    #     project_filter_obj = get_object_or_404(UserProjectFilter, pk=project_filter.pk)
+    #     project_filter_obj.__setattr__(filter_name, value)
+    #     project_filter_obj.save()
+    return JsonResponse({})
+
+
+# ACCESS -
 
 
 # VIEWS +
@@ -1728,8 +1784,8 @@ def project_param(request, pk):
     invited_users = InviteUser.objects.filter(user_sender__username__exact=request.user.username) \
         .filter(not_invited=False).filter(invited=True)
     project_invite_form = ProjectInviteUser(prefix='invite_project')
-    project_invite_form.fields['user_invite'].queryset = User.objects \
-        .filter(pk__in=[user.user_invite.pk for user in invited_users])
+    # project_invite_form.fields['user_invite'].queryset = User.objects \
+    #     .filter(pk__in=[user.user_invite.pk for user in invited_users])
 
     users_in_project = PartnerGroup.objects.filter(project=project)
 
@@ -1738,6 +1794,10 @@ def project_param(request, pk):
 
     all_users_in_project = User.objects.filter(
         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+
+    project_invite_form.fields['user_invite'].queryset = User.objects.exclude(
+        pk__in=[user.partner_id for user in users_in_project]) \
+        .filter(pk__in=[user.user_invite.pk for user in invited_users])
 
     data['form_is_valid'] = True
     data['html_active_tasks_list'] = ''
