@@ -858,13 +858,13 @@ def set_access(request, pk):
             if rule.user.pk in value:
                 rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
                 rule_access.__setattr__(filter_name, True)
-                if filter_name == 'full_right':
+                if filter_name == 'full_rights':
                     rule_access.read_only = False
                 rule_access.save()
             else:
                 rule_access = get_object_or_404(ProjectAccess, pk=rule.pk)
                 rule_access.__setattr__(filter_name, False)
-                if filter_name == 'full_right':
+                if filter_name == 'full_rights':
                     rule_access.read_only = True
                 rule_access.save()
     elif value != 0:

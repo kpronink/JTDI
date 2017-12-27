@@ -39,6 +39,7 @@
     <div class="field">
         <div class="two fields">
             <div class="field">
+                <label for="read_only">Только чтение</label>
                 <select name="read_only" multiple="" class="ui dropdown" id="read_only">
                     <option value="">Только чтение</option>
                     {% for user_in_proj in users_in_project %}
@@ -49,6 +50,7 @@
                 </select>
             </div>
             <div class="field">
+                <label for="full_rights">Полные права</label>
                 <select name="full_rights" multiple="" class="ui dropdown" id="full_rights">
                     <option value="">Полные права</option>
                     {% for user_in_proj in users_in_project %}
