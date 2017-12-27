@@ -5,8 +5,7 @@
 ---------------------------------------------------------  */
 
 $(document).ready((function ($) {
-    google.charts.load('current', {'packages': ['gantt'], 'language': 'ru'});
-
+    google.charts.load('current', {'packages': ['gantt']});
     "use strict";
     var mainApp = {
 
@@ -125,7 +124,6 @@ $(document).ready((function ($) {
 
 }(jQuery)));
 
-
 function DonutChart() {
     $("#morris-donut-chart").empty()
     if ($('*').is('#url_ajax_chart')) {
@@ -187,7 +185,7 @@ function drawChartGantt(url) {
     });
     data.addRows(rows);
     var options = {
-        height: rows.length * 30,
+        height: rows.length * 30.5,
         width: $('#Gantt').width() * 1,
         // gantt: {
         //     defaultStartDateMillis: new Date(2015, 3, 28)
@@ -210,7 +208,7 @@ function drawChartGantt(url) {
         } else {
             var selection = selections[0];
             console.info(selection);
-            TaskDetail('/task/det/'+data.getValue(selection.row, 0)+'/')
+            TaskDetail('/task/det/' + data.getValue(selection.row, 0) + '/')
         }
     }
 
@@ -227,49 +225,49 @@ function drawBurndownChart(url) {
         async: false
     }).responseText;
     var my_data = JSON.parse(jsonData);
-    google.charts.load('current', {'packages':['line'], 'language': 'ru'});
+    google.charts.load('current', {'packages': ['line'], 'language': 'ru'});
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
 
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'Дни');
-      data.addColumn('number', 'Идеальная линия выполнения задач, на которую и следует опираться');
-      data.addColumn('number', 'Реальная история выполнения   задач');
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Дни');
+        data.addColumn('number', 'Идеальная линия выполнения задач, на которую и следует опираться');
+        data.addColumn('number', 'Реальная история выполнения   задач');
 
 
-    data.addRows(my_data);
-      // data.addRows([
-      //   [14,  12, 14],
-      //   [13,  18, 16],
-      //   [12,  24,   25],
-      //   [11,  30, 28],
-      //   [10,  36, 35],
-      //   [9,   42, 40],
-      //   [8,   48, 52],
-      //   [7,  54, 50],
-      //   [6,  60, 60],
-      //   [5, 66, 68],
-      //   [4,  72,  75],
-      //   [3,  78,  74],
-      //   [2,  84,  85],
-      //   [1,  90,  90]
-      // ]);
+        data.addRows(my_data);
+        // data.addRows([
+        //   [14,  12, 14],
+        //   [13,  18, 16],
+        //   [12,  24,   25],
+        //   [11,  30, 28],
+        //   [10,  36, 35],
+        //   [9,   42, 40],
+        //   [8,   48, 52],
+        //   [7,  54, 50],
+        //   [6,  60, 60],
+        //   [5, 66, 68],
+        //   [4,  72,  75],
+        //   [3,  78,  74],
+        //   [2,  84,  85],
+        //   [1,  90,  90]
+        // ]);
 
-      var options = {
-        chart: {
-          title: 'Диаграмма сгорания задач',
-          subtitle: 'Данный график является основным средством для отслеживания выполненных задач в спринте или во всем проекте'
-        },
-        // width: $('#burndown_chart').width() * 1,
-        height: 500
-      };
+        var options = {
+            chart: {
+                title: 'Диаграмма сгорания задач',
+                subtitle: 'Данный график является основным средством для отслеживания выполненных задач в спринте или во всем проекте'
+            },
+            // width: $('#burndown_chart').width() * 1,
+            height: 500
+        };
 
-      var chart = new google.charts.Line(document.getElementById('burndown_chart'));
+        var chart = new google.charts.Line(document.getElementById('burndown_chart'));
 
-      chart.draw(data, google.charts.Line.convertOptions(options));
+        chart.draw(data, google.charts.Line.convertOptions(options));
     }
-    
+
 }
 
 

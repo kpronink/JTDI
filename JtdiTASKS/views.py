@@ -145,7 +145,7 @@ def register_event(event_object, user, project, event_desc):
         sees.save()
 
 
-def get_event(user, request, render=True, slice=10):
+def get_event(user, request, render=True, slice=10, see=False):
     projects = list(
         PartnerGroup.objects.filter(partner=user).values_list('project', flat=True))
     project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
@@ -161,9 +161,10 @@ def get_event(user, request, render=True, slice=10):
     tasks = list()
     for event in events:
         model = event.event.content_type.model_class()
-        event_obj = get_object_or_404(ViewsEventsTable, pk=event.pk)
-        event_obj.sees = True
-        event_obj.save()
+        if see:
+            event_obj = get_object_or_404(ViewsEventsTable, pk=event.pk)
+            event_obj.sees = True
+            event_obj.save()
         if event.event.author.profile.avatar:
             avatar = event.event.author.profile.avatar.url
         else:
@@ -492,7 +493,7 @@ def get_notify_list(request):
         return JsonResponse({'msg': 'пользователь не авторизован'})
 
     data = dict()
-    data['notify_tasks'], data['count_notify'] = get_event(request.user, request)
+    data['notify_tasks'], data['count_notify'] = get_event(request.user, request, see=True)
 
     return JsonResponse(data)
 

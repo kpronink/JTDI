@@ -269,12 +269,14 @@ function UniversalFun(task_url, close_modal) {
                 }
                 if (result.html_active_tasks_list !== '') {
                     $("#TaskActive").html(result.html_active_tasks_list);
+                    drawChartGantt();
                 }
                 if (result.html_active_notes_list !== '') {
                     $("#NotesTables").html(result.html_active_notes_list);
                 }
                 if (result.html_finished_tasks_list !== '') {
                     $("#TasksFinished").html(result.html_finished_tasks_list);
+                    drawChartGantt();
                 }
                 if (result.html_form !== '') {
                     $("#modal-task .modal-content").html(result.html_form);
@@ -375,11 +377,6 @@ $(document).ready(function () {
             $.tab('change tab', 'StoryLine');
         })
     ;
-
-    $('.ui.modal')
-        .modal().update()
-    ;
-
 });
 
 function Alert(msg) {
@@ -701,10 +698,13 @@ function OpenSidebarRight() {
 }
 
 function OpenModal() {
-    $('.ui.modal').modal( {
-        observeChanges: true
-      })
-      .modal('show');
+    $('.ui.modal').modal({
+        observeChanges: true,
+        onHide: function () {
+            $("#modal_content").html("");
+        }
+    })
+        .modal('show');
 }
 
 function CloseModal() {
