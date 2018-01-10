@@ -237,7 +237,6 @@ function TaskDetail(task_url) {
         else {
         }
         LoaderActive();
-        OpenModal();
         $.ajax({
             url: task_url,
             type: 'post',
@@ -246,6 +245,7 @@ function TaskDetail(task_url) {
             success: function (result) {
                 $("#modal_content").html(result.html_form);
                 get_comments();
+                OpenModal();
                 LoaderDeactive();
             }
         });

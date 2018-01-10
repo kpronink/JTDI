@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27fd5074-e122-48ee-9567-ffb4a0d3eb2d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" afterPath="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/profile_menu.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/profile_menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" afterPath="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -131,7 +125,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project_task_list.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="project_task_list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
@@ -166,17 +160,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="512" column="13" lean-forward="false" selection-start-line="512" selection-start-column="8" selection-end-line="512" selection-end-column="13" />
+            <state relative-caret-position="321">
+              <caret line="205" column="21" lean-forward="false" selection-start-line="205" selection-start-column="16" selection-end-line="205" selection-end-column="21" />
               <folding>
-                <element signature="e#9641#11199#0" expanded="false" />
-                <marker date="1515573700103" expanded="true" signature="3346:3353" ph="×" />
-                <marker date="1515573700103" expanded="true" signature="5573:5583" ph="..." />
-                <marker date="1515573700103" expanded="true" signature="5854:5864" ph="..." />
-                <marker date="1515573700103" expanded="true" signature="6124:6134" ph="..." />
+                <element signature="e#9649#11207#0" expanded="false" />
+                <marker date="1515584872705" expanded="true" signature="3346:3353" ph="×" />
+                <marker date="1515584872705" expanded="true" signature="5573:5583" ph="..." />
+                <marker date="1515584872705" expanded="true" signature="5854:5864" ph="..." />
+                <marker date="1515584872705" expanded="true" signature="6124:6134" ph="..." />
               </folding>
             </state>
           </provider>
@@ -271,9 +265,9 @@
       <find>Open</find>
       <find>OpenModal</find>
       <find>getS</find>
-      <find>OpenM</find>
       <find>loa</find>
       <find>loader</find>
+      <find>OpenM</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -328,11 +322,11 @@
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/project_param.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/views.py" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/menu/profile_menu.html" />
-        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/base.html" />
         <option value="$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/views/project_task_list.html" />
+        <option value="$PROJECT_DIR$/JtdiTASKS/static/js/main.js" />
       </list>
     </option>
   </component>
@@ -1104,32 +1098,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="512" column="13" lean-forward="false" selection-start-line="512" selection-start-column="8" selection-end-line="512" selection-end-column="13" />
-          <folding>
-            <element signature="e#9641#11199#0" expanded="false" />
-            <marker date="1515573700103" expanded="true" signature="3346:3353" ph="×" />
-            <marker date="1515573700103" expanded="true" signature="5573:5583" ph="..." />
-            <marker date="1515573700103" expanded="true" signature="5854:5864" ph="..." />
-            <marker date="1515573700103" expanded="true" signature="6124:6134" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JtdiTASKS/templates/JtdiTASKS/ajax_views/task_detail_ajax.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-816">
           <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1151,6 +1123,28 @@
             <element signature="n#div#5;n#!!top" expanded="false" />
             <element signature="n#div#6;n#!!top" expanded="false" />
             <marker date="1515578471659" expanded="true" signature="9480:9501" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/custom-scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JtdiTASKS/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="205" column="21" lean-forward="false" selection-start-line="205" selection-start-column="16" selection-end-line="205" selection-end-column="21" />
+          <folding>
+            <element signature="e#9649#11207#0" expanded="false" />
+            <marker date="1515584872705" expanded="true" signature="3346:3353" ph="×" />
+            <marker date="1515584872705" expanded="true" signature="5573:5583" ph="..." />
+            <marker date="1515584872705" expanded="true" signature="5854:5864" ph="..." />
+            <marker date="1515584872705" expanded="true" signature="6124:6134" ph="..." />
           </folding>
         </state>
       </provider>
