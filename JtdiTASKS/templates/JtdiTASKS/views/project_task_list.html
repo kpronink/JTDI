@@ -1,6 +1,5 @@
 {% extends 'JtdiTASKS/base.html' %} {% load staticfiles %} {% block content %}
-    <div class="ui large disable loader"></div>
-    <div class="ui mini top attached tabular menu">
+    <div class="ui mini top attached tabular menu" style="margin-top: 0.2rem;">
         <a class="item red active" data-tab="TableTask">Таблица задач</a>
         <a class="item green" data-tab="Finished">Завершенные задачи</a>
         <a class="item purple" data-tab="StoryLine" onclick="getStory({{ project }})">История проекта</a>
@@ -93,7 +92,6 @@
         <div id="chart_div"></div>
     </div>
     <div id="StoryLine" class="ui bottom attached tab segment" data-tab="StoryLine">
-            <div class="ui large disable loader"></div>
     </div>
     <div id="Finished" class="ui bottom attached tab segment" data-tab="Finished">
 

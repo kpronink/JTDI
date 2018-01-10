@@ -191,7 +191,7 @@ $(".modal").on("submit", "#note_create_form", function () {
 
 
 function UpdateTask(url) {
-
+    LoaderActive();
     $.ajax({
         url: url,
         type: 'get',
@@ -208,12 +208,13 @@ function UpdateTask(url) {
             else {
                 Alert(result.msg)
             }
+            LoaderDeactive();
         }
     });
 }
 
 function UpdateNote(url) {
-
+    LoaderActive();
     $.ajax({
         url: url,
         type: 'get',
@@ -222,6 +223,7 @@ function UpdateNote(url) {
         success: function (result) {
             $("#modal_content").html(result.html_form);
             OpenModal();
+            LoaderDeactive();
         }
 
     });
@@ -234,6 +236,7 @@ function TaskDetail(task_url) {
         }
         else {
         }
+        LoaderActive();
         OpenModal();
         $.ajax({
             url: task_url,
@@ -243,6 +246,7 @@ function TaskDetail(task_url) {
             success: function (result) {
                 $("#modal_content").html(result.html_form);
                 get_comments();
+                LoaderDeactive();
             }
         });
     }
@@ -254,7 +258,7 @@ function UniversalFun(task_url, close_modal) {
         }
         else {
         }
-
+        LoaderActive();
         $.ajax({
             url: task_url,
             type: 'post',
@@ -289,6 +293,7 @@ function UniversalFun(task_url, close_modal) {
                 }
 
                 Alert(result.msg);
+                LoaderDeactive();
             }
         });
     }
@@ -370,13 +375,6 @@ $(document).ready(function () {
     $('.menu .item').tab();
 
     google.charts.load("current", {packages: ["gantt", "table"]});
-
-    $('#get_story')
-        .on('click', function () {
-            // programmatically activating tab
-            $.tab('change tab', 'StoryLine');
-        })
-    ;
 });
 
 function Alert(msg) {
@@ -428,7 +426,7 @@ function GetNotifications() {
 }
 
 function getStory(project) {
-    $('.loader').addClass('active');
+    LoaderActive();
     $.ajax({
         url: '/ajax/get_story/' + String(project) + '/',
         data: {},
@@ -438,8 +436,7 @@ function getStory(project) {
             if (result.story !== '') {
                 $('#StoryLine').html(result.story)
             }
-            $('.loader').removeClass('active');
-            $('.loader').addClass('disable');
+            LoaderDeactive();
         }
     });
 
@@ -507,6 +504,7 @@ function notifyMe(notify_body, notify_title, notify_url) {
 }
 
 function OpenUrl(any_url) {
+    LoaderActive();
     if (any_url.indexOf('invite') + 1) {
         document.location.href = any_url;
     }
@@ -514,6 +512,7 @@ function OpenUrl(any_url) {
         TaskDetail(any_url);
         OpenModal();
     }
+    LoaderDeactive();
 }
 
 function ProjectSelect(val) {
@@ -571,6 +570,7 @@ function GetKanban(update) {
 }
 
 function AddNewColumn() {
+    LoaderActive();
     $.ajax({
         type: "GET",
         url: "/ajax/add_kanban_column/" + $("#project").attr("project") + "/",
@@ -581,6 +581,7 @@ function AddNewColumn() {
                 $("#modal_content").html(result.kanban_column_form);
                 OpenModal();
                 Alert(result.msg)
+                LoaderDeactive();
             }
         }
     });
@@ -707,9 +708,21 @@ function OpenModal() {
         .modal('show');
 }
 
+function LoaderActive() {
+    $('#loader').addClass('active')
+}
+
+function LoaderDeactive() {
+    $('#loader').removeClass('active')
+}
+
 function CloseModal() {
     $('.ui.modal')
         .modal('hide')
     ;
 
+}
+
+function switchStoryTab() {
+    $.tab('change tab', 'StoryLine');
 }

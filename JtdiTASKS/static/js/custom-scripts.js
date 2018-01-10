@@ -5,6 +5,7 @@
 ---------------------------------------------------------  */
 
 function DonutChart() {
+    LoaderActive();
     $("#morris-donut-chart").empty()
     if ($('*').is('#url_ajax_chart')) {
         try {
@@ -28,10 +29,12 @@ function DonutChart() {
         catch (err) {
         }
     }
+    LoaderDeactive();
 }
 
 function drawChartGantt(url) {
     // google.charts.load('current', {'packages': ['gantt']});
+    LoaderActive();
     var jsonData = $.ajax({
         url: url,
         dataType: "json",
@@ -91,6 +94,7 @@ function drawChartGantt(url) {
     }
     google.visualization.events.addListener(chart, 'select', selectHandler);
     chart.draw(data, options);
+    LoaderDeactive();
 }
 
 function drawBurndownChart(url) {

@@ -77,46 +77,52 @@
                 {#                                class="pause icon"></i>#}
                 {#                        </button> {% elif task.status == 'Finished' %} {% endif %}#}
                 {#                </div>#}
-                <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()">
-                    {% if task.status == 'Wait' or task.status == 'Stoped' %}
+
+                {% if task.status == 'Wait' or task.status == 'Stoped' %}
+                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()">
                         <div class="hidden content">Старт</div>
                         <div class="visible content">
                             <i class="play icon"></i>
                         </div>
-                    {% elif task.status == 'Started' %}
+                    </div>
+                {% elif task.status == 'Started' %}
+                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()">
                         <div class="hidden content">Стоп</div>
                         <div class="visible content">
                             <i class="stop icon"></i>
                         </div>
-                    {% elif task.status == 'Finished' %} {% endif %}
-                </div>
+                    </div>
+                {% elif task.status == 'Finished' %} {% endif %}
+
 
 
             {% endif %}
 
             <div class="ui fluid card">
                 <div class="content">
-                <div class="ui fluid comments" id="comments">
+                    <div class="ui fluid comments" id="comments">
 
-                </div>
-
-            <div id="add-comment">
-                <form class="ui reply form" id="commentForm">
-
-                    {% csrf_token %} {{ comment_form }}
-
-                    <div class="ui blue labeled submit icon button" id="submitComment" onclick="create_post()"><i
-                            class="icon edit"></i> Оставить комментарий
                     </div>
-                    {#                        <button class="waves-effect waves-light btn" id="submitComment"#}
-                    {#                                onclick="create_post()" type="button"><span class="glyphicon glyphicon-send"></span>#}
-                    {#                            Оставить комментарий#}
-                    {#                        </button>#}
 
-                    <div id="url_ajax_add_comment" url_ajax_add_comment="{% url 'add_comment' task.pk %}"></div>
-                    <div id="url_ajax_get_comments" url_ajax_get_comments="{% url 'get_comments' task.pk %}"></div>
-                </form>
-            </div>
+                    <div id="add-comment">
+                        <form class="ui reply form" id="commentForm">
+
+                            {% csrf_token %} {{ comment_form }}
+
+                            <div class="ui blue labeled submit icon button" id="submitComment" onclick="create_post()">
+                                <i
+                                        class="icon edit"></i> Оставить комментарий
+                            </div>
+                            {#                        <button class="waves-effect waves-light btn" id="submitComment"#}
+                            {#                                onclick="create_post()" type="button"><span class="glyphicon glyphicon-send"></span>#}
+                            {#                            Оставить комментарий#}
+                            {#                        </button>#}
+
+                            <div id="url_ajax_add_comment" url_ajax_add_comment="{% url 'add_comment' task.pk %}"></div>
+                            <div id="url_ajax_get_comments"
+                                 url_ajax_get_comments="{% url 'get_comments' task.pk %}"></div>
+                        </form>
+                    </div>
                 </div>
             </div>
             {#    <div class="ui comments">#}
