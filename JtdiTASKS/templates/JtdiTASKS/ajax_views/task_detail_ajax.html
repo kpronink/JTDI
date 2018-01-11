@@ -3,115 +3,128 @@
 
     <div class="ui form"> {% if task.status != 'Finished' %}
         <div class="field">
-            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}', true)"> <i
-                    class="flag icon" style="color: {{ task.color }};"> </i>Завершить</a>
+            <a href="#" onclick="UniversalFun('{% url 'task_finish' pk=task.pk %}', true)">
+                <i class="flag icon" style="color: {{ task.color }};"> </i>Завершить
+            </a>
         </div>
 
-        <div class="divider"></div> {% task_menu request task=task.pk user=user %} {% else %} {% endif %}
-
-        <div class="field">
-            <div class="two fields">
+        <div class="divider"></div>
+        {% task_menu request task=task.pk user=user %} {% else %} {% endif %}
+        <div class="ui two column grid">
+            <div class="column">
                 <div class="field">
-                    <label>Заголовок задачи</label>
-                    <input type="text" placeholder="Заголовок задачи" name="first-name" value="{{ task.title }}"
-                           readonly>
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Заголовок задачи</label>
+                            <input type="text" placeholder="Заголовок задачи" name="first-name" value="{{ task.title }}"
+                                   readonly>
+                        </div>
+                        <div class="field">
+                            <label>Дата начала</label> {{ task.date }}
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
-                    <label>Дата начала</label> {{ task.date }} </div>
-            </div>
-        </div>
-        <div class="field">
-            <div class="two fields">
-                <div class="field">
-                    <label>Расшифровка</label>
-                    <textarea rows="2" placeholder="Расшифровка"
-                              readonly> "{{ task.description }}"
-            </textarea>
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Расшифровка</label>
+                            <textarea rows="2" placeholder="Расшифровка"
+                                      readonly> "{{ task.description }}"</textarea>
+                        </div>
+                        <div class="field">
+                            <label>Время начала</label> {{ task.time }}
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
-                    <label>Время начала</label> {{ task.time }} </div>
+                    <div class="two fields">
+                        <div class="field"></div>
+                        <div class="field">
+                            {% if task.date_time_finish is None %}
+                                <label>Дата завершения</label> Не завершена
+                            {% else %}
+                                <label>Дата завершения</label> {{ task.date_time_finish }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="two fields">
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden"{% if task.repeating %}
+                                   checked {% else %}{% endif %}>
+                            <label for="{{ task.repeating.auto_id }}">Повторяющаяся</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden"{% if  task.remind %}
+                                   checked {% else %}{% endif %}>
+                            <label for="{{ task.remind.auto_id }}">Не напоминать</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="field" id="task_status">
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Состояние задачи: </label> {{ task.status }}
+                        </div>
+                        <div class="field">
+                            {% if task.performer == user %}
+
+                                <div id="url_ajax_start" url_ajax_start="{% url 'task_start_stop' task.pk %}"></div>
+
+                                {% if task.status == 'Wait' or task.status == 'Stoped' %}
+                                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()"
+                                         id="start_stop_butt">
+                                        <div class="hidden content">Старт</div>
+                                        <div class="visible content">
+                                            <i class="play icon"></i>
+                                        </div>
+                                    </div>
+                                {% elif task.status == 'Started' %}
+                                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()"
+                                         id="start_stop_butt">
+                                        <div class="hidden content">Стоп</div>
+                                        <div class="visible content">
+                                            <i class="stop icon"></i>
+                                        </div>
+                                    </div>
+                                {% elif task.status == 'Finished' %} {% endif %}
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="field" id="task_full_time">
+                    <label>Общее время работы над задачей: </label> {{ full_time }}
+                </div>
             </div>
-        </div>
+            <div class="column">
+                <div class="ui small comments" id="comments">
+                </div>
+                <div id="add-comment">
+                    <form class="ui reply form" id="commentForm">
 
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="field">
+                            <div class="required field">
+                                {{ comment_form.addComment }}
+                            </div>
+                        </div>
 
-        <div class="field">
-            <div class="two fields">
-                <div class="field"></div>
-                <div class="field">
-                    {% if task.date_time_finish is None %}
-                        <label>Дата завершения</label> Не завершена </div>
-                    {% else %}
-                        <label>Дата завершения</label> {{ task.date_time_finish }} </div>
-                    {% endif %}
+                        <div class="ui blue labeled submit icon button" id="submitComment" onclick="create_post()">
+                            <i class="icon edit"></i> Оставить комментарий
+                        </div>
 
+                        <div id="url_ajax_add_comment" url_ajax_add_comment="{% url 'add_comment' task.pk %}"></div>
+                        <div id="url_ajax_get_comments"url_ajax_get_comments="{% url 'get_comments' task.pk %}"></div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="divider">
-        <div class="field">
-            <div class="ui toggle checkbox">
-                <input type="checkbox" tabindex="0" class="hidden"{% if task.repeating %} checked {% else %}{% endif %}>
-                <label for="{{ task.repeating.auto_id }}">Повторяющаяся</label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui toggle checkbox">
-                <input type="checkbox" tabindex="0" class="hidden"{% if  task.remind %} checked {% else %}{% endif %}>
-                <label for="{{ task.remind.auto_id }}">Не напоминать</label>
-            </div>
-        </div>
-        <div class="divider">
-            <div class="field" id="task_status">
-                <label>Состояние задачи: </label> {{ task.status }}</div>
-            <div class="field" id="task_full_time">
-                <label>Общее время работы над задачей: </label> {{ full_time }} </div>
-            {% if task.performer == user %}
-
-                <div id="url_ajax_start" url_ajax_start="{% url 'task_start_stop' task.pk %}"></div>
-
-                {% if task.status == 'Wait' or task.status == 'Stoped' %}
-                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()" id="start_stop_butt">
-                        <div class="hidden content">Старт</div>
-                        <div class="visible content">
-                            <i class="play icon"></i>
-                        </div>
-                    </div>
-                {% elif task.status == 'Started' %}
-                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()" id="start_stop_butt">
-                        <div class="hidden content">Стоп</div>
-                        <div class="visible content">
-                            <i class="stop icon"></i>
-                        </div>
-                    </div>
-                {% elif task.status == 'Finished' %} {% endif %}
-
-            {% endif %}
-
-            <div class="ui fluid card">
-                <div class="content">
-                    <div class="ui small comments" id="comments">
-                    </div>
-                    <div id="add-comment">
-                        <form class="ui reply form" id="commentForm">
-
-                            {% csrf_token %}
-                            {{ form.non_field_errors }}
-                            <div class="field">
-                                <div class="required field">
-                                    {{ comment_form.addComment }}
-                                </div>
-                            </div>
-
-                            <div class="ui blue labeled submit icon button" id="submitComment" onclick="create_post()">
-                                <i
-                                        class="icon edit"></i> Оставить комментарий
-                            </div>
-
-                            <div id="url_ajax_add_comment" url_ajax_add_comment="{% url 'add_comment' task.pk %}"></div>
-                            <div id="url_ajax_get_comments"
-                                 url_ajax_get_comments="{% url 'get_comments' task.pk %}"></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
 {% endblock content %}
