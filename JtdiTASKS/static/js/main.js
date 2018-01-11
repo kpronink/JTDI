@@ -57,7 +57,7 @@ $(function () {
 
 // AJAX for posting comment
 function create_post() {
-    get_comments();
+
     $.ajax({
         url: $("#url_ajax_add_comment").attr('url_ajax_add_comment'), // the endpoint
         type: "POST", // http method
@@ -66,7 +66,7 @@ function create_post() {
         // handle a successful response
         success: function (result) {
             $('#id_addComment').val(''); // remove the value from the input
-            $('#comments').append(result.comments)
+            // $('#comments').append(result.comments)
             // $("#comments").append("<div class='media' id='comment'><p class='pull-right'><small>" + result.created + "</small></p><a class='media-left' href='#'>" +
             //     "<img src=" + result.avatar + " class='circle' width='40' height='40' border='20'></a><div class='media-body'>" +
             //     "<h4 class='media-heading user_name'>" + result.author + "</h4>" + result.text + "</div></div>");
@@ -79,7 +79,7 @@ function create_post() {
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
-
+    get_comments();
     return false
 }
 
@@ -125,12 +125,12 @@ function StartStop() {
             $("#task_status").append("<label>Состояние задачи: </label>" + status + "</div>");
             $("#task_full_time").append("<label>Общее время работы над задачей: </label>" + full_time + "</div>");
             if (result["status"] === "Wait") {
-                $("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'> <i class='material-icons' style='size: 50px'>play_circle_filled</i> </button>");
+                $("#start_stop_butt").html("<div class='hidden content'>Старт</div><div class='visible content'><i class='play icon'></i></div>");
             }
             else if (result["status"] === "Started") {
-                $("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'><i class='material-icons' style='size: 50px'>pause_circle_filled</i> </button>");
+                $("#start_stop_butt").html("<div class='hidden content'>Стоп</div><div class='visible content'><i class='stop icon'></i></div>");
             } else if (result["status"] === "Stoped") {
-                $("#form_start_stop").append("<button class='btn-floating btn-large red' id='btn_start_stop' onclick='StartStop()'> <i class='material-icons' style='size: 50px'>play_circle_filled</i> </button>");
+                $("#start_stop_butt").html("<div class='hidden content'>Старт</div><div class='visible content'><i class='play icon'></i></div>");
             }
         },
         error: function (result) {

@@ -1372,7 +1372,7 @@ def task_copy(request, pk):
     project_pk = None
     task = get_object_or_404(Task, pk=pk)
     task.pk = None
-    task.save()
+    # task.save()
 
     if task.project is not None:
         if task.author != request.user or task.project.author != request.user:

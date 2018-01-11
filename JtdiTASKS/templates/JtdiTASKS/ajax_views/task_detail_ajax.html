@@ -68,25 +68,15 @@
 
                 <div id="url_ajax_start" url_ajax_start="{% url 'task_start_stop' task.pk %}"></div>
 
-                {#                <div class="field" id="form_start_stop">#}
-                {#                    {% if task.status == 'Wait' or task.status == 'Stoped' %}#}
-                {#                        <button id="btn_start_stop" onclick="StartStop()"><i#}
-                {#                                class="play icon"></i>#}
-                {#                        </button> {% elif task.status == 'Started' %}#}
-                {#                        <button id="btn_start_stop" onclick="StartStop()"><i#}
-                {#                                class="pause icon"></i>#}
-                {#                        </button> {% elif task.status == 'Finished' %} {% endif %}#}
-                {#                </div>#}
-
                 {% if task.status == 'Wait' or task.status == 'Stoped' %}
-                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()">
+                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()" id="start_stop_butt">
                         <div class="hidden content">Старт</div>
                         <div class="visible content">
                             <i class="play icon"></i>
                         </div>
                     </div>
                 {% elif task.status == 'Started' %}
-                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()">
+                    <div class="ui red vertical animated button" tabindex="0" onclick="StartStop()" id="start_stop_butt">
                         <div class="hidden content">Стоп</div>
                         <div class="visible content">
                             <i class="stop icon"></i>
@@ -94,29 +84,27 @@
                     </div>
                 {% elif task.status == 'Finished' %} {% endif %}
 
-
-
             {% endif %}
 
             <div class="ui fluid card">
                 <div class="content">
-                    <div class="ui fluid comments" id="comments">
-
+                    <div class="ui small comments" id="comments">
                     </div>
-
                     <div id="add-comment">
                         <form class="ui reply form" id="commentForm">
 
-                            {% csrf_token %} {{ comment_form }}
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <div class="field">
+                                <div class="required field">
+                                    {{ comment_form.addComment }}
+                                </div>
+                            </div>
 
                             <div class="ui blue labeled submit icon button" id="submitComment" onclick="create_post()">
                                 <i
                                         class="icon edit"></i> Оставить комментарий
                             </div>
-                            {#                        <button class="waves-effect waves-light btn" id="submitComment"#}
-                            {#                                onclick="create_post()" type="button"><span class="glyphicon glyphicon-send"></span>#}
-                            {#                            Оставить комментарий#}
-                            {#                        </button>#}
 
                             <div id="url_ajax_add_comment" url_ajax_add_comment="{% url 'add_comment' task.pk %}"></div>
                             <div id="url_ajax_get_comments"
@@ -125,32 +113,5 @@
                     </div>
                 </div>
             </div>
-            {#    <div class="ui comments">#}
-            {#  <h3 class="ui dividing header">Комментарии</h3>#}
-            {#  <div class="comment">#}
-            {#    <a class="avatar">#}
-            {#      <img src="/images/avatar/small/matt.jpg">#}
-            {#    </a>#}
-            {#    <div class="content">#}
-            {#      <a class="author">Matt</a>#}
-            {#      <div class="metadata">#}
-            {#        <span class="date">Сегодня вечером в 5:42</span>#}
-            {#      </div>#}
-            {#      <div class="text">Как артистично! </div>#}
-            {#      <div class="actions">#}
-            {#        <a class="reply">Reply</a>#}
-            {#      </div>#}
-            {#    </div>#}
-            {#  </div>#}
-            {#  <form class="ui reply form">#}
-            {#    <div class="field">#}
-            {#      <textarea></textarea>#}
-            {#    </div>#}
-            {#    <div class="ui blue labeled submit icon button"><i class="icon edit"></i> Add Reply </div>#}
-            {#  </form>#}
-            {#</div>#}
-
-
-
 
 {% endblock content %}
