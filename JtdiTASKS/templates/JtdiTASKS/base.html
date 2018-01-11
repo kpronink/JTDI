@@ -83,8 +83,6 @@
     $(document).ready(function () {
         $('#TasksTables').dataTable({pageLength:{{ count_visible_tasks}}});
         $('#TasksTablesFinished').dataTable({pageLength:{{ count_visible_tasks}}});
-        {#            $('#dataTables-finish').dataTable({pageLength:{{ count_visible_tasks}}});#}
-
         $('#TasksTables').on('length.dt', function (e, settings, len) {
             console.log('New page length: ' + len);
             InstallFilter('count_visible_tasks', len);

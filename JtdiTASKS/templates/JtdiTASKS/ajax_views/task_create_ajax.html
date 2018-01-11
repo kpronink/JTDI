@@ -27,9 +27,9 @@
                 {{ form.description }}
             </div>
             <div class="required field">
-                {{ form.time_field.errors }}
-                <label for="{{ form.time_field.id_for_label }}">{{ form.time_field.label }}:</label>
-                {{ form.time_field }}
+                {{ form.time.errors }}
+                <label for="{{ form.time.id_for_label }}">{{ form.time.label }}:</label>
+                {{ form.time}}
             </div>
         </div>
     </div>
@@ -37,14 +37,14 @@
         {{ form.non_field_errors }}
         <div class="two fields">
             <div class="field">
-                {{ form.priority_field.errors }}
-                <label for="{{ form.priority_field.id_for_label }}">{{ form.priority_field.label }}:</label>
-                {{ form.priority_field }}
+                {{ form.priority.errors }}
+                <label for="{{ form.priority.id_for_label }}">{{ form.priority.label }}:</label>
+                {{ form.priority }}
             </div>
             <div class="field">
-                {{ form.date_planed.errors }}
-                <label for="{{ form.date_planed.id_for_label }}">{{ form.date_planed.label }}:</label>
-                {{ form.date_planed }}
+                {{ form.planed_date_finish.errors }}
+                <label for="{{ form.planed_date_finish.id_for_label }}">{{ form.planed_date_finish.label }}:</label>
+                {{ form.planed_date_finish }}
             </div>
         </div>
     </div>
@@ -52,9 +52,9 @@
         {{ form.non_field_errors }}
         <div class="two fields">
             <div class="field">
-                {{ form.project_field.errors }}
-                <label for="{{ form.project_field.id_for_label }}">{{ form.project_field.label }}:</label>
-                {{ form.project_field }}
+                {{ form.project.errors }}
+                <label for="{{ form.project.id_for_label }}">{{ form.project.label }}:</label>
+                {{ form.project }}
             </div>
             <div class="field">
                 {{ form.performer.errors }}

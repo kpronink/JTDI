@@ -1179,7 +1179,7 @@ def task_create(request):
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
-        form.fields['project_field'].queryset = Project.objects.filter(Q(author=user) | Q(pk__in=projects))
+        form.fields['project'].queryset = Project.objects.filter(Q(author=user) | Q(pk__in=projects))
         form.fields['performer'].queryset = all_users_in_project
         form.fields['owner_task'].queryset = Task.objects.filter(
             Q(author=request.user) | Q(performer=request.user)).filter(project=project_pk)
@@ -1188,15 +1188,15 @@ def task_create(request):
             task.title = form.cleaned_data['title']
             task.description = form.cleaned_data['description']
             task.date = form.cleaned_data['date']
-            task.time = datetime.datetime.combine(task.date, form.cleaned_data['time_field'])
-            task.planed_date_finish = form.cleaned_data['date_planed']
+            task.time = datetime.datetime.combine(task.date, form.cleaned_data["time"])
+            task.planed_date_finish = form.cleaned_data["planed_date_finish"]
             task.owner_task = form.cleaned_data['owner_task']
             task.date_time = task.time
             task.author = request.user
             if proj is not None:
                 task.project = proj
             else:
-                task.project = form.cleaned_data['project_field']
+                task.project = form.cleaned_data["project"]
             if form.cleaned_data['performer'] is not None:
                 task.performer = form.cleaned_data['performer']
             else:
@@ -1204,7 +1204,7 @@ def task_create(request):
             task.active = True
             task.repeating = form.cleaned_data['repeating']
             task.remind = form.cleaned_data['remind']
-            task.priority = form.cleaned_data['priority_field']
+            task.priority = form.cleaned_data["priority"]
             task.color = COLOR_CHOISE[int(task.priority)]
             task.remind = False
             task.save(Task)
@@ -1227,8 +1227,8 @@ def task_create(request):
         else:
             data['form_is_valid'] = False
     else:
-        form = TaskForm(initial={'project_field': proj, 'performer': user})
-        form.fields['project_field'].queryset = Project.objects.filter(Q(author=user) | Q(
+        form = TaskForm(initial={"project": proj, 'performer': user})
+        form.fields['project'].queryset = Project.objects.filter(Q(author=user) | Q(
             pk__in=PartnerGroup.objects.filter(partner=user).values_list('project', flat=True)))
         form.fields['performer'].queryset = all_users_in_project
         form.fields['owner_task'].queryset = Task.objects.filter(
@@ -1409,7 +1409,7 @@ def task_copy(request, pk):
 
     context = {'form': form,
                'task': task}
-    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_edit_ajax.html',
+    data['html_form'] = render_to_string('JtdiTASKS/ajax_views/task_create_ajax.html',
                                          context,
                                          request=request
                                          )
@@ -1457,6 +1457,16 @@ def task_del(request, pk):
             'tasks': tasks,
             'user': request.user})
         data['msg'] = 'Задача успешно удалена'
+
+        project_filter = get_filter(request.user, task.project.pk)
+        if project_filter is not None:
+            kanban = project_filter.kanban
+            count_visible_tasks = project_filter.count_visible_tasks
+        else:
+            kanban = False
+
+        if task.project is not None and kanban:
+            data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
 
     return JsonResponse(data)
 
@@ -1520,6 +1530,7 @@ def task_finish(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if task.author == request.user or task.performer == request.user:
         task.finish()
+
         tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
@@ -1529,8 +1540,18 @@ def task_finish(request, pk):
             'tasks': tasks,
             'user': request.user})
         data['msg'] = ' Задача успешно завершена '
+
         if task.project is not None:
             register_event(task, request.user, task.project, ' завершил задачу: ')
+            project_filter = get_filter(request.user, task.project.pk)
+            if project_filter is not None:
+                kanban = project_filter.kanban
+                count_visible_tasks = project_filter.count_visible_tasks
+            else:
+                kanban = False
+
+        if task.project is not None and kanban:
+            data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
 
     return JsonResponse(data)
 
@@ -1574,6 +1595,15 @@ def task_restore(request, pk):
         data['msg'] = ' Задача успешно восстановлена '
         if task.project is not None:
             register_event(task, request.user, task.project, ' восстановил задачу: ')
+            project_filter = get_filter(request.user, task.project.pk)
+            if project_filter is not None:
+                kanban = project_filter.kanban
+                count_visible_tasks = project_filter.count_visible_tasks
+            else:
+                kanban = False
+
+        if task.project is not None and kanban:
+            data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
 
     return JsonResponse(data)
 

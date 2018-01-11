@@ -240,7 +240,7 @@ function ParseDate(title) {
             var sms = "";
         }}
         if (mydate == "") {mydate = new Date()};
-        document.getElementById('id_time_field').value = (mydate.getHours()<10?'0'+mydate.getHours():mydate.getHours()) + ":" + (mydate.getMinutes()<10?'0':'') + mydate.getMinutes();
+        document.getElementById('id_time').value = (mydate.getHours()<10?'0'+mydate.getHours():mydate.getHours()) + ":" + (mydate.getMinutes()<10?'0':'') + mydate.getMinutes();
 
         var day = mydate.getDate() + "";
         var month = (mydate.getMonth() + 1) + "";
@@ -252,13 +252,13 @@ function ParseDate(title) {
 
         var title_date = "";
         document.getElementById('id_date').value = year + '-' + month + '-' + day
-        document.getElementById('id_date_planed').value = year + '-' + month + '-' + String((Number(day) + 3 ))
+        document.getElementById('id_planed_date_finish').value = year + '-' + month + '-' + String((Number(day) + 3 ))
         if ((answer == undefined) && (add == undefined)) {title_date = ""}
         else {title_date = answer + " " + add};
-        document.getElementById('parse').empty()
-        document.getElementById('parse_date').empty()
-        document.getElementById('parse').appendChild(document.createTextNode(title_date))
-        document.getElementById('parse_date').appendChild(document.createTextNode(mydate.toLocaleString()))
+        $('#parse').empty();
+        $('#parse_date').empty();
+        $('#parse').html(title_date);
+        $('#parse_date').html(mydate.toLocaleString());
         // return {
         //     title: title_date,
         //     date: mydate,

@@ -273,14 +273,12 @@ function UniversalFun(task_url, close_modal) {
                 }
                 if (result.html_active_tasks_list !== '') {
                     $("#TaskActive").html(result.html_active_tasks_list);
-                    drawChartGantt();
                 }
                 if (result.html_active_notes_list !== '') {
                     $("#NotesTables").html(result.html_active_notes_list);
                 }
                 if (result.html_finished_tasks_list !== '') {
-                    $("#TasksFinished").html(result.html_finished_tasks_list);
-                    drawChartGantt();
+                    $("#TaskFinished").html(result.html_finished_tasks_list);
                 }
                 if (result.html_form !== '') {
                     $("#modal-task .modal-content").html(result.html_form);
@@ -416,7 +414,7 @@ function GetNotifications() {
 
             var count_notify = Number(data.count_notify);
             var count_notify_now = Number($("#all_notify").text());
-            count_notify = count_notify + count_notify_now;
+            // count_notify = count_notify + count_notify_now;
             if (isFinite(count_notify) && count_notify !== 0) {
                 $('#all_notify').html(count_notify);
                 $('.tab_counter_top')[0].style.display = "block";

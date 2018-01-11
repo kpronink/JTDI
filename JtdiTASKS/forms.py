@@ -153,19 +153,19 @@ class TaskForm(forms.Form):
     date = forms.DateField(label='Дата начала', initial=datetime.date.today)
     date.widget.input_type = 'date'
 
-    time_field = forms.TimeField(label='Время', required=False)
-    time_field.widget.input_type = 'time'
+    time = forms.TimeField(label='Время', required=False)
+    time.widget.input_type = 'time'
 
-    date_planed = forms.DateField(label='Планируемая дата сдачи')
-    date_planed.widget.input_type = 'date'
+    planed_date_finish = forms.DateField(label='Планируемая дата сдачи')
+    planed_date_finish.widget.input_type = 'date'
 
-    project_field = forms.ModelChoiceField(
+    project = forms.ModelChoiceField(
         label='Проект',
         required=False,
         queryset=None,
     )
 
-    project_field.widget.attrs.update({'onChange': 'ProjectSelect(this.value);'})
+    project.widget.attrs.update({'onChange': 'ProjectSelect(this.value);'})
 
     owner_task = forms.ModelChoiceField(
         label='Головная задача',
@@ -173,7 +173,7 @@ class TaskForm(forms.Form):
         queryset=None,
     )
 
-    priority_field = forms.ChoiceField(
+    priority = forms.ChoiceField(
         label='Важность',
         required=False,
         choices=PRIORITY_CHOISE,
@@ -189,7 +189,7 @@ class TaskForm(forms.Form):
     remind = forms.BooleanField(label='Не напоминать', required=False)
 
     def clean(self):
-        project = self.cleaned_data['project_field']
+        project = self.cleaned_data["project"]
         performer = self.cleaned_data['performer']
         all_users_in_project = list()
         users_in_project = PartnerGroup.objects.filter(project=project)
