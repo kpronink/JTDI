@@ -12,7 +12,6 @@ import datetime
 
 from django.template.defaulttags import register
 from django.template.loader import render_to_string
-from django.templatetags.static import static
 
 from .forms import TaskForm, TaskEditForm, UserProfileForm, UserForm, ProjectForm, SearchForm, InviteUserForm, \
     ProjectFormRename, ProjectInviteUser, CommentAddForm, MyUserCreationForm, KanbanColumnForm, NoteForm
@@ -50,7 +49,7 @@ def get_tasks_with_filter(filter_method, project, user, assigned_performers=None
     if filter_method == 'projects':
         if project.author == user:
             if assigned_performers is not None:
-                if assigned_performers.count():
+                if assigned_performers.__len__() > 0:
                     tasks = Task.objects.filter(active=True).filter(project=project) \
                         .filter(performer__pk__in=assigned_performers).order_by('date')
                 else:
