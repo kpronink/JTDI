@@ -68,7 +68,7 @@ def get_tasks_with_filter(filter_method, project, user, assigned_performers=None
 
             tasks = Task.objects.filter(active=True).filter(
                 Q(author__in=all_users_in_project) | Q(performer__id__in=all_users_in_project)). \
-                filter(project=project).order_by('date')
+                filter(project=project).filter(performer__pk__in=assigned_performers).order_by('date')
 
             tasks_finish = Task.objects.filter(active=False).filter(finished=True). \
                 filter(Q(author=user) | Q(performer=user)).filter(project=project.pk) \
@@ -145,23 +145,36 @@ def register_event(event_object, user, project, event_desc):
         sees.save()
 
 
-def get_event(user, request, render=True, slice=10, see=False):
+def get_event(user, request, render=True, slice=10, see=False, project=None):
     projects = list(
         PartnerGroup.objects.filter(partner=user).values_list('project', flat=True))
     project_owner = list(Project.objects.filter(author=user).values_list('pk', flat=True))
     projects.extend(project_owner)
-    events = ViewsEventsTable.objects.filter(sees=False).filter(user=user).filter(Q(
-        event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:slice]
-    count_notify = events.count()
-    if not count_notify:
-        events = ViewsEventsTable.objects.filter(sees=True).filter(user=user).filter(Q(
-            event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:slice]
+    if project is not None:
+        events = ViewsEventsTable.objects.filter(event__project_id=int(project)).order_by('id').reverse()
         count_notify = 0
+    else:
+        if user is not None:
+            events = ViewsEventsTable.objects.filter(sees=False).filter(Q(
+                event__project_id__in=projects) | Q(event__project=None)).filter(user=user).order_by('id').reverse()[:slice]
+        else:
+            events = ViewsEventsTable.objects.filter(sees=False).filter(Q(
+                event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:slice]
+        count_notify = events.count()
+        if not count_notify:
+            if user is not None:
+                events = ViewsEventsTable.objects.filter(sees=True).filter(Q(
+                    event__project_id__in=projects) | Q(event__project=None)).filter(user=user).order_by('id').reverse()[
+                         :slice]
+            else:
+                events = ViewsEventsTable.objects.filter(sees=True).filter(Q(
+                    event__project_id__in=projects) | Q(event__project=None)).order_by('id').reverse()[:slice]
+            count_notify = 0
 
     tasks = list()
     for event in events:
         model = event.event.content_type.model_class()
-        if see:
+        if see and event.sees is False:
             event_obj = get_object_or_404(ViewsEventsTable, pk=event.pk)
             event_obj.sees = True
             event_obj.save()
@@ -186,7 +199,7 @@ def get_event(user, request, render=True, slice=10, see=False):
                           'time': event.event.date_time.strftime('%a, %d %b %Y %H:%M'),
                           'avatar': avatar,
                           'ico': ico,
-                          'user': event.event.author})
+                          'user': event.event.author.username})
         elif model == PartnerGroup:
             try:
                 object_model = get_object_or_404(PartnerGroup, pk=event.event.object_id)
@@ -199,7 +212,7 @@ def get_event(user, request, render=True, slice=10, see=False):
                           'time': event.event.date_time.strftime('%a, %d %b %Y %H:%M'),
                           'avatar': avatar,
                           'ico': ico,
-                          'user': event.event.author})
+                          'user': event.event.author.username})
         elif model == InviteUser:
             try:
                 object_model = get_object_or_404(InviteUser, pk=event.event.object_id)
@@ -212,7 +225,7 @@ def get_event(user, request, render=True, slice=10, see=False):
                  'time': event.event.date_time.strftime('%a, %d %b %Y %H:%M'),
                  'avatar': avatar,
                  'ico': ico,
-                 'user': event.event.author})
+                 'user': event.event.author.username})
 
     if render:
         notify_tasks = render_to_string('JtdiTASKS/menu/notify_menu.html',
@@ -266,7 +279,7 @@ def get_push_event(request):
 def get_story(request, pk):
     data = dict()
 
-    notify_tasks, count_notify = get_event(request.user, request, False, None)
+    notify_tasks, count_notify = get_event(None, request, False, None, see=False, project=pk)
     data['story'] = render_to_string('JtdiTASKS/ajax_views/story_line.html',
                                      {'notify_tasks': notify_tasks},
                                      request=request
@@ -483,7 +496,7 @@ def get_notifycation(request):
     data['tasks_today_notify'] = tasks_today_notify
     data['tasks_overdue_notify'] = tasks_overdue_notify
 
-    data['notify_tasks'], data['count_notify'] = get_event(request.user, request)
+    data['notify_tasks'], data['count_notify'] = get_event(request.user, request, render=False, project=None)
 
     return JsonResponse(data)
 
@@ -829,7 +842,6 @@ def get_access_project(user, project):
 
 
 def set_access(request, pk):
-
     filter_name = request.POST['filter']
     if ',' not in request.POST['value'] and request.POST['value'] != '':
         value = json.loads(request.POST['value'])
@@ -1024,7 +1036,7 @@ def project_task_list(request, pk):
     else:
         kanban_view = False
         count_visible_tasks = 10
-        assigned_performers = None
+        assigned_performers = []
         filter_count = 0
 
     tasks, tasks_finish = get_tasks_with_filter('projects', project, request.user, assigned_performers)
@@ -1161,9 +1173,12 @@ def task_create(request):
         project_filter = get_filter(request.user, project_pk)
         if project_filter is not None:
             kanban = project_filter.kanban
+            assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True) \
+                .values_list('performer', flat=True)
             count_visible_tasks = project_filter.count_visible_tasks
         else:
             kanban = False
+            assigned_performers = []
 
         read_only, full_right = get_access_project(user, proj)
     else:
@@ -1216,7 +1231,8 @@ def task_create(request):
             if task.project is not None:
                 register_event(task, request.user, task.project, ' создал задачу: ')
 
-            tasks, tasks_finish = get_tasks_with_filter(method, task.project, user)
+            tasks, tasks_finish = get_tasks_with_filter(method, task.project, user,
+                                                        assigned_performers=assigned_performers)
             data['form_is_valid'] = True
             data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
                 'tasks': tasks
@@ -1289,9 +1305,12 @@ def task_update(request, pk):
         project_filter = get_filter(request.user, project_pk)
         if project_filter is not None:
             kanban = project_filter.kanban
+            assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True) \
+                .values_list('performer', flat=True)
             count_visible_tasks = project_filter.count_visible_tasks
         else:
             kanban = False
+            assigned_performers = []
 
     else:
         users_in_project = PartnerGroup.objects.filter(partner_id__in=[user.user_invite.pk for user in invited_users])
@@ -1317,7 +1336,8 @@ def task_update(request, pk):
                 if task.project is not None:
                     register_event(task, request.user, task.project, ' изменил задачу: ')
 
-                tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
+                tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user,
+                                                            assigned_performers=assigned_performers)
                 data['form_is_valid'] = True
                 data['msg'] = 'Задача успешно обновлена'
                 data['html_active_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body.html', {
@@ -1448,7 +1468,17 @@ def task_del(request, pk):
     if task.author == request.user:
         task.delete()
 
-        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
+        project_filter = get_filter(request.user, task.project.pk)
+        if project_filter is not None:
+            kanban = project_filter.kanban
+            assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True) \
+                .values_list('performer', flat=True)
+        else:
+            kanban = False
+            assigned_performers = []
+
+        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user,
+                                                    assigned_performers=assigned_performers)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
             'tasks_finished': tasks_finish,
@@ -1457,13 +1487,6 @@ def task_del(request, pk):
             'tasks': tasks,
             'user': request.user})
         data['msg'] = 'Задача успешно удалена'
-
-        project_filter = get_filter(request.user, task.project.pk)
-        if project_filter is not None:
-            kanban = project_filter.kanban
-            count_visible_tasks = project_filter.count_visible_tasks
-        else:
-            kanban = False
 
         if task.project is not None and kanban:
             data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
@@ -1531,7 +1554,19 @@ def task_finish(request, pk):
     if task.author == request.user or task.performer == request.user:
         task.finish()
 
-        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
+        if task.project is not None:
+            register_event(task, request.user, task.project, ' завершил задачу: ')
+            project_filter = get_filter(request.user, task.project.pk)
+            if project_filter is not None:
+                kanban = project_filter.kanban
+                assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True) \
+                    .values_list('performer', flat=True)
+            else:
+                kanban = False
+                assigned_performers = []
+
+        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user,
+                                                    assigned_performers=assigned_performers)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
             'tasks_finished': tasks_finish,
@@ -1540,15 +1575,6 @@ def task_finish(request, pk):
             'tasks': tasks,
             'user': request.user})
         data['msg'] = ' Задача успешно завершена '
-
-        if task.project is not None:
-            register_event(task, request.user, task.project, ' завершил задачу: ')
-            project_filter = get_filter(request.user, task.project.pk)
-            if project_filter is not None:
-                kanban = project_filter.kanban
-                count_visible_tasks = project_filter.count_visible_tasks
-            else:
-                kanban = False
 
         if task.project is not None and kanban:
             data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
@@ -1584,7 +1610,19 @@ def task_restore(request, pk):
     task.restore()
 
     if task.author == request.user or task.performer == request.user:
-        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user)
+        if task.project is not None:
+            register_event(task, request.user, task.project, ' восстановил задачу: ')
+            project_filter = get_filter(request.user, task.project.pk)
+            if project_filter is not None:
+                kanban = project_filter.kanban
+                assigned_performers = PerformersAssigned.objects.filter(filter=project_filter).filter(selected=True) \
+                    .values_list('performer', flat=True)
+            else:
+                kanban = False
+                assigned_performers = []
+
+        tasks, tasks_finish = get_tasks_with_filter(method, task.project, request.user,
+                                                    assigned_performers=assigned_performers)
         data['form_is_valid'] = True
         data['html_finished_tasks_list'] = render_to_string('JtdiTASKS/ajax_views/task_table_body_finished.html', {
             'tasks_finished': tasks_finish,
@@ -1593,14 +1631,6 @@ def task_restore(request, pk):
             'tasks': tasks,
             'user': request.user})
         data['msg'] = ' Задача успешно восстановлена '
-        if task.project is not None:
-            register_event(task, request.user, task.project, ' восстановил задачу: ')
-            project_filter = get_filter(request.user, task.project.pk)
-            if project_filter is not None:
-                kanban = project_filter.kanban
-                count_visible_tasks = project_filter.count_visible_tasks
-            else:
-                kanban = False
 
         if task.project is not None and kanban:
             data['html_active_tasks_list'] = json.loads(get_kanban(request, task.project.pk).content)['kanban']
@@ -2127,17 +2157,6 @@ def get_comments(request, pk):
     data = dict()
     local_timez = pytz.timezone(request.user.profile.timezone)
     data['comments'] = render_to_string("JtdiTASKS/ajax_views/comment_body.html", {'comments': comments}, request)
-    # for comment in comments:
-    #     response_data = {}
-    #     response_data['postpk'] = comment.pk
-    #     response_data['text'] = comment.comment
-    #     response_data['created'] = comment.date_time.astimezone(local_timez).strftime('%B %d, %Y %H:%M')
-    #     response_data['author'] = comment.commentator.username
-    #     if request.user.profile.avatar:
-    #         response_data['avatar'] = request.user.profile.avatar.url
-    #     else:
-    #         response_data['avatar'] = static('img/avatar_2x.png')
-    #     data.append(response_data)
 
     return JsonResponse(data)
 

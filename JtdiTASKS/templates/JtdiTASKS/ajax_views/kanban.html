@@ -1,5 +1,5 @@
 {% load staticfiles %} {% block content %}
-<div id="TaskActive" class="ui bottom attached tab segment active" data-tab="TableTask">
+{#<div id="TaskActive" class="ui bottom attached tab segment active" data-tab="TableTask">#}
     <div id="p1" class="mdl-progress mdl-js-progress"></div>
     <script>
         document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
@@ -83,6 +83,6 @@
             </ol>
         {% endfor %}
     </div>
-</div>
+{#</div>#}
 <script src={% static "js/Kanban.js" %}></script>
 {% endblock %}

@@ -86,7 +86,9 @@
             </table>
         </div>
     {% else %}
+        <div id="TaskActive" class="ui bottom attached tab segment active" data-tab="TableTask">
         {% kanban request project %}
+        </div>
     {% endif %}
     <div id="Gantt" class="ui bottom attached tab segment" data-tab="Gantt">
         <div id="chart_div"></div>

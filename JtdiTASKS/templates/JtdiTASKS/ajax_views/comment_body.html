@@ -2,8 +2,8 @@
 {% for comment in comments %}
     <div class="comment">
         <a class="avatar">
-            {% if user.profile.avatar %}
-                <img src="{{ user.profile.avatar.url }}">
+            {% if comment.commentator.profile.avatar %}
+                <img src="{{ comment.commentator.profile.avatar.url }}">
             {% else %}
                 <img src="/static/img/avatar_2x.png">
             {% endif %}
