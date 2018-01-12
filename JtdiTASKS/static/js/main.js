@@ -316,6 +316,25 @@ $(".modal").on("submit", "#user_inv_form_in_proj", function () {
     return false;
 });
 
+$(".modal").on("submit", "#user_deinv_form_in_proj", function () {
+    var form = $(this);
+    $.ajax({
+        url: form.attr("action"),
+        data: form.serialize(),
+        type: form.attr("method"),
+        dataType: 'json',
+        success: function (result) {
+            if (result.form_is_valid) {
+                $("#user_collection").append(result.html_new_user);
+            }
+            else {
+                alert("Пользователь уже состоит в проекте");
+            }
+        }
+    });
+    return false;
+});
+
 $(".modal").on("submit", "#rename_proj_form", function () {
     var form = $(this);
     $.ajax({

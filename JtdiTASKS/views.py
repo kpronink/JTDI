@@ -1050,6 +1050,9 @@ def project_task_list(request, pk):
 
     all_users_in_project = User.objects.filter(
         Q(pk__in=[user.partner_id for user in users_in_project]) | Q(pk=project.author.pk))
+    
+    if request.user not in all_users_in_project:
+        return redirect('/')
 
     all_users_task_count = []
     for user_in_proj in all_users_in_project:
@@ -1850,6 +1853,7 @@ def project_param(request, pk):
     invited_users = InviteUser.objects.filter(user_sender__username__exact=request.user.username) \
         .filter(not_invited=False).filter(invited=True)
     project_invite_form = ProjectInviteUser(prefix='invite_project')
+    project_deinvite_form = ProjectInviteUser(prefix='deinvite_project')
     # project_invite_form.fields['user_invite'].queryset = User.objects \
     #     .filter(pk__in=[user.user_invite.pk for user in invited_users])
 
@@ -1864,6 +1868,9 @@ def project_param(request, pk):
     project_invite_form.fields['user_invite'].queryset = User.objects.exclude(
         pk__in=[user.partner_id for user in users_in_project]) \
         .filter(pk__in=[user.user_invite.pk for user in invited_users])
+    project_deinvite_form.fields['user_invite'].queryset = User.objects.filter(
+        pk__in=[user.partner_id for user in users_in_project]) \
+        .filter(pk__in=[user.user_invite.pk for user in invited_users])
 
     data['form_is_valid'] = True
     data['html_active_tasks_list'] = ''
@@ -1871,6 +1878,7 @@ def project_param(request, pk):
     data['project_param'] = render_to_string('JtdiTASKS/ajax_views/project_param.html', {
         'project_rename_form': ProjectFormRename(prefix='rename_project'),
         'project_invite_form': project_invite_form,
+        'project_deinvite_form': project_deinvite_form,
         'project': pk,
         'users_in_project': all_users_in_project,
         'read_only_users': read_only_users,
@@ -2086,14 +2094,26 @@ def delete_user_in_project(request, pk):
         project_invite_form.fields['user_invite'].queryset = User.objects.filter(
             pk__in=[user.user_invite.pk for user in invited_users])
 
-        user_in_proj = get_object_or_404(User, pk=project_invite_form.data['invite_project-user_invite'])
-        user_in_proj_pk = project_invite_form.data['invite_project-user_invite']
+        user_in_proj = get_object_or_404(User, pk=project_invite_form.data['deinvite_project-user_invite'])
+        user_in_proj_pk = project_invite_form.data['deinvite_project-user_invite']
         partner = PartnerGroup.objects.filter(partner=user_in_proj_pk) \
-            .filter(project=project).exists()
-        if partner is not None:
-            new_partner = get_object_or_404(PartnerGroup, pk=partner.pk)
+            .filter(project=project)
+        if partner.count():
+            new_partner = get_object_or_404(PartnerGroup, pk=partner[0].pk)
             register_event(new_partner.partner, request.user, project, 'удален из проекта: ')
             new_partner.delete()
+
+            tasks_in_proj = Task.objects.filter(project=project).filter(performer=user_in_proj)
+            for task_qset in tasks_in_proj:
+                task = get_object_or_404(Task, pk=task_qset.pk)
+                task.performer = None
+                task.save()
+
+            tasks_in_proj = Task.objects.filter(project=project).filter(author=user_in_proj)
+            for task_qset in tasks_in_proj:
+                task = get_object_or_404(Task, pk=task_qset.pk)
+                task.author = project.author
+                task.save()
 
             data['html_new_user'] = render_to_string('JtdiTASKS/user_in_proj.html', {
                 'task_count': Task.objects.filter(project=project)

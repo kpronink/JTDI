@@ -20,7 +20,7 @@
 <div class="divider"></div>
 
 {#            <fieldset id="invite_user_in_proj">#}
-<form method="post" action="{% url 'invite_in_proj' pk=project %}" class="ui form user_inv_form_in_proj">
+<form method="post" action="{% url 'invite_in_proj' pk=project %}" class="ui form user_inv_form_in_proj" id="user_inv_form_in_proj">
     {% csrf_token %}
     {% for field in project_invite_form %}
         <div class="field {% if field.errors %} has-error{% endif %}">
@@ -32,6 +32,20 @@
         </div>
     {% endfor %}
     <button type="submit" class="ui button blue">Пригласить</button>
+</form>
+
+<form method="post" action="{% url 'del_user' pk=project %}" class="ui form user_deinv_form_in_proj" id="user_deinv_form_in_proj">
+    {% csrf_token %}
+    {% for field in project_deinvite_form %}
+        <div class="field {% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% render_field field class="field" %}
+            {% for error in field.errors %}
+                <p class="help-block">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="ui button blue">Удалить</button>
 </form>
 {#            </fieldset>#}
 <form class="ui form">
